@@ -1,0 +1,126 @@
+.about-description {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #151515;
+
+  .contents-box {
+    position: relative;
+    height: 400px;
+    width: 1000px;
+    margin-top: 96px;
+    margin-bottom: 96px;
+
+    .main-img {
+      position: absolute;
+      display: block;
+      left: 0px;
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    .descript {
+      position: absolute;
+      width: 536px;
+      right: 0px;
+      top: 25px;
+
+      .headline {
+        margin-top: 45px;
+        width: 100%;
+        //styleName: cb24;
+        font-family: normalidad-compact;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 32px;
+        letter-spacing: 0em;
+        text-align: left;
+
+        color: #ffffff;
+
+        .big-text {
+          font-size: 24px;
+          color: #86c0f7;
+        }
+      }
+
+      .main-part {
+        margin-top: 32px;
+        width: 100%;
+
+        //styleName: cr16;
+        font-family: normalidad-compact;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 21px;
+        letter-spacing: 0em;
+        text-align: left;
+
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .about-description {
+    .contents-box {
+      width: 536px;
+      height: auto;
+      background-color: aquamarine;
+
+      .main-img {
+        position: relative;
+        left: 68px;
+      }
+
+      .descript {
+        position: relative;
+        margin-top: 64px;
+        width: 100%;
+        top: 0px;
+        .headline {
+          margin-top: 0px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .about-description {
+    .contents-box {
+      width: 347px;
+      height: auto;
+      margin-top: 64px;
+      margin-bottom: 64px;
+      background-color: rgb(139, 146, 106);
+
+      .main-img {
+        width: 347px;
+        height: 347px;
+        left: 0px;
+      }
+      .descript {
+        margin-top: 32px;
+        width: 100%;
+        .headline {
+          top: 0px;
+          margin-top: 0px;
+          font-size: 20px;
+          line-height: 26px;
+          text-align: left;
+
+          .big-text {
+            font-size: 20px;
+            color: #86c0f7;
+          }
+        }
+      }
+    }
+  }
+}
