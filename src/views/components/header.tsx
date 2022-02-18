@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import "./navbar.less";
+import React, { Component, ReactNode } from "react";
+import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
-import { history } from "../..//history";
+import { history } from "../../route/history";
 
 export interface NavPageInfo {
   title?: String;
@@ -18,6 +18,7 @@ export interface INavProps {
 interface INavState extends INavProps {}
 
 export class NavBar extends Component<INavProps, INavState> {
+  private m_group: HTMLElement | null = null;
   constructor(props: INavProps) {
     super(props);
     if (props.home) {
@@ -42,14 +43,30 @@ export class NavBar extends Component<INavProps, INavState> {
       pages: pages,
     });
   }
+
   public render() {
     const { pages } = this.state;
-    console.log(this.props);
     return (
-      <div className="navbar">
-        <img className="logo" src={logo} alt="" />
-        <img className="hamburger" src={hamburger} alt="" />
-        <ul className="btn-group">
+      <div className="header">
+        <img className="logo" src={logo} />
+        <img
+          className="hamburger"
+          src={hamburger}
+          onClick={(e) => {
+            const group = this.m_group as HTMLElement;
+            if (group.style.display === "") {
+              group.style.display = "block";
+            } else {
+              group.style.display = "";
+            }
+          }}
+        />
+        <ul
+          className="btn-group"
+          ref={(dom) => {
+            this.m_group = dom;
+          }}
+        >
           {pages?.map((v: NavPageInfo, i: number) => (
             <div
               className={`nav-area ${v.active ? "nav-area-active" : ""}`}
@@ -57,7 +74,7 @@ export class NavBar extends Component<INavProps, INavState> {
               onClick={(e) => {
                 this.fnSelectedItem(v);
                 history.push(`${v.url}`);
-                console.log(history)
+                console.log(history);
               }}
             >
               <div className="title-text">{v.title}</div>
