@@ -1,7 +1,7 @@
 .about-roudmap {
   width: 100%;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   background: #2a2a2a;
@@ -19,17 +19,80 @@
 
     color: #ffffff;
   }
-  .complete {
-    background-color: #afadad;
-    height: 813px;
+
+  .pahse-title {
+    width: 128px;
+    height: 41px;
+    margin: auto;
+    margin-bottom: 32px;
+
+    .phase {
+      font-family: ethnocentric;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+
+    .time {
+      margin-bottom: 32px;
+      //styleName: cr14;
+      font-family: normalidad-compact;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+  }
+
+  .phase1 {
+    // test color
+    background-color: #afadad36;
+    // height: 813px;
     width: 1000px;
     margin-top: 64px;
   }
-  .plans {
+  .phase2 {
+    // test color
     background-color: #4d4d4d;
-    height: 628px;
+    // height: 628px;
     width: 1000px;
     margin-top: 64px;
     margin-bottom: 160px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .about-roudmap {
+    .headline {
+    }
+    .pahse-title {
+      margin-left: 0;
+    }
+    .phase1 {
+      width: 670px;
+    }
+    .phase2 {
+      width: 670px;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .about-roudmap {
+    .headline {
+      font-size: 24px;
+      line-height: 29px;
+    }
+    .phase1 {
+      width: 374px;
+    }
+    .phase2 {
+      width: 374px;
+    }
   }
 }
