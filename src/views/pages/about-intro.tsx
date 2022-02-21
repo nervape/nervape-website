@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import santaPunk from "../../assets/about/santa-punk.svg";
-import "./about.intro.less";
+import "./about-intro.less";
 
 export class AboutIntro extends Component {
   render() {
