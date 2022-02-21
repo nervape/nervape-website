@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { AboutDescription } from "./about.description";
-import { AboutIntro } from "./about.intro";
+import { AboutDescription } from "./about-description";
+import { AboutIntro } from "./about-intro";
 import "./about.less";
-import { AboutRoadmap } from "./about.roadmap";
+import { AboutRoadmap } from "./about-roadmap";
 
 export class About extends Component {
   render() {
