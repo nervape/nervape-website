@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import desertScene from "../../assets/about/desert-scene.svg";
-import "./about.description.less";
+import "./about-description.less";
 
 export class AboutDescription extends Component {
   render() {
