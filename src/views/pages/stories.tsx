@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StoriesIntro } from "./stories-intro";
 import { StoriesList } from "./stories-list";
 import testImg from "../../assets/noval/intro-bg.png";
+import { StoriesReader } from "./stories-reader";
 
 export interface ISotory {
   chapter?: string;
@@ -26,7 +27,7 @@ const stories: IStoriesList = [
       {
         chapter: "Chapter I",
         sequence: "Story001",
-        title: "title",
+        title: "An Unexpected Encounter",
         content: "content",
         related: ["realated", "realated", "realated"],
         image: testImg,
@@ -94,8 +95,13 @@ export class Stories extends Component {
     };
     return (
       <div className="stories">
-        <StoriesIntro latestStory={latest}></StoriesIntro>
-        <StoriesList active={0} stories={stories}></StoriesList>
+        {/* <StoriesIntro latestStory={latest}></StoriesIntro>
+        <StoriesList active={0} stories={stories}></StoriesList> */}
+        <StoriesReader
+          previous={true}
+          next={true}
+          story={latest}
+        ></StoriesReader>
       </div>
     );
   }
