@@ -1,0 +1,300 @@
+.campaign-item {
+  width: 1000px;
+  border-radius: 8px;
+  padding: 14px;
+
+  background: #2a2a2a;
+
+  .cam-item-title-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .cam-item-title {
+
+      font-family: Ethnocentric;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: left;
+
+      color: #ffffff;
+    }
+
+    .cam-item-starts {
+      //styleName: cm14;
+      font-family: normalidad-compact;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: right;
+      align-items: center;
+
+      color: #7b7b7b;
+    }
+  }
+
+  .cam-item-content {
+    margin-top: 8px;
+
+    //styleName: cr16;
+    font-family: normalidad-compact;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    color: #ffffff;
+  }
+
+  .cam-card-frame {
+    margin-top: 32px;
+
+    display: flex;
+    justify-content: space-between;
+
+    .cam-item-reward-card {
+      position: relative;
+      height: 106px;
+      width: 478px;
+
+      .reward-word {
+        //styleName: cm14;
+        font-family: normalidad-compact;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: left;
+
+        color: #ffffff;
+      }
+
+      .reward-image {
+        position: absolute;
+        left: 0px;
+        top: 26px;
+
+        height: 80px;
+        width: 80px;
+        border-radius: 8px;
+      }
+
+      .reward-title {
+        position: absolute;
+        left: 95px;
+        top: 26px;
+
+        //styleName: tb14;
+        font-family: normalidad-text;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: left;
+
+        color: #ffffff;
+      }
+
+      .reward-claimed {
+        position: absolute;
+        left: 95px;
+        top: 48px;
+
+        //styleName: cm12;
+        font-family: normalidad-compact;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: left;
+
+        color: #7b7b7b;
+      }
+
+      .reward-icon {
+        position: absolute;
+        left: 95px;
+        top: 68px;
+
+        color: #7b7b7b;
+      }
+    }
+    .cam-item-material-card {
+      width: 478px;
+
+      .material-word {
+        //styleName: cm14;
+        font-family: normalidad-compact;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: left;
+
+        color: #ffffff;
+      }
+      .material-img-list {
+        margin-top: 8px;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
+        .material-img-item {
+          height: 50px;
+          width: 50px;
+          margin-top: 8px;
+          margin-right: 10px;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+
+  .cam-button-frame {
+    margin-top: 32px;
+
+    bottom: 0px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .cam-item-button {
+      border-radius: 8px;
+      padding: 8px;
+
+      background: #ffffff0d;
+
+      color: #7b7b7b;
+
+      .text-top {
+        //styleName: cr10;
+        font-family: normalidad-compact;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+
+      .text-bottom {
+        //styleName: wm12;
+        font-family: normalidad-wide;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+    }
+
+    .button-rul {
+      height: 45px;
+      width: 235px;
+    }
+
+    .button-mat {
+      margin: 0px 10px;
+
+      height: 45px;
+      width: 235px;
+    }
+
+    .button-nft {
+      width: 481px;
+      height: 45px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .campaign-item {
+    width: 640px;
+
+    .cam-card-frame {
+      .cam-item-reward-card {
+        width: 298px;
+      }
+      .cam-item-material-card {
+        width: 298px;
+      }
+    }
+
+    .cam-button-frame {
+      .button-rul {
+        width: 146px;
+      }
+
+      .button-mat {
+        width: 146px;
+      }
+
+      .button-nft {
+        width: 300px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .campaign-item {
+    width: 347px;
+
+    .cam-item-title-line {
+      display: flex;
+      flex-direction: column;
+
+      .cam-item-title {
+        text-align: left;
+      }
+      .cam-item-starts {
+        margin-top: 8px;
+        text-align: left;
+      }
+    }
+
+    .cam-card-frame {
+      display: flex;
+      flex-direction: column;
+
+      .cam-item-reward-card {
+        width: 319px;
+      }
+      .cam-item-material-card {
+        margin-top: 16px;
+        width: 319px;
+      }
+    }
+
+    .cam-button-frame {
+      .button-rul {
+        width: 154px;
+      }
+
+      .button-mat {
+        margin-right: 0px;
+        width: 154px;
+      }
+
+      .button-nft {
+        margin-top: 10px;
+        width: 319px;
+      }
+    }
+  }
+}

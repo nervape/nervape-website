@@ -23,6 +23,14 @@ export class GalleryList extends Component {
     }
   }
 
+  componentDidMount() {
+    window.removeEventListener("scroll", this.fnScrollWindow, true);
+    window.addEventListener("scroll", this.fnScrollWindow, true);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.fnScrollWindow, true);
+  }
+
   render() {
     return (
       <div className="gallery-list">
@@ -39,8 +47,6 @@ export class GalleryList extends Component {
             className="nft-gallery-classify"
             ref={(elClassify) => {
               this.elClassify = elClassify;
-              window.removeEventListener("scroll", this.fnScrollWindow);
-              window.addEventListener("scroll", this.fnScrollWindow);
             }}
           >
             <div className="default-text">Featured</div>
