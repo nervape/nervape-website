@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { CampaignItem } from "./campaign-item";
+import { CampaigIntro } from "./campaign-intro";
+import { CampaignList } from "./campaign-list";
 
 export class Campaign extends Component {
   render() {
     return (
       <div className="campaign-page">
-        <CampaignItem></CampaignItem>
+        <CampaigIntro></CampaigIntro>
+        <CampaignList></CampaignList>
       </div>
     );
   }
