@@ -22,6 +22,9 @@ export class GalleryList extends Component {
       elClassify.style.position = "";
     }
   }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.fnScrollWindow);
+  }
 
   render() {
     return (
