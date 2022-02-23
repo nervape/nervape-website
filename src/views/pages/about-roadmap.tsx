@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TimelineItem } from "../components/timeline-item";
-import "./about-roudmap.less";
+import "./about-roadmap.less";
 
 const phase1 = [
   {
