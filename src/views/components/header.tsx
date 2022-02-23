@@ -2,12 +2,12 @@ import React, { Component, ReactNode } from "react";
 import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
-import { history } from "../../route/history";
+import { NavTool } from "../../route/navi-tool";
+import { Location, useLocation } from "react-router";
 
 export interface NavPageInfo {
-  title?: String;
-  url?: String[];
-  active?: boolean;
+  title: string;
+  url: string;
 }
 
 export interface INavProps {
@@ -15,6 +15,7 @@ export interface INavProps {
 }
 
 interface INavState extends INavProps {
+  pages: NavPageInfo[];
   disableList: boolean;
 }
 
@@ -22,46 +23,37 @@ export class NavBar extends Component<INavProps, INavState> {
   constructor(props: INavProps) {
     super(props);
     this.state = {
-      ...props,
+      pages: props.pages ? props.pages : [],
       disableList: true,
     };
 
     this.fnScrollWindow = this.fnScrollWindow.bind(this);
   }
 
-  public fnClickNavButton(v: NavPageInfo) {
+  public fnClickNavButton(page: NavPageInfo) {
     this.setState({
       disableList: true,
     });
-    const urlParams = new URL(window.location.href);
-    const pathname = urlParams?.pathname;
-    if (v.url?.indexOf(pathname) !== -1) {
-      return;
-    }
 
-    history.push(`${v.url}`);
-    console.log(`naigator jump to:${v.url}`);
-    this.fnActiveButtonFromkUrl();
+    NavTool.fnJumpToPage(page.url);
   }
 
-  public fnActiveButtonFromkUrl() {
-    const urlParams = new URL(window.location.href);
-    const pathname = urlParams?.pathname;
-    console.log("check url pathname:", pathname);
+  public fnCheckUrl() {
     const { pages } = this.state;
-    const result = [];
-    pages?.map((v) => {
-      if (v.url?.indexOf(pathname) !== -1) {
-        v.active = true;
-        result.push(v);
-      } else {
-        v.active = false;
+    const location = NavTool.location;
+    const pathname = NavTool.location.pathname;
+    // console.log(location, pathname);
+
+    let activeIndex = 0;
+    pages.map((v, i) => {
+      if (v.url === pathname) {
+        if (activeIndex !== i) {
+          activeIndex = i;
+        }
       }
     });
-    if (result.length !== 1) {
-      throw "page header route url error";
-    }
-    this.setState({ pages });
+
+    return activeIndex;
   }
 
   public fnClickHamburger() {
@@ -86,7 +78,6 @@ export class NavBar extends Component<INavProps, INavState> {
   }
 
   public componentDidMount() {
-    this.fnActiveButtonFromkUrl();
     window.removeEventListener("scroll", this.fnScrollWindow, true);
     window.addEventListener("scroll", this.fnScrollWindow, true);
   }
@@ -96,7 +87,7 @@ export class NavBar extends Component<INavProps, INavState> {
 
   public render() {
     const { pages, disableList } = this.state;
-    // console.log("render");
+    const activeIndex = this.fnCheckUrl();
     return (
       <div
         className="header-container"
@@ -131,8 +122,10 @@ export class NavBar extends Component<INavProps, INavState> {
           >
             {pages?.map((v: NavPageInfo, i: number) => (
               <div
-                className={`nav-area ${v.active ? "nav-area-active" : ""}`}
-                key={v.title as React.Key}
+                className={`nav-area ${
+                  i === activeIndex ? "nav-area-active" : ""
+                }`}
+                key={i}
                 onClick={(e) => {
                   this.fnClickNavButton(v);
                 }}

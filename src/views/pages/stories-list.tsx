@@ -1,35 +1,43 @@
 import React, { Component } from "react";
-import { IStoriesList } from "./stories";
+import { StoriesMock } from "../../mock/stories-mock";
+import { Chapter, Story } from "../../nervape/story";
+import { NavTool } from "../../route/navi-tool";
 import { StoriesListItem } from "./stories-list-item";
 import "./stories-list.less";
 
-export interface IStoriesListProps {
-  active: number;
-  stories: IStoriesList;
+const chaptersData = StoriesMock.fnGetStories();
+
+export interface IStoriesListState {
+  chapters: Chapter[];
 }
 
-export class StoriesList extends Component<
-  IStoriesListProps,
-  IStoriesListProps
-> {
-  constructor(props: IStoriesListProps) {
+export class StoriesList extends Component<any, IStoriesListState> {
+  constructor(props: any) {
     super(props);
     this.state = {
-      ...props,
+      chapters: chaptersData,
     };
   }
 
-  fnSlecteChapter(active: number) {
-    if (this.state.active === active) {
-      return;
-    }
-    this.setState({
-      active,
-    });
+  fnSlecteChapter(chapter: Chapter) {
+    NavTool.fnJumpToPage(`/story?chapter=${chapter.name}`);
+    this.forceUpdate();
   }
 
   render() {
-    const { stories, active } = this.state;
+    const { chapters } = this.state;
+    const chapterParam = NavTool.fnQueryParam("chapter");
+
+    let activeInndex = 0;
+
+    for (let index = 0; index < chapters.length; index++) {
+      const c = chapters[index];
+      if (
+        c.name.toLocaleLowerCase().trim().replace(/\s+/g, "") === chapterParam
+      ) {
+        activeInndex = index;
+      }
+    }
 
     return (
       <div className="stories-list">
@@ -37,20 +45,24 @@ export class StoriesList extends Component<
         <div className="subfield-group">
           {
             /* 分栏 */
-            stories.map((v, i) => {
+            chapters.map((v, i) => {
               return (
                 <div className="chapter-box" key={`${v.name}-${i}`}>
                   <div
                     className={`subfield ${
-                      active === i ? "subfield-selected" : ""
+                      activeInndex === i ? "subfield-selected" : ""
                     }`}
                     onClick={() => {
-                      this.fnSlecteChapter(i);
+                      this.fnSlecteChapter(v);
                     }}
                   >
                     {v.name}
                   </div>
-                  {i === stories.length - 1 ? "" : <div className="line"></div>}
+                  {i === chapters.length - 1 ? (
+                    ""
+                  ) : (
+                    <div className="line"></div>
+                  )}
                 </div>
               );
             })
@@ -58,16 +70,8 @@ export class StoriesList extends Component<
         </div>
 
         <div className="stories-intro-list">
-          {stories[active].list.map((v, i) => {
-            return (
-              <StoriesListItem
-                story={v}
-                key={i}
-                onClickCard={(e: any) => {
-                  console.log(e);
-                }}
-              ></StoriesListItem>
-            );
+          {chapters[activeInndex].stories.map((v, i) => {
+            return <StoriesListItem story={v} key={i}></StoriesListItem>;
           })}
         </div>
 
