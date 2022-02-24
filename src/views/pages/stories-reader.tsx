@@ -40,7 +40,7 @@ export class StoriesReader extends Component {
                 return (
                   <a
                     className="sr-nft-item"
-                    href={v.url}
+                    href={v.mibaoUrl}
                     target="_blank"
                     key={i}
                     onClick={(e) => {

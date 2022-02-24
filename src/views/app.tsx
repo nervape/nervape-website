@@ -16,7 +16,7 @@ import { StoriesPage } from "./pages/stories";
 import { Footer } from "./components/footer";
 import { NavTool } from "../route/navi-tool";
 
-export const App: React.FC = () => {
+export function App() {
   NavTool.navigation = useNavigate();
   NavTool.location = useLocation();
 
@@ -52,4 +52,4 @@ export const App: React.FC = () => {
       <Footer></Footer>
     </div>
   );
-};
+}

@@ -53,7 +53,9 @@ export class StoriesList extends Component<any, IStoriesListState> {
                       activeInndex === i ? "subfield-selected" : ""
                     }`}
                     onClick={() => {
-                      this.fnSlecteChapter(v);
+                      if (i === 0) {
+                        this.fnSlecteChapter(v);
+                      }
                     }}
                   >
                     {v.name}

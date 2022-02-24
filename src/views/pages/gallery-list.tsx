@@ -48,8 +48,10 @@ export class GalleryList extends Component {
     console.log(activeType, typeData);
 
     const renderdata = nftData.filter((v) => {
-      if (NavTool.fnStdNavStr(v.type) === activeType) {
-        return v;
+      for (let i = 0; i < v.type.length; ++i) {
+        if (NavTool.fnStdNavStr(v.type[i]) === activeType) {
+          return v;
+        }
       }
     });
 

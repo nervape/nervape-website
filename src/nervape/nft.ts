@@ -1,5 +1,12 @@
 import { Story } from "./story";
 
+export enum NFTType {
+  Featured = "Featured",
+  Character = "Character",
+  Scene = "Scene",
+  Item = "Item",
+}
+
 export class NftItem {
   id = "";
 
@@ -9,7 +16,7 @@ export class NftItem {
 
   last = 0;
 
-  type = "";
+  type: NFTType[] = [];
 
   thumbnail = "";
 
