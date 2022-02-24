@@ -42,10 +42,10 @@ export class GalleryList extends Component {
 
     let activeType = NavTool.fnQueryParam("type");
     if (activeType === null) {
-      activeType = typeData[0];
+      activeType = NavTool.fnStdNavStr(typeData[0]);
     }
 
-    console.log(activeType);
+    console.log(activeType, typeData);
 
     const renderdata = nftData.filter((v) => {
       if (NavTool.fnStdNavStr(v.type) === activeType) {
@@ -53,7 +53,7 @@ export class GalleryList extends Component {
       }
     });
 
-    console.log(renderdata)
+    console.log(renderdata);
 
     return (
       <div className="gallery-list">
@@ -77,7 +77,9 @@ export class GalleryList extends Component {
                 <div key={typeStr} className="check-box">
                   <div
                     className={`default-text ${
-                      NavTool.fnStdNavStr(typeStr) === activeType ? "select-text" : ""
+                      NavTool.fnStdNavStr(typeStr) === activeType
+                        ? "select-text"
+                        : ""
                     }`}
                     onClick={() => {
                       NavTool.fnJumpToPage(`/nft?type=${typeStr}`);

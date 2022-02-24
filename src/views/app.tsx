@@ -10,7 +10,7 @@ import {
 import "./App.less";
 import { INavProps, NavBar } from "./components/header";
 import { AboutPage } from "./pages/about";
-import { Campaign } from "./pages/campaign";
+import { CampaignPage } from "./pages/campaign";
 import { Gallery } from "./pages/gallery";
 import { StoriesPage } from "./pages/stories";
 import { Footer } from "./components/footer";
@@ -46,7 +46,7 @@ export const App: React.FC = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/nft" element={<Gallery />} />
         <Route path="/story" element={<StoriesPage />} />
-        <Route path="/campaign" element={<Campaign />} />
+        <Route path="/campaign" element={<CampaignPage />} />
         <Route path="*" element={<Navigate to="/about" />} />
       </Routes>
       <Footer></Footer>
