@@ -8,10 +8,6 @@ import { GalleryList } from "./gallery-list";
 export class Gallery extends Component {
   render() {
     return (
-      // <div>
-      //   <NFTCard></NFTCard>
-      // </div>
-
       <div className="gallery-page">
         <GalleryIntro></GalleryIntro>
         <GalleryList></GalleryList>

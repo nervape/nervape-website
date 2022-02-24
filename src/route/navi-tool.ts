@@ -1,27 +1,4 @@
-import React from "react";
-import { createHashHistory } from "history";
-import {
-  NavigateFunction,
-  NavigateOptions,
-  Router,
-  Location,
-} from "react-router-dom";
-
-// export const history = createHashHistory();
-
-// export const fnJumpToPage = (path: string, param: string = "") => {
-//   const location = history.location;
-
-//   // const tgUrl = new URL(format);
-//   const toUrl = toPath + (toParam === "" ? "" : `?${toParam}`);
-
-//   const from = location.pathname + location.search;
-//   if (from === toUrl) {
-//     return;
-//   }
-//   history.push(toUrl);
-//   console.log(`naigator from${from} to:${toUrl}`);
-// };
+import { NavigateFunction, Location } from "react-router-dom";
 
 export class NavTool {
   public static fnStdNavStr(str: string) {

@@ -1,6 +1,9 @@
 import { Chapter, Story } from "../nervape/story";
 import imgStroy001 from "../assets/noval/intro-bg.png";
 import { NavTool } from "../route/navi-tool";
+import { NftItem } from "../nervape/nft";
+
+const nftTemplate = new NftItem();
 
 const storyTemplate = {
   chapter: "chapter name",
@@ -14,27 +17,27 @@ const storyTemplate = {
   nft: [
     {
       name: "Nervape / Story 001",
-      url: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
+      mibaoUrl: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
     },
     {
       name: "Nervape / Story 001",
-      url: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
+      mibaoUrl: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
     },
     {
       name: "Nervape / Story 001",
-      url: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
+      mibaoUrl: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
     },
     {
       name: "Nervape / Story 001",
-      url: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
+      mibaoUrl: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
     },
     {
       name: "Nervape / St",
-      url: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
+      mibaoUrl: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
     },
     {
       name: "Nervape",
-      url: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
+      mibaoUrl: "https://mibao.net/class/040c00b8-689c-4f2e-83cb-c63e4cf3bbd4",
     },
   ],
 } as Story;

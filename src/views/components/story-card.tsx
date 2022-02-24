@@ -36,7 +36,7 @@ export class StoryCard extends Component<IStoryCardProps> {
               return (
                 <a
                   className="nft-button"
-                  href={rv.url}
+                  href={rv.mibaoUrl}
                   target="_blank"
                   key={`${ri}-${rv.name}`}
                   onClick={(e) => {
