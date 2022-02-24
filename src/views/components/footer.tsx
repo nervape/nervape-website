@@ -4,6 +4,7 @@ import logo from "../../assets/logo/logo_nervape.svg";
 import twitter from "../../assets/icons/twitter.svg";
 import discord from "../../assets/icons/discord.svg";
 import instagram from "../../assets/icons/instagram.svg";
+import socialmedia from "../../assets/icons/socialmedia.svg";
 import github from "../../assets/icons/github.svg";
 import email from "../../assets/icons/email.svg";
 
@@ -13,21 +14,49 @@ export class Footer extends Component {
       <div className="footer">
         <img className="logo" src={logo} />
         <div className="icon-group">
-          <div className="icon">
+          <a
+            className="icon"
+            target="_blank"
+            href="https://twitter.com/Nervapes"
+          >
             <img src={twitter} />
-          </div>
-          <div className="icon">
+          </a>
+
+          <a
+            className="icon"
+            target="_blank"
+            href="https://discord.gg/EWWanFs4Hu"
+          >
             <img src={discord} />
-          </div>
-          <div className="icon">
+          </a>
+
+          <a
+            className="icon"
+            target="_blank"
+            href="https://www.instagram.com/nervapes/"
+          >
             <img src={instagram} />
-          </div>
-          <div className="icon">
+          </a>
+
+          <a
+            className="icon"
+            target="_blank"
+            href="https://medium.com/@Nervape"
+          >
+            <img src={socialmedia} />
+          </a>
+
+          <a className="icon" target="_blank" href="https://github.com/nervape">
             <img src={github} />
-          </div>
-          <div className="icon">
+          </a>
+
+          <a
+            className="icon"
+            target="_blank"
+            href="mailto:creative@nervape.com"
+          >
             <img src={email} />
-          </div>
+          </a>
         </div>
       </div>
     );

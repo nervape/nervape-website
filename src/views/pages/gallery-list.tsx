@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { NFTsMock } from "../../mock/nft-mock";
+import { NftItem } from "../../nervape/nft";
+import { NavTool } from "../../route/navi-tool";
 import { NFTCard } from "../components/nft-card";
 import "./gallery-list.less";
 
@@ -16,10 +19,12 @@ export class GalleryList extends Component {
     const elClassify = this.elClassify as HTMLElement;
     const rect = elTitle.getBoundingClientRect();
     // console.log(rect);
-    if (rect.top < -rect.height) {
+    if (rect.top < -rect.height + 93) {
       elClassify.style.position = "fixed";
+      elClassify.style.top = rect.width < 750 ? "60px" : "93px";
     } else {
       elClassify.style.position = "";
+      elClassify.style.top = "";
     }
   }
 
@@ -32,6 +37,24 @@ export class GalleryList extends Component {
   }
 
   render() {
+    const nftData = NFTsMock.fnGetNftList();
+    const typeData = NFTsMock.fGetTypes();
+
+    let activeType = NavTool.fnQueryParam("type");
+    if (activeType === null) {
+      activeType = NavTool.fnStdNavStr(typeData[0]);
+    }
+
+    console.log(activeType, typeData);
+
+    const renderdata = nftData.filter((v) => {
+      if (NavTool.fnStdNavStr(v.type) === activeType) {
+        return v;
+      }
+    });
+
+    console.log(renderdata);
+
     return (
       <div className="gallery-list">
         <div className="gallery-list-header">
@@ -49,37 +72,40 @@ export class GalleryList extends Component {
               this.elClassify = elClassify;
             }}
           >
-            <div className="default-text">Featured</div>
-            <div className="hover-text"></div>
-
-            <div className="default-text">Featured</div>
-            <div className="hover-text"></div>
-
-            <div className="default-text">Featured</div>
-            <div className="hover-text"></div>
+            {typeData.map((typeStr, i) => {
+              return (
+                <div key={typeStr} className="check-box">
+                  <div
+                    className={`default-text ${
+                      NavTool.fnStdNavStr(typeStr) === activeType
+                        ? "select-text"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      NavTool.fnJumpToPage(`/nft?type=${typeStr}`);
+                    }}
+                  >
+                    {typeStr}
+                  </div>
+                  {i === typeData.length - 1 ? (
+                    ""
+                  ) : (
+                    <div className="line"></div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
         <div className="nft-list">
-          <div className="card-container">
-            <NFTCard></NFTCard>
-          </div>
-
-          <div className="card-container">
-            <NFTCard></NFTCard>
-          </div>
-
-          <div className="card-container">
-            <NFTCard></NFTCard>
-          </div>
-
-          <div className="card-container">
-            <NFTCard></NFTCard>
-          </div>
-
-          <div className="card-container">
-            <NFTCard></NFTCard>
-          </div>
+          {renderdata.map((v, i) => {
+            return (
+              <div className="card-container" key={i}>
+                <NFTCard nft={v}></NFTCard>
+              </div>
+            );
+          })}
         </div>
       </div>
     );

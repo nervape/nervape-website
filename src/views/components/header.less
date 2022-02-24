@@ -1,129 +1,147 @@
-.header {
+.header-container {
   position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 80px;
-  width: 100%;
+
+  z-index: 999;
   height: 93px;
-  background: #151515;
+  width: 100%;
 
-  .logo {
-    width: 160px;
-    height: 24px;
-  }
-
-  .hamburger {
-    display: none;
-  }
-
-  .btn-group {
-    right: 0px;
-    height: 100%;
-
+  .header {
+    position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
-    align-self: flex-end;
+    justify-content: space-between;
+    padding: 0px 80px;
+    width: 100%;
+    height: 93px;
+    background: #151515;
 
-    .nav-area {
-      position: relative;
-      margin-left: 64px;
+    .logo {
+      width: 160px;
       height: 100%;
-      font-family: normalidad-text;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 21px;
-      color: #ffffff;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .btn-group {
+      right: 0px;
+      height: 100%;
 
       display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
       align-items: center;
-
-      .select-line {
-        position: absolute;
-        display: none;
-        bottom: 0px;
-        height: 4px;
-        width: 100%;
-        background: #86c0f7;
-      }
-    }
-
-    .nav-area-active {
-      .title-text {
-        font-weight: bold;
-      }
-      .select-line {
-        display: block;
-      }
-    }
-
-    .nav-area:hover {
-      .select-line {
-        display: block;
-      }
-    }
-  }
-
-  @media screen and (max-width: 1200px) {
-    padding: 0px 40px;
-    height: 93px;
-
-    .logo {
-      width: 134px;
-      height: 20px;
-    }
-
-    .btn-group {
-      .nav-area {
-        margin-left: 32px;
-      }
-    }
-  }
-
-  @media screen and (max-width: 750px) {
-    padding: 0px 14px;
-    height: 60px;
-
-    .logo {
-      width: 107px;
-      height: 16px;
-    }
-    .hamburger {
-      display: block;
-    }
-
-    .btn-group {
-      position: absolute;
-      display: none;
-      top: 100%;
-      width: 100%;
-      background: #2a2a2a;
-      padding: 8px 14px;
-      flex-direction: column;
-      height: auto;
-      z-index: 999;
+      align-self: flex-end;
 
       .nav-area {
-        margin-left: 20px;
-        margin-top: 8px;
-        margin-bottom: 8px;
-        width: 100%;
-        height: 37px;
+        position: relative;
+        margin-left: 64px;
+        height: 100%;
+        font-family: normalidad-text;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 21px;
+        color: #ffffff;
 
-        .title-text {
-          margin-left: 20px;
-        }
+        display: flex;
+        align-items: center;
 
         .select-line {
           position: absolute;
+          display: none;
+          bottom: 0px;
+          height: 4px;
+          width: 100%;
+          background: #86c0f7;
+        }
+      }
+
+      .nav-area-active {
+        .title-text {
+          font-weight: bold;
+        }
+        .select-line {
+          display: block;
+        }
+      }
+
+      .nav-area:hover {
+        .select-line {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .header-container {
+    .header {
+      padding: 0px 40px;
+
+      .logo {
+        width: 134px;
+        height: 20px;
+      }
+
+      .btn-group {
+        .nav-area {
+          margin-left: 32px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .header-container {
+    height: 60px;
+
+    .header {
+      padding: 0px 14px;
+      height: 60px;
+
+      .logo {
+        width: 107px;
+      }
+      .hamburger {
+        display: block;
+      }
+
+      .btn-group {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        background: #2a2a2a;
+        padding: 8px 14px;
+        flex-direction: column;
+        height: auto;
+
+        .nav-area {
+          margin-left: 20px;
           margin-top: 8px;
           margin-bottom: 8px;
-          height: 21px;
-          width: 4px;
+          width: 100%;
+          height: 37px;
+
+          .title-text {
+            margin-left: 20px;
+          }
+
+          .select-line {
+            position: absolute;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            height: 21px;
+            width: 4px;
+          }
         }
+      }
+
+      .active-group {
+        display: none;
       }
     }
   }

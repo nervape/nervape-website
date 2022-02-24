@@ -1,50 +1,55 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./App.less";
 import { INavProps, NavBar } from "./components/header";
-import { About } from "./pages/about";
-import { Campaign } from "./pages/campaign";
+import { AboutPage } from "./pages/about";
+import { CampaignPage } from "./pages/campaign";
 import { Gallery } from "./pages/gallery";
-import { Stories } from "./pages/stories";
-import { history, HistoryRouter } from "../route/history";
+import { StoriesPage } from "./pages/stories";
 import { Footer } from "./components/footer";
-const navData = {
-  pages: [
-    {
-      title: "About Nervape",
-      url: "/about",
-      active: true,
-    },
-    {
-      title: "NFT Gallery",
-      url: "/gallery",
-    },
-    {
-      title: "Stories",
-      url: "/stories",
-    },
-    {
-      title: "Campaign",
-      url: "/campaign",
-    },
-  ],
-} as INavProps;
+import { NavTool } from "../route/navi-tool";
 
-export class App extends Component {
-  render() {
-    return (
-      <div className="app">
-        <HistoryRouter history={history}>
-          <NavBar pages={navData.pages}></NavBar>
-          <Routes>
-            <Route path="/about" element={<About />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/stories" element={<Stories />} />
-            <Route path="/campaign" element={<Campaign />} />
-          </Routes>
-          <Footer></Footer>
-        </HistoryRouter>
-      </div>
-    );
-  }
-}
+export const App: React.FC = () => {
+  NavTool.navigation = useNavigate();
+  NavTool.location = useLocation();
+
+  return (
+    <div className="app">
+      <NavBar
+        pages={[
+          {
+            title: "About Nervape",
+            url: "/about",
+          },
+          {
+            title: "NFT Gallery",
+            url: "/nft",
+          },
+          {
+            title: "Stories",
+            url: "/story",
+          },
+          {
+            title: "Campaign",
+            url: "/campaign",
+          },
+        ]}
+      ></NavBar>
+      <Routes>
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/nft" element={<Gallery />} />
+        <Route path="/story" element={<StoriesPage />} />
+        <Route path="/campaign" element={<CampaignPage />} />
+        <Route path="*" element={<Navigate to="/about" />} />
+      </Routes>
+      <Footer></Footer>
+    </div>
+  );
+};

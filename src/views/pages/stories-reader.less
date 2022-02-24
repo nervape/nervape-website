@@ -20,6 +20,13 @@
       text-align: left;
 
       color: #787878;
+
+      display: flex;
+      flex-direction: row;
+
+      .chapter-text {
+        cursor: pointer;
+      }
     }
 
     .sr-title {
@@ -40,6 +47,9 @@
       margin-top: 16px;
       display: flex;
       justify-content: start;
+      .related-text {
+        flex-shrink: 0;
+      }
 
       //styleName: cr14;
       font-family: normalidad-compact;
@@ -54,10 +64,13 @@
       .sr-nft-parent {
         display: flex;
         justify-content: start;
+        flex-wrap: wrap;
 
-        color: #7b7b7b;
         .sr-nft-item {
           margin-left: 12px;
+          color: #7b7b7b;
+
+          cursor: pointer;
         }
       }
     }
@@ -85,11 +98,15 @@
         float: left;
         left: 0px;
         margin: auto;
+
+        cursor: pointer;
       }
       .sr-next {
         float: right;
         right: 0px;
         margin: auto;
+
+        cursor: pointer;
       }
     }
   }

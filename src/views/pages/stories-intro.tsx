@@ -1,29 +1,19 @@
 import React, { Component } from "react";
 import "./stories-intro.less";
-import novalBg from "../../assets/noval/intro-bg.png";
-import { ISotory } from "./stories";
+import { Story } from "../../nervape/story";
+import { StoryCard } from "../components/story-card";
 
 export interface IStoriesInfroProps {
-  latestStory: ISotory;
+  latest: Story;
 }
 
 export class StoriesIntro extends Component<IStoriesInfroProps> {
   render() {
-    const { chapter, sequence, title, content, related } =
-      this.props.latestStory;
+    const { latest } = this.props;
     return (
       <div className="stories-intro">
-        <img className="src-img" src={novalBg} alt="" />
-        <div className="banner">
-          <div className="main-body">
-            <div className="chapter">
-              {chapter}/{sequence}
-            </div>
-            <div className="title">{title}</div>
-            <div className="content">{content}</div>
-          </div>
-          <div className="realated">{related}</div>
-        </div>
+        <img className="src-img" src={latest.imageUrl} alt="" />
+        <StoryCard className="banner" story={latest}></StoryCard>
       </div>
     );
   }

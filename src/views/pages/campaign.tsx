@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { CampaigIntro } from "./campaign-intro";
 import { CampaignList } from "./campaign-list";
 
-export class Campaign extends Component {
+export class CampaignPage extends Component {
   render() {
     return (
       <div className="campaign-page">

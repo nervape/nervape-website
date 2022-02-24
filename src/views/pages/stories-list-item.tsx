@@ -1,29 +1,24 @@
 import React, { Component } from "react";
 import "./stories-list-item.less";
-import { ISotory } from "./stories";
+import { StoryCard } from "../components/story-card";
+import { Story } from "../../nervape/story";
+import { StoriesMock } from "../../mock/stories-mock";
 
 export interface IStoriesListItemProps {
-  story: ISotory;
-  onClickCard?: any;
+  story: Story;
 }
+
 export class StoriesListItem extends Component<IStoriesListItemProps> {
   fnRalatedNFT(p: any) {
     console.log(p);
   }
   render() {
-    const { story, onClickCard } = this.props;
+    const { story } = this.props;
     return (
-      <div
-        className="story-item"
-        onClick={() => {
-          if (onClickCard) {
-            onClickCard(story);
-          }
-        }}
-      >
-        <div className="s-item-img">
+      <div className="story-item">
+        <div className="img-bg-item">
           <img
-            src={story.image}
+            src={story.imageUrl}
             style={{
               width: "100%",
               height: "100%",
@@ -31,33 +26,7 @@ export class StoriesListItem extends Component<IStoriesListItemProps> {
             }}
           />
         </div>
-        <div className="main-body">
-          <div className="s-item-detail">
-            <div className="chapter">
-              {story.chapter}/{story.sequence}
-            </div>
-            <div className="title">{story.title}</div>
-            <div className="content">{story.content}</div>
-          </div>
-          <div className="related">
-            <div className="related-text">Related NFT(s):</div>
-            <div className="related-btn-group">
-              {story.related?.map((rv, ri) => {
-                return (
-                  <div
-                    className="related-button"
-                    key={`${ri}-${rv}`}
-                    onClick={() => {
-                      this.fnRalatedNFT(rv);
-                    }}
-                  >
-                    {rv}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <StoryCard story={story} className="card-item"></StoryCard>
       </div>
     );
   }

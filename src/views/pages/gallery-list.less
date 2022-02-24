@@ -20,9 +20,10 @@
     }
     .nft-gallery-classify {
       padding-top: 16px;
+      padding-bottom: 16px;
       width: 100%;
       top: 0px;
-      z-index: 999;
+      z-index: 998;
       background: #151515;
 
       //styleName: cr16;
@@ -39,6 +40,39 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      .check-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .default-text {
+          margin: 0px 16px;
+          cursor: pointer;
+        }
+
+        .select-text {
+          //styleName: tb16;
+          font-family: normalidad-text;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 21px;
+          letter-spacing: 0em;
+          text-align: left;
+
+          color: #ffffff;
+        }
+
+        .line {
+          margin-top: auto;
+          margin-bottom: auto;
+          width: 2px;
+          height: 16px;
+
+          background-color: #7b7b7b;
+        }
+      }
     }
   }
 
