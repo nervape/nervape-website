@@ -8,6 +8,7 @@ export class Story {
   public content = "";
 
   public imageUrl = "";
+  public storyPreviewUrl = "";
   public nft: NftItem[] = [];
 }
 

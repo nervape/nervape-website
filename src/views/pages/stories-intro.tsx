@@ -12,7 +12,7 @@ export class StoriesIntro extends Component<IStoriesInfroProps> {
     const { latest } = this.props;
     return (
       <div className="stories-intro">
-        <img className="src-img" src={latest.imageUrl} alt="" />
+        <img className="src-img" src={latest.storyPreviewUrl} alt="" />
         <StoryCard className="banner" story={latest}></StoryCard>
       </div>
     );

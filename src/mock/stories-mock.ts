@@ -2,6 +2,7 @@ import { Chapter, Story } from "../nervape/story";
 import imgStroy001 from "../assets/noval/intro-bg.png";
 import { NavTool } from "../route/navi-tool";
 import { NFTsMock, NftStory001 } from "./nft-mock";
+import storyPreview from "../assets/noval/story001.png";
 
 export const story001 = new Story();
 story001.chapter = "Chapter I";
@@ -10,6 +11,7 @@ story001.serial = "Story 001";
 story001.overview = `Lost in a mysterious world, Dev the Developer encounters a giant monolith ahead. What he sees next went beyond his imagination.`;
 story001.nft = [NftStory001];
 story001.imageUrl = imgStroy001;
+story001.storyPreviewUrl = storyPreview;
 story001.content = `Dev the pink ape coughed and sputtered as he pushed through the swirling sandstorm. 
 
 There was nowhere to go but forward. His laptop lost many miles ago, he now had only himself to rely on. 
