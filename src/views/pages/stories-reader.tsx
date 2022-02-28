@@ -19,7 +19,9 @@ export class StoriesReader extends Component {
 
     return (
       <div className="stories-reader">
-        <img className="sr-image" src={story.imageUrl}></img>
+        <div className="banner">
+          <img className="sr-image" src={story.storyBannerUrl}></img>
+        </div>
         <div className="novel-parent">
           <div className="sr-nav-header">
             <div
@@ -38,18 +40,17 @@ export class StoriesReader extends Component {
             <div className="sr-nft-parent">
               {story.nft?.map((v, i) => {
                 return (
-                  <a
+                  <div
                     className="sr-nft-item"
-                    href={v.mibaoUrl}
-                    target="_blank"
                     key={i}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      window.open(v.mibaoUrl);
                     }}
                   >
                     {v.name}
-                  </a>
+                  </div>
                 );
               })}
             </div>

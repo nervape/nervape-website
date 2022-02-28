@@ -23,7 +23,7 @@ export class NFTCard extends Component<INFTCardProps> {
               );
             }}
           >
-            <div className="nft-card-search-input">{nft.story?.name}</div>
+            <div className="nft-card-search-button">{nft.story?.name}</div>
           </div>
         </div>
         <div className="nft-card-story">{nft.name}</div>
@@ -50,7 +50,7 @@ export class NFTCard extends Component<INFTCardProps> {
             }}
           >
             <div className="nft-button-t1">Purchase on</div>
-            <div className="nft-button-t2">Collect.me</div>
+            <div className="nft-button-t2">Kollect.me</div>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { NftItem, NFTType } from "../nervape/nft";
+import nftBanner from "../assets/gallery/nft-banner.png";
 
 //Nervape / Story 001
 import imgStory001 from "../assets/nftthumb/nervape-story-001.png";
@@ -14,6 +15,7 @@ NftStory001.mibaoUrl =
 NftStory001.purchaseUrl =
   "https://kollect.me/nft/f9fc221c-65c1-4c37-985d-79f1a5945113";
 NftStory001.distributed = 128;
+NftStory001.bannerImgUrl = nftBanner;
 
 //GROOVY Party
 import imgGroovyParty from "../assets/nftthumb/groovy-party.png";
@@ -27,6 +29,7 @@ NftGroovyParty.mibaoUrl =
 NftGroovyParty.purchaseUrl =
   "https://kollect.me/nft/8c95d2e1-14f0-4219-b414-2277c996149c";
 NftGroovyParty.distributed = 256;
+NftGroovyParty.bannerImgUrl = nftBanner;
 
 // Nervape / GROOVY DeFier
 import imgGroovyDefier from "../assets/nftthumb/nervape-groovy-defier.png";

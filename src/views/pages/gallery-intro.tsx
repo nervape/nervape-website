@@ -11,9 +11,7 @@ export default class GalleryIntro extends Component {
 
     return (
       <div className="gallery-intro">
-        <img className="gallery-bg-img" src={nft.story?.storyPreviewUrl}></img>
-        <div className="gallery-bg-mask"></div>
-
+        <img className="gallery-bg-img" src={nft.bannerImgUrl}></img>
         <div className="gallery-rect">
           <div className="gallery-text-card">
             <div className="title-text01">{nft.name}</div>

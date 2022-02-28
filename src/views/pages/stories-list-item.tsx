@@ -3,6 +3,7 @@ import "./stories-list-item.less";
 import { StoryCard } from "../components/story-card";
 import { Story } from "../../nervape/story";
 import { StoriesMock } from "../../mock/stories-mock";
+import { NavTool } from "../../route/navi-tool";
 
 export interface IStoriesListItemProps {
   story: Story;
@@ -15,7 +16,16 @@ export class StoriesListItem extends Component<IStoriesListItemProps> {
   render() {
     const { story } = this.props;
     return (
-      <div className="story-item">
+      <div
+        className="story-item"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          NavTool.fnJumpToPage(
+            `/story?chapter=${story.chapter}&&serial=${story.serial}`
+          );
+        }}
+      >
         <div className="img-bg-item">
           <img
             src={story.imageUrl}

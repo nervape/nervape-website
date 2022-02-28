@@ -1,8 +1,20 @@
 .stories-reader {
-  .sr-image {
+  position: relative;
+  display: block;
+
+  .banner {
+    background: #151515;
     width: 100%;
-    height: 800px;
-    object-fit: cover;
+    height: 676px;
+
+    display: flex;
+    justify-content: center;
+
+    .sr-image {
+      width: 1200px;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   .novel-parent {
@@ -25,6 +37,7 @@
       flex-direction: row;
 
       .chapter-text {
+        font-weight: 400;
         cursor: pointer;
       }
     }
@@ -78,6 +91,15 @@
     .sr-content {
       margin-top: 64px;
       white-space: pre-wrap;
+
+      //styleName: cr16;
+      font-family: normalidad-compact;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 21px;
+      letter-spacing: 0em;
+      text-align: left;
     }
 
     .sr-nav-footer {
@@ -114,6 +136,10 @@
 }
 @media screen and (max-width: 1200px) {
   .stories-reader {
+    .banner {
+      height: 800px;
+    }
+
     .novel-parent {
       width: 670px;
 
