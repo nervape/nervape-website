@@ -6,7 +6,7 @@ export class CamPaign {
   claimUrl = "";
 
   name = "";
-  content = "";
+  overview = "";
 
   reward: NftItem[] = [];
   materials: NftItem[] = [];

@@ -24,7 +24,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
     const seconds = duraion
       .subtract(moment.duration(Math.floor(minutes), "minutes"))
       .asSeconds();
-    console.log(days, hours, minutes, seconds);
+    // console.log(days, hours, minutes, seconds);
 
     return (
       <div className="campaign-item">
@@ -39,7 +39,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
             )}:${Math.floor(minutes)}:${Math.floor(seconds)}`}
           </div>
         </div>
-        <div className="cam-item-content">{campaign.content}</div>
+        <div className="cam-item-content">{campaign.overview}</div>
         <div className="cam-card-frame">
           <div className="cam-item-reward-card">
             <div className="reward-word">Reward:</div>

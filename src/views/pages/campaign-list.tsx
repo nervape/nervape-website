@@ -8,7 +8,7 @@ export class CampaignList extends Component {
     const datas = CampaignMock.fnGetDataList();
     console.log(datas);
     return (
-      <div className="campaign-list-page">
+      <div className="campaign-list">
         {datas.map((value, index) => {
           return (
             <div className="campaign-item-container" key={index}>

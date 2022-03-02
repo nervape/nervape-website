@@ -1,38 +1,37 @@
+import moment from "moment";
 import { CamPaign } from "../nervape/campaign";
-import { NFTsMock } from "./nft-mock";
-import tempMat from "../assets/campaign/cam-mat-template.png";
-import tempImg from "../assets/campaign/cam-img-template.png";
+import {
+  NftGroovyParty,
+  NFTsMock,
+  NftStory001,
+  NftGroovyDefier,
+  NftGroovyResearcher,
+  NftGroovyNfter,
+  NftGroovyMiner,
+  NftGroovyWhale,
+  NftGroovyRookie,
+  NftGroovyDeveloper,
+} from "./nft-mock";
 
-const cpTemplate = new CamPaign();
-cpTemplate.name = "test name";
-cpTemplate.content = `    -- test content
-test content
-    ---`;
-
-cpTemplate.ruleUrl = "https://google.com";
-cpTemplate.materialUrl = "https://bing.com";
-cpTemplate.claimUrl = "https://baidu.com";
-
-const nftTemplate = NFTsMock.fnGetLatest();
-cpTemplate.reward = [{ ...nftTemplate, thumbnail: tempImg }];
-
-cpTemplate.materials = [
-  { ...nftTemplate, thumbnail: tempMat },
-  { ...nftTemplate, thumbnail: tempMat },
-  { ...nftTemplate, thumbnail: tempMat },
-  { ...nftTemplate, thumbnail: tempMat },
+const campaignParty = new CamPaign();
+campaignParty.name = "Groovy Party";
+campaignParty.overview = `Breaking out of our daily routine, Nervapes have a DAY OFF today! We’re gonna have fun, goof around, and explore this new world to the fullest! Find hidden gems in this crystal ball. Piece together an era of dreams.`;
+campaignParty.ruleUrl = "https://medium.com/@Nervape/groovy-party-4ebe82b40a78";
+campaignParty.materialUrl = "https://www.nervape.com/claim/availability";
+campaignParty.claimUrl = "https://www.nervape.com/claim/login";
+campaignParty.startTime = moment("2022-01-21 00:00:00");
+campaignParty.reward = [NftGroovyParty];
+campaignParty.materials = [
+  NftGroovyNfter,
+  NftGroovyRookie,
+  NftGroovyDefier,
+  NftGroovyResearcher,
+  NftGroovyWhale,
+  NftGroovyMiner,
+  NftGroovyDeveloper,
 ];
 
-const dataList: CamPaign[] = [
-  { ...cpTemplate },
-  { ...cpTemplate },
-  { ...cpTemplate },
-  { ...cpTemplate },
-  { ...cpTemplate },
-  { ...cpTemplate },
-  { ...cpTemplate },
-  { ...cpTemplate },
-];
+const dataList: CamPaign[] = [campaignParty];
 
 export class CampaignMock {
   public static fnGetDataList() {

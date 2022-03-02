@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Story } from "../../nervape/story";
 import "./story-card.less";
-import { Link, useNavigate } from "react-router-dom";
 import { NavTool } from "../../route/navi-tool";
 
 export interface IStoryCardProps {

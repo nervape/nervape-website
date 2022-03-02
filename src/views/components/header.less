@@ -19,6 +19,7 @@
     .logo {
       width: 160px;
       height: 100%;
+      cursor: pointer;
     }
 
     .hamburger {
@@ -39,14 +40,11 @@
         position: relative;
         margin-left: 64px;
         height: 100%;
-        font-family: normalidad-text;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 21px;
-        color: #ffffff;
 
         display: flex;
         align-items: center;
+
+        cursor: pointer;
 
         .select-line {
           position: absolute;
@@ -56,10 +54,19 @@
           width: 100%;
           background: #86c0f7;
         }
+
+        .title-text {
+          font-family: normalidad-text;
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 21px;
+          color: #ffffff;
+        }
       }
 
       .nav-area-active {
         .title-text {
+          color: #ffffff;
           font-weight: bold;
         }
         .select-line {
@@ -67,11 +74,11 @@
         }
       }
 
-      .nav-area:hover {
-        .select-line {
-          display: block;
-        }
-      }
+      // .nav-area:hover {
+      //   .select-line {
+      //     display: block;
+      //   }
+      // }
     }
   }
 }

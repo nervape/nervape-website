@@ -8,7 +8,7 @@
     .nft-gallery-title {
       padding-top: 32px;
       padding-bottom: 16px;
-      font-family: Ethnocentric;
+      font-family: ethnocentric_bk;
       font-size: 36px;
       font-style: normal;
       font-weight: 400;
@@ -26,15 +26,6 @@
       z-index: 998;
       background: #151515;
 
-      //styleName: cr16;
-      font-family: normalidad-compact;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 21px;
-      letter-spacing: 0em;
-      text-align: left;
-
       color: #7b7b7b;
 
       display: flex;
@@ -47,7 +38,16 @@
         justify-content: center;
 
         .default-text {
-          margin: 0px 16px;
+          //styleName: cr16;
+          font-family: normalidad-compact;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 21px;
+          letter-spacing: 0em;
+          text-align: left;
+
+          margin: 0px 30px;
           cursor: pointer;
         }
 
@@ -106,10 +106,17 @@
   .gallery-list {
     .gallery-list-header {
       height: 114px;
-      .nft-gallery-title {
-        font-size: 24px;
-        font-weight: 400;
-        line-height: 29px;
+      .nft-gallery-classify {
+        .nft-gallery-title {
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 29px;
+        }
+        .check-box {
+          .default-text {
+            margin: 0px 16px;
+          }
+        }
       }
     }
     .nft-list {
