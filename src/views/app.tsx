@@ -7,7 +7,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import "./app.less";
+import "./App.less";
 import { INavProps, NavBar } from "./components/header";
 import { AboutPage } from "./pages/about";
 import { CampaignPage } from "./pages/campaign";
