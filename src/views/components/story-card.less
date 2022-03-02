@@ -1,0 +1,123 @@
+.story-card {
+  position: relative;
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+
+  cursor: pointer;
+
+  // debug color
+  // background-color: #8f7f7f48;
+  .card-detail {
+    width: 100%;
+
+    .chapter {
+      //styleName: cm14;
+      font-family: normalidad-compact;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: left;
+
+      color: #7b7b7b;
+    }
+
+    .title {
+      margin-top: 8px;
+      font-family: ethnocentric_bk;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: left;
+
+      color: #ffffff;
+    }
+
+    .content {
+      padding-top: 8px;
+      padding-bottom: 5px;
+      //styleName: cr16;
+      font-family: normalidad-compact;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 21px;
+      letter-spacing: 0em;
+      text-align: left;
+
+      color: #ffffff;
+    }
+  }
+
+  .nft-list {
+    position: relative;
+    margin-top: 24px;
+    bottom: 0px;
+    flex-shrink: 0;
+    // debug color
+    // background-color: #383838;
+
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    align-items: flex-start;
+    flex-grow: 0;
+
+    .nft-text {
+      width: 94px;
+      flex-shrink: 0;
+      margin-right: 6px;
+
+      //styleName: cr14;
+      font-family: normalidad-compact;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 34px;
+      letter-spacing: 0em;
+
+      color: #ffffff;
+    }
+
+    .nft-btn-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .nft-button {
+        height: 34px;
+        left: 106px;
+        top: 0px;
+        border-radius: 8px;
+        margin: 0px 0px 6px 6px;
+        padding: 8px;
+
+        background: #ffffff0d;
+
+        //styleName: cr14;
+        font-family: normalidad-compact;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18px;
+        letter-spacing: 0em;
+
+        color: #7b7b7b;
+      }
+
+      .nft-button:hover {
+        background: #ffffff1a;
+        color: #ffffff;
+      }
+    }
+  }
+}

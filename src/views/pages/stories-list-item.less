@@ -1,0 +1,49 @@
+.story-item {
+  margin-top: 32px;
+
+  display: flex;
+  flex-direction: row;
+  background: #2a2a2a;
+  border-radius: 8px 8px 8px 8px;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  .img-bg-item {
+    height: 300px;
+    width: 300px;
+    flex-shrink: 0;
+    background-color: #7b7b7b;
+  }
+  .card-item {
+    width: 700px;
+    top: 0px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .story-item {
+    flex-direction: column;
+
+    .img-bg-item {
+      width: 670px;
+      height: 300px;
+    }
+    .card-item {
+      width: 622px;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .story-item {
+    .img-bg-item {
+      width: 347px;
+      height: 300px;
+    }
+    .card-item {
+      width: 300px;
+    }
+  }
+}

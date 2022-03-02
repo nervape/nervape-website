@@ -1,0 +1,126 @@
+.gallery-list {
+  background: #151515;
+
+  .gallery-list-header {
+    // position: fixed;
+    height: 128px;
+
+    .nft-gallery-title {
+      padding-top: 32px;
+      padding-bottom: 16px;
+      font-family: ethnocentric_bk;
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 43px;
+      letter-spacing: 0em;
+      text-align: center;
+
+      color: #ffffff;
+    }
+    .nft-gallery-classify {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      width: 100%;
+      top: 0px;
+      z-index: 998;
+      background: #151515;
+
+      color: #7b7b7b;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .check-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .default-text {
+          //styleName: cr16;
+          font-family: normalidad-compact;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 21px;
+          letter-spacing: 0em;
+          text-align: left;
+
+          margin: 0px 30px;
+          cursor: pointer;
+        }
+
+        .select-text {
+          //styleName: tb16;
+          font-family: normalidad-text;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 21px;
+          letter-spacing: 0em;
+          text-align: left;
+
+          color: #ffffff;
+        }
+
+        .line {
+          margin-top: auto;
+          margin-bottom: auto;
+          width: 2px;
+          height: 16px;
+
+          background-color: #7b7b7b;
+        }
+      }
+    }
+  }
+
+  .nft-list {
+    width: 980px+40px;
+    margin: auto;
+    margin-top: 64px;
+    padding-bottom: 160px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+
+    .card-container {
+      margin: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .gallery-list {
+    .nft-list {
+      width: 640px+40px;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .gallery-list {
+    .gallery-list-header {
+      height: 114px;
+      .nft-gallery-classify {
+        .nft-gallery-title {
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 29px;
+        }
+        .check-box {
+          .default-text {
+            margin: 0px 16px;
+          }
+        }
+      }
+    }
+    .nft-list {
+      width: 300px+40px;
+    }
+  }
+}

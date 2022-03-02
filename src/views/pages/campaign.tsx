@@ -1,7 +1,15 @@
 import React, { Component } from "react";
+import { CampaigIntro } from "./campaign-intro";
+import { CampaignList } from "./campaign-list";
+import "./campaign.less"
 
-export class Campaign extends Component {
+export class CampaignPage extends Component {
   render() {
-    return <div>Campaign</div>;
+    return (
+      <div className="campaign-page">
+        <CampaigIntro></CampaigIntro>
+        <CampaignList></CampaignList>
+      </div>
+    );
   }
 }

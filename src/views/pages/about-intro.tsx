@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import santaPunk from "../../assets/about/santa-punk.svg";
-import "./about.intro.less";
+import santaPunk from "../../assets/about/santa-punk.png";
+import "./about-intro.less";
 
 export class AboutIntro extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="about-introduce">
         <div className="contents-box">
           <img className="main-img" src={santaPunk} alt="" />
           <div className="intro">

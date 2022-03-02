@@ -1,0 +1,41 @@
+.campaign-intro {
+  position: relative;
+
+  height: 171px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  .campaign-intro-bg {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+  }
+
+  .campaign-header-text {
+    font-family: ethnocentric_bk;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 43px;
+    letter-spacing: 0em;
+    text-align: center;
+
+    color: #ffffff;
+  }
+}
+
+@media screen and(max-width:750px) {
+  .campaign-intro {
+    height: 157px;
+    .campaign-header-text {
+      font-size: 24px;
+    }
+  }
+}
