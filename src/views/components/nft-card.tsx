@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./nft-card.less";
 import iconUrl from "../../assets/gallery/www.svg";
-import { NftItem } from "../../nervape/nft";
+import { NFT } from "../../nervape/nft";
 import { NavTool } from "../../route/navi-tool";
 
 export interface INFTCardProps {
-  nft: NftItem;
+  nft: NFT;
 }
 export class NFTCard extends Component<INFTCardProps> {
   render() {

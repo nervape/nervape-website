@@ -13,13 +13,6 @@ export default class PageView extends Component<INavProps> {
   public footerRef: Footer | null = null;
 
   fnUpdateView() {
-    if (
-      this.headerRef === null ||
-      this.mainRef === null ||
-      this.footerRef === null
-    ) {
-      return;
-    }
     const header = (this.headerRef as NavHeader).domRoot as HTMLElement;
     const main = this.mainRef as HTMLElement;
     const footer = (this.footerRef as Footer).domRoot as HTMLElement;
@@ -42,24 +35,32 @@ export default class PageView extends Component<INavProps> {
     }
   }
 
+  observer = new ResizeObserver(() => {
+    this.fnUpdateView();
+  });
+
+  componentDidMount() {
+    const main = this.mainRef as HTMLElement;
+    this.observer.observe(main.children[0]);
+  }
+  componentWillUnmount() {
+    const main = this.mainRef as HTMLElement;
+    this.observer.unobserve(main.children[0]);
+  }
+
   render() {
     const { children, activeIndex } = this.props;
-    window.onresize = () => {
-      this.fnUpdateView();
-    };
     return (
       <div className="page-view">
         <NavHeader
           activeIndex={activeIndex}
           ref={(el) => {
             this.headerRef = el;
-            this.fnUpdateView();
           }}
         ></NavHeader>
         <div
           ref={(el) => {
             this.mainRef = el;
-            this.fnUpdateView();
           }}
         >
           {children}
@@ -67,7 +68,6 @@ export default class PageView extends Component<INavProps> {
         <Footer
           ref={(el) => {
             this.footerRef = el;
-            this.fnUpdateView();
           }}
         ></Footer>
       </div>

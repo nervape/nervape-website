@@ -1,37 +1,26 @@
-import { NftItem } from "./nft";
+import { NFT } from "./nft";
+
+export type CHAPTER_TYPE = "" | "Chapter I" | "Chapter II" | "Chapter III";
 
 export class Story {
-  public chapter = "";
-  public serial = "";
-  public name = "";
-  public overview = "";
-  public content = "";
+  id: string = "";
+  chapter: CHAPTER_TYPE = "";
+  serial: string = "";
+  title: string = "";
+  overview: string = "";
+  content: string = "";
 
-  public imageUrl = "";
-  public storyBannerUrl = "";
-  public nft: NftItem[] = [];
+  imageUrl: string = "";
+  bannerUrl: string = "";
 
+  previousId: string = "";
+  nextId: string = "";
 
-  // id: number;
-  // chapter: CHAPTER_TYPE;
-  // serial: string;
-  // title: string;
-  // overview: string;
-  // content: string;
+  nftId: string[] = [];
+  publish: boolean = false;
+  latest: boolean = false;
 
-  // imageUrl: string;
-  // bannerUrl: string;
-
-  // previousId: string;
-  // nextId: string;
-
-  // nftId: string[];
-  // publish: boolean;
-
-  
-}
-
-export class Chapter {
-  name = "";
-  stories: Story[] = [];
+  nfts: NFT[] = [];
+  previousStory?: Story;
+  nextStory?: Story;
 }

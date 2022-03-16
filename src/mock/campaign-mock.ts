@@ -1,17 +1,5 @@
 import moment from "moment";
 import { CamPaign } from "../nervape/campaign";
-import {
-  NftGroovyParty,
-  NFTsMock,
-  NftStory001,
-  NftGroovyDefier,
-  NftGroovyResearcher,
-  NftGroovyNfter,
-  NftGroovyMiner,
-  NftGroovyWhale,
-  NftGroovyRookie,
-  NftGroovyDeveloper,
-} from "./nft-mock";
 
 const campaignParty = new CamPaign();
 campaignParty.name = "Groovy Party";
@@ -20,15 +8,17 @@ campaignParty.ruleUrl = "https://medium.com/@Nervape/groovy-party-4ebe82b40a78";
 campaignParty.materialUrl = "https://www.nervape.com/claim/availability";
 campaignParty.claimUrl = "https://www.nervape.com/claim/login";
 campaignParty.startTime = moment("2022-01-21 00:00:00");
-campaignParty.reward = [NftGroovyParty];
+campaignParty.reward = [
+  // NftGroovyParty
+];
 campaignParty.materials = [
-  NftGroovyNfter,
-  NftGroovyRookie,
-  NftGroovyDefier,
-  NftGroovyResearcher,
-  NftGroovyWhale,
-  NftGroovyMiner,
-  NftGroovyDeveloper,
+  // NftGroovyNfter,
+  // NftGroovyRookie,
+  // NftGroovyDefier,
+  // NftGroovyResearcher,
+  // NftGroovyWhale,
+  // NftGroovyMiner,
+  // NftGroovyDeveloper,
 ];
 
 const dataList: CamPaign[] = [campaignParty];

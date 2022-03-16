@@ -1,4 +1,4 @@
-import { NftItem } from "./nft";
+import { NFT } from "./nft";
 import moment from "moment-timezone";
 export class CamPaign {
   ruleUrl = "";
@@ -8,8 +8,8 @@ export class CamPaign {
   name = "";
   overview = "";
 
-  reward: NftItem[] = [];
-  materials: NftItem[] = [];
+  reward: NFT[] = [];
+  materials: NFT[] = [];
 
   startTime = moment("2022-03-01 00:00:00");
 }

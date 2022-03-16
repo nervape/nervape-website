@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NFTCard } from "../components/nft-card";
 import "./gallery-intro.less";
-import { NftItem } from "../../nervape/nft";
+import { NFT } from "../../nervape/nft";
 import { NFTsMock } from "../../mock/nft-mock";
 import { NavTool } from "../../route/navi-tool";
 

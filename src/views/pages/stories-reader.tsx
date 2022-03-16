@@ -6,21 +6,52 @@ import { NavTool } from "../../route/navi-tool";
 
 import "./stories-reader.less";
 
-export class StoriesReader extends Component {
+export class StoriesReader extends Component<{ story: Story }> {
   render() {
-    const pChapter = NavTool.fnQueryParam("chapter");
-    const pSerial = NavTool.fnQueryParam("serial");
-    console.log(pChapter, pSerial);
+    const { story } = this.props;
+    if (!story) {
+      return <></>;
+    }
+    const { previousStory, nextStory } = story;
+    console.log(previousStory);
 
-    const datas = StoriesMock.fnGetStory(pChapter as string, pSerial as string);
-
-    console.log("reader data", datas);
-    const { story, previous, next } = datas;
+    const fnPrev = () => {
+      if (previousStory) {
+        return (
+          <div
+            className="sr-previous"
+            onClick={() => {
+              NavTool.fnJumpToPage(
+                `/story?chapter=${previousStory.chapter}&&serial=${previousStory.serial}`
+              );
+            }}
+          >
+            Previous Story
+          </div>
+        );
+      }
+    };
+    const fnNext = () => {
+      if (nextStory) {
+        return (
+          <div
+            className="sr-next"
+            onClick={() => {
+              NavTool.fnJumpToPage(
+                `/story?chapter=${nextStory.chapter}&&serial=${nextStory.serial}`
+              );
+            }}
+          >
+            Next Story
+          </div>
+        );
+      }
+    };
 
     return (
       <div className="stories-reader">
         <div className="banner">
-          <img className="sr-image" src={story.storyBannerUrl}></img>
+          <img className="sr-image" src={story.bannerUrl}></img>
         </div>
         <div className="novel-parent">
           <div className="sr-nav-header">
@@ -34,11 +65,11 @@ export class StoriesReader extends Component {
             </div>
             /{story.serial}
           </div>
-          <div className="sr-title">{story.name}</div>
+          <div className="sr-title">{story.title}</div>
           <div className="sr-nft-related">
             <div className="related-text"> Relatred NFT(s):</div>
             <div className="sr-nft-parent">
-              {story.nft?.map((v, i) => {
+              {story.nfts?.map((v, i) => {
                 return (
                   <div
                     className="sr-nft-item"
@@ -58,34 +89,8 @@ export class StoriesReader extends Component {
           <div className="sr-content">{story.content}</div>
 
           <div className="sr-nav-footer">
-            {previous !== null ? (
-              <div
-                className="sr-previous"
-                onClick={() => {
-                  NavTool.fnJumpToPage(
-                    `/story?chapter=${previous.chapter}&&serial=${previous.serial}`
-                  );
-                }}
-              >
-                Previous Story
-              </div>
-            ) : (
-              ""
-            )}
-            {next !== null ? (
-              <div
-                className="sr-next"
-                onClick={() => {
-                  NavTool.fnJumpToPage(
-                    `/story?chapter=${next.chapter}&&serial=${next.serial}`
-                  );
-                }}
-              >
-                Next Story
-              </div>
-            ) : (
-              ""
-            )}
+            {fnPrev()}
+            {fnNext()}
           </div>
         </div>
       </div>

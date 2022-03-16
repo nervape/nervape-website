@@ -1,22 +1,20 @@
 import React, { Component } from "react";
 import { StoriesMock } from "../../mock/stories-mock";
-import { Chapter, Story } from "../../nervape/story";
+import { Story } from "../../nervape/story";
 import { NavTool } from "../../route/navi-tool";
 import { StoriesListItem } from "./stories-list-item";
 import "./stories-list.less";
 
-const chaptersData = StoriesMock.fnGetStories();
-
-export interface IStoriesListState {
-  chapters: Chapter[];
+export class Chapter {
+  name = "";
+  stories: Story[] = [];
 }
 
-export class StoriesList extends Component<any, IStoriesListState> {
+export class StoriesList extends Component<{
+  chapters: Chapter[];
+}> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      chapters: chaptersData,
-    };
   }
 
   fnSlecteChapter(chapter: Chapter) {
@@ -25,16 +23,18 @@ export class StoriesList extends Component<any, IStoriesListState> {
   }
 
   render() {
-    const { chapters } = this.state;
+    const { chapters } = this.props;
+    if (!chapters || chapters.length === 0) {
+      return <></>;
+    }
+    console.log(chapters);
     const chapterParam = NavTool.fnQueryParam("chapter");
 
     let activeInndex = 0;
 
     for (let index = 0; index < chapters.length; index++) {
       const c = chapters[index];
-      if (
-        c.name.toLocaleLowerCase().trim().replace(/\s+/g, "") === chapterParam
-      ) {
+      if (NavTool.fnStdNavStr(c.name) === chapterParam) {
         activeInndex = index;
       }
     }

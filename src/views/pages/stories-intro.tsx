@@ -3,16 +3,15 @@ import "./stories-intro.less";
 import { Story } from "../../nervape/story";
 import { StoryCard } from "../components/story-card";
 
-export interface IStoriesInfroProps {
-  latest: Story;
-}
-
-export class StoriesIntro extends Component<IStoriesInfroProps> {
+export class StoriesIntro extends Component<{
+  latest?: Story;
+}> {
   render() {
     const { latest } = this.props;
+    console.log("StoriesIntro", latest);
     return (
       <div className="stories-intro">
-        <img className="src-img" src={latest.storyBannerUrl} alt="" />
+        <img className="src-img" src={latest?.bannerUrl} alt="" />
         <StoryCard className="banner" story={latest}></StoryCard>
       </div>
     );
