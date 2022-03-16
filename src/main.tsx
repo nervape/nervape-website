@@ -9,9 +9,9 @@ moment.tz.setDefault("Asia/Shanghai");
 
 ReactDOM.render(
   <StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </StrictMode>,
 
   document.getElementById("root")

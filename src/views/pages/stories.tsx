@@ -6,6 +6,7 @@ import { StoriesReader } from "./stories-reader";
 import { StoriesMock } from "../../mock/stories-mock";
 import { NavTool } from "../../route/navi-tool";
 import { useParams } from "react-router-dom";
+import "./stories.less";
 
 export class StoriesPage extends Component {
   render() {

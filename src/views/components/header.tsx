@@ -3,7 +3,6 @@ import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
 import { NavTool } from "../../route/navi-tool";
-import { Location, useLocation } from "react-router";
 
 export interface NavPageInfo {
   title: string;
@@ -11,19 +10,36 @@ export interface NavPageInfo {
 }
 
 export interface INavProps {
-  pages?: NavPageInfo[];
+  activeIndex?: number;
 }
 
 interface INavState extends INavProps {
-  pages: NavPageInfo[];
   disableList: boolean;
 }
 
-export class NavBar extends Component<INavProps, INavState> {
+const pages = [
+  {
+    title: "About Nervape",
+    url: "/about",
+  },
+  {
+    title: "NFT Gallery",
+    url: "/nft",
+  },
+  {
+    title: "Stories",
+    url: "/story",
+  },
+  {
+    title: "Campaign",
+    url: "/campaign",
+  },
+];
+
+export class NavHeader extends Component<INavProps, INavState> {
   constructor(props: INavProps) {
     super(props);
     this.state = {
-      pages: props.pages ? props.pages : [],
       disableList: true,
     };
 
@@ -38,36 +54,18 @@ export class NavBar extends Component<INavProps, INavState> {
     NavTool.fnJumpToPage(page.url);
   }
 
-  public fnCheckUrl() {
-    const { pages } = this.state;
-    const location = NavTool.location;
-    const pathname = NavTool.location.pathname;
-    // console.log(location, pathname);
-
-    let activeIndex = 0;
-    pages.map((v, i) => {
-      if (v.url === pathname) {
-        if (activeIndex !== i) {
-          activeIndex = i;
-        }
-      }
-    });
-
-    return activeIndex;
-  }
-
   public fnClickHamburger() {
     this.setState({
       disableList: !this.state.disableList,
     });
   }
 
-  private m_elContainer: HTMLElement | null = null;
-  private m_elHeader: HTMLElement | null = null;
+  public domRoot: HTMLElement | null = null;
+  public domHeader: HTMLElement | null = null;
 
   public fnScrollWindow(e: Event) {
-    const container = this.m_elContainer as HTMLElement;
-    const header = this.m_elHeader as HTMLElement;
+    const container = this.domRoot as HTMLElement;
+    const header = this.domHeader as HTMLElement;
     const rect = container.getBoundingClientRect();
     // console.log(rect);
     if (rect.top < 0) {
@@ -86,19 +84,20 @@ export class NavBar extends Component<INavProps, INavState> {
   }
 
   public render() {
-    const { pages, disableList } = this.state;
-    const activeIndex = this.fnCheckUrl();
+    const { disableList } = this.state;
+    const { activeIndex } = this.props;
+
     return (
       <div
         className="header-container"
         ref={(el) => {
-          this.m_elContainer = el;
+          this.domRoot = el;
         }}
       >
         <div
           className="header"
           ref={(el) => {
-            this.m_elHeader = el;
+            this.domHeader = el;
           }}
         >
           <img

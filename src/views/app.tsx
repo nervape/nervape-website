@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useRef } from "react";
 import {
   HashRouter,
   Navigate,
@@ -8,13 +8,14 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "./app.less";
-import { INavProps, NavBar } from "./components/header";
+import { NavHeader } from "./components/header";
 import { AboutPage } from "./pages/about";
 import { CampaignPage } from "./pages/campaign";
 import { Gallery } from "./pages/gallery";
 import { StoriesPage } from "./pages/stories";
 import { Footer } from "./components/footer";
 import { NavTool } from "../route/navi-tool";
+import PageView from "./components/page-view";
 
 export function App() {
   NavTool.navigation = useNavigate();
@@ -22,34 +23,43 @@ export function App() {
 
   return (
     <div className="app">
-      <NavBar
-        pages={[
-          {
-            title: "About Nervape",
-            url: "/about",
-          },
-          {
-            title: "NFT Gallery",
-            url: "/nft",
-          },
-          {
-            title: "Stories",
-            url: "/story",
-          },
-          {
-            title: "Campaign",
-            url: "/campaign",
-          },
-        ]}
-      ></NavBar>
-      <Routes>
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/nft" element={<Gallery />} />
-        <Route path="/story" element={<StoriesPage />} />
-        <Route path="/campaign" element={<CampaignPage />} />
-        <Route path="*" element={<Navigate to="/about" />} />
-      </Routes>
-      <Footer></Footer>
+      <div>
+        <Routes>
+          <Route
+            path="/about"
+            element={
+              <PageView activeIndex={0}>
+                <AboutPage />
+              </PageView>
+            }
+          />
+          <Route
+            path="/nft"
+            element={
+              <PageView activeIndex={1}>
+                <Gallery />
+              </PageView>
+            }
+          />
+          <Route
+            path="/story"
+            element={
+              <PageView activeIndex={2}>
+                <StoriesPage />
+              </PageView>
+            }
+          />
+          <Route
+            path="/campaign"
+            element={
+              <PageView activeIndex={3}>
+                <CampaignPage />
+              </PageView>
+            }
+          />
+          <Route path="*" element={<Navigate to="/about" />} />
+        </Routes>
+      </div>
     </div>
   );
 }

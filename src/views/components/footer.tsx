@@ -9,9 +9,16 @@ import github from "../../assets/icons/github.svg";
 import email from "../../assets/icons/email.svg";
 
 export class Footer extends Component {
+  public domRoot: HTMLElement | null = null;
+
   render() {
     return (
-      <div className="footer">
+      <div
+        className="footer"
+        ref={(el) => {
+          this.domRoot = el;
+        }}
+      >
         <img className="logo" src={logo} />
         <div className="icon-group">
           <a
