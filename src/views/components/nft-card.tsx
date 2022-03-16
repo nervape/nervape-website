@@ -10,26 +10,41 @@ export interface INFTCardProps {
 export class NFTCard extends Component<INFTCardProps> {
   render() {
     const { nft } = this.props;
-    // console.log(nft);
-    return (
-      <div className="nft-card">
-        <div className="nft-card-vision">
-          <img className="nft-card-image" src={nft.thumbnail}></img>
+    const relatedStory = nft.stories[0];
+    const fnRelatedStory = () => {
+      if (relatedStory) {
+        const { chapter, serial, title } = relatedStory;
+        return (
           <div
             className="nft-card-search-parent"
             onClick={() => {
               NavTool.fnJumpToPage(
-                `/story?chapter=${nft.story?.chapter}&&serial=${nft.story?.serial}`
+                `/story?chapter=${chapter}&&serial=${serial}`
               );
             }}
           >
-            <div className="nft-card-search-button">{nft.story?.name}</div>
+            <div className="nft-card-search-button">{title}</div>
           </div>
+        );
+      }
+    };
+
+    return (
+      <div className="nft-card">
+        <div className="nft-card-vision">
+          <img
+            className="nft-card-image"
+            src={nft.cover_image_url}
+            onClick={() => {
+              window.open(nft.mibaoUrl);
+            }}
+          ></img>
+          {fnRelatedStory()}
         </div>
         <div className="nft-card-story">{nft.name}</div>
         <div className="nft-card-distributed">
           <div>
-            {nft.distributed - nft.last}/{nft.distributed} distributed
+            {Number(nft.issued)}/{Number(nft.total)} distributed
           </div>
           <img src={iconUrl} />
         </div>
@@ -46,7 +61,7 @@ export class NFTCard extends Component<INFTCardProps> {
           <div
             className="nft-button "
             onClick={() => {
-              window.open(nft.purchaseUrl);
+              window.open(nft.kollectMeUrl);
             }}
           >
             <div className="nft-button-t1">Purchase on</div>

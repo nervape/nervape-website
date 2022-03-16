@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import "./campaign-item.less";
 import iconWWW from "../../assets/campaign/cam-www.svg";
-import { CamPaign } from "../../nervape/campaign";
+import { Campaign } from "../../nervape/campaign";
 import moment from "moment-timezone";
 
 export interface CampaignItemProps {
-  campaign: CamPaign;
+  campaign: Campaign;
 }
 export class CampaignItem extends Component<CampaignItemProps> {
   render() {
     const { campaign } = this.props;
+    if (!campaign) {
+      return <div></div>;
+    }
+
     const reward = campaign.reward[0];
 
     const delta = campaign.startTime.clone().subtract(moment.now());
@@ -26,6 +30,22 @@ export class CampaignItem extends Component<CampaignItemProps> {
       .asSeconds();
     // console.log(days, hours, minutes, seconds);
 
+    const fnReward = () => {
+      if (reward) {
+        return (
+          <div className="cam-item-reward-card">
+            <div className="reward-word">Reward:</div>
+            <img className="reward-image" src={reward.cover_image_url}></img>
+            <div className="reward-title">{reward.name}</div>
+            <div className="reward-claimed">
+              {Number(reward.issued)}/{Number(reward.total)} claimed
+            </div>
+            <img className="reward-icon" src={iconWWW}></img>
+          </div>
+        );
+      }
+    };
+
     return (
       <div className="campaign-item">
         <div className="cam-item-title-line">
@@ -41,16 +61,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
         </div>
         <div className="cam-item-content">{campaign.overview}</div>
         <div className="cam-card-frame">
-          <div className="cam-item-reward-card">
-            <div className="reward-word">Reward:</div>
-            <img className="reward-image" src={reward.thumbnail}></img>
-            <div className="reward-title">{reward.name}</div>
-            <div className="reward-claimed">
-              {`${reward.distributed - reward.last}/${reward.distributed}`}{" "}
-              claimed
-            </div>
-            <img className="reward-icon" src={iconWWW}></img>
-          </div>
+          {fnReward()}
           <div className="cam-item-material-card">
             <div className="material-word">Material:</div>
             <div className="material-img-list">
@@ -58,7 +69,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
                 return (
                   <img
                     className="material-img-item"
-                    src={v.thumbnail}
+                    src={v.cover_image_url}
                     key={i}
                   ></img>
                 );

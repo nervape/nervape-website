@@ -1,6 +1,6 @@
 import { NFT } from "./nft";
 import moment from "moment-timezone";
-export class CamPaign {
+export class Campaign {
   ruleUrl = "";
   materialUrl = "";
   claimUrl = "";

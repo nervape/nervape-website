@@ -1,4 +1,6 @@
 import axios from "axios";
+import { CHAPTER_TYPE } from "../nervape/story";
+import { Chapter } from "../views/pages/stories-list";
 
 class NervapeApi {
   public baseUrl = "http://localhost:3001";

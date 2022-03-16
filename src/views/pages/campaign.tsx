@@ -7,8 +7,8 @@ export class CampaignPage extends Component {
   render() {
     return (
       <div className="campaign-page">
-        {/* <CampaigIntro></CampaigIntro>
-        <CampaignList></CampaignList> */}
+        <CampaigIntro></CampaigIntro>
+        <CampaignList></CampaignList>
       </div>
     );
   }

@@ -9,6 +9,7 @@ import "./stories.less";
 import { nervapeApi } from "../../api/nervape-api";
 import { CHAPTER_TYPE, Story } from "../../nervape/story";
 import { NFT } from "../../nervape/nft";
+import { WebMock } from "../../mock/web-mock";
 
 export class StoriesPage extends Component<
   any,
@@ -22,59 +23,19 @@ export class StoriesPage extends Component<
     super(props);
     this.state = { latest: undefined, stories: [], chapters: [] };
   }
-  async fnGetStoryList() {
-    const stories = (await nervapeApi.fnGetStoryList()) as Story[];
-    const nfts = (await nervapeApi.fnGetNftList()) as NFT[];
-    for (let i = 0; i < stories.length; ++i) {
-      const story = stories[i];
-      story.nfts = [];
-      story.nftId.map((v) => {
-        const nft = nfts.find((n) => n.id === v);
-        if (nft) {
-          story.nfts.push(nft);
-        }
-      });
 
-      story.previousStory = stories.find((v) => v.id === story.previousId);
-      story.nextStory = stories.find((v) => v.id === story.nextId);
-    }
-    const chapters = [
-      {
-        name: "Chapter I",
-        stories: [],
-      },
-      {
-        name: "Chapter II",
-        stories: [],
-      },
-      {
-        name: "Chapter II",
-        stories: [],
-      },
-    ] as Chapter[];
-    const chapterName: CHAPTER_TYPE[] = [
-      "Chapter I",
-      "Chapter II",
-      "Chapter III",
-    ];
-    for (let i = 0; i < stories.length; ++i) {
-      const story = stories[i];
-      const chpIdx = chapterName.indexOf(story.chapter);
-      chapters[chpIdx].stories.push(story);
-    }
-
-    console.log("load data", stories, nfts);
-    const latest = stories.find((v) => v.latest);
-    console.log(latest);
+  fnInitStoryInfo = async () => {
+    const { latestStory, stories, nfts, chapters } =
+      await WebMock.fnGetMockInfo();
     this.setState({
-      latest,
+      latest: latestStory,
       stories,
       chapters,
     });
-  }
+  };
 
   componentDidMount() {
-    this.fnGetStoryList();
+    this.fnInitStoryInfo();
   }
 
   fnFindSerialStory() {

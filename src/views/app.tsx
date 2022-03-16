@@ -23,7 +23,6 @@ export function App() {
 
   return (
     <div className="app">
-      <div>
         <Routes>
           <Route
             path="/about"
@@ -59,7 +58,6 @@ export function App() {
           />
           <Route path="*" element={<Navigate to="/about" />} />
         </Routes>
-      </div>
     </div>
   );
 }

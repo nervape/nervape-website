@@ -5,10 +5,9 @@ import { NavTool } from "../../route/navi-tool";
 import { NFTCard } from "../components/nft-card";
 import "./gallery-list.less";
 
-export class GalleryList extends Component {
+export class GalleryList extends Component<{ nfts: NFT[] }> {
   constructor(props: any) {
     super(props);
-
     this.fnScrollWindow = this.fnScrollWindow.bind(this);
   }
   elTitle: HTMLElement | null = null;
@@ -37,8 +36,8 @@ export class GalleryList extends Component {
   }
 
   render() {
-    const nftData = NFTsMock.fnGetNftList();
-    const typeData = NFTsMock.fGetTypes();
+    const { nfts } = this.props;
+    const typeData = ["Featured", "Character", "Scene", "Item"]
 
     let activeType = NavTool.fnQueryParam("type");
     if (activeType === null) {
@@ -47,7 +46,7 @@ export class GalleryList extends Component {
 
     console.log(activeType, typeData);
 
-    const renderdata = nftData.filter((v) => {
+    const renderdata = nfts.filter((v) => {
       for (let i = 0; i < v.type.length; ++i) {
         if (NavTool.fnStdNavStr(v.type[i]) === activeType) {
           return v;

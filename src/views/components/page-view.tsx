@@ -35,19 +35,6 @@ export default class PageView extends Component<INavProps> {
     }
   }
 
-  observer = new ResizeObserver(() => {
-    this.fnUpdateView();
-  });
-
-  componentDidMount() {
-    const main = this.mainRef as HTMLElement;
-    this.observer.observe(main.children[0]);
-  }
-  componentWillUnmount() {
-    const main = this.mainRef as HTMLElement;
-    this.observer.unobserve(main.children[0]);
-  }
-
   render() {
     const { children, activeIndex } = this.props;
     return (
@@ -59,6 +46,7 @@ export default class PageView extends Component<INavProps> {
           }}
         ></NavHeader>
         <div
+          className="page-main"
           ref={(el) => {
             this.mainRef = el;
           }}

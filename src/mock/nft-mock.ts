@@ -4,7 +4,7 @@ import axios from "axios";
 
 export class NFTsMock {
   public static async fGetTypes() {
-    return ["Featured", "Character", "Scene", "Item"];
+    return ;
   }
 
   public static async fnGetNftList() {

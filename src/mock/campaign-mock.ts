@@ -1,7 +1,7 @@
 import moment from "moment";
-import { CamPaign } from "../nervape/campaign";
+import { Campaign } from "../nervape/campaign";
 
-const campaignParty = new CamPaign();
+const campaignParty = new Campaign();
 campaignParty.name = "Groovy Party";
 campaignParty.overview = `Breaking out of our daily routine, Nervapes have a DAY OFF today! We’re gonna have fun, goof around, and explore this new world to the fullest! Find hidden gems in this crystal ball. Piece together an era of dreams.`;
 campaignParty.ruleUrl = "https://medium.com/@Nervape/groovy-party-4ebe82b40a78";
@@ -21,7 +21,7 @@ campaignParty.materials = [
   // NftGroovyDeveloper,
 ];
 
-const dataList: CamPaign[] = [campaignParty];
+const dataList: Campaign[] = [campaignParty];
 
 export class CampaignMock {
   public static fnGetDataList() {
