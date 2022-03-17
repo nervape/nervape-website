@@ -1,15 +1,19 @@
 import { Story } from "./story";
-import iconFeatured from "../assets/gallery/scene.svg";
 import iconCharacter from "../assets/gallery/scene.svg";
-import iconScene from "../assets/gallery/scene.svg";
-import iconItem from "../assets/gallery/scene.svg";
+import iconScene from "../assets/gallery/character.svg";
+import iconItem from "../assets/gallery/item.svg";
 
-export type NFT_TYPE = "Featured" | "Character" | "Scene" | "Item";
+export type NFT_TYPE = "" | "Character" | "Scene" | "Item";
+
+export const IconMap = new Map<NFT_TYPE, string>();
+IconMap.set("Character", iconCharacter);
+IconMap.set("Scene", iconScene);
+IconMap.set("Item", iconItem);
 
 export class NFT {
   id: string = "";
   name: string = "";
-  type: NFT_TYPE[] = [];
+  type: NFT_TYPE = "";
   storyId: string[] = [];
   bannerUrl: string = "";
   mibaoUrl: string = "";

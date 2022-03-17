@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import santaPunk from "../../assets/about/santa-punk.png";
+import santaPunk from "../../assets/about/santa-punk-x2.png";
 import "./about-intro.less";
 
 export class AboutIntro extends Component {

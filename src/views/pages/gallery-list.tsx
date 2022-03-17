@@ -37,22 +37,24 @@ export class GalleryList extends Component<{ nfts: NFT[] }> {
 
   render() {
     const { nfts } = this.props;
-    const typeData = ["Featured", "Character", "Scene", "Item"]
+    const typeData = ["Featured", "Character", "Scene", "Item"];
 
     let activeType = NavTool.fnQueryParam("type");
     if (activeType === null) {
       activeType = NavTool.fnStdNavStr(typeData[0]);
     }
-
     console.log(activeType, typeData);
 
-    const renderdata = nfts.filter((v) => {
-      for (let i = 0; i < v.type.length; ++i) {
-        if (NavTool.fnStdNavStr(v.type[i]) === activeType) {
-          return v;
-        }
-      }
-    });
+    const renderdata =
+      activeType === NavTool.fnStdNavStr("Featured")
+        ? nfts
+        : nfts.filter((v) => {
+            for (let i = 0; i < v.type.length; ++i) {
+              if (NavTool.fnStdNavStr(v.type) === activeType) {
+                return v;
+              }
+            }
+          });
 
     console.log(renderdata);
 
