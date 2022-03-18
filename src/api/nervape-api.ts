@@ -1,9 +1,7 @@
 import axios from "axios";
-import { CHAPTER_TYPE } from "../nervape/story";
-import { Chapter } from "../views/pages/stories-list";
 
 class NervapeApi {
-  public baseUrl = "http://localhost:3001";
+  public baseUrl = "https://dev.nervape.com/nvp-admin";
 
   public async fnGetStoryList(id?: string) {
     const url = `${this.baseUrl}/story/read${!id ? "" : "/?id=" + id}`;

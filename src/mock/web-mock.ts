@@ -17,7 +17,7 @@ export class WebMock {
         stories: [],
       },
       {
-        name: "Chapter II",
+        name: "Chapter III",
         stories: [],
       },
     ] as Chapter[];
@@ -29,7 +29,9 @@ export class WebMock {
     for (let i = 0; i < stories.length; ++i) {
       const story = stories[i];
       const chpIdx = chapterName.indexOf(story.chapter);
-      chapters[chpIdx].stories.push(story);
+      if (chpIdx !== -1) {
+        chapters[chpIdx].stories.push(story);
+      }
     }
 
     return chapters;
