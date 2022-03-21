@@ -1,6 +1,6 @@
 import { Story } from "./story";
-import iconCharacter from "../assets/gallery/scene.svg";
-import iconScene from "../assets/gallery/character.svg";
+import iconScene from "../assets/gallery/scene.svg";
+import iconCharacter from "../assets/gallery/character.svg";
 import iconItem from "../assets/gallery/item.svg";
 
 export type NFT_TYPE = "" | "Character" | "Scene" | "Item";
