@@ -54,12 +54,15 @@ export class NFTCard extends Component<
           <div className="model-preview">
             <model-viewer
               class="model-viewer-class"
+              id="reveal"
+              loading="eager"
+              camera-controls
+              auto-rotate
               src={enableModuleUrl}
               ar-modes="webxr scene-viewer quick-look"
               // environment-image="shared-assets/environments/moon_1k.hdr"
               seamless-poster
               shadow-intensity="1"
-              camera-controls
             ></model-viewer>
 
             <img
