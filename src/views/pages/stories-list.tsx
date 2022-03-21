@@ -33,10 +33,13 @@ export class StoriesList extends Component<{
     let activeInndex = 0;
 
     for (let index = 0; index < chapters.length; index++) {
-      const c = chapters[index];
-      if (NavTool.fnStdNavStr(c.name) === chapterParam) {
+      const chap = chapters[index];
+      if (NavTool.fnStdNavStr(chap.name) === chapterParam) {
         activeInndex = index;
       }
+      chap.stories.sort((a, b) => {
+        return (a.serial + "").localeCompare(b.serial + "");
+      });
     }
 
     return (
