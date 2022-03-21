@@ -39,12 +39,14 @@ export default class PageView extends Component<INavProps> {
     const { children, activeIndex } = this.props;
     return (
       <div className="page-view">
-        <NavHeader
-          activeIndex={activeIndex}
-          ref={(el) => {
-            this.headerRef = el;
-          }}
-        ></NavHeader>
+        <div className="page-header">
+          <NavHeader
+            activeIndex={activeIndex}
+            ref={(el) => {
+              this.headerRef = el;
+            }}
+          ></NavHeader>
+        </div>
         <div
           className="page-main"
           ref={(el) => {
@@ -53,11 +55,13 @@ export default class PageView extends Component<INavProps> {
         >
           {children}
         </div>
-        <Footer
-          ref={(el) => {
-            this.footerRef = el;
-          }}
-        ></Footer>
+        <div className="page-footer">
+          <Footer
+            ref={(el) => {
+              this.footerRef = el;
+            }}
+          ></Footer>
+        </div>
       </div>
     );
   }
