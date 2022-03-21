@@ -27,7 +27,7 @@ export default class GalleryIntro extends Component<{ nft?: NFT }> {
                 );
               }}
             >
-              {serial}:{title}
+              {serial}:&nbsp;{title}
             </div>
           </div>
         );
