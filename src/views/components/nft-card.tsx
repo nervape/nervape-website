@@ -3,6 +3,7 @@ import "./nft-card.less";
 import { IconMap, NFT } from "../../nervape/nft";
 import { NavTool } from "../../route/navi-tool";
 import iconPreviewClose from "../../assets/gallery/preview-close-button.svg";
+import loadingGif from "../../assets/gallery/loading.gif";
 
 declare global {
   namespace JSX {
@@ -55,6 +56,7 @@ export class NFTCard extends Component<
             <model-viewer
               class="model-viewer-class"
               id="reveal"
+              // reveal="interaction"
               loading="eager"
               camera-controls
               auto-rotate
@@ -63,7 +65,11 @@ export class NFTCard extends Component<
               // environment-image="shared-assets/environments/moon_1k.hdr"
               seamless-poster
               shadow-intensity="1"
-            ></model-viewer>
+            >
+              <div className="model-loading" slot="poster">
+                <img className="model-loading-gif" src={loadingGif} alt="" />
+              </div>
+            </model-viewer>
 
             <img
               className="close-button"

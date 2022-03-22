@@ -10,7 +10,7 @@ model-viewer#reveal {
   height: 100%;
   z-index: 1000;
 
-  background-color: rgba(255, 255, 255, 0.9);;
+  background-color: rgba(255, 255, 255, 0.9);
 
   .close-button {
     position: absolute;
@@ -24,6 +24,24 @@ model-viewer#reveal {
   .model-viewer-class {
     width: 100%;
     height: 100%;
+
+    .model-loading {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      display: flex;
+      justify-content: center;
+      align-content: center;
+
+      .model-loading-gif {
+        margin: auto;
+        width: 200px;
+        height: 200px;
+      }
+    }
   }
 }
 
@@ -39,12 +57,23 @@ model-viewer#reveal {
     position: relative;
     height: 300px;
     width: 300px;
+    overflow: hidden;
 
     .nft-card-image {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
       width: 100%;
       height: 100%;
+
+      transform: translate(-50%, -50%);
       object-fit: cover;
       cursor: pointer;
+    }
+    .nft-card-image:hover {
+      width: 110%;
+      height: 110%;
     }
 
     .nft-card-search-parent {
