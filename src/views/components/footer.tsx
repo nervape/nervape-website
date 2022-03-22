@@ -19,51 +19,61 @@ export class Footer extends Component {
           this.domRoot = el;
         }}
       >
-        <img className="logo" src={logo} />
-        <div className="icon-group">
-          <a
-            className="icon"
-            target="_blank"
-            href="https://twitter.com/Nervapes"
-          >
-            <img src={twitter} />
-          </a>
+        <div className="top-line">
+          <img className="logo" src={logo} />
+          <div className="icon-group">
+            <a
+              className="icon"
+              target="_blank"
+              href="https://twitter.com/Nervapes"
+            >
+              <img src={twitter} />
+            </a>
 
-          <a
-            className="icon"
-            target="_blank"
-            href="https://discord.gg/EWWanFs4Hu"
-          >
-            <img src={discord} />
-          </a>
+            <a
+              className="icon"
+              target="_blank"
+              href="https://discord.gg/EWWanFs4Hu"
+            >
+              <img src={discord} />
+            </a>
 
-          <a
-            className="icon"
-            target="_blank"
-            href="https://www.instagram.com/nervapes/"
-          >
-            <img src={instagram} />
-          </a>
+            <a
+              className="icon"
+              target="_blank"
+              href="https://www.instagram.com/nervapes/"
+            >
+              <img src={instagram} />
+            </a>
 
-          <a
-            className="icon"
-            target="_blank"
-            href="https://medium.com/@Nervape"
-          >
-            <img src={socialmedia} />
-          </a>
+            <a
+              className="icon"
+              target="_blank"
+              href="https://medium.com/@Nervape"
+            >
+              <img src={socialmedia} />
+            </a>
 
-          <a className="icon" target="_blank" href="https://github.com/nervape">
-            <img src={github} />
-          </a>
+            <a
+              className="icon"
+              target="_blank"
+              href="https://github.com/nervape"
+            >
+              <img src={github} />
+            </a>
 
-          <a
-            className="icon"
-            target="_blank"
-            href="mailto:creative@nervape.com"
-          >
-            <img src={email} />
-          </a>
+            <a
+              className="icon"
+              target="_blank"
+              href="mailto:creative@nervape.com"
+            >
+              <img src={email} />
+            </a>
+          </div>
+        </div>
+        <div className="bottom-line">
+          <div className="brand-assets">Brand Assets</div>
+          <div className="join-us">Join Us</div>
         </div>
       </div>
     );

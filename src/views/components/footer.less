@@ -1,50 +1,74 @@
 .footer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   padding: 48px 80px;
   width: 100%;
-  height: 124px;
   background: #161616;
   overflow: hidden;
   z-index: 999;
 
-  .logo {
-    width: 134px;
-    height: 20px;
+  .top-line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 
-    cursor: pointer;
+    .logo {
+      width: 107px;
+      cursor: pointer;
+    }
+    .icon-group {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 0px;
+      margin-left: 80px;
+
+      .icon {
+        width: 28px;
+        height: 28px;
+        margin-left: 32px;
+      }
+    }
   }
-  .icon-group {
+
+  .bottom-line {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-    margin-left: 80px;
+    margin-top: 32px;
+    width: 100%;
 
-    .icon {
-      width: 28px;
-      height: 28px;
-      margin-right: 32px;
+    .brand-assets {
+      font-family: normalidad-compact;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 21px;
+      color: #7b7b7b;
+    }
+    .join-us {
+      margin-left: 32px;
+      font-family: normalidad-compact;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 21px;
+      color: #7b7b7b;
     }
   }
 
   @media screen and (max-width: 750px) {
-    height: 170px;
-    padding: 48px 14px;
-    flex-direction: column;
+    padding: 24px 14px;
+    .top-line {
+      flex-direction: column;
+      .icon-group {
+        margin-top: 32px;
+        margin-left: 0px;
 
-    .logo {
-      width: 94px;
-      height: 14px;
-    }
-    .icon-group {
-      margin-top: 32px;
-      margin-left: 0px;
-
-      .icon {
-        margin-left: 16px;
-        margin-right: 16px;
+        .icon {
+          margin-left: 0px;
+          margin-right: 24px;
+        }
       }
     }
   }
