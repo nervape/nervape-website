@@ -18,9 +18,9 @@ export class GalleryList extends Component<{ nfts: NFT[] }> {
     const elClassify = this.elClassify as HTMLElement;
     const rect = elTitle.getBoundingClientRect();
     // console.log(rect);
-    if (rect.top < -rect.height + 93) {
+    if (rect.top < -rect.height + 64) {
       elClassify.style.position = "fixed";
-      elClassify.style.top = rect.width < 750 ? "60px" : "93px";
+      elClassify.style.top = rect.width < 750 ? "64px" : "64px";
     } else {
       elClassify.style.position = "";
       elClassify.style.top = "";
