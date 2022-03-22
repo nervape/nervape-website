@@ -21,9 +21,11 @@ export class GalleryList extends Component<{ nfts: NFT[] }> {
     if (rect.top < -rect.height + 64) {
       elClassify.style.position = "fixed";
       elClassify.style.top = rect.width < 750 ? "64px" : "64px";
+      elClassify.style.borderBottom = "1px solid #2a2a2a";
     } else {
       elClassify.style.position = "";
       elClassify.style.top = "";
+      elClassify.style.borderBottom = "";
     }
   }
 
