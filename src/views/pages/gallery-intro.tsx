@@ -18,7 +18,7 @@ export default class GalleryIntro extends Component<{ nft?: NFT }> {
         const { chapter, serial, title } = relatedStory;
         return (
           <div className="from-parent">
-            <div className="from-text">From:</div>
+            {/* <div className="from-text">From:</div>
             <div
               className="related-story"
               onClick={() => {
@@ -28,7 +28,7 @@ export default class GalleryIntro extends Component<{ nft?: NFT }> {
               }}
             >
               {serial}:&nbsp;{title}
-            </div>
+            </div> */}
           </div>
         );
       }
