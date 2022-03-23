@@ -73,7 +73,13 @@ export class Footer extends Component {
         </div>
         <div className="bottom-line">
           <div className="brand-assets">Brand Assets</div>
-          <div className="join-us">Join Us</div>
+          <a
+            className="join-us"
+            target="_blank"
+            href=" https://www.notion.so/Nervape-Job-Board-7b62e55294cf4010bf6fae57f3cb47d0 "
+          >
+            Join Us
+          </a>
         </div>
       </div>
     );
