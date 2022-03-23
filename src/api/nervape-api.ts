@@ -18,8 +18,9 @@ class NervapeApi {
       console.warn(data);
       throw `request failed:${data.msg} from  ${url} `;
     }
-    const result = data.data.sort((a:NFT, b:NFT) => a.index - b.index);
-    return result;
+    const result: NFT[] = data.data.sort((a: NFT, b: NFT) => a.index - b.index);
+    const publish = result.filter((v) => v.publish === true);
+    return publish;
   }
 
   public async fnGetNftList(id?: string) {
@@ -35,8 +36,9 @@ class NervapeApi {
       console.warn(data);
       throw `request failed:${data.msg} from  ${url} `;
     }
-    const result = data.data.sort((a:NFT, b:NFT) => a.index - b.index);
-    return result;
+    const result: NFT[] = data.data.sort((a: NFT, b: NFT) => a.index - b.index);
+    const publish = result.filter((v) => v.publish === true);
+    return publish;
   }
 }
 
