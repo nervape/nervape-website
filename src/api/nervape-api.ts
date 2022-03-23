@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NFT } from "../nervape/nft";
+import { Story } from "../nervape/story";
 
 class NervapeApi {
   // public baseUrl = "http://localhost:3001/nvp-admin";
@@ -18,7 +19,8 @@ class NervapeApi {
       console.warn(data);
       throw `request failed:${data.msg} from  ${url} `;
     }
-    return data.data;
+    const publish = data.data.filter((v: Story) => v.publish === true);
+    return publish;
   }
 
   public async fnGetNftList(id?: string) {

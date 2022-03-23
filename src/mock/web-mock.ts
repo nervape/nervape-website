@@ -98,6 +98,7 @@ export class WebMock {
   public static async fnGetMockInfo() {
     const storyData = (await nervapeApi.fnGetStoryList()) as Story[];
     const nftData = (await nervapeApi.fnGetNftList()) as NFT[];
+    console.log(storyData);
 
     const { stories, nfts } = WebMock.fnRelateStoryAndNft(storyData, nftData);
     const chapters = WebMock.fnGroupStory(stories);
