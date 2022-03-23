@@ -116,7 +116,7 @@ export class NFTCard extends Component<
               window.open(nft.mibaoUrl);
             }}
           >
-            <div className="nft-button-t1">View 3D on</div>
+            <div className="nft-button-t1">View on</div>
             <div className="nft-button-t2">Mibao</div>
           </div>
           <div
