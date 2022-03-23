@@ -1,6 +1,8 @@
 import axios from "axios";
+import { NFT } from "../nervape/nft";
 
 class NervapeApi {
+  // public baseUrl = "http://localhost:3001/nvp-admin";
   public baseUrl = "https://dev.nervape.com/nvp-admin";
 
   public async fnGetStoryList(id?: string) {
@@ -16,7 +18,8 @@ class NervapeApi {
       console.warn(data);
       throw `request failed:${data.msg} from  ${url} `;
     }
-    return res.data.data;
+    const result = data.data.sort((a:NFT, b:NFT) => a.index - b.index);
+    return result;
   }
 
   public async fnGetNftList(id?: string) {
@@ -32,7 +35,8 @@ class NervapeApi {
       console.warn(data);
       throw `request failed:${data.msg} from  ${url} `;
     }
-    return res.data.data;
+    const result = data.data.sort((a:NFT, b:NFT) => a.index - b.index);
+    return result;
   }
 }
 

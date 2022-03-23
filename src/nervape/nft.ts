@@ -18,6 +18,8 @@ export class NFT {
   bannerUrl: string = "";
   mibaoUrl: string = "";
   kollectMeUrl: string = "";
+  index: number = -1;
+  featured: boolean = false;
   publish: boolean = false;
   latest: boolean = false;
 

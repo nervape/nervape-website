@@ -47,16 +47,22 @@ export class GalleryList extends Component<{ nfts: NFT[] }> {
     }
     console.log(activeType, typeData);
 
-    const renderdata =
-      activeType === NavTool.fnStdNavStr("Featured")
-        ? nfts
-        : nfts.filter((v) => {
-            for (let i = 0; i < v.type.length; ++i) {
-              if (NavTool.fnStdNavStr(v.type) === activeType) {
-                return v;
-              }
-            }
-          });
+    const renderdata: NFT[] = [];
+    if (activeType === NavTool.fnStdNavStr("Featured")) {
+      const data = nfts.filter((v) => {
+        return v.featured === true;
+      });
+      renderdata.push(...data);
+    } else {
+      const data = nfts.filter((v) => {
+        for (let i = 0; i < v.type.length; ++i) {
+          if (NavTool.fnStdNavStr(v.type) === activeType) {
+            return v;
+          }
+        }
+      });
+      renderdata.push(...data);
+    }
 
     console.log(renderdata);
 
