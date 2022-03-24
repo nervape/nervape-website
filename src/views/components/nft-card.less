@@ -71,11 +71,13 @@ model-viewer#reveal {
       transform: translate(-50%, -50%);
       object-fit: cover;
       cursor: pointer;
-    }
-    .nft-card-image:hover {
+
       transition: all 0.3s;
-      width: 110%;
-      height: 110%;
+      &:hover {
+        transition: all 0.3s;
+        width: 110%;
+        height: 110%;
+      }
     }
 
     .nft-card-search-parent {
@@ -114,17 +116,19 @@ model-viewer#reveal {
         color: #7b7b7b;
 
         cursor: pointer;
-      }
 
-      .nft-card-search-button:hover {
         transition: all 0.2s;
-        border: 1px solid #ffffff;
-        background: #3f3f3f;
-        color: #ffffff;
+        &:hover {
+          transition: all 0.2s;
+          border: 1px solid #ffffff;
+          background: #3f3f3f;
+          color: #ffffff;
+        }
+
+        // &:hover::placeholder {
+        //   color: #ffffff;
+        // }
       }
-      // .nft-card-search-button:hover::placeholder {
-      //   color: #ffffff;
-      // }
     }
   }
 
@@ -219,10 +223,12 @@ model-viewer#reveal {
       letter-spacing: 0em;
       text-align: center;
     }
-  }
-  .nft-button:hover {
+
     transition: all 0.2s;
-    background: #ffffff1a;
-    color: #ffffff;
+    &:hover {
+      transition: all 0.2s;
+      background: #ffffff1a;
+      color: #ffffff;
+    }
   }
 }
