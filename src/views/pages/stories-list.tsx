@@ -16,10 +16,17 @@ export class StoriesList extends Component<{
   constructor(props: any) {
     super(props);
   }
+  elList: HTMLElement | null = null;
 
   fnSlecteChapter(chapter: Chapter) {
+    const elList = this.elList as HTMLElement;
+
     NavTool.fnJumpToPage(`/story?chapter=${chapter.name}`);
     this.forceUpdate();
+    window.scrollTo({
+      top: elList.offsetTop - 64,
+      behavior: "smooth",
+    });
   }
 
   render() {
@@ -43,7 +50,12 @@ export class StoriesList extends Component<{
     }
 
     return (
-      <div className="stories-list">
+      <div
+        className="stories-list"
+        ref={(elList) => {
+          this.elList = elList;
+        }}
+      >
         <div className="headline">Story</div>
         <div className="subfield-group">
           {
