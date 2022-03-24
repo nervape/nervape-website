@@ -24,6 +24,10 @@ export class StoriesListItem extends Component<IStoriesListItemProps> {
           NavTool.fnJumpToPage(
             `/story?chapter=${story.chapter}&&serial=${story.serial}`
           );
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         }}
       >
         <div className="img-bg-item">

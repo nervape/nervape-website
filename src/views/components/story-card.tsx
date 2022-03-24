@@ -18,6 +18,10 @@ export class StoryCard extends Component<{
           NavTool.fnJumpToPage(
             `/story?chapter=${story?.chapter}&&serial=${story?.serial}`
           );
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         }}
       >
         <div className="card-detail">

@@ -10,6 +10,7 @@ export class GalleryList extends Component<{ nfts: NFT[] }> {
     super(props);
     this.fnScrollWindow = this.fnScrollWindow.bind(this);
   }
+  elList: HTMLElement | null = null;
   elTitle: HTMLElement | null = null;
   elClassify: HTMLElement | null = null;
 
@@ -67,7 +68,12 @@ export class GalleryList extends Component<{ nfts: NFT[] }> {
     console.log(renderdata);
 
     return (
-      <div className="gallery-list">
+      <div
+        className="gallery-list"
+        ref={(elList) => {
+          this.elList = elList;
+        }}
+      >
         <div className="gallery-list-header">
           <div
             className="nft-gallery-title"
@@ -93,7 +99,12 @@ export class GalleryList extends Component<{ nfts: NFT[] }> {
                         : ""
                     }`}
                     onClick={() => {
+                      const elList = this.elList as HTMLElement;
                       NavTool.fnJumpToPage(`/nft?type=${typeStr}`);
+                      window.scrollTo({
+                        top: elList.offsetTop - 64,
+                        behavior: "smooth",
+                      });
                     }}
                   >
                     {typeStr}

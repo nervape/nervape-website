@@ -24,7 +24,6 @@ export class StoriesReader extends Component<{ story: Story }> {
               NavTool.fnJumpToPage(
                 `/story?chapter=${previousStory.chapter}&&serial=${previousStory.serial}`
               );
-              window.scrollTo(0, 0);
             }}
           >
             Previous Story
@@ -41,7 +40,6 @@ export class StoriesReader extends Component<{ story: Story }> {
               NavTool.fnJumpToPage(
                 `/story?chapter=${nextStory.chapter}&&serial=${nextStory.serial}`
               );
-              window.scrollTo(0, 0);
             }}
           >
             Next Story

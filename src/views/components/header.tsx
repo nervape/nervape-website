@@ -105,6 +105,7 @@ export class NavHeader extends Component<INavProps, INavState> {
             src={logo}
             onClick={() => {
               this.fnClickNavButton((pages as NavPageInfo[])[0]);
+              window.scrollTo(0, 0);
             }}
           />
           <img
@@ -127,6 +128,7 @@ export class NavHeader extends Component<INavProps, INavState> {
                 key={i}
                 onClick={(e) => {
                   this.fnClickNavButton(v);
+                  window.scrollTo(0, 0);
                 }}
               >
                 <div className="title-text">{v.title}</div>
