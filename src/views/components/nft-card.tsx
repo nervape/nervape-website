@@ -34,15 +34,17 @@ export class NFTCard extends Component<
       if (relatedStory) {
         const { chapter, serial, title } = relatedStory;
         return (
-          <div
-            className="nft-card-search-parent"
-            onClick={() => {
-              NavTool.fnJumpToPage(
-                `/story?chapter=${chapter}&&serial=${serial}`
-              );
-            }}
-          >
-            <div className="nft-card-search-button">{title}</div>
+          <div className="nft-card-search-parent">
+            <div
+              className="nft-card-search-button"
+              onClick={() => {
+                NavTool.fnJumpToPage(
+                  `/story?chapter=${chapter}&&serial=${serial}`
+                );
+              }}
+            >
+              {title}
+            </div>
           </div>
         );
       }
