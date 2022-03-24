@@ -11,7 +11,15 @@ export class StoriesIntro extends Component<{
     console.log("StoriesIntro", latest);
     return (
       <div className="stories-intro">
-        <img className="src-img" src={latest?.bannerUrl} alt="" />
+        <img
+          className="src-img"
+          src={latest?.bannerUrl}
+          onLoad={(e) => {
+            console.log("image load complete!!!!", e);
+            const img = e.target as HTMLImageElement
+            img.style.opacity = "1"
+          }}
+        />
         <StoryCard className="banner" story={latest}></StoryCard>
       </div>
     );
