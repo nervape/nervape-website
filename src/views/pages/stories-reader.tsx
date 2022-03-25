@@ -9,6 +9,10 @@ import "./stories-reader.less";
 export class StoriesReader extends Component<{ story: Story }> {
   render() {
     const { story } = this.props;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     if (!story) {
       return <></>;
     }
