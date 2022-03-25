@@ -1,4 +1,5 @@
 .about-roudmap {
+  margin: auto;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -6,101 +7,139 @@
   flex-direction: column;
   background: #2a2a2a;
 
-  .headline {
-    margin-top: 96px;
+  &-content {
+    width: 1000px;
 
-    font-family: ethnocentric_bk;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 43px;
-    letter-spacing: 0em;
-    text-align: center;
+    .headline1 {
+      margin-top: 96px;
 
-    color: #ffffff;
-  }
-
-  .pahse-title {
-    width: 128px;
-    height: 41px;
-    margin: auto;
-    margin-bottom: 32px;
-
-    .phase {
-      font-family: ethnocentric_bk;
+      // font-family: ethnocentric_bk;
+      font-family: "Ethnocentric";
+      font-style: normal;
+      font-weight: 400;
       font-size: 20px;
-      font-style: normal;
-      font-weight: 400;
       line-height: 24px;
-      letter-spacing: 0em;
       text-align: center;
+
+      color: #ffffff;
+
+      width: 100%;
     }
 
-    .time {
-      margin-bottom: 32px;
-      //styleName: cr14;
-      font-family: normalidad-compact;
-      font-size: 14px;
+    .headline2 {
+      margin-top: 64px;
+
+      // font-family: ethnocentric_bk;
+      font-family: "Ethnocentric";
       font-style: normal;
       font-weight: 400;
-      line-height: 18px;
-      letter-spacing: 0em;
+      font-size: 20px;
+      line-height: 24px;
       text-align: center;
+
+      color: #ffffff;
+
+      width: 100%;
     }
-  }
 
-  .phase1 {
-    // deubg color
-    // background-color: #afadad36;
-    // height: 813px;
-    width: 1000px;
-    margin-top: 64px;
-  }
-  .phase2 {
-    // debug color
-    // background-color: #4d4d4d;
+    .pahse-title {
+      width: 128px;
+      height: 41px;
+      margin: auto;
+      margin-bottom: 32px;
 
-    // height: 628px;
-    width: 1000px;
-    margin-top: 64px;
-    margin-bottom: 160px;
+      .phase {
+        // font-family: ethnocentric_bk;
+        font-family: "Ethnocentric";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+
+      .time {
+        margin-bottom: 32px;
+        //styleName: cr14;
+        font-family: normalidad-compact;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+    }
+
+    .phase1 {
+      // deubg color
+      // background-color: #afadad36;
+      // height: 813px;
+      width: 100%;
+      // margin-top: 64px;
+      margin-top: 32px;
+    }
+    .phase2 {
+      // debug color
+      // background-color: #4d4d4d;
+
+      // height: 628px;
+      width: 100%;
+      margin-top: 64px;
+      margin-bottom: 160px;
+      margin-top: 32px;
+    }
   }
 }
 
 @media screen and (max-width: 1200px) {
   .about-roudmap {
-    .pahse-title {
-      margin-left: 0;
-      .phase {
+    &-content {
+      width: 670px;
+      .headline1 {
+        text-align: left;
+      }
+      .headline2 {
         text-align: left;
       }
 
-      .time {
-        text-align: left;
-      }
-    }
+      .pahse-title {
+        margin-left: 0;
+        .phase {
+          text-align: left;
+        }
 
-    .phase1 {
-      width: 670px;
-    }
-    .phase2 {
-      width: 670px;
+        .time {
+          text-align: left;
+        }
+      }
+
+      .phase1 {
+      }
+      .phase2 {
+      }
     }
   }
 }
 
 @media screen and (max-width: 750px) {
   .about-roudmap {
-    .headline {
-      font-size: 24px;
-      line-height: 29px;
+    &-content {
+      width: 347px;
+      .headline1 {
+      margin-top: 64px;
     }
+      .headline2 {
+      }
 
-    .phase1 {
-      width: 374px;
-    }
-    .phase2 {
-      width: 374px;
+      .phase1 {
+        margin-top: 16px;
+      }
+      .phase2 {
+        margin-top: 16px;
+        margin-bottom: 96px;
+      }
     }
   }
 }

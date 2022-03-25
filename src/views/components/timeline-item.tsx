@@ -4,13 +4,14 @@ import "./timeline-item.less";
 export interface ITimelineItemProps {
   title?: string;
   content?: string;
+  img?: string;
   direction?: string;
   color?: string;
 }
 
 export class TimelineItem extends Component<ITimelineItemProps> {
   render() {
-    const { title, content, direction, color } = this.props;
+    const { title, content, direction, color, img } = this.props;
     const defaultColor = "#ffffff";
     return (
       <div className="timeline-item">
@@ -24,12 +25,13 @@ export class TimelineItem extends Component<ITimelineItemProps> {
           }`}
           style={{ background: color ? color : defaultColor }}
         ></div>
-        <div
+        <img
           className={`pattern ${
             direction !== "right" ? "pattern-left " : "pattern-right"
           }`}
-          style={{ background: color ? color : defaultColor }}
-        ></div>
+          style={{ background: img ? "" : color ? color : defaultColor }}
+          src={img}
+        ></img>
         <div
           className={`text-panel  ${
             direction !== "right" ? "text-panel-left " : "text-panel-right"

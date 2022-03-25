@@ -12,15 +12,11 @@ export class AboutIntro extends Component {
             <div className="headline">ABOUT THE PROJECT</div>
             <div className="main-part">
               The Nervape project is an ongoing saga and a story of friendship,
-              courage, and trust among the first Nervapes that arrive at The
-              Third Continent.
-              <br></br>
-              <br></br>
-              As the Nervapes continue to explore The Third Continent, unique
-              features of the land, fantasy elements, and new characters will be
-              added as 3D NFTs. These NFTs will become a part of customizable
-              avatars and personal spaces allowing their owners to participate
-              in the construction of The Third Continent.
+              courage, and trust among the first Nervapes that arrive at the
+              Third Continent. As the Nervapes continue to explore the Third
+              Continent, new characters, unique features of the land, and
+              fantasy elements will be added as 3D NFTs to the Nervos
+              blockchain.
             </div>
           </div>
         </div>

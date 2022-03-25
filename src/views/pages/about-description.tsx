@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import desertScene from "../../assets/about/desert-scene.png";
 import "./about-description.less";
 
+const content = {
+  header: `Nervape is a brand, a saga, a new world of countless possibilities.`,
+  content: `It starts with a story and limited 3D NFT collections. It growth stems from the creativity of the community. 
+
+Your Nervape is your digital avatar in the Third Continent. As you choose your paths and embark on adventures, you will be building the Metaverse along with others. When you grow, the Third Continent grows with you.`,
+};
+
 export class AboutDescription extends Component {
   render() {
     return (
@@ -19,25 +26,13 @@ export class AboutDescription extends Component {
           ></div> */}
           <div className="descript">
             <div className="headline">
-              Our goal is to build the
+              {/* Our goal is to build the
               <big className="big-text"> The Third Continent </big>, a new world
-              with countless possibilities.
+              with countless possibilities. */}
+              {content.header}
             </div>
 
-            <div className="main-part">
-              To get there, the roadmap is divided into 2 phases:
-              <br></br>
-              <br></br>
-              In Phase 1, we will release stories that will introduce our unique
-              characters.
-              <br></br>
-              <br></br>
-              In Phase 2, each owner can create their own Nervape and each
-              Nervape will have their own space that they live in. They will
-              then be able to step out of their space to interact with others in
-              the world. When the public and private spaces intersect, The Third
-              Continent keeps growing!
-            </div>
+            <div className="main-part">{content.content}</div>
           </div>
         </div>
       </div>
