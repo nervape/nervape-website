@@ -11,7 +11,6 @@ export class StoriesReader extends Component<{ story: Story }> {
     const { story } = this.props;
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
     });
     if (!story) {
       return <></>;
