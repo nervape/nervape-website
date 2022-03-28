@@ -40,6 +40,25 @@ class NervapeApi {
     const publish = result.filter((v) => v.publish === true);
     return publish;
   }
+
+
+  public async fnGetSyncFromMibao() {
+    const url = `${this.baseUrl}/nft/sync-mibao`;
+    console.log(url);
+    const res = await axios.get(url);
+    if (res.status !== 200) {
+      console.warn(res);
+      throw `request failed:${url} `;
+    }
+    const data = res.data;
+    if (data.code !== 0) {
+      console.warn(data);
+      throw `request failed:${data.msg} from  ${url} `;
+    }
+    const result: NFT[] = data.data.sort((a: NFT, b: NFT) => a.index - b.index);
+    const publish = result.filter((v) => v.publish === true);
+    return publish;
+  }
 }
 
 export const nervapeApi = new NervapeApi();

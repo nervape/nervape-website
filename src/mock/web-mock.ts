@@ -95,9 +95,20 @@ export class WebMock {
     return campaigns;
   }
 
+  public static storyData: Story[] | null = null;
+  public static nftData: NFT[] | null = null;
+
   public static async fnGetMockInfo() {
-    const storyData = (await nervapeApi.fnGetStoryList()) as Story[];
-    const nftData = (await nervapeApi.fnGetNftList()) as NFT[];
+    if (WebMock.storyData === null) {
+      WebMock.storyData = (await nervapeApi.fnGetStoryList()) as Story[];
+    }
+    let storyData = WebMock.storyData;
+
+    if (WebMock.nftData === null) {
+      WebMock.nftData = (await nervapeApi.fnGetSyncFromMibao()) as NFT[];
+    }
+    let nftData = WebMock.nftData;
+
     console.log(storyData);
 
     const { stories, nfts } = WebMock.fnRelateStoryAndNft(storyData, nftData);
