@@ -2,9 +2,11 @@ import axios from "axios";
 import { NFT } from "../nervape/nft";
 import { Story } from "../nervape/story";
 
+console.log();
+
 class NervapeApi {
-  // public baseUrl = "http://localhost:3001/nvp-admin";
-  public baseUrl = "https://dev.nervape.com/nvp-admin";
+  //@ts-ignore
+  public baseUrl = import.meta.env.VITE_BACKEND_HOST;
 
   public async fnGetStoryList(id?: string) {
     const url = `${this.baseUrl}/story/read${!id ? "" : "/?id=" + id}`;
@@ -40,7 +42,6 @@ class NervapeApi {
     const publish = result.filter((v) => v.publish === true);
     return publish;
   }
-
 
   public async fnGetSyncFromMibao() {
     const url = `${this.baseUrl}/nft/sync-mibao`;

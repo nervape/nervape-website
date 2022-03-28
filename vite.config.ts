@@ -6,6 +6,7 @@ export default defineConfig(({ command, mode }) => {
   let base = "/";
   return {
     base: base,
+    envDir: "./",
     // base: "/",
     plugins: [react()],
     server: {
