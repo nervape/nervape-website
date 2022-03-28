@@ -72,11 +72,18 @@ export class Footer extends Component {
           </div>
         </div>
         <div className="bottom-line">
-          <div className="brand-assets">Brand Assets</div>
+          <a
+            className="brand-assets"
+            target="_blank"
+            href="https://tourmaline-elderberry-f93.notion.site/Nervape-Brand-Assets-b7c52ca6f17c492e87cd18b5496da8f0"
+          >
+            Brand Assets
+          </a>
+
           <a
             className="join-us"
             target="_blank"
-            href=" https://www.notion.so/Nervape-Job-Board-7b62e55294cf4010bf6fae57f3cb47d0 "
+            href="https://tourmaline-elderberry-f93.notion.site/Nervape-Job-Board-7b62e55294cf4010bf6fae57f3cb47d0"
           >
             Join Us
           </a>
