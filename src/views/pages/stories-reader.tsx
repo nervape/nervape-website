@@ -70,7 +70,7 @@ export class StoriesReader extends Component<{ story: Story }> {
           </div>
           <div className="sr-title">{story.title}</div>
           <div className="sr-nft-related">
-            <div className="related-text"> Relatred NFT(s):</div>
+            <div className="related-text"> Related NFT(s):</div>
             <div className="sr-nft-parent">
               {story.nfts?.map((v, i) => {
                 return (
