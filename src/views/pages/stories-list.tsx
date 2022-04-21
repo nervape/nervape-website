@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StoriesMock } from "../../mock/stories-mock";
-import { Story } from "../../nervape/story";
+import { WebMock } from "../../mock/web-mock";
+import { CHAPTER_TYPE, Story } from "../../nervape/story";
 import { NavTool } from "../../route/navi-tool";
 import { StoriesListItem } from "./stories-list-item";
 import "./stories-list.less";
@@ -10,23 +11,47 @@ export class Chapter {
   stories: Story[] = [];
 }
 
-export class StoriesList extends Component<{
-  chapters: Chapter[];
-}> {
-  constructor(props: any) {
+interface StoriesListProps {
+  chapters: CHAPTER_TYPE[],
+  stories: Story[]
+}
+
+interface StoriesListState {
+  stories: Story[]
+}
+
+export class StoriesList extends Component<StoriesListProps, StoriesListState> {
+  constructor(props: StoriesListProps) {
     super(props);
+    this.state = {
+      stories: []
+    }
   }
   elList: HTMLElement | null = null;
 
-  fnSlecteChapter(chapter: Chapter) {
+  fnSlecteChapter(chapter: CHAPTER_TYPE) {
     const elList = this.elList as HTMLElement;
 
-    NavTool.fnJumpToPage(`/story?chapter=${chapter.name}`);
+    this.fnGetStoryList(chapter);
+    NavTool.fnJumpToPage(`/story?chapter=${chapter}`);
     this.forceUpdate();
     window.scrollTo({
       top: elList.offsetTop - 64,
       behavior: "smooth",
     });
+  }
+  componentDidUpdate(prevProps: StoriesListProps) {
+    if (prevProps.stories != this.props.stories) {
+      this.setState({
+        stories: this.props.stories
+      })
+    }
+  }
+  async fnGetStoryList(chapter: string) {
+    const data = await WebMock.fnGetStoryMockInfo(false, chapter);
+    this.setState({
+      stories: data.stories
+    })
   }
 
   render() {
@@ -34,20 +59,16 @@ export class StoriesList extends Component<{
     if (!chapters || chapters.length === 0) {
       return <></>;
     }
-    console.log(chapters);
+    // console.log(chapters);
     const chapterParam = NavTool.fnQueryParam("chapter");
 
     let activeInndex = 0;
 
-    for (let index = 0; index < chapters.length; index++) {
-      const chap = chapters[index];
-      if (NavTool.fnStdNavStr(chap.name) === chapterParam) {
+    chapters.forEach((chap, index) => {
+      if (NavTool.fnStdNavStr(chap) === chapterParam) {
         activeInndex = index;
       }
-      chap.stories.sort((a, b) => {
-        return (a.serial + "").localeCompare(b.serial + "");
-      });
-    }
+    })
 
     return (
       <div
@@ -62,7 +83,7 @@ export class StoriesList extends Component<{
             /* 分栏 */
             chapters.map((v, i) => {
               return (
-                <div className="chapter-box" key={`${v.name}-${i}`}>
+                <div className="chapter-box" key={`${v}-${i}`}>
                   <div
                     className={`subfield ${
                       activeInndex === i ? "subfield-selected" : ""
@@ -73,7 +94,7 @@ export class StoriesList extends Component<{
                       }
                     }}
                   >
-                    {v.name}
+                    {v}
                   </div>
                   {i === chapters.length - 1 ? (
                     ""
@@ -87,7 +108,7 @@ export class StoriesList extends Component<{
         </div>
 
         <div className="stories-intro-list">
-          {chapters[activeInndex].stories.map((v, i) => {
+          {this.state.stories.map((v, i) => {
             return <StoriesListItem story={v} key={i}></StoriesListItem>;
           })}
         </div>

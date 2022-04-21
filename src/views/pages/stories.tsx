@@ -11,22 +11,22 @@ import { CHAPTER_TYPE, Story } from "../../nervape/story";
 import { NFT } from "../../nervape/nft";
 import { WebMock } from "../../mock/web-mock";
 
-export class StoriesPage extends Component<
-  any,
-  {
-    latest?: Story;
-    stories: Story[];
-    chapters: Chapter[];
-  }
-> {
-  constructor(props: any) {
+interface StoryPageProps { }
+
+interface StoryPageState {
+  latest?: Story;
+  stories: Story[];
+  chapters: CHAPTER_TYPE[];
+}
+export class StoriesPage extends Component<StoryPageProps, StoryPageState> {
+  constructor(props: StoryPageProps) {
     super(props);
     this.state = { latest: undefined, stories: [], chapters: [] };
   }
 
   fnInitStoryInfo = async () => {
-    const { latestStory, stories, nfts, chapters } =
-      await WebMock.fnGetMockInfo();
+    // const { latestStory, stories, nfts, chapters } = await WebMock.fnGetMockInfo();
+    const { latestStory, stories, chapters } = await WebMock.fnGetStoryMockInfo(true);
     this.setState({
       latest: latestStory,
       stories,
@@ -42,52 +42,50 @@ export class StoriesPage extends Component<
     const { chapters } = this.state;
 
     const chapter = NavTool.fnQueryParam("chapter");
-    const serial = NavTool.fnQueryParam("serial");
-    console.log(`chapter;${chapter}, story:${serial}`);
+    // const serial = NavTool.fnQueryParam("serial");
+    const id = NavTool.fnQueryParam("id");
+
+    // console.log(`chapter;${chapter}, story:${serial}`);
     let enableChapters = false;
     let enableStory = false;
-    if ((chapter === null && serial === null) || chapter !== null) {
+
+    if ((chapter === null && id === null) || chapter !== null) {
       enableChapters = true;
     }
-    if (serial !== null) {
+    if (id !== null) {
       enableChapters = false;
       enableStory = true;
     }
     const cpData = chapters.find(
-      (v) => NavTool.fnStdNavStr(v.name) === chapter
+      (v) => NavTool.fnStdNavStr(v) === chapter
     );
     console.log(cpData);
-    const storyDetail = cpData?.stories.find((v) => {
-      return NavTool.fnStdNavStr(v.serial) === serial;
-    }) as Story;
+    // const storyDetail = cpData?.stories.find((v) => {
+    //   return NavTool.fnStdNavStr(v.serial) === serial;
+    // }) as Story;
+    const storyDetail = undefined;
 
     return { enableChapters, enableStory, storyDetail };
   }
 
   render() {
-    const { latest, chapters } = this.state;
-    const { enableChapters, enableStory, storyDetail } =
-      this.fnFindSerialStory();
+    const { latest, chapters, stories } = this.state;
+    const { enableChapters, enableStory, storyDetail } = this.fnFindSerialStory();
 
     const fnShowList = () => {
       if (enableChapters === true) {
         return (
           <>
             <StoriesIntro latest={latest}></StoriesIntro>
-            <StoriesList chapters={chapters}></StoriesList>
+            <StoriesList chapters={chapters} stories={stories}></StoriesList>
           </>
         );
       }
-    };
-    const fnShowDetail = () => {
-      if (enableStory === true)
-        return <StoriesReader story={storyDetail}></StoriesReader>;
     };
 
     return (
       <div className="stories-page">
         {fnShowList()}
-        {fnShowDetail()}
       </div>
     );
   }

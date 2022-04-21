@@ -16,6 +16,7 @@ import { StoriesPage } from "./pages/stories";
 import { Footer } from "./components/footer";
 import { NavTool } from "../route/navi-tool";
 import PageView from "./components/page-view";
+import { StoryDetailPage } from "./pages/stories-detail";
 
 export function App() {
   NavTool.navigation = useNavigate();
@@ -45,6 +46,14 @@ export function App() {
             element={
               <PageView activeIndex={2}>
                 <StoriesPage />
+              </PageView>
+            }
+          />
+          <Route
+            path="/story/:id"
+            element={
+              <PageView activeIndex={2}>
+                <StoryDetailPage />
               </PageView>
             }
           />

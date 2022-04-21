@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./nft-card.less";
-import { IconMap, NFT } from "../../nervape/nft";
+import { IconMap, NFT_List } from "../../nervape/nft";
 import { NavTool } from "../../route/navi-tool";
 import iconPreviewClose from "../../assets/gallery/preview-close-button.svg";
 import loadingGif from "../../assets/gallery/loading.gif";
@@ -13,7 +13,7 @@ declare global {
   }
 }
 export class NFTCard extends Component<
-  { nft: NFT },
+  { nft: NFT_List },
   {
     enableModule: boolean;
     enableModuleUrl: String;
@@ -93,7 +93,7 @@ export class NFTCard extends Component<
         <div className="nft-card-vision">
           <img
             className="nft-card-image"
-            src={nft.cover_image_url}
+            src={nft.image}
             onClick={() => {
               this.setState({
                 enableModule: true,
@@ -109,7 +109,7 @@ export class NFTCard extends Component<
           <div>
             {Number(nft.issued)}/{Number(nft.total)} distributed
           </div>
-          <img src={IconMap.get(nft.type)} />
+          <img src={IconMap.get(nft.type.length > 0 ? nft.type[0] : '')} />
         </div>
         <div className="nft-btn-parent">
           <div

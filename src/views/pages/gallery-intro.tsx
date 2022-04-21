@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { NFTCard } from "../components/nft-card";
 import "./gallery-intro.less";
-import { NFT } from "../../nervape/nft";
+import { NFT, NFT_List } from "../../nervape/nft";
 import { NFTsMock } from "../../mock/nft-mock";
 import { NavTool } from "../../route/navi-tool";
 
-export default class GalleryIntro extends Component<{ nft?: NFT }> {
+export default class GalleryIntro extends Component<{ nft?: NFT_List }> {
   render() {
     const { nft } = this.props;
     if (!nft) {

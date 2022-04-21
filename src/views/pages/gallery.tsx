@@ -5,13 +5,13 @@ import "./gallery.less";
 import GalleryIntro from "./gallery-intro";
 import { GalleryList } from "./gallery-list";
 import { WebMock } from "../../mock/web-mock";
-import { NFT } from "../../nervape/nft";
+import { NFT, NFT_List } from "../../nervape/nft";
 
 export class Gallery extends Component<
   any,
   {
-    latestNft?: NFT;
-    nfts: NFT[];
+    latestNft?: NFT_List;
+    nfts: NFT_List[];
   }
 > {
   constructor(props: any) {
@@ -20,7 +20,8 @@ export class Gallery extends Component<
   }
 
   fnInitGalleryInfo = async () => {
-    const { nfts, latestNft } = await WebMock.fnGetMockInfo();
+    // const { nfts, latestNft } = await WebMock.fnGetMockInfo();
+    const { nfts, latestNft } = await WebMock.fnGetNftMockInfo(true);
     this.setState({
       nfts,
       latestNft,

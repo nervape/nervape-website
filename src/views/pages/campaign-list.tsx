@@ -17,7 +17,8 @@ export class CampaignList extends Component<
   }
 
   fnInitCampaignInfo = async () => {
-    const { campaigns } = await WebMock.fnGetMockInfo();
+    // const { campaigns } = await WebMock.fnGetMockInfo();
+    const { campaigns } = await WebMock.fnGetCampaigns();
     this.setState({
       campaigns,
     });

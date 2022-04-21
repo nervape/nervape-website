@@ -14,9 +14,8 @@ export class CampaignItem extends Component<CampaignItemProps> {
       return <div></div>;
     }
 
-    const reward = campaign.reward[0];
-
-    const delta = campaign.startTime.clone().subtract(moment.now());
+    const reward = campaign.reward;
+    const delta = moment(campaign.startTime).clone().subtract(moment.now());
     const duraion = moment.duration(delta as any);
     const days = duraion.asDays();
     const hours = duraion
@@ -69,7 +68,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
                 return (
                   <img
                     className="material-img-item"
-                    src={v.cover_image_url}
+                    src={v.image}
                     key={i}
                   ></img>
                 );
@@ -82,7 +81,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
           <div
             className="cam-item-button button-rul"
             onClick={() => {
-              window.open(campaign.ruleUrl);
+              window.open(campaign.rule_url);
             }}
           >
             <div className="text-top">View</div>
@@ -91,7 +90,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
           <div
             className="cam-item-button button-mat"
             onClick={() => {
-              window.open(campaign.materialUrl);
+              window.open(campaign.material_availability_url);
             }}
           >
             <div className="text-top">View</div>
@@ -100,7 +99,7 @@ export class CampaignItem extends Component<CampaignItemProps> {
           <div
             className="cam-item-button button-nft"
             onClick={() => {
-              window.open(campaign.claimUrl);
+              window.open(campaign.nft_claim_url);
             }}
           >
             <div className="text-top">Participate on</div>
