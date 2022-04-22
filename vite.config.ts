@@ -17,5 +17,14 @@ export default defineConfig(({ command, mode }) => {
       host: "0.0.0.0",
       port: 3000,
     },
+    build: {
+      minify: "terser",
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+    },
   };
 });

@@ -3,6 +3,7 @@ services:
   nervape_website:
     container_name: nervape_website
     image: "node:16"
+    restart: always
     user: "node"
     working_dir: /home/node/app
     environment:
