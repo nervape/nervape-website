@@ -93,7 +93,7 @@ export class StoriesReader extends Component<StoriesReaderProps> {
               })}
             </div>
           </div>
-          <div className="sr-content">{story.content}</div>
+          <div className="sr-content" dangerouslySetInnerHTML={{ __html: story.content }}></div>
 
           <div className="sr-nav-footer">
             {fnPrev()}
