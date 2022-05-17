@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { CampaignMock } from "../../mock/campaign-mock";
 import { WebMock } from "../../mock/web-mock";
 import { Campaign } from "../../nervape/campaign";
 import { CampaignItem } from "./campaign-item";
