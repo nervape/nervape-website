@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { CampaignMock } from "../../mock/campaign-mock";
 import { WebMock } from "../../mock/web-mock";
 import { Campaign } from "../../nervape/campaign";
 import { CampaignItem } from "./campaign-item";
@@ -17,7 +16,8 @@ export class CampaignList extends Component<
   }
 
   fnInitCampaignInfo = async () => {
-    const { campaigns } = await WebMock.fnGetMockInfo();
+    // const { campaigns } = await WebMock.fnGetMockInfo();
+    const { campaigns } = await WebMock.fnGetCampaigns();
     this.setState({
       campaigns,
     });

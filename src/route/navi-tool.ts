@@ -13,6 +13,12 @@ export class NavTool {
     navigation(toPath);
   };
 
+  public static fnJumpToPagePush = (path: string) => {
+    const toPath = NavTool.fnStdNavStr(path);
+    const navigation = NavTool.navigation;
+    navigation(toPath);
+  };
+
   public static fnQueryParam = (name: string) => {
     const location = NavTool.location;
     const search = location.search;

@@ -22,7 +22,7 @@ export class StoriesListItem extends Component<IStoriesListItemProps> {
           e.preventDefault();
           e.stopPropagation();
           NavTool.fnJumpToPage(
-            `/story?chapter=${story.chapter}&&serial=${story.serial}`
+            `/story/${story.id}`
           );
           window.scrollTo({
             top: 0,

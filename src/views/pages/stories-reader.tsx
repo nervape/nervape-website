@@ -6,7 +6,11 @@ import { NavTool } from "../../route/navi-tool";
 
 import "./stories-reader.less";
 
-export class StoriesReader extends Component<{ story: Story }> {
+interface StoriesReaderProps {
+  story?: Story
+}
+
+export class StoriesReader extends Component<StoriesReaderProps> {
   render() {
     const { story } = this.props;
     window.scrollTo({
@@ -25,7 +29,7 @@ export class StoriesReader extends Component<{ story: Story }> {
             className="sr-previous"
             onClick={() => {
               NavTool.fnJumpToPage(
-                `/story?chapter=${previousStory.chapter}&&serial=${previousStory.serial}`
+                `/story/${previousStory.id}`
               );
             }}
           >
@@ -41,7 +45,7 @@ export class StoriesReader extends Component<{ story: Story }> {
             className="sr-next"
             onClick={() => {
               NavTool.fnJumpToPage(
-                `/story?chapter=${nextStory.chapter}&&serial=${nextStory.serial}`
+                `/story/${nextStory.id}`
               );
             }}
           >
@@ -89,7 +93,7 @@ export class StoriesReader extends Component<{ story: Story }> {
               })}
             </div>
           </div>
-          <div className="sr-content">{story.content}</div>
+          <div className="sr-content" dangerouslySetInnerHTML={{ __html: story.content }}></div>
 
           <div className="sr-nav-footer">
             {fnPrev()}

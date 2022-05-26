@@ -24,3 +24,10 @@ export class Story {
   previousStory?: Story;
   nextStory?: Story;
 }
+
+export class Story_NFT_List {
+  _id: string = "";
+  title: string = "";
+  chapter: CHAPTER_TYPE = "";
+  serial: string = "";
+}
