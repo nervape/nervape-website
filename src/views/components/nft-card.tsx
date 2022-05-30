@@ -109,7 +109,7 @@ export class NFTCard extends Component<
           <div>
             {Number(nft.issued)}/{Number(nft.total)} distributed
           </div>
-          <img src={IconMap.get(nft.type.length > 0 ? nft.type[0] : '')} />
+          <img src={IconMap.get(nft.type)} />
         </div>
         <div className="nft-btn-parent">
           <div
