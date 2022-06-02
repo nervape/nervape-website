@@ -109,7 +109,7 @@ export class NFTCard extends Component<
           <div>
             {Number(nft.issued)}/{Number(nft.total)} distributed
           </div>
-          <img src={IconMap.get(nft.type.length > 0 ? nft.type[0] : '')} />
+          <img src={IconMap.get(nft.type)} />
         </div>
         <div className="nft-btn-parent">
           <div
@@ -121,7 +121,7 @@ export class NFTCard extends Component<
             <div className="nft-button-t1">View on</div>
             <div className="nft-button-t2">Mibao</div>
           </div>
-          {/* <div
+          <div
             className="nft-button "
             onClick={() => {
               window.open(nft.kollectMeUrl);
@@ -129,7 +129,7 @@ export class NFTCard extends Component<
           >
             <div className="nft-button-t1">Purchase on</div>
             <div className="nft-button-t2">Kollect.me</div>
-          </div> */}
+          </div>
         </div>
       </div>
     );

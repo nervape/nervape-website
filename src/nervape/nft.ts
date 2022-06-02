@@ -13,7 +13,7 @@ IconMap.set("Item", iconItem);
 export class NFT {
   id: string = "";
   name: string = "";
-  type: NFT_TYPE[] = [];
+  type: NFT_TYPE = '';
   storyId: string[] = [];
   bannerUrl: string = "";
   mibaoUrl: string = "";
@@ -40,7 +40,7 @@ export class NFT {
 export class NFT_List {
   id: string = "";
   name: string = "";
-  type: NFT_TYPE[] = [];
+  type: NFT_TYPE = '';
   storyId: string[] = [];
   bannerUrl: string = "";
   mibaoUrl: string = "";
