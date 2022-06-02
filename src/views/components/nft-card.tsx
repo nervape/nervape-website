@@ -111,7 +111,7 @@ export class NFTCard extends Component<
           </div>
           <img src={IconMap.get(nft.type)} />
         </div>
-        <div className="nft-btn-parent">
+        <div className={["nft-btn-parent", nft.kollectMeUrl ? "nft-two-btn" : null].join(' ')}>
           <div
             className="nft-button "
             onClick={() => {
@@ -121,15 +121,20 @@ export class NFTCard extends Component<
             <div className="nft-button-t1">View on</div>
             <div className="nft-button-t2">Mibao</div>
           </div>
-          <div
-            className="nft-button "
-            onClick={() => {
-              window.open(nft.kollectMeUrl);
-            }}
-          >
-            <div className="nft-button-t1">Purchase on</div>
-            <div className="nft-button-t2">Kollect.me</div>
-          </div>
+          {
+            nft.kollectMeUrl
+              ? (
+                <div
+                  className="nft-button "
+                  onClick={() => {
+                    window.open(nft.kollectMeUrl);
+                  }}
+                >
+                  <div className="nft-button-t1">Purchase on</div>
+                  <div className="nft-button-t2">Kollect.me</div>
+                </div>
+              ) : ""
+          }
         </div>
       </div>
     );
