@@ -31,3 +31,9 @@ export class Story_NFT_List {
   chapter: CHAPTER_TYPE = "";
   serial: string = "";
 }
+
+export class ChapterList {
+  _id: string = "";
+  name: string = "";
+  isShow: boolean = false;
+}

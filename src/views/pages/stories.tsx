@@ -7,7 +7,7 @@ import { StoriesMock } from "../../mock/stories-mock";
 import { NavTool } from "../../route/navi-tool";
 import "./stories.less";
 import { nervapeApi } from "../../api/nervape-api";
-import { CHAPTER_TYPE, Story } from "../../nervape/story";
+import { ChapterList, Story } from "../../nervape/story";
 import { NFT } from "../../nervape/nft";
 import { WebMock } from "../../mock/web-mock";
 
@@ -16,7 +16,7 @@ interface StoryPageProps { }
 interface StoryPageState {
   latest?: Story;
   stories: Story[];
-  chapters: CHAPTER_TYPE[];
+  chapters: ChapterList[];
 }
 export class StoriesPage extends Component<StoryPageProps, StoryPageState> {
   constructor(props: StoryPageProps) {
@@ -57,7 +57,7 @@ export class StoriesPage extends Component<StoryPageProps, StoryPageState> {
       enableStory = true;
     }
     const cpData = chapters.find(
-      (v) => NavTool.fnStdNavStr(v) === chapter
+      (v) => NavTool.fnStdNavStr(v.name) === chapter
     );
     console.log(cpData);
     // const storyDetail = cpData?.stories.find((v) => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NFT } from "../nervape/nft";
-import { Story } from "../nervape/story";
+import { ChapterList, Story } from "../nervape/story";
 
 console.log();
 
@@ -68,6 +68,20 @@ class NervapeApi {
     if (res.status !== 200) {
       console.warn(res);
       throw `request failed:${url} `;
+    }
+    const data = res.data;
+    if (data.code !== 0) {
+      console.warn(data);
+      throw `request failed:${data.msg} from  ${url} `;
+    }
+    return data.data;
+  }
+  public async fnGetChapters() : Promise<ChapterList[]> {
+    const url = `${this.baseUrl}/chapter/all`;
+    const res = await axios.get(url);
+    if (res.status !== 200) {
+      console.warn(res);
+      throw `request failed: ${url} `;
     }
     const data = res.data;
     if (data.code !== 0) {
