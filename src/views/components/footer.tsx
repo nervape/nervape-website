@@ -33,7 +33,7 @@ export class Footer extends Component {
             <a
               className="icon"
               target="_blank"
-              href="https://discord.gg/EWWanFs4Hu"
+              href="https://discord.com/invite/7br6nvuNHP"
             >
               <img src={discord} />
             </a>
