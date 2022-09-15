@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StoriesMock } from "../../mock/stories-mock";
 import { WebMock } from "../../mock/web-mock";
-import { CHAPTER_TYPE, Story } from "../../nervape/story";
+import { ChapterList, Story } from "../../nervape/story";
 import { NavTool } from "../../route/navi-tool";
 import { StoriesListItem } from "./stories-list-item";
 import "./stories-list.less";
@@ -12,7 +12,7 @@ export class Chapter {
 }
 
 interface StoriesListProps {
-  chapters: CHAPTER_TYPE[],
+  chapters: ChapterList[],
   stories: Story[]
 }
 
@@ -29,11 +29,11 @@ export class StoriesList extends Component<StoriesListProps, StoriesListState> {
   }
   elList: HTMLElement | null = null;
 
-  fnSlecteChapter(chapter: CHAPTER_TYPE) {
+  fnSlecteChapter(chapter: ChapterList) {
     const elList = this.elList as HTMLElement;
 
     this.fnGetStoryList(chapter);
-    NavTool.fnJumpToPage(`/story?chapter=${chapter}`);
+    NavTool.fnJumpToPage(`/story?chapter=${chapter.name}`);
     this.forceUpdate();
     window.scrollTo({
       top: elList.offsetTop - 64,
@@ -47,7 +47,7 @@ export class StoriesList extends Component<StoriesListProps, StoriesListState> {
       })
     }
   }
-  async fnGetStoryList(chapter: string) {
+  async fnGetStoryList(chapter: ChapterList) {
     const data = await WebMock.fnGetStoryMockInfo(false, chapter);
     this.setState({
       stories: data.stories
@@ -65,7 +65,7 @@ export class StoriesList extends Component<StoriesListProps, StoriesListState> {
     let activeInndex = 0;
 
     chapters.forEach((chap, index) => {
-      if (NavTool.fnStdNavStr(chap) === chapterParam) {
+      if (NavTool.fnStdNavStr(chap.name) === chapterParam) {
         activeInndex = index;
       }
     })
@@ -83,18 +83,18 @@ export class StoriesList extends Component<StoriesListProps, StoriesListState> {
             /* 分栏 */
             chapters.map((v, i) => {
               return (
-                <div className="chapter-box" key={`${v}-${i}`}>
+                <div className="chapter-box" key={`${v.name}-${i}`}>
                   <div
                     className={`subfield ${
                       activeInndex === i ? "subfield-selected" : ""
                     }`}
                     onClick={() => {
-                      if (i === 0) {
+                      if (v.isShow) {
                         this.fnSlecteChapter(v);
                       }
                     }}
                   >
-                    {v}
+                    {v.name}
                   </div>
                   {i === chapters.length - 1 ? (
                     ""
