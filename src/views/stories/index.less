@@ -1,0 +1,224 @@
+.stories-container {
+    width: 1280px;
+    margin: 0 auto;
+    letter-spacing: -0.05em;
+    color: #FFFFFF;
+    .story-header {
+        padding-top: 64px;
+        .title {
+            font-weight: 800;
+            font-size: 48px;
+            line-height: 58px;
+        }
+        .desc {
+            width: 800px;
+            padding-top: 16px;
+            font-size: 14px;
+            line-height: 17px;
+        }
+    }
+    .story-content {
+        padding-top: 80px;
+        padding-bottom: 130px;
+        .chapter-item {
+            display: flex;
+            .process-left {
+                flex: 1;
+                .process-c {
+                    width: 4px;
+                    height: 100%;
+                    margin-left: 7px;
+                }
+                .dot {
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    transform: translateX(-6.5px);
+                    top: 50vh;
+                    position: -webkit-sticky;
+                    position: sticky;
+                    z-index: 9;
+                }
+                .dot.fixed {
+                    position: fixed;
+                }
+            }
+            .story-items {
+                width: 1200px;
+                .chapter-info {
+                    position: -webkit-sticky;
+                    position: sticky;
+                    top: 0;
+                    background: #141D26;
+                    z-index: 1;;
+                    .chapter-info-c {
+                        padding: 40px 0;
+                        .chapter-title {
+                            font-size: 24px;
+                            line-height: 29px;
+                        }
+                        .chapter-desc {
+                            font-weight: 800;
+                            font-size: 36px;
+                            line-height: 43px;
+                        }
+                    }
+                }
+                .chapter-info.fixed {
+                    position: fixed;
+                    top: 0;
+                    width: 1200px;
+                }
+                .stories {
+                    padding-bottom: 164px;
+                    .story-item {
+                        margin-bottom: 40px;
+                        position: relative;
+                        .image-url {
+                            width: 100%;
+                            object-fit: cover;
+                            height: 240px;
+                            display: block;
+                        }
+                        .serial {
+                            position: absolute;
+                            top: 16px;
+                            left: 16px;
+                            font-size: 20px;
+                            font-weight: 500;
+                        }
+                        .image-url.hover {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            opacity: 0;
+                            transition: all 0.3s;
+                        }
+                        .story-info.hover {
+                            position: absolute;
+                            bottom: 0;
+                            height: 66px;
+                            opacity: 0;
+                            width: 100%;
+                            transition: all 0.5s;
+                            display: flex;
+                            align-items: center;
+                            background: #1B212F;
+                            .name, .overview {
+                                flex: 1;
+                                display: flex;
+                                height: 100%;
+                                align-items: center;
+                            }
+
+                            .name {
+                                flex-direction: row-reverse;
+                                font-weight: 800;
+                                font-size: 20px;
+                                padding-right: 16px;
+                            }
+                            .overview {
+                                font-size: 14px;
+                                padding-left: 16px;
+                                line-height: 21px;
+                            }
+                        }
+                    }
+                    .story-item:hover {
+                        .image-url.hover {
+                            opacity: 1;
+                        }
+                        .story-info.hover {
+                            opacity: 1;
+                            height: 66px;
+                        }
+                    }
+                    .coming-soon {
+                        position: relative;
+                        height: 240px;
+                        background: rgba(43, 50, 65, 0.5);
+                        .serial {
+                            position: absolute;
+                            top: 16px;
+                            left: 16px;
+                            background-color: #BAF45F;
+                            border-radius: 4px;
+                            font-weight: 500;
+                            font-size: 20px;
+                            line-height: 24px;
+                            color: #141D26;
+                            padding: 8px 16px;
+                        }
+                    }
+                }
+            }
+        }
+        .chapter-item:last-child {
+            .story-items {
+                .stories {
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .stories-container {
+        width: 347px;
+        .story-header {
+            padding-top: 54px;
+            .desc {
+                width: 100%;
+            }
+        }
+        .story-content {
+            .chapter-item {
+                .process-left {
+                    .dot {
+                        transform: translateX(-6.5px);
+                        top: 50vh;
+                        position: -webkit-sticky;
+                        position: sticky;
+                        z-index: 9;
+                    }
+                    .dot.fixed {
+                        position: fixed;
+                    }
+                }
+                .story-items {
+                    width: 313px;
+                    .chapter-info {
+                        .chapter-info-c {
+                            .chapter-title {
+                                font-size: 16px;
+                                line-height: 19px;
+                            }
+                            .chapter-desc {
+                                font-size: 24px;
+                                line-height: 29px;
+                            }
+                        }
+                    }
+                    .stories {
+                        padding-bottom: 95px;
+                        .story-item {
+                            margin-bottom: 28px;
+                            .story-info.hover {
+                                display: none;
+                            }
+                            .serial {
+                                font-size: 16px;
+                            }
+                        }
+                        .coming-soon {
+                            .serial {
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

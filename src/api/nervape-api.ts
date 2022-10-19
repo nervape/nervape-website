@@ -135,6 +135,21 @@ class NervapeApi {
     }
     return data.data;
   }
+
+  public async fnGetNFTBanners() {
+    const url = `${this.baseUrl}/nft/banners/all`;
+    const res = await axios.get(url);
+    if (res.status !== 200) {
+      console.warn(res);
+      throw `request failed:${url} `;
+    }
+    const data = res.data;
+    if (data.code !== 0) {
+      console.warn(data);
+      throw `request failed:${data.msg} from  ${url} `;
+    }
+    return data.data;
+  }
 }
 
 export const nervapeApi = new NervapeApi();

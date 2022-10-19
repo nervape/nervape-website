@@ -3,7 +3,7 @@ import iconScene from "../assets/gallery/scene.svg";
 import iconCharacter from "../assets/gallery/character.svg";
 import iconItem from "../assets/gallery/item.svg";
 
-export type NFT_TYPE = "" | "Character" | "Scene" | "Item";
+export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special";
 
 export const IconMap = new Map<NFT_TYPE, string>();
 IconMap.set("Character", iconCharacter);
@@ -61,4 +61,16 @@ export class NFT_List {
   is_banned: boolean = false;
 
   stories: Story_NFT_List[] = [];
+}
+
+export class NFT_BANNER {
+  _id: string = "";
+  imageUrl4k: string = "";
+  imageUrlsmail: string = "";
+  promoVideoUrl: string = "";
+  name: string = "";
+  job: string = "";
+  type: NFT_TYPE = "";
+  published: boolean = false;
+  sort: number = 0;
 }

@@ -11,12 +11,14 @@ import "./app.less";
 import { NavHeader } from "./components/header";
 import { AboutPage } from "./pages/about";
 import { CampaignPage } from "./pages/campaign";
-import { Gallery } from "./pages/gallery";
-import { StoriesPage } from "./pages/stories";
-import { Footer } from "./components/footer";
+// import { Gallery } from "./pages/gallery";
+// import { StoriesPage } from "./pages/stories";
+import Story from "./stories";
+import NFT from "./nfts";
 import { NavTool } from "../route/navi-tool";
 import PageView from "./components/page-view";
-import { StoryDetailPage } from "./pages/stories-detail";
+// import { StoryDetailPage } from "./pages/stories-detail";
+import StoryProfile from "./stories/profile/profile";
 
 export function App() {
   NavTool.navigation = useNavigate();
@@ -37,7 +39,7 @@ export function App() {
             path="/nft"
             element={
               <PageView activeIndex={1}>
-                <Gallery />
+                <NFT />
               </PageView>
             }
           />
@@ -45,15 +47,15 @@ export function App() {
             path="/story"
             element={
               <PageView activeIndex={2}>
-                <StoriesPage />
+                <Story />
               </PageView>
             }
           />
           <Route
             path="/story/:id"
             element={
-              <PageView activeIndex={2}>
-                <StoryDetailPage />
+              <PageView activeIndex={2} disableFooter={true}>
+                <StoryProfile />
               </PageView>
             }
           />

@@ -1,87 +1,33 @@
 .footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 48px 80px;
+  height: 40px;
   width: 100%;
-  background: #161616;
-  overflow: hidden;
-  z-index: 999;
-
-  .top-line {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    .logo {
-      width: 107px;
-      cursor: pointer;
-    }
-    .icon-group {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 0px;
-      margin-left: 80px;
-
-      .icon {
-        width: 28px;
-        height: 28px;
-        margin-left: 32px;
-      }
-    }
-  }
-
-  .bottom-line {
-    display: flex;
-    flex-direction: row;
-    margin-top: 32px;
-    width: 100%;
-
-    .brand-assets {
-      font-family: normalidad-compact;
-      font-style: normal;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Normalidad;
+  .footer-item {
+      display: inline-flex;
+      padding-left: 32px;
       font-weight: 400;
-      font-size: 16px;
-      line-height: 21px;
-      color: #7b7b7b;
-
-      transition: all 0.2s;
-      &:hover {
-        transition: all 0.2s;
-        color: white;
+      .brand-assets, .contact-us {
+          cursor: pointer;
+          padding-left: 32px;
+          a {
+              color: #FFFFFF;
+          }
       }
-    }
-    .join-us {
-      margin-left: 32px;
-      font-family: normalidad-compact;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 21px;
-      color: #7b7b7b;
-
-      transition: all 0.2s;
-      &:hover {
-        transition: all 0.2s;
-        color: white;
-      }
-    }
   }
+}
 
-  @media screen and (max-width: 750px) {
-    padding: 24px 14px;
-    .top-line {
-      flex-direction: column;
-      .icon-group {
-        margin-top: 32px;
-        margin-left: 0px;
-
-        .icon {
-          margin-left: 0px;
-          margin-right: 24px;
-        }
-      }
-    }
+.footer.mobile {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100px;
+  .footer-item {
+      padding-left: 0;
+      padding-bottom: 20px;
   }
 }

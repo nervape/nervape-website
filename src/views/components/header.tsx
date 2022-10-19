@@ -2,15 +2,21 @@ import React, { Component, ReactNode } from "react";
 import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
+import twitter from "../../assets/icons/twitter.svg";
+import discord from "../../assets/icons/discord.svg";
+
 import { NavTool } from "../../route/navi-tool";
 
 export interface NavPageInfo {
   title: string;
   url: string;
+  type: string;
+  image: string;
 }
 
 export interface INavProps {
   activeIndex?: number;
+  disableFooter?: boolean;
 }
 
 interface INavState extends INavProps {
@@ -19,21 +25,53 @@ interface INavState extends INavProps {
 
 const pages = [
   {
-    title: "About Nervape",
+    title: "ABOUT",
     url: "/about",
+    type: "navbar",
+    image: "",
   },
   {
-    title: "NFT Gallery",
-    url: "/nft",
-  },
-  {
-    title: "Stories",
+    title: "STORY",
     url: "/story",
+    type: "navbar",
+    image: "",
   },
   {
-    title: "Campaign",
-    url: "/campaign",
+    title: "NFT",
+    url: "/nft",
+    type: "navbar",
+    image: "",
   },
+  {
+    title: "CAMPAIGN",
+    url: "/campaign",
+    type: "navbar",
+    image: "",
+  },
+  {
+    title: "WALLET",
+    url: "",
+    type: "navbar",
+    image: "",
+  },
+  {
+    title: "BRIDGE",
+    url: "",
+    type: "action",
+    image: "",
+  },
+  {
+    title: "",
+    url: "https://twitter.com/Nervapes",
+    image: twitter,
+    type: "icon"
+  },
+  {
+    title: "",
+    url: "https://discord.com/invite/7br6nvuNHP",
+    image: discord,
+    type: "icon"
+  }
 ];
 
 export class NavHeader extends Component<INavProps, INavState> {
@@ -75,13 +113,13 @@ export class NavHeader extends Component<INavProps, INavState> {
     }
   }
 
-  public componentDidMount() {
-    window.removeEventListener("scroll", this.fnScrollWindow, true);
-    window.addEventListener("scroll", this.fnScrollWindow, true);
-  }
-  public componentWillUnmount() {
-    window.removeEventListener("scroll", this.fnScrollWindow, true);
-  }
+  // public componentDidMount() {
+  //   window.removeEventListener("scroll", this.fnScrollWindow, true);
+  //   window.addEventListener("scroll", this.fnScrollWindow, true);
+  // }
+  // public componentWillUnmount() {
+  //   window.removeEventListener("scroll", this.fnScrollWindow, true);
+  // }
 
   public render() {
     const { disableList } = this.state;
@@ -116,23 +154,24 @@ export class NavHeader extends Component<INavProps, INavState> {
             }}
           />
           <ul
-            className={`btn-group ${
-              disableList === true ? "active-group" : ""
-            }`}
+            className={`btn-group ${disableList === true ? "active-group" : ""
+              }`}
           >
             {pages?.map((v: NavPageInfo, i: number) => (
               <div
-                className={`nav-area ${
-                  i === activeIndex ? "nav-area-active" : ""
-                }`}
+                className={`nav-area ${v.type}`}
                 key={i}
-                onClick={(e) => {
+                onClick={() => {
                   this.fnClickNavButton(v);
                   window.scrollTo(0, 0);
                 }}
               >
-                <div className="title-text">{v.title}</div>
-                <div className="select-line"></div>
+                {v.type === 'icon' ? (
+                  <img className="icon-image" src={v.image} />
+                ) : (
+                  <div className="title-text">{v.title}</div>
+                )}
+                {/* <div className="select-line"></div> */}
               </div>
             ))}
           </ul>
