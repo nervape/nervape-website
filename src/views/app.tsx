@@ -14,7 +14,7 @@ import { CampaignPage } from "./pages/campaign";
 // import { Gallery } from "./pages/gallery";
 // import { StoriesPage } from "./pages/stories";
 import Story from "./stories";
-import NFT from "./nfts";
+import NFTPage from "./nfts";
 import { NavTool } from "../route/navi-tool";
 import PageView from "./components/page-view";
 // import { StoryDetailPage } from "./pages/stories-detail";
@@ -39,7 +39,7 @@ export function App() {
             path="/nft"
             element={
               <PageView activeIndex={1}>
-                <NFT />
+                <NFTPage />
               </PageView>
             }
           />

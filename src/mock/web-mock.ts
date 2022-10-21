@@ -142,10 +142,10 @@ export class WebMock {
     if (type === null) {
       type = NavTool.fnStdNavStr(WebMock.typeData[0]);
     }
-    const data = await nervapeApi.fnGetNfts(type, latest);
+    // const data = await nervapeApi.fnGetNfts(type, latest);
     return {
-      nfts: data.normalNfts,
-      latestNft: data.latestNfts.length > 0 ? data.latestNfts[0] : null
+      nfts: [], // data.normalNfts,
+      latestNft: null // data.latestNfts.length > 0 ? data.latestNfts[0] : null
     }
   }
 

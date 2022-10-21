@@ -1,7 +1,7 @@
 import { Story, Story_NFT_List } from "./story";
-import iconScene from "../assets/gallery/scene.svg";
-import iconCharacter from "../assets/gallery/character.svg";
-import iconItem from "../assets/gallery/item.svg";
+import iconScene from "../assets/icons/scene.png";
+import iconCharacter from "../assets/icons/character.png";
+import iconItem from "../assets/icons/item.png";
 
 export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special";
 
@@ -35,6 +35,11 @@ export class NFT {
 
   // ===== > info from mibao
   stories: Story[] = [];
+  origin: string = "";
+  short_name: string = "";
+  birthday: string = "";
+  card_background: string = "";
+  job: string = "";
 }
 
 export class NFT_List {
@@ -73,4 +78,22 @@ export class NFT_BANNER {
   type: NFT_TYPE = "";
   published: boolean = false;
   sort: number = 0;
+}
+
+export class NFT_QUERY {
+  name?: string;
+  origin?: string[];
+  type?: string[];
+}
+
+export class NFT_FILTER_ITEM {
+  name: string = "";
+  count: number = 0;
+  checked: boolean = false;
+}
+
+export class NFT_FILTER {
+  name: string = "";
+  open: boolean = true;
+  items: NFT_FILTER_ITEM[] = [];
 }

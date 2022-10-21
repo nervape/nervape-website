@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NFT } from "../nervape/nft";
+import { NFT, NFT_QUERY } from "../nervape/nft";
 import { ChapterList, Story } from "../nervape/story";
 
 console.log();
@@ -25,24 +25,6 @@ class NervapeApi {
     return publish;
   }
 
-  public async fnGetNftList(id?: string) {
-    const url = `${this.baseUrl}/nft/read${!id ? "" : "/?id=" + id}`;
-    console.log(url);
-    const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    const result: NFT[] = data.data.sort((a: NFT, b: NFT) => a.index - b.index);
-    const publish = result.filter((v) => v.publish === true);
-    return publish;
-  }
-
   public async fnGetSyncFromMibao() {
     const url = `${this.baseUrl}/nft/sync-mibao`;
     console.log(url);
@@ -61,21 +43,6 @@ class NervapeApi {
     return publish;
   }
 
-  public async fnGetNfts(type: string, latest?: boolean) {
-    type = type.replace(type[0], type[0].toUpperCase())
-    const url = `${this.baseUrl}/nft${!type ? "" : "?type=" + type}${!latest ? "" : "&latest=" + latest}`;
-    const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
-  }
   public async fnGetChapters() : Promise<ChapterList[]> {
     const url = `${this.baseUrl}/chapter/all`;
     const res = await axios.get(url);
@@ -139,6 +106,38 @@ class NervapeApi {
   public async fnGetNFTBanners() {
     const url = `${this.baseUrl}/nft/banners/all`;
     const res = await axios.get(url);
+    if (res.status !== 200) {
+      console.warn(res);
+      throw `request failed:${url} `;
+    }
+    const data = res.data;
+    if (data.code !== 0) {
+      console.warn(data);
+      throw `request failed:${data.msg} from  ${url} `;
+    }
+    return data.data;
+  }
+
+  public async fnGetNftFilterList() {
+    const url = `${this.baseUrl}/nft/filter`;
+    const res = await axios.get(url);
+    if (res.status !== 200) {
+      console.warn(res);
+      throw `request failed:${url} `;
+    }
+    const data = res.data;
+    if (data.code !== 0) {
+      console.warn(data);
+      throw `request failed:${data.msg} from  ${url} `;
+    }
+    return data.data;
+  }
+
+  public async fnGetNfts(query?: NFT_QUERY) {
+    const url = `${this.baseUrl}/nft`;
+    const res = await axios.get(url, {
+      params: query
+    });
     if (res.status !== 200) {
       console.warn(res);
       throw `request failed:${url} `;
