@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback, useEffect, useState } from "react";
+import React, { MouseEventHandler, useCallback, useContext, useEffect, useState } from "react";
 import { nervapeApi } from "../../api/nervape-api";
 import { IconMap, NFT, NFT_BANNER, NFT_FILTER, NFT_FILTER_ITEM, NFT_QUERY } from "../../nervape/nft";
 import "./index.less";
@@ -15,6 +15,7 @@ import CloseIcon from '../../assets/icons/close_icon.png';
 import FullscrenIcon from '../../assets/icons/fullscreen.png';
 import IconPreviewClose from "../../assets/gallery/preview-close-button.svg";
 import LoadingGif from "../../assets/gallery/loading.gif";
+import { DataContext } from "../../utils/utils";
 
 declare global {
     namespace JSX {
@@ -23,6 +24,7 @@ declare global {
         }
     }
 }
+
 export interface BannerVideoProp {
     promoVideoUrl: string;
     resetUrl: MouseEventHandler;
@@ -132,7 +134,6 @@ export default function NFTPage() {
     const [filters, setFilters] = useState<NFT_FILTER[]>();
     const [nfts, setNfts] = useState<NFT[]>();
     const [query, setQuery] = useState<NFT_QUERY>({});
-    const [width, setWidth] = useState(0);
     const [filterSelectCount, setFilterSelectCount] = useState(0);
     const [showMFilter, setShowMFilter] = useState(true);
     const [promoVideoUrl, setPromoVideoUrl] = useState("");
@@ -140,6 +141,8 @@ export default function NFTPage() {
     const [showNftCard, setShowNftCard] = useState(false);
     const [showFullscreen, setShowFullscreen] = useState(false);
     const [nftDetail, setNftDetail] = useState<NFT>();
+
+    const { windowWidth } = useContext(DataContext);
 
     SwiperCore.use([Autoplay, Pagination]);
 
@@ -172,7 +175,6 @@ export default function NFTPage() {
     }
 
     useEffect(() => {
-        setWidth(window.innerWidth);
         nervapeApi.fnGetNFTBanners().then(res => {
             setBanners(res);
         })
@@ -194,17 +196,8 @@ export default function NFTPage() {
                 })
             });
             setFilters(_filters);
-        })
-        // fnFilter(query);
-        window.addEventListener("resize", resetWidth)
-        return () => {
-            window.removeEventListener("resize", resetWidth)
-        }
+        });
     }, []);
-
-    function resetWidth() {
-        setWidth(window.innerWidth);
-    }
 
     useEffect(() => {
         fnFilter(query);
@@ -234,13 +227,13 @@ export default function NFTPage() {
                     return (
                         <SwiperSlide key={index}>
                             <div className="banner-image">
-                                <img src={width > 750 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
+                                <img src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                             </div>
                             <div className="cover-mask"></div>
                             <div className="banner-info">
                                 <div className="info-item">
                                     <div className="name">{banner.name}</div>
-                                    <div className="job">{banner.job}</div>
+                                    <div className="job">{banner.job.toUpperCase()}</div>
                                     <div className="type-video">
                                         <div className="type-c">
                                             <embed src={IconMap.get(banner.type)} className="icon" type="" />
@@ -261,7 +254,7 @@ export default function NFTPage() {
                 <div className="content">
                     <div className="filter-items">
                         <div className="input-c">
-                            <div className={`filter-menu ${width > 1200 && 'hidden'}`} onClick={() => {
+                            <div className={`filter-menu ${windowWidth == 1200 && 'hidden'}`} onClick={() => {
                                 setShowMFilter(!showMFilter);
                             }}>
                                 <img src={FilterIcon} alt="FilterIcon" />
@@ -287,12 +280,12 @@ export default function NFTPage() {
                                     return (
                                         <div className="filter" key={i}>
                                             <div className="f-title" onClick={() => {
-                                                if (width < 1200) return;
+                                                if (windowWidth !== 1200) return;
                                                 const _filters = JSON.parse(JSON.stringify(filters));
                                                 _filters[i].open = !_filters[i].open;
                                                 setFilters(_filters);
                                             }}>
-                                                <img className={`filter-arrow-icon ${!filter.open && 'close'} ${width < 1200 && 'hidden'}`} src={FilterArrowIcon} alt="filterArrowIcon" />
+                                                <img className={`filter-arrow-icon ${!filter.open && 'close'} ${windowWidth !== 1200 && 'hidden'}`} src={FilterArrowIcon} alt="filterArrowIcon" />
                                                 <div className="name">{filter.name}</div>
                                             </div>
                                             {

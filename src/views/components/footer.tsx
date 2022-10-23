@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { getWindowWidthRange } from '../../utils/utils';
+import React, { useContext, useEffect, useState } from 'react';
+import { DataContext, getWindowWidthRange } from '../../utils/utils';
 import './footer.less';
 
 export default function Footer() {
-    const widthRange = getWindowWidthRange();
     const [isMobile, setIsMobile] = useState(false);
+    const { windowWidth } = useContext(DataContext);
 
     useEffect(() => {
-        setIsMobile(!(widthRange !== 375));
-    }, []);
+        setIsMobile(!(windowWidth !== 375));
+    }, [windowWidth]);
+    
     return (
         <div className={`footer ${isMobile && 'mobile'}`}>
             <div className="copy">@2022 Nervape</div>

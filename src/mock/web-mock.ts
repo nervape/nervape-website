@@ -101,42 +101,6 @@ export class WebMock {
   public static storyData: Story[] | null = null;
   public static nftData: NFT[] | null = null;
 
-  /**
-   * 不再使用
-   * @returns 
-   */
-  public static async fnGetMockInfo() {
-    if (WebMock.storyData === null) {
-      WebMock.storyData = (await nervapeApi.fnGetStoryList()) as Story[];
-    }
-    let storyData = WebMock.storyData;
- 
-    if (WebMock.nftData === null) {
-      WebMock.nftData = (await nervapeApi.fnGetSyncFromMibao()) as NFT[];
-    }
-    let nftData = WebMock.nftData;
-
-    console.log(storyData);
-
-    const { stories, nfts } = WebMock.fnRelateStoryAndNft(storyData, nftData);
-    const chapters = WebMock.fnGroupStory(stories);
-    const latestStory = stories.find((v) => v.latest);
-    const latestNft = nfts.find((v) => v.latest);
-
-    const campaigns = WebMock.fnSetCompainData(nfts);
-    console.log(nfts);
-    return {
-      latestStory,
-      stories,
-      chapters,
-
-      nfts,
-      latestNft,
-
-      campaigns,
-    };
-  }
-
   public static async fnGetNftMockInfo(latest: boolean, type?: string | null) {
     type = type || NavTool.fnQueryParam("type");
     if (type === null) {

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { NFT, NFT_QUERY } from "../nervape/nft";
 import { ChapterList, Story } from "../nervape/story";
 
@@ -8,10 +8,7 @@ class NervapeApi {
   //@ts-ignore
   public baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-  public async fnGetStoryList(id?: string) {
-    const url = `${this.baseUrl}/story/read${!id ? "" : "/?id=" + id}`;
-    console.log(url);
-    const res = await axios.get(url);
+  private _fnDealResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
       console.warn(res);
       throw `request failed:${url} `;
@@ -21,116 +18,43 @@ class NervapeApi {
       console.warn(data);
       throw `request failed:${data.msg} from  ${url} `;
     }
-    const publish = data.data.filter((v: Story) => v.publish === true);
-    return publish;
-  }
-
-  public async fnGetSyncFromMibao() {
-    const url = `${this.baseUrl}/nft/sync-mibao`;
-    console.log(url);
-    const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    const result: NFT[] = data.data.sort((a: NFT, b: NFT) => a.index - b.index);
-    const publish = result.filter((v) => v.publish === true);
-    return publish;
+    return data.data;
   }
 
   public async fnGetChapters() : Promise<ChapterList[]> {
     const url = `${this.baseUrl}/chapter/all`;
     const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed: ${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
+    return this._fnDealResponse(res, url);
   }
 
   public async fnGetStories(chapter: string, latest?: boolean) {
     const url = `${this.baseUrl}/story${!chapter ? "" : "?chapter=" + chapter}${!latest ? "" : "&latest=" + latest}`;
     const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
+    return this._fnDealResponse(res, url);
   }
 
   public async fnGetStoryDetail(id: string) {
     const url = `${this.baseUrl}/story/profile/${id}`;
     const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
+    return this._fnDealResponse(res, url);
   }
 
   public async fnGetCampaigns() {
     const url = `${this.baseUrl}/campaign/website`;
     const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
+    return this._fnDealResponse(res, url);
   }
 
   public async fnGetNFTBanners() {
     const url = `${this.baseUrl}/nft/banners/all`;
     const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
+    return this._fnDealResponse(res, url);
   }
 
   public async fnGetNftFilterList() {
     const url = `${this.baseUrl}/nft/filter`;
     const res = await axios.get(url);
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
+    return this._fnDealResponse(res, url);
   }
 
   public async fnGetNfts(query?: NFT_QUERY) {
@@ -138,16 +62,19 @@ class NervapeApi {
     const res = await axios.get(url, {
       params: query
     });
-    if (res.status !== 200) {
-      console.warn(res);
-      throw `request failed:${url} `;
-    }
-    const data = res.data;
-    if (data.code !== 0) {
-      console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
-    }
-    return data.data;
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetCampaignBanners() {
+    const url = `${this.baseUrl}/campaign/banners/all`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetPoapBadges() {
+    const url = `${this.baseUrl}/campaign/poap_badges/all`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
   }
 }
 

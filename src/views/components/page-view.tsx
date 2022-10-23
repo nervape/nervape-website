@@ -1,33 +1,40 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
+import { DataContext, getWindowWidthRange } from "../../utils/utils";
 import Footer from "./footer";
-import { INavProps, NavHeader } from "./header";
+import NavHeader from "./header";
 import "./page-view.less";
 
-export default class PageView extends Component<INavProps> {
-  constructor(props: any) {
-    super(props);
+interface PageViewState {
+  windowWidth: number
+}
+
+export default function PageView(props: any) {
+  const [windowWidth, setWindowWidth] = useState(0);
+  const { children, activeIndex, disableFooter } = props;
+
+  function fnResizeWindow() {
+    const width = getWindowWidthRange();
+    setWindowWidth(width);
   }
 
-  public headerRef: NavHeader | null = null;
-  public mainRef: HTMLElement | null = null;
+  useEffect(() => {
+    fnResizeWindow();
+    window.addEventListener("resize", fnResizeWindow, true);
+    return () => {
+      window.removeEventListener("resize", fnResizeWindow, true)
+    }
+  }, []);
 
-  render() {
-    const { children, activeIndex, disableFooter } = this.props;
-    return (
+  return (
+    <DataContext.Provider value={{ windowWidth: windowWidth }}>
       <div className="page-view">
         <div className="page-header">
           <NavHeader
             activeIndex={activeIndex}
-            ref={(el) => {
-              this.headerRef = el;
-            }}
           ></NavHeader>
         </div>
         <div
           className="page-main"
-          ref={(el) => {
-            this.mainRef = el;
-          }}
         >
           <>
             {children}
@@ -35,11 +42,10 @@ export default class PageView extends Component<INavProps> {
               <div className="page-footer">
                 <Footer></Footer>
               </div>
-            ) }
-            
+            )}
           </>
         </div>
       </div>
-    );
-  }
+    </DataContext.Provider>
+  );
 }

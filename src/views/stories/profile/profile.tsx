@@ -2,21 +2,58 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
+import { NavTool } from "../../../route/navi-tool";
 import Footer from "../../components/footer";
 import "./profile.less";
 
 export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story>();
-    
+
     useEffect(() => {
         if (!params.id) return;
         nervapeApi.fnGetStoryDetail(params.id).then(res => {
-            console.log(res);
             setStory(res);
         })
     }, [params.id]);
-   
+
+    if (!story) return <></>;
+
+    const { previousStory, nextStory } = story;
+
+    const fnPrev = () => {
+        if (previousStory) {
+            return (
+                <div
+                    className="sr-previous"
+                    onClick={() => {
+                        NavTool.fnJumpToPage(
+                            `/story/${previousStory.id}`
+                        );
+                    }}
+                >
+                    {`< PREVIOUS`}
+                </div>
+            );
+        }
+    };
+    const fnNext = () => {
+        if (nextStory) {
+            return (
+                <div
+                    className="sr-next"
+                    onClick={() => {
+                        NavTool.fnJumpToPage(
+                            `/story/${nextStory.id}`
+                        );
+                    }}
+                >
+                    {`NEXT >`}
+                </div>
+            );
+        }
+    };
+
     return (
         <div className="story-profile-container main-container">
             <div className="banner">
@@ -26,7 +63,7 @@ export default function StoryProfile(props: any) {
                 <div className="header-sketch">
                     <img src={story?.headerSketch} alt="headerSketch" />
                 </div>
-                <div className="story-content" style={{background: story?.background}}>
+                <div className="story-content" style={{ background: story?.background }}>
                     <div className="profile-info">
                         <div className="chapter-name">{story?.chapterId?.name}</div>
                         <div className="story-serial">{story?.serial}</div>
@@ -35,6 +72,10 @@ export default function StoryProfile(props: any) {
                     </div>
                     <div className="footer-sketch">
                         <img src={story?.footerSketch} alt="footerSketch" />
+                        <div className="sr-nav-footer">
+                            {fnPrev()}
+                            {fnNext()}
+                        </div>
                     </div>
                     <div className="page-footer">
                         <Footer></Footer>

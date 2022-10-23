@@ -8,9 +8,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "./app.less";
-import { NavHeader } from "./components/header";
 import { AboutPage } from "./pages/about";
-import { CampaignPage } from "./pages/campaign";
+import CampaignPage from "./campaigns";
 // import { Gallery } from "./pages/gallery";
 // import { StoriesPage } from "./pages/stories";
 import Story from "./stories";

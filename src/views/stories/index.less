@@ -12,6 +12,7 @@
         }
         .desc {
             width: 800px;
+            max-width: 100%;
             padding-top: 16px;
             font-size: 14px;
             line-height: 17px;
@@ -112,6 +113,7 @@
                             }
 
                             .name {
+                                text-align: right;
                                 flex-direction: row-reverse;
                                 font-weight: 800;
                                 font-size: 20px;
@@ -120,6 +122,7 @@
                             .overview {
                                 font-size: 14px;
                                 padding-left: 16px;
+                                padding-right: 24px;
                                 line-height: 21px;
                             }
                         }
@@ -163,6 +166,62 @@
     }
 }
 
+@media screen and (min-width: 1200px) and (max-width: 1440px) {
+    .stories-container {
+        width: 1000px;
+        .story-content {
+            .chapter-item {
+                .story-items {
+                    width: 920px;
+                    .chapter-info.fixed {
+                        width: 920px;
+                    }
+                    .stories {
+                        .story-item {
+                            .story-info.hover {
+                                height: 87px;
+                            }
+                        }
+                        .story-item:hover {
+                            .story-info.hover {
+                                height: 87px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+    .stories-container {
+        width: 600px;
+        .story-content {
+            .chapter-item {
+                .story-items {
+                    width: 542px;
+                    .chapter-info.fixed {
+                        width: 542px;
+                    }
+                    .stories {
+                        padding-bottom: 121px;
+                        .story-item {
+                            .story-info.hover {
+                                height: 129px;
+                            }
+                        }
+                        .story-item:hover {
+                            .story-info.hover {
+                                height: 129px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 @media screen and (max-width: 750px) {
     .stories-container {
         width: 347px;
