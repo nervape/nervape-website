@@ -57,11 +57,11 @@ export default function StoryProfile(props: any) {
     return (
         <div className="story-profile-container main-container">
             <div className="banner">
-                <img src={story?.bannerUrl} alt="bannerUrl" />
+                <img loading="lazy" src={story?.bannerUrl} alt="bannerUrl" />
             </div>
             <div className="profile-content">
                 <div className="header-sketch">
-                    <img src={story?.headerSketch} alt="headerSketch" />
+                    <img loading="lazy" src={story?.headerSketch} alt="headerSketch" />
                 </div>
                 <div className="story-content" style={{ background: story?.background }}>
                     <div className="profile-info">
@@ -71,7 +71,7 @@ export default function StoryProfile(props: any) {
                         <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
                     </div>
                     <div className="footer-sketch">
-                        <img src={story?.footerSketch} alt="footerSketch" />
+                        <img loading="lazy" src={story?.footerSketch} alt="footerSketch" />
                         <div className="sr-nav-footer">
                             {fnPrev()}
                             {fnNext()}

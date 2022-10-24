@@ -27,7 +27,7 @@ function BoneListItem(props: any) {
 
     return (
         <div className="bl-item">
-            <img src={BoneListImage} alt="BoneListImage" />
+            <img loading="lazy" src={BoneListImage} alt="BoneListImage" />
             <div className="info">
                 <div className="name">{item.name}</div>
                 <div className="desc">{item.desc}</div>
@@ -43,7 +43,7 @@ function CampaignItem(props: { campaign: Campaign }) {
     const endDate = new Date(campaign.endTime).toLocaleDateString("en-US");
     return (
         <div className="campaign-item">
-            <img src={campaign.reward?.cover_image_url || campaign.reward?.image} alt="AwardCoverImage" />
+            <img loading="lazy" src={campaign.reward?.cover_image_url || campaign.reward?.image} alt="AwardCoverImage" />
             <div className="c-title">{campaign.title}</div>
             <div className="c-start-end-date">{`${startDate} - ${endDate}`}</div>
             <div className={`c-status ${campaign.timeline}`}>
@@ -69,7 +69,7 @@ function PoapBadgeItem(props: { poap: PoapBadge }) {
                 </div>
             </div>
             <div className="cover-image">
-                <img src={poap.cover_image_url} alt="coverImage" />
+                <img loading="lazy" src={poap.cover_image_url} alt="coverImage" />
             </div>
         </div>
     );
@@ -107,7 +107,7 @@ export default function CampaignPage() {
                     return (
                         <SwiperSlide key={index}>
                             <div className="banner-image">
-                                <img src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
+                                <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                             </div>
                         </SwiperSlide>
                     );

@@ -56,7 +56,7 @@ function PreviewModel(props: any) {
             shadow-intensity="1"
             >
             <div className="model-loading" slot="poster">
-                <img className="model-loading-gif" src={LoadingGif} alt="" />
+                <img loading="lazy" className="model-loading-gif" src={LoadingGif} alt="" />
             </div>
         </model-viewer>
     );
@@ -69,7 +69,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
                     <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
-                    <img onClick={fullscreen} className="full-screen" src={FullscrenIcon} alt="FullscrenIcon" />
+                    <img loading="lazy" onClick={fullscreen} className="full-screen" src={FullscrenIcon} alt="FullscrenIcon" />
                 </div>
                 <div className="detail-info" style={{background: nft.card_background}}>
                     <div className="info-content">
@@ -124,7 +124,7 @@ function FullscreenPreview(props: {nft?: NFT, close: any}) {
     return (
         <div className="fullscreen-container mask-cover">
             <PreviewModel enableModuleUrl={nft?.renderer}></PreviewModel>
-            <img className="close-icon" onClick={close} src={IconPreviewClose} alt="IconPreviewClose" />
+            <img loading="lazy" className="close-icon" onClick={close} src={IconPreviewClose} alt="IconPreviewClose" />
         </div>
     );
 }
@@ -227,7 +227,7 @@ export default function NFTPage() {
                     return (
                         <SwiperSlide key={index}>
                             <div className="banner-image">
-                                <img src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
+                                <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                             </div>
                             <div className="cover-mask"></div>
                             <div className="banner-info">
@@ -237,10 +237,10 @@ export default function NFTPage() {
                                     <div className="type-video">
                                         <div className="type-c">
                                             <embed src={IconMap.get(banner.type)} className="icon" type="" />
-                                            {/* <img src={IconMap.get(banner.type)} className="icon" alt="" /> */}
+                                            {/* <img loading="lazy" src={IconMap.get(banner.type)} className="icon" alt="" /> */}
                                             <div className="type">{`${banner.type} NFT`.toUpperCase()}</div>
                                         </div>
-                                        <img src={PlayIcon} onClick={() => {
+                                        <img loading="lazy" src={PlayIcon} onClick={() => {
                                             setPromoVideoUrl(banner.promoVideoUrl);
                                         }} className="play-icon cursor" alt="" />
                                     </div>
@@ -257,7 +257,7 @@ export default function NFTPage() {
                             <div className={`filter-menu ${windowWidth == 1200 && 'hidden'}`} onClick={() => {
                                 setShowMFilter(!showMFilter);
                             }}>
-                                <img src={FilterIcon} alt="FilterIcon" />
+                                <img loading="lazy" src={FilterIcon} alt="FilterIcon" />
                                 {filterSelectCount > 0 && <span>{filterSelectCount}</span>}
                             </div>
                             <input
@@ -285,7 +285,7 @@ export default function NFTPage() {
                                                 _filters[i].open = !_filters[i].open;
                                                 setFilters(_filters);
                                             }}>
-                                                <img className={`filter-arrow-icon ${!filter.open && 'close'} ${windowWidth !== 1200 && 'hidden'}`} src={FilterArrowIcon} alt="filterArrowIcon" />
+                                                <img loading="lazy" className={`filter-arrow-icon ${!filter.open && 'close'} ${windowWidth !== 1200 && 'hidden'}`} src={FilterArrowIcon} alt="filterArrowIcon" />
                                                 <div className="name">{filter.name}</div>
                                             </div>
                                             {
@@ -317,7 +317,7 @@ export default function NFTPage() {
                                     return (
                                         <div className="filter-selected" key={origin}>
                                             <span>{origin}</span>
-                                            <img src={CloseIcon} onClick={() => {
+                                            <img loading="lazy" src={CloseIcon} onClick={() => {
                                                 delSelectedFilter(origin);
                                             }} alt="CloseIcon" />
                                         </div>
@@ -327,7 +327,7 @@ export default function NFTPage() {
                                     return (
                                         <div className="filter-selected" key={type}>
                                             <span>{type}</span>
-                                            <img src={CloseIcon} onClick={() => {
+                                            <img loading="lazy" src={CloseIcon} onClick={() => {
                                                 delSelectedFilter(type);
                                             }} alt="CloseIcon" />
                                         </div>
@@ -345,14 +345,14 @@ export default function NFTPage() {
                                             setShowNftCard(true);
                                             setNftDetail(nft);
                                         }}>
-                                            <img src={nft.cover_image_url || nft.image} alt="cover-image" />
+                                            <img loading="lazy" src={nft.cover_image_url || nft.image} alt="cover-image" />
                                         </div>
                                         <div className="nft-info">
                                             <div className="nervape">NERVAPE</div>
                                             <div className="name">{nft.name}</div>
                                             <div className="distributed">{`${nft.issued}/${nft.total} distributed`}</div>
                                             <div className="nft-icon">
-                                                <img src={IconMap.get(nft.type)} alt="icon" />
+                                                <img loading="lazy" src={IconMap.get(nft.type)} alt="icon" />
                                             </div>
                                         </div>
                                     </div>

@@ -49,8 +49,8 @@ export default function Story() {
                                             <div className="item story-item" onClick={() => {
                                                 NavTool.fnJumpToPage(`/story/${story?._id}`)
                                             }} key={_index}>
-                                                <img className="image-url dishover" src={story.imageUrl} alt="imageUrl" />
-                                                <img className="image-url hover" src={story.hoverImageUrl} alt="imageUrl" />
+                                                <img loading="lazy" className="image-url dishover" src={story.imageUrl} alt="imageUrl" />
+                                                <img loading="lazy" className="image-url hover" src={story.hoverImageUrl} alt="imageUrl" />
                                                 <span className="serial">{story.serial.split(' ')[1]}</span>
                                                 <div className="story-info hover">
                                                     <span className="name">{story.title}</span>
