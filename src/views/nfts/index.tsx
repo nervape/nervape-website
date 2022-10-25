@@ -149,7 +149,7 @@ export default function NFTPage() {
     const fnFilter = useCallback(filterNfts(), []);
 
     function filterNfts() {
-        let timer: number;
+        let timer: any;
         return function (_query?: NFT_QUERY) {
             if (timer) {
                 clearTimeout(timer);

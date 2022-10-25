@@ -1,9 +1,11 @@
 .story-profile-container {
   padding-top: 0 !important;
   min-height: 100vh !important;
+  .banner, .header-sketch {
+    height: calc(100vh + 157.5px);
+  }
   .banner {
     width: 100vw;
-    height: 100vh;
     position: fixed;
     overflow-x: hidden;
     top: 0;
@@ -11,6 +13,7 @@
     img {
       width: 100%;
       object-fit: cover;
+      // object-position: top;
       position: absolute;
       display: block;
       left: 50%;
@@ -23,7 +26,6 @@
     top: 0;
     .header-sketch {
       width: 100vw;
-      height: calc(100vh + 157.5px);
       position: relative;
       overflow-x: hidden;
       top: 0;
@@ -31,6 +33,7 @@
       img {
         width: 100%;
         object-fit: cover;
+        // object-position: top;
         position: absolute;
         display: block;
         left: 50%;
@@ -122,8 +125,6 @@
 @media screen and (max-width: 750px) {
   .story-profile-container {
     .profile-content {
-      .header-sketch {
-      }
       .story-content {
         .profile-info {
           width: 347px;
@@ -142,9 +143,6 @@
 @media screen and (min-width: 750px) and (max-width: 1200px) {
   .story-profile-container {
     .profile-content {
-      .header-sketch {
-        height: calc(100vh + 157.5px);
-      }
       .story-content {
         .profile-info {
           width: 600px;
@@ -164,10 +162,10 @@
 
 @media screen and (max-width: 2560px) and (min-width: 1440px) {
   .story-profile-container {
+    .banner, .header-sketch {
+      height: calc(100vh + 280px);
+    }
     .profile-content {
-      .header-sketch {
-        height: calc(100vh + 280px);
-      }
       .story-content {
         .profile-info {
           top: -198px;
@@ -178,10 +176,10 @@
 }
 @media screen and (max-width: 3840px) and (min-width: 2560px) {
   .story-profile-container {
+    .banner, .header-sketch {
+      height: calc(100vh + 420px);
+    }
     .profile-content {
-      .header-sketch {
-        height: calc(100vh + 420px);
-      }
       .story-content {
         .profile-info {
           top: -338px;
