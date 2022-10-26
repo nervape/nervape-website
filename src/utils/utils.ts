@@ -11,9 +11,12 @@ export function getWindowWidthRange() {
     return 1200;
 }
 
+export function getWindowScrollTop() {
+    return document.documentElement.scrollTop || document.body.scrollTop;
+}
 export function scrollToTop() {
-    const sTop = document.documentElement.scrollTop || document.body.scrollTop;
-    console.log('scrollToTop', sTop);
+    const sTop = getWindowScrollTop();
+    console.log(sTop);
     if (sTop > 0) {
         // window.requestAnimationFrame(scrollToTop);
         window.scrollTo(0, 0);

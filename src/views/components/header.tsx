@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, useContext, useState } from "react";
+import React, { Component, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
@@ -6,7 +6,7 @@ import twitter from "../../assets/icons/twitter.svg";
 import discord from "../../assets/icons/discord.svg";
 
 import { NavTool } from "../../route/navi-tool";
-import { DataContext } from "../../utils/utils";
+import { DataContext, getWindowScrollTop, scrollToTop } from "../../utils/utils";
 
 export interface NavPageInfo {
   title: string;
@@ -78,12 +78,46 @@ const pages = [
 export default function NavHeader(props: any) {
   const { activeIndex } = props;
   const [disableList, setDisableList] = useState(true);
+  const [hideHeader, setHideHeader] = useState(false);
 
   const { windowWidth } = useContext(DataContext);
 
+  const fnFilter = useCallback(filterNfts(), []);
+
+  function filterNfts() {
+    let timer: any;
+    let lastTop = 0;
+    return function () {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        const currTop = getWindowScrollTop();
+        if (currTop - lastTop > 0) {
+          setHideHeader(true);
+        } else {
+          setHideHeader(false);
+        }
+        lastTop = currTop;
+      }, 0);
+    }
+  }
+
+  function fnScrollPage() {
+    fnFilter();
+  }
+
+  useEffect(() => {
+    scrollToTop();
+    window.addEventListener('scroll', fnScrollPage, true)
+    return () => {
+      window.removeEventListener('scroll', fnScrollPage, true)
+    }
+  }, []);
+
   return (
     <div
-      className="header-container"
+      className={`header-container ${hideHeader && 'hide'}`}
     >
       <div
         className={`header ${!disableList && 'disable'}`}
@@ -123,22 +157,22 @@ export default function NavHeader(props: any) {
           ))}
           <div className={`icon-nav-c ${windowWidth === 375 && 'mobile'}`}>
             <div
-                className={`nav-area icon`}
-                onClick={() => {
-                  setDisableList(true);
-                  window.open('https://twitter.com/Nervapes')
-                }}
-              >
-                <img className="icon-image" src={twitter} alt="" />
+              className={`nav-area icon`}
+              onClick={() => {
+                setDisableList(true);
+                window.open('https://twitter.com/Nervapes')
+              }}
+            >
+              <img className="icon-image" src={twitter} alt="" />
             </div>
             <div
-                className={`nav-area icon`}
-                onClick={() => {
-                  setDisableList(true);
-                  window.open('https://discord.com/invite/7br6nvuNHP')
-                }}
-              >
-                <img className="icon-image" src={discord} alt="" />
+              className={`nav-area icon`}
+              onClick={() => {
+                setDisableList(true);
+                window.open('https://discord.com/invite/7br6nvuNHP')
+              }}
+            >
+              <img className="icon-image" src={discord} alt="" />
             </div>
           </div>
         </ul>

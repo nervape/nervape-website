@@ -3,12 +3,14 @@ import { useParams } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
 import { NavTool } from "../../../route/navi-tool";
+import { getWindowScrollTop } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 
 export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story>();
+    const [isRead, setIsRead] = useState(false);
 
     useEffect(() => {
         if (!params.id) return;
