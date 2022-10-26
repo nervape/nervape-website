@@ -15,10 +15,12 @@ export function getWindowScrollTop() {
     return document.documentElement.scrollTop || document.body.scrollTop;
 }
 export function scrollToTop() {
-    const sTop = getWindowScrollTop();
-    console.log(sTop);
-    if (sTop > 0) {
-        // window.requestAnimationFrame(scrollToTop);
-        window.scrollTo(0, 0);
-    }
+    setTimeout(() => {
+        const sTop = getWindowScrollTop();
+        console.log(sTop);
+        if (sTop > 0) {
+            // window.requestAnimationFrame(scrollToTop);
+            window.scrollTo(0, 0);
+        }
+    }, 100);
 }
