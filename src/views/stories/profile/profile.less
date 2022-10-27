@@ -70,17 +70,18 @@
     }
     .footer-sketch {
       width: 100vw;
-      height: 200px;
+      // height: 200px;
+      height: auto;
       overflow-x: hidden;
       position: relative;
       img {
         width: 100%;
         object-fit: cover;
         object-position: top;
-        position: absolute;
+        // position: absolute;
         display: block;
         left: 50%;
-        transform: translateX(-50%);
+        // transform: translateX(-50%);
         height: 100%;
       }
       .sr-nav-footer {
@@ -131,6 +132,13 @@
         }
       }
       .footer-sketch {
+        object-fit: cover;
+        object-position: top;
+        position: absolute;
+        display: block;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
         .sr-nav-footer {
             width: 347px;
             top: 63px;
@@ -180,7 +188,7 @@
       .story-content {
       }
       .footer-sketch {
-        height: 300px;
+        // height: 300px;
       }
     }
   }
