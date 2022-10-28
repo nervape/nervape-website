@@ -7,6 +7,8 @@ import { getWindowScrollTop } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 
+import { Parallax } from 'rc-scroll-anim';
+
 export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story>();
@@ -66,12 +68,17 @@ export default function StoryProfile(props: any) {
                     <img loading="lazy" src={story?.headerSketch} alt="headerSketch" />
                 </div>
                 <div className="story-content" style={{ background: story?.background }}>
-                    <div className="profile-info">
-                        <div className="chapter-name">{story?.chapterId?.name}</div>
-                        <div className="story-serial">{story?.serial}</div>
-                        <div className="story-name">{story?.title}</div>
-                        <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
-                    </div>
+                    <Parallax
+                        animation={{ y: 0, opacity: 1, playScale: [0.1, 0.8] }}
+                        style={{ transform: 'translateY(50px)', opacity: 0 }}
+                    >
+                        <div className="profile-info">
+                            <div className="chapter-name">{story?.chapterId?.name}</div>
+                            <div className="story-serial">{story?.serial}</div>
+                            <div className="story-name">{story?.title}</div>
+                            <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
+                        </div>
+                    </Parallax>
                     <div className="footer-sketch">
                         <img loading="lazy" src={story?.footerSketch} alt="footerSketch" />
                         <div className="sr-nav-footer">
