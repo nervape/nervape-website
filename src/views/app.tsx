@@ -8,15 +8,12 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "./app.less";
-import { AboutPage } from "./pages/about";
+import AboutPage from "./about";
 import CampaignPage from "./campaigns";
-// import { Gallery } from "./pages/gallery";
-// import { StoriesPage } from "./pages/stories";
 import Story from "./stories";
 import NFTPage from "./nfts";
 import { NavTool } from "../route/navi-tool";
 import PageView from "./components/page-view";
-// import { StoryDetailPage } from "./pages/stories-detail";
 import StoryProfile from "./stories/profile/profile";
 
 export function App() {
