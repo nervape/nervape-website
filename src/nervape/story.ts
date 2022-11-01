@@ -20,6 +20,7 @@ export class Story {
   imageUrl: string = "";
   hoverImageUrl: string = "";
   bannerUrl: string = "";
+  bannerUrlSmall: string = "";
 
   previousId: string = "";
   nextId: string = "";

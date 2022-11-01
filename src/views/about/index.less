@@ -98,6 +98,7 @@
   }
   .customizable-section {
     background: #ffffff;
+    position: relative;
     .title {
       font-weight: 400;
       font-size: 32px;
@@ -145,25 +146,43 @@
           padding-bottom: 24px;
         }
         .more-detail {
-            width: 142px;
-            height: 29px;
+          width: 142px;
+          height: 29px;
+          text-align: center;
+          line-height: 29px;
+          background: #242e38;
+          border-radius: 4px;
+          a {
+            font-weight: 800;
+            font-size: 14px;
+            line-height: 17px;
             text-align: center;
-            line-height: 29px;
-            background: #242E38;
-            border-radius: 4px;
-            a {
-              font-weight: 800;
-              font-size: 14px;
-              line-height: 17px;
-              text-align: center;
-              color: #ffffff;
-            }
-            img {
-              width: 10px;
-              margin-left: 6px;
-            }
+            color: #ffffff;
           }
+          img {
+            width: 10px;
+            margin-left: 6px;
+          }
+        }
       }
+    }
+  }
+
+  .humans-section {
+    background: #242e38;
+    position: relative;
+    .title {
+      font-weight: 800;
+      font-size: 36px;
+      line-height: 43px;
+      color: #ffffff;
+      padding-top: 80px;
+    }
+    .desc {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
     }
   }
 }

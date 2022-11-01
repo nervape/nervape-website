@@ -77,6 +77,10 @@ export default function AboutPage() {
                     </div>
                 </div>
             </section>
+            <section className="humans-section">
+                <h3 className="title">The Humans and Other Creature Behind the Nervape</h3>
+                <p className="desc">A group of simple creatures with a wild mind.</p>
+            </section>
         </div>
     );
 }

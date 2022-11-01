@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
 import { NavTool } from "../../../route/navi-tool";
-import { getWindowScrollTop } from "../../../utils/utils";
+import { DataContext, getWindowScrollTop } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 
@@ -13,6 +13,7 @@ export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story>();
     const [isRead, setIsRead] = useState(false);
+    const { windowWidth } = useContext(DataContext);
 
     useEffect(() => {
         if (!params.id) return;
@@ -61,7 +62,7 @@ export default function StoryProfile(props: any) {
     return (
         <div className="story-profile-container main-container">
             <div className="banner">
-                <img loading="lazy" src={story?.bannerUrl} alt="bannerUrl" />
+                <img loading="lazy" src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
             </div>
             <div className="profile-content">
                 <div className="header-sketch">
@@ -73,8 +74,7 @@ export default function StoryProfile(props: any) {
                         style={{ transform: 'translateY(50px)', opacity: 0 }}
                     >
                         <div className="profile-info">
-                            <div className="chapter-name">{story?.chapterId?.name}</div>
-                            <div className="story-serial">{story?.serial}</div>
+                            <div className="chapter-name">{`${story?.chapterId?.name} | ${story?.serial}`}</div>
                             <div className="story-name">{story?.title}</div>
                             <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
                         </div>
