@@ -74,7 +74,10 @@ export default function StoryProfile(props: any) {
                         style={{ transform: 'translateY(50px)', opacity: 0 }}
                     >
                         <div className="profile-info">
-                            <div className="chapter-name">{`${story?.chapterId?.name} | ${story?.serial}`}</div>
+                            <div className="chapter-name">
+                                <span>{story?.chapterId?.name}</span>
+                                {` | ${story?.serial}`}
+                            </div>
                             <div className="story-name">{story?.title}</div>
                             <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
                         </div>
