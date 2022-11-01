@@ -70,7 +70,7 @@ export default function StoryProfile(props: any) {
                 </div>
                 <div className="story-content" style={{ background: story?.background }}>
                     <Parallax
-                        animation={{ y: 0, opacity: 1, playScale: [0.1, 0.8] }}
+                        animation={{ y: 0, opacity: 1, playScale: [0.1, 0.5] }}
                         style={{ transform: 'translateY(50px)', opacity: 0 }}
                     >
                         <div className="profile-info">
