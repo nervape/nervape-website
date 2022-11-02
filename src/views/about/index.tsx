@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import WallpaperLight from '../../assets/about/wallpaper_light.png';
 import Bonelist from '../../assets/about/bonelist.svg';
@@ -7,8 +7,53 @@ import AboutStory02 from '../../assets/about/about_story-02.png';
 import ArrowIcon from '../../assets/about/icon_arrow.png';
 import SceneDragon from '../../assets/about/scene_dragon.png';
 import './index.less';
+import { Question, Staff } from "../../nervape/about";
+import { nervapeApi } from "../../api/nervape-api";
+import TwitterIcon from '../../assets/about/twitter.svg';
+import UpArrowIcon from '../../assets/about/up_arrow.svg';
+import AboutBottom from '../../assets/about/about_bottom.png';
 
 export default function AboutPage() {
+    const [humans, setHumans] = useState<Staff[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
+
+    useEffect(() => {
+        nervapeApi.fnGetStaffs().then(res => {
+            setHumans(res);
+        })
+
+        setQuestions([
+            {
+                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+                answer: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+                open: false,
+                sort: 0,
+                backgroundColor: '#141D26'
+            },
+            {
+                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+                answer: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+                open: false,
+                sort: 0,
+                backgroundColor: '#282F41'
+            },
+            {
+                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+                answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
+                open: true,
+                sort: 0,
+                backgroundColor: '#506077'
+            },
+            {
+                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+                answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
+                open: true,
+                sort: 0,
+                backgroundColor: '#9196A5'
+            }
+        ]);
+    }, []);
+
     return (
         <div className="about-container main-container">
             <div className="banner">
@@ -17,15 +62,15 @@ export default function AboutPage() {
             </div>
             <section className="intro-section">
                 <div className="intro-content">
-                    <p>It begins with a dream,</p>
-                    <p>Seen by seekers and believers of the waking world.</p>
-                    <p>Living day by day, yet yearning for change, </p>
-                    <p>For freedom could only be found within dreams,</p>
-                    <p>Or so we believe. </p>
-                    <p>Will you dare to seek the unknown? </p>
-                    <p>To embrace adventure?</p>
-                    <p>To explore the limits of your strength and courage? </p>
-                    <p>The Third Continent awaits for those who take the leap of faith.</p>
+                    <div className="p">It begins with a dream,</div>
+                    <div className="p p1">Seen by seekers and believers of the waking world.</div>
+                    <div className="p p1">Living day by day, yet yearning for change, </div>
+                    <div className="p p1">For freedom could only be found within dreams,</div>
+                    <div className="p">Or so we believe. </div>
+                    <div className="p p1">Will you dare to seek the unknown? </div>
+                    <div className="p">To embrace adventure?</div>
+                    <div className="p p1">To explore the limits of your strength and courage? </div>
+                    <div className="p p1">The Third Continent awaits for those who take the leap of faith.</div>
                     <img src={Bonelist} alt="" />
                 </div>
             </section>
@@ -78,11 +123,81 @@ export default function AboutPage() {
                 </div>
             </section>
             <section className="humans-section">
-                <h3 className="title">The Humans and Other Creature Behind the Nervape</h3>
-                <p className="desc">A group of simple creatures with a wild mind.</p>
-                <div className="humans">
-                    
+                <div className="humans-content">
+                    <h3 className="title">The Humans and Other Creature Behind the Nervape</h3>
+                    <p className="desc">A group of simple creatures with a wild mind.</p>
+                    <div className="humans">
+                        {humans.length ? (
+                            humans.map((human, index) => {
+                                return (
+                                    <div className="human" style={{zIndex: humans.length - index}} key={index}>
+                                        <div className="introduction">
+                                            <div className="intro-c">
+                                                <div className="c-top">
+                                                    <div className="c-left">
+                                                        <div className="name">{human.name}</div>
+                                                        <div className="job">{human.job}</div>
+                                                    </div>
+                                                    <div className="c-right">
+                                                        <img src={TwitterIcon} alt="TwitterIcon" />
+                                                    </div>
+                                                </div>
+                                                <div className="c-bottom">
+                                                    {human.introduction}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="avatar">
+                                            <img src={human.avatar} alt="avatar" />
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        ) : ''}
+                    </div>
                 </div>
+            </section>
+
+            <section className="qa-section">
+                <div className="qa-content">
+                    <h3 className="title">Q&A</h3>
+                    <div className="questions">
+                        {questions.length ? (
+                            questions.map((question, index) => {
+                                return (
+                                    <div 
+                                        onClick={() => {
+                                            let _questions = JSON.parse(JSON.stringify(questions));
+                                            _questions[index].open = !_questions[index].open;
+                                            setQuestions(_questions);
+                                        }} 
+                                        key={index}
+                                        className={`question ${question.open && 'open'}`} 
+                                        style={{background: question.backgroundColor}}
+                                    >
+                                        <div className="arrow">
+                                            <img src={UpArrowIcon} alt="UpArrowIcon" />
+                                        </div>
+                                        <div className="q">
+                                            <div className="q-l">Q:</div>
+                                            <div className="q-r">{question.question}</div>
+                                        </div>
+                                        {question.open ? (
+                                            <div className="a">
+                                                <div className="a-l">A:</div>
+                                                <div className="a-r">{question.answer}</div>
+                                            </div>
+                                        ) : ''}
+                                    </div>
+                                );
+                            })
+                        ) : ''}
+                    </div>
+                </div>
+            </section>
+
+            <section className="bottom-section">
+                <img src={AboutBottom} alt="AboutBottom" />
             </section>
         </div>
     );
