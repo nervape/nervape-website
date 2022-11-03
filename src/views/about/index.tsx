@@ -12,6 +12,7 @@ import { nervapeApi } from "../../api/nervape-api";
 import TwitterIcon from '../../assets/about/twitter.svg';
 import UpArrowIcon from '../../assets/about/up_arrow.svg';
 import AboutBottom from '../../assets/about/about_bottom.png';
+import { NavTool } from "../../route/navi-tool";
 
 export default function AboutPage() {
     const [humans, setHumans] = useState<Staff[]>([]);
@@ -86,7 +87,12 @@ export default function AboutPage() {
                         elements will be added as 3D NFTs to the Nervos
                         blockchain.
                     </p>
-                    <div className="onging-saga">
+                    <div 
+                        className="onging-saga cursor"
+                        onClick={() => {
+                            NavTool.fnJumpToPage('/story');
+                        }}
+                    >
                         <a href="javascript;;">ONGOING SAGA</a>
                         <img src={ArrowIcon} alt="ArrowIcon" />
                     </div>
@@ -115,7 +121,12 @@ export default function AboutPage() {
                             <br />
                             <p>The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.</p>
                         </div>
-                        <div className="more-detail">
+                        <div 
+                            className="more-detail cursor" 
+                            onClick={() => {
+                                NavTool.fnJumpToPage('/nft');
+                            }}
+                        >
                             <a href="javascript;;">More Detail</a>
                             <img src={ArrowIcon} alt="ArrowIcon" />
                         </div>
@@ -139,7 +150,12 @@ export default function AboutPage() {
                                                         <div className="job">{human.job}</div>
                                                     </div>
                                                     {human.twitter && (
-                                                        <div className="c-right">
+                                                        <div 
+                                                            className="c-right cursor"
+                                                            onClick={() => {
+                                                                window.open(human.twitter);
+                                                            }}
+                                                        >
                                                             <img src={TwitterIcon} alt="TwitterIcon" />
                                                         </div>
                                                     )}
@@ -174,7 +190,7 @@ export default function AboutPage() {
                                             setQuestions(_questions);
                                         }} 
                                         key={index}
-                                        className={`question ${question.open && 'open'}`} 
+                                        className={`question cursor ${question.open && 'open'}`} 
                                         style={{background: question.backgroundColor}}
                                     >
                                         <div className="arrow">
