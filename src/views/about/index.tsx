@@ -57,7 +57,7 @@ export default function AboutPage() {
     return (
         <div className="about-container main-container">
             <div className="banner">
-                <div className="text">Nervape is a Storytelling and Customizable 3D Metawerse Brand.</div>
+                <div className="text">Nervape is a Storytelling and Customizable 3D Metaverse Brand.</div>
                 <img loading="lazy" src={WallpaperLight} alt="bannerUrl" />
             </div>
             <section className="intro-section">
@@ -87,7 +87,7 @@ export default function AboutPage() {
                         blockchain.
                     </p>
                     <div className="onging-saga">
-                        <a href="javascript;;">ONGING SAGA</a>
+                        <a href="javascript;;">ONGOING SAGA</a>
                         <img src={ArrowIcon} alt="ArrowIcon" />
                     </div>
                 </div>
