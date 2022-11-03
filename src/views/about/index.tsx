@@ -138,9 +138,11 @@ export default function AboutPage() {
                                                         <div className="name">{human.name}</div>
                                                         <div className="job">{human.job}</div>
                                                     </div>
-                                                    <div className="c-right">
-                                                        <img src={TwitterIcon} alt="TwitterIcon" />
-                                                    </div>
+                                                    {human.twitter && (
+                                                        <div className="c-right">
+                                                            <img src={TwitterIcon} alt="TwitterIcon" />
+                                                        </div>
+                                                    )}
                                                 </div>
                                                 <div className="c-bottom">
                                                     {human.introduction}
