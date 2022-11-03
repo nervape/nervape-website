@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
 import { NavTool } from "../../../route/navi-tool";
-import { DataContext, getWindowScrollTop } from "../../../utils/utils";
+import { DataContext, getWindowScrollTop, scrollToTop } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 
@@ -32,6 +32,7 @@ export default function StoryProfile(props: any) {
                 <div
                     className="sr-previous"
                     onClick={() => {
+                        scrollToTop();
                         NavTool.fnJumpToPage(
                             `/story/${previousStory.id}`
                         );
@@ -48,6 +49,7 @@ export default function StoryProfile(props: any) {
                 <div
                     className="sr-next"
                     onClick={() => {
+                        scrollToTop();
                         NavTool.fnJumpToPage(
                             `/story/${nextStory.id}`
                         );

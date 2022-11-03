@@ -279,7 +279,7 @@ export default function NFTPage() {
                                 {filters?.map((filter, i) => {
                                     return (
                                         <div className="filter" key={i}>
-                                            <div className="f-title" onClick={() => {
+                                            <div className="f-title cursor" onClick={() => {
                                                 if (windowWidth !== 1200) return;
                                                 const _filters = JSON.parse(JSON.stringify(filters));
                                                 _filters[i].open = !_filters[i].open;
@@ -327,7 +327,7 @@ export default function NFTPage() {
                                     return (
                                         <div className="filter-selected" key={type}>
                                             <span>{type}</span>
-                                            <img loading="lazy" src={CloseIcon} onClick={() => {
+                                            <img loading="lazy" className="cursor" src={CloseIcon} onClick={() => {
                                                 delSelectedFilter(type);
                                             }} alt="CloseIcon" />
                                         </div>
@@ -341,10 +341,13 @@ export default function NFTPage() {
                             {nfts?.map((nft, index) => {
                                 return (
                                     <div className="nft" key={index}>
-                                        <div className="cover-image" onClick={() => {
-                                            setShowNftCard(true);
-                                            setNftDetail(nft);
-                                        }}>
+                                        <div 
+                                            className="cover-image cursor" 
+                                            onClick={() => {
+                                                setShowNftCard(true);
+                                                setNftDetail(nft);
+                                            }}
+                                        >
                                             <img loading="lazy" src={nft.cover_image_url || nft.image} alt="cover-image" />
                                         </div>
                                         <div className="nft-info">

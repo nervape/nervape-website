@@ -46,7 +46,7 @@ export default function Story() {
                                 <div className="stories">
                                     {chapter.stories?.map((story, _index) => {
                                         return (
-                                            <div className="item story-item" onClick={() => {
+                                            <div className="item story-item cursor" onClick={() => {
                                                 NavTool.fnJumpToPage(`/story/${story?._id}`)
                                             }} key={_index}>
                                                 <img loading="lazy" className="image-url dishover" src={story.imageUrl} alt="imageUrl" />
