@@ -30,7 +30,7 @@
     .btn-group {
       right: 0px;
       height: 100%;
-
+      margin-bottom: unset;
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -40,7 +40,7 @@
       .nav-area {
         position: relative;
         margin-right: 24px;
-        height: 100%;
+        height: 32px;
 
         display: flex;
         align-items: center;
@@ -69,7 +69,7 @@
       }
       .nav-area.action {
         height: 32px;
-        background: #F44D37;
+        background: #f44d37;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
         border-radius: 6px;
         padding: 0 16px;
@@ -108,10 +108,29 @@
   opacity: 0;
 }
 
+.tooltip {
+  width: 150px;
+  border-radius: 8px;
+  max-width: unset;
+  .ant-tooltip-content {
+    font-size: 12px;
+    font-weight: 500;
+    .ant-tooltip-inner {
+      text-align: center;
+      height: 46px;
+      line-height: 46px;
+      padding: 0 !important;
+      border-radius: 8px !important;
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .header-container {
     .header {
-
       .logo {
       }
 
@@ -125,7 +144,6 @@
 
 @media screen and (max-width: 750px) {
   .header-container {
-
     .header {
       padding: 0px 14px;
 

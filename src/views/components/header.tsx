@@ -7,6 +7,7 @@ import discord from "../../assets/icons/discord.svg";
 
 import { NavTool } from "../../route/navi-tool";
 import { DataContext, getWindowScrollTop, scrollToTop } from "../../utils/utils";
+import { Tooltip } from "antd";
 
 export interface NavPageInfo {
   title: string;
@@ -142,19 +143,42 @@ export default function NavHeader(props: any) {
           className={`btn-group ${disableList === true ? "active-group" : ""
             }`}
         >
-          {pages?.map((v: NavPageInfo, i: number) => (
-            <div
-              className={`nav-area ${v.type}`}
-              key={i}
-              onClick={() => {
-                setDisableList(true);
-                NavTool.fnJumpToPage(v.url);
-                window.scrollTo(0, 0);
-              }}
-            >
-              <div className="title-text">{v.title}</div>
-            </div>
-          ))}
+          {pages?.map((v: NavPageInfo, i: number) => {
+            if (v.title === 'WALLET' || v.title === 'BRIDGE') {
+              return (
+                <Tooltip
+                  key={i}
+                  title={() => {
+                    return (
+                      <p>Coming Soon!</p>
+                    );
+                  }}
+                  placement="bottom"
+                  trigger={['hover', 'click']}
+                  overlayClassName="tooltip"
+                  color="#506077"
+                >
+                  <div className={`nav-area ${v.type}`}>
+                    <div className="title-text">{v.title}</div>
+                  </div>
+                </Tooltip>
+              );
+            } else {
+              return (
+                <div
+                  className={`nav-area ${v.type}`}
+                  key={i}
+                  onClick={() => {
+                    setDisableList(true);
+                    NavTool.fnJumpToPage(v.url);
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  <div className="title-text">{v.title}</div>
+                </div>
+              );
+            }
+          })}
           <div className={`icon-nav-c ${windowWidth === 375 && 'mobile'}`}>
             <div
               className={`nav-area icon`}

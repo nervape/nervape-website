@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import WallpaperLight from '../../assets/about/wallpaper_light.png';
 import Bonelist from '../../assets/about/bonelist.svg';
@@ -6,6 +6,7 @@ import AboutStory01 from '../../assets/about/about_story-01.png';
 import AboutStory02 from '../../assets/about/about_story-02.png';
 import ArrowIcon from '../../assets/about/icon_arrow.png';
 import SceneDragon from '../../assets/about/scene_dragon.png';
+import SceneDragonSmall from '../../assets/about/scene_dragon_small.png';
 import './index.less';
 import { Question, Staff } from "../../nervape/about";
 import { nervapeApi } from "../../api/nervape-api";
@@ -13,10 +14,13 @@ import TwitterIcon from '../../assets/about/twitter.svg';
 import UpArrowIcon from '../../assets/about/up_arrow.svg';
 import AboutBottom from '../../assets/about/about_bottom.png';
 import { NavTool } from "../../route/navi-tool";
+import { DataContext, scrollToTop } from "../../utils/utils";
 
 export default function AboutPage() {
     const [humans, setHumans] = useState<Staff[]>([]);
     const [questions, setQuestions] = useState<Question[]>([]);
+
+    const { windowWidth } = useContext(DataContext); 
 
     useEffect(() => {
         nervapeApi.fnGetStaffs().then(res => {
@@ -91,9 +95,10 @@ export default function AboutPage() {
                         className="onging-saga cursor"
                         onClick={() => {
                             NavTool.fnJumpToPage('/story');
+                            scrollToTop();
                         }}
                     >
-                        <a href="javascript;;">ONGOING SAGA</a>
+                        <a href="javascript:;">ONGOING SAGA</a>
                         <img src={ArrowIcon} alt="ArrowIcon" />
                     </div>
                 </div>
@@ -109,7 +114,7 @@ export default function AboutPage() {
             <section className="customizable-section">
                 <div className="title">“YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF”</div>
                 <div className="custom-cover">
-                    <img src={SceneDragon} alt="SceneDragon" />
+                    <img src={windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
                 </div>
                 <div className="customizable-collection">
                     <div className="custom-content">
@@ -125,9 +130,10 @@ export default function AboutPage() {
                             className="more-detail cursor" 
                             onClick={() => {
                                 NavTool.fnJumpToPage('/nft');
+                                scrollToTop();
                             }}
                         >
-                            <a href="javascript;;">More Detail</a>
+                            <a href="javascript:;">More Detail</a>
                             <img src={ArrowIcon} alt="ArrowIcon" />
                         </div>
                     </div>

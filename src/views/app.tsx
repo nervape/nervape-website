@@ -7,6 +7,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import 'antd/dist/antd.css';
 import "./app.less";
 import AboutPage from "./about";
 import CampaignPage from "./campaigns";
