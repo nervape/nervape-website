@@ -64,6 +64,7 @@ function PreviewModel(props: any) {
 
 function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
     const {nft, close, fullscreen} = props;
+
     return (
         <div className="nft-card-detail-container mask-cover" onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
@@ -87,10 +88,10 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="attributes flex">
+                        <div className="attributes attributes-1 flex">
                             <div className="range flex-1">
                                 <div className="text">ID Range</div>
-                                <div className="value">10010001 - 10010256</div>
+                                <div className="value">{nft.id_range}</div>
                             </div>
                             <div className="origin flex-1">
                                 <div className="text">Origin</div>

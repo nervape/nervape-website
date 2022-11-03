@@ -40,6 +40,8 @@ export class NFT {
   birthday: string = "";
   card_background: string = "";
   job: string = "";
+
+  id_range: string = "";
 }
 
 export class NFT_List {
