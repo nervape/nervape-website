@@ -25,7 +25,6 @@
   }
   .intro-section {
     width: 100%;
-    height: 200vh;
     background: #141d26;
     .intro-top {
       height: 100vh;
@@ -460,19 +459,28 @@
 @media screen and (max-width: 750px) {
   .about-container {
     .banner {
-      .text {
-        width: 347px;
-        font-size: 24px;
-        line-height: 29px;
-      }
     }
 
     .intro-section {
-      .intro-content {
-        width: 275px;
-        margin: 0 auto;
-        .p1 {
-          // line-height: 17px;
+      .intro-top {
+        .text {
+          width: 347px;
+          font-size: 24px;
+          line-height: 29px;
+        }
+      }
+      .intro-bottom {
+        .intro-content {
+          width: 275px;
+          margin: 0 auto;
+          padding: 0;
+          .p {
+            line-height: 17px;
+            margin-bottom: 17px;
+          }
+          .p1 {
+            line-height: 17px;
+          }
         }
       }
     }
