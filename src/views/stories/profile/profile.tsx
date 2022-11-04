@@ -11,7 +11,7 @@ import { Parallax } from 'rc-scroll-anim';
 
 export default function StoryProfile(props: any) {
     const params = useParams();
-    const [story, setStory] = useState<Story>();
+    const [story, setStory] = useState<Story | undefined>();
     const [isRead, setIsRead] = useState(false);
     const { windowWidth } = useContext(DataContext);
     const [keyId, setKeyId] = useState(0);
@@ -33,6 +33,7 @@ export default function StoryProfile(props: any) {
                 <div
                     className="sr-previous"
                     onClick={() => {
+                        setStory(undefined);
                         scrollToTop();
                         setKeyId(keyId + 1);
                         NavTool.fnJumpToPage(
@@ -51,6 +52,7 @@ export default function StoryProfile(props: any) {
                 <div
                     className="sr-next"
                     onClick={() => {
+                        setStory(undefined);
                         scrollToTop();
                         setKeyId(keyId + 1);
                         NavTool.fnJumpToPage(
