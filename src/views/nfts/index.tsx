@@ -13,6 +13,7 @@ import FilterArrowIcon from '../../assets/icons/filter_arrow_icon.png';
 import FilterIcon from '../../assets/icons/filter_icon.png';
 import CloseIcon from '../../assets/icons/close_icon.png';
 import FullscrenIcon from '../../assets/icons/fullscreen.png';
+import DetailCloseIcon from '../../assets/nft/close_detail.png';
 import IconPreviewClose from "../../assets/gallery/preview-close-button.svg";
 import LoadingGif from "../../assets/gallery/loading.gif";
 import { DataContext } from "../../utils/utils";
@@ -65,12 +66,17 @@ function PreviewModel(props: any) {
 function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
     const {nft, close, fullscreen} = props;
 
+    const { windowWidth } = useContext(DataContext);
+
     return (
         <div className="nft-card-detail-container mask-cover" onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
                     <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
-                    <img loading="lazy" onClick={fullscreen} className="full-screen" src={FullscrenIcon} alt="FullscrenIcon" />
+                    { windowWidth !== 1200 && (
+                        <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
+                    )}
+                    <img loading="lazy" onClick={fullscreen} className="full-screen cursor" src={FullscrenIcon} alt="FullscrenIcon" />
                 </div>
                 <div className="detail-info" style={{background: nft.card_background}}>
                     <div className="info-content">
@@ -78,10 +84,6 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
                         <div className="distribution">
                             <div className="title">Distribution</div>
                             <div className="flex">
-                                <div className="nervos-l1 flex-1">
-                                    <span className="text">NERVOS L1</span>
-                                    <span className="value">{`${parseInt(nft.total) - parseInt(nft.issued)}/${nft.total}`}</span>
-                                </div>
                                 <div className="godwoken flex-1">
                                     <span className="text">GODWOKEN</span>
                                     <span className="value">{`${nft.issued}/${nft.total}`}</span>
@@ -125,7 +127,7 @@ function FullscreenPreview(props: {nft?: NFT, close: any}) {
     return (
         <div className="fullscreen-container mask-cover">
             <PreviewModel enableModuleUrl={nft?.renderer}></PreviewModel>
-            <img loading="lazy" className="close-icon" onClick={close} src={IconPreviewClose} alt="IconPreviewClose" />
+            <img loading="lazy" className="close-icon cursor" onClick={close} src={IconPreviewClose} alt="IconPreviewClose" />
         </div>
     );
 }

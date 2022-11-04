@@ -14,11 +14,12 @@ import TwitterIcon from '../../assets/about/twitter.svg';
 import UpArrowIcon from '../../assets/about/up_arrow.svg';
 import AboutBottom from '../../assets/about/about_bottom.png';
 import { NavTool } from "../../route/navi-tool";
-import { DataContext, scrollToTop } from "../../utils/utils";
+import { DataContext, isMobile, scrollToTop } from "../../utils/utils";
 
 export default function AboutPage() {
     const [humans, setHumans] = useState<Staff[]>([]);
     const [questions, setQuestions] = useState<Question[]>([]);
+    const [currIndex, setCurrIndex] = useState(-1);
 
     const { windowWidth } = useContext(DataContext); 
 
@@ -45,14 +46,14 @@ export default function AboutPage() {
             {
                 question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
                 answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
-                open: true,
+                open: false,
                 sort: 0,
                 backgroundColor: '#506077'
             },
             {
                 question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
                 answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
-                open: true,
+                open: false,
                 sort: 0,
                 backgroundColor: '#9196A5'
             }
@@ -145,7 +146,19 @@ export default function AboutPage() {
                         {humans.length ? (
                             humans.map((human, index) => {
                                 return (
-                                    <div className="human" style={{zIndex: humans.length - index}} key={index}>
+                                    <div 
+                                        className={`human ${windowWidth !== 375 ? 'pc' : 'mobile'} ${currIndex === index && 'open'}`}
+                                        style={{zIndex: humans.length - index}} 
+                                        key={index}
+                                        onClick={() => {
+                                            if (!isMobile()) return;
+                                            if (currIndex === index) {
+                                                setCurrIndex(-1);
+                                            } else {
+                                                setCurrIndex(index);
+                                            }
+                                        }}
+                                    >
                                         <div className="introduction">
                                             <div className="intro-c">
                                                 <div className="c-top">
@@ -190,6 +203,10 @@ export default function AboutPage() {
                                     <div 
                                         onClick={() => {
                                             let _questions = JSON.parse(JSON.stringify(questions));
+                                            _questions.map((q: any)=> {
+                                                q.open = false;
+                                                return q;
+                                            })
                                             _questions[index].open = !_questions[index].open;
                                             setQuestions(_questions);
                                         }} 

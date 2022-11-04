@@ -88,7 +88,7 @@
             .swiper-slide:hover {
                 .banner-image {
                     img {
-                        transform: scale(1.1);
+                        // transform: scale(1.1);
                     }
                 }
                   
@@ -265,6 +265,7 @@
         }
     }
     .nft-card-detail-container, .fullscreen-container {
+        z-index: 999;
         .model-viewer-class {
             width: 100%;
             height: 100%;
@@ -295,7 +296,7 @@
                 width: 500px;
                 height: 500px;
                 background: #D9D9D9;
-                border-radius: 16px 0 0 16px;
+                border-radius: 0;
                 .model-viewer-class {
                     width: 100%;
                     height: 100%;
@@ -312,18 +313,24 @@
                         }
                     }
                 }
-                .full-screen {
+                .full-screen, .close-detail {
                     position: absolute;
-                    bottom: 20px;
-                    right: 20px;
                     width: 40px;
                     height: 40px;
+                }
+                .full-screen {
+                    bottom: 10px;
+                    right: 10px;
+                }
+                .close-detail {
+                    top: 10px;
+                    right: 10px;
                 }
             }
             .detail-info {
                 width: 500px;
                 background: #506077;
-                border-radius: 0px 16px 16px 0px;
+                border-radius: 0;
                 .info-content {
                     padding: 32px;
                     color: #FFFFFF;
@@ -621,11 +628,9 @@
                 .preview-model {
                     width: 600px;
                     height: 600px;
-                    border-radius: 16px 16px 0 0;
                 }
                 .detail-info {
                     width: 600px;
-                    border-radius: 0px 0 16px 16px;
                     .info-content {
                         padding: 16px 32px;
                     }
@@ -794,16 +799,17 @@
         }
         .nft-card-detail-container {
             .nft-card-detail {
-                width: 347px;
+                width: 100vw;
+                height: 100vh;
                 display: unset;
                 .preview-model {
-                    width: 347px;
-                    height: 347px;
-                    border-radius: 16px 16px 0 0;
+                    width: 100vw;
+                    height: 100vw;
                 }
                 .detail-info {
-                    width: 347px;
-                    border-radius: 0px 0 16px 16px;
+                    width: 100vw;
+                    height: calc(100vh - 100vw);
+                    overflow-y: scroll;
                     .info-content {
                         padding: 16px;
                         .attributes-1 {
