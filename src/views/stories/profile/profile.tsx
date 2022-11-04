@@ -14,6 +14,7 @@ export default function StoryProfile(props: any) {
     const [story, setStory] = useState<Story>();
     const [isRead, setIsRead] = useState(false);
     const { windowWidth } = useContext(DataContext);
+    const [keyId, setKeyId] = useState(0);
 
     useEffect(() => {
         if (!params.id) return;
@@ -33,6 +34,7 @@ export default function StoryProfile(props: any) {
                     className="sr-previous"
                     onClick={() => {
                         scrollToTop();
+                        setKeyId(keyId + 1);
                         NavTool.fnJumpToPage(
                             `/story/${previousStory.id}`
                         );
@@ -50,6 +52,7 @@ export default function StoryProfile(props: any) {
                     className="sr-next"
                     onClick={() => {
                         scrollToTop();
+                        setKeyId(keyId + 1);
                         NavTool.fnJumpToPage(
                             `/story/${nextStory.id}`
                         );
@@ -62,7 +65,7 @@ export default function StoryProfile(props: any) {
     };
 
     return (
-        <div className="story-profile-container main-container">
+        <div className="story-profile-container main-container" key={keyId}>
             <div className="banner">
                 <img loading="lazy" src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
             </div>

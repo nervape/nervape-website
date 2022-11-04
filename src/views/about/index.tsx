@@ -76,7 +76,7 @@ export default function AboutPage() {
                     <div className="p">To embrace adventure?</div>
                     <div className="p p1">To explore the limits of your strength and courage? </div>
                     <div className="p p1">The Third Continent awaits for those who take the leap of faith.</div>
-                    <img src={Bonelist} alt="" />
+                    <img loading="lazy" src={Bonelist} alt="" />
                 </div>
             </section>
             <section className="story-section">
@@ -104,17 +104,17 @@ export default function AboutPage() {
                 </div>
 
                 <div className="story story-01">
-                    <img src={AboutStory01} alt="AboutStory01" />
+                    <img loading="lazy" src={AboutStory01} alt="AboutStory01" />
                 </div>
                 <div className="story story-02">
-                    <img src={AboutStory02} alt="AboutStory01" />
+                    <img loading="lazy" src={AboutStory02} alt="AboutStory01" />
                 </div>
             </section>
 
             <section className="customizable-section">
                 <div className="title">“YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF”</div>
                 <div className="custom-cover">
-                    <img src={windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+                    <img loading="lazy" src={windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
                 </div>
                 <div className="customizable-collection">
                     <div className="custom-content">
@@ -132,7 +132,7 @@ export default function AboutPage() {
                             }}
                         >
                             <a href="javascript:;">More Detail</a>
-                            <img src={ArrowIcon} alt="ArrowIcon" />
+                            <img loading="lazy" src={ArrowIcon} alt="ArrowIcon" />
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,7 @@ export default function AboutPage() {
                                                                 window.open(human.twitter);
                                                             }}
                                                         >
-                                                            <img src={TwitterIcon} alt="TwitterIcon" />
+                                                            <img loading="lazy" src={TwitterIcon} alt="TwitterIcon" />
                                                         </div>
                                                     )}
                                                 </div>
@@ -170,7 +170,7 @@ export default function AboutPage() {
                                             </div>
                                         </div>
                                         <div className="avatar">
-                                            <img src={human.avatar} alt="avatar" />
+                                            <img loading="lazy" src={human.avatar} alt="avatar" />
                                         </div>
                                     </div>
                                 )
@@ -198,7 +198,7 @@ export default function AboutPage() {
                                         style={{background: question.backgroundColor}}
                                     >
                                         <div className="arrow">
-                                            <img src={UpArrowIcon} alt="UpArrowIcon" />
+                                            <img loading="lazy" src={UpArrowIcon} alt="UpArrowIcon" />
                                         </div>
                                         <div className="q">
                                             <div className="q-l">Q:</div>
@@ -219,7 +219,7 @@ export default function AboutPage() {
             </section>
 
             <section className="bottom-section">
-                <img src={AboutBottom} alt="AboutBottom" />
+                <img loading="lazy" src={AboutBottom} alt="AboutBottom" />
             </section>
         </div>
     );

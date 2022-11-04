@@ -2,6 +2,7 @@ import { Story, Story_NFT_List } from "./story";
 import iconScene from "../assets/icons/scene.png";
 import iconCharacter from "../assets/icons/character.png";
 import iconItem from "../assets/icons/item.png";
+import iconSpecial from "../assets/icons/special.png";
 
 export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special";
 
@@ -9,6 +10,7 @@ export const IconMap = new Map<NFT_TYPE, string>();
 IconMap.set("Character", iconCharacter);
 IconMap.set("Scene", iconScene);
 IconMap.set("Item", iconItem);
+IconMap.set("Special", iconSpecial);
 
 export class NFT {
   id: string = "";
