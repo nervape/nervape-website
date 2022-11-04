@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import WallpaperLight from '../../assets/about/wallpaper_light.png';
 import Bonelist from '../../assets/about/bonelist.svg';
@@ -16,12 +16,16 @@ import AboutBottom from '../../assets/about/about_bottom.png';
 import { NavTool } from "../../route/navi-tool";
 import { DataContext, isMobile, scrollToTop } from "../../utils/utils";
 
+import { Parallax } from 'rc-scroll-anim';
+
 export default function AboutPage() {
     const [humans, setHumans] = useState<Staff[]>([]);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currIndex, setCurrIndex] = useState(-1);
 
-    const { windowWidth } = useContext(DataContext); 
+    const { windowWidth } = useContext(DataContext);
+
+    const bannerRef = useRef(null);
 
     useEffect(() => {
         nervapeApi.fnGetStaffs().then(res => {
@@ -62,55 +66,162 @@ export default function AboutPage() {
 
     return (
         <div className="about-container main-container">
-            <div className="banner">
-                <div className="text">Nervape is a Storytelling and Customizable 3D Metaverse Brand.</div>
+            <div className="banner" ref={bannerRef}>
                 <img loading="lazy" src={WallpaperLight} alt="bannerUrl" />
             </div>
+
             <section className="intro-section">
-                <div className="intro-content">
-                    <div className="p">It begins with a dream,</div>
-                    <div className="p p1">Seen by seekers and believers of the waking world.</div>
-                    <div className="p p1">Living day by day, yet yearning for change, </div>
-                    <div className="p p1">For freedom could only be found within dreams,</div>
-                    <div className="p">Or so we believe. </div>
-                    <div className="p p1">Will you dare to seek the unknown? </div>
-                    <div className="p">To embrace adventure?</div>
-                    <div className="p p1">To explore the limits of your strength and courage? </div>
-                    <div className="p p1">The Third Continent awaits for those who take the leap of faith.</div>
-                    <img loading="lazy" src={Bonelist} alt="" />
-                </div>
-            </section>
-            <section className="story-section">
-                <div className="storytelling-intro">
-                    <h3 className="title">STORYTELLING</h3>
-                    <p className="desc">
-                        The Nervape project is an ongoing saga and a story of
-                        friendship, courage, and trust among the first
-                        Nervapes that arrive at the Third Continent. As the
-                        Nervapes continue to explore the Third Continent, new
-                        characters, unique features of the land, and fantasy
-                        elements will be added as 3D NFTs to the Nervos
-                        blockchain.
-                    </p>
-                    <div 
-                        className="onging-saga cursor"
-                        onClick={() => {
-                            NavTool.fnJumpToPage('/story');
-                            scrollToTop();
-                        }}
-                    >
-                        <a href="javascript:;">ONGOING SAGA</a>
-                        <img src={ArrowIcon} alt="ArrowIcon" />
+                <Parallax
+                    animation={{ opacity: 0, playScale: [1, 1.5] }}
+                    style={{ opacity: 1 }}
+                >
+                    <div className="intro-top">
+                        <div className="text">Nervape is a Storytelling and Customizable 3D Metaverse Brand.</div>
+                    </div>
+                </Parallax>
+                <div className="intro-bottom">
+                    <div className="intro-content">
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p">It begins with a dream,</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Seen by seekers and believers of the waking world.</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Living day by day, yet yearning for change, </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">For freedom could only be found within dreams,</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p">Or so we believe. </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Will you dare to seek the unknown? </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Will you dare to seek the unknown? </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p">To embrace adventure?</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">To explore the limits of your strength and courage? </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">The Third Continent awaits for those who take the leap of faith.</div>
+                        </Parallax>
+                        <img loading="lazy" src={Bonelist} alt="" />
                     </div>
                 </div>
-
-                <div className="story story-01">
-                    <img loading="lazy" src={AboutStory01} alt="AboutStory01" />
-                </div>
-                <div className="story story-02">
-                    <img loading="lazy" src={AboutStory02} alt="AboutStory01" />
-                </div>
             </section>
+            <Parallax
+                animation={{
+                    playScale: [0, 0],
+                    onStart: () => {
+                        if (bannerRef) {
+                            bannerRef.current.className = "banner banner1";
+                        }
+                    },
+                    onStartBack: () => {
+                        if (bannerRef) {
+                            bannerRef.current.className = "banner";
+                        }
+                    }
+                }}
+            >
+                <section className="story-section">
+                    <div className="storytelling-intro">
+                        <h3 className="title">STORYTELLING</h3>
+                        <p className="desc">
+                            The Nervape project is an ongoing saga and a story of
+                            friendship, courage, and trust among the first
+                            Nervapes that arrive at the Third Continent. As the
+                            Nervapes continue to explore the Third Continent, new
+                            characters, unique features of the land, and fantasy
+                            elements will be added as 3D NFTs to the Nervos
+                            blockchain.
+                        </p>
+                        <div
+                            className="onging-saga cursor"
+                            onClick={() => {
+                                NavTool.fnJumpToPage('/story');
+                                scrollToTop();
+                            }}
+                        >
+                            <div className="a">ONGOING SAGA</div>
+                            <img src={ArrowIcon} alt="ArrowIcon" />
+                        </div>
+                    </div>
+
+                    <div className="story story-01">
+                        <img loading="lazy" src={AboutStory01} alt="AboutStory01" />
+                    </div>
+                    <div className="story story-02">
+                        <img loading="lazy" src={AboutStory02} alt="AboutStory01" />
+                    </div>
+                </section>
+            </Parallax>
 
             <section className="customizable-section">
                 <div className="title">“YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF”</div>
@@ -125,14 +236,14 @@ export default function AboutPage() {
                             <p>The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.</p>
                             <p>The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.</p>
                         </div>
-                        <div 
-                            className="more-detail cursor" 
+                        <div
+                            className="more-detail cursor"
                             onClick={() => {
                                 NavTool.fnJumpToPage('/nft');
                                 scrollToTop();
                             }}
                         >
-                            <a href="javascript:;">More Detail</a>
+                            <div className="a">More Detail</div>
                             <img loading="lazy" src={ArrowIcon} alt="ArrowIcon" />
                         </div>
                     </div>
@@ -146,9 +257,9 @@ export default function AboutPage() {
                         {humans.length ? (
                             humans.map((human, index) => {
                                 return (
-                                    <div 
+                                    <div
                                         className={`human ${windowWidth !== 375 ? 'pc' : 'mobile'} ${currIndex === index && 'open'}`}
-                                        style={{zIndex: humans.length - index}} 
+                                        style={{ zIndex: humans.length - index }}
                                         key={index}
                                         onClick={() => {
                                             if (!isMobile()) return;
@@ -167,7 +278,7 @@ export default function AboutPage() {
                                                         <div className="job">{human.job}</div>
                                                     </div>
                                                     {human.twitter && (
-                                                        <div 
+                                                        <div
                                                             className="c-right cursor"
                                                             onClick={() => {
                                                                 window.open(human.twitter);
@@ -200,19 +311,19 @@ export default function AboutPage() {
                         {questions.length ? (
                             questions.map((question, index) => {
                                 return (
-                                    <div 
+                                    <div
                                         onClick={() => {
                                             let _questions = JSON.parse(JSON.stringify(questions));
-                                            _questions.map((q: any)=> {
+                                            _questions.map((q: any) => {
                                                 q.open = false;
                                                 return q;
                                             })
                                             _questions[index].open = !_questions[index].open;
                                             setQuestions(_questions);
-                                        }} 
+                                        }}
                                         key={index}
-                                        className={`question cursor ${question.open && 'open'}`} 
-                                        style={{background: question.backgroundColor}}
+                                        className={`question cursor ${question.open && 'open'}`}
+                                        style={{ background: question.backgroundColor }}
                                     >
                                         <div className="arrow">
                                             <img loading="lazy" src={UpArrowIcon} alt="UpArrowIcon" />
