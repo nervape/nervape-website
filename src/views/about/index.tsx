@@ -25,7 +25,7 @@ export default function AboutPage() {
 
     const { windowWidth } = useContext(DataContext);
 
-    const bannerRef = useRef(null);
+    const bannerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         nervapeApi.fnGetStaffs().then(res => {
@@ -179,14 +179,12 @@ export default function AboutPage() {
                 animation={{
                     playScale: [0, 0],
                     onStart: () => {
-                        if (bannerRef) {
-                            bannerRef.current.className = "banner banner1";
-                        }
+                        const current = bannerRef.current as unknown as HTMLDivElement;
+                        current.className = "banner banner1";
                     },
                     onStartBack: () => {
-                        if (bannerRef) {
-                            bannerRef.current.className = "banner";
-                        }
+                        const current = bannerRef.current as unknown as HTMLDivElement;
+                        current.className = "banner banner1";
                     }
                 }}
             >
