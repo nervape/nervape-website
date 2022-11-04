@@ -184,7 +184,7 @@ export default function AboutPage() {
                     },
                     onStartBack: () => {
                         const current = bannerRef.current as unknown as HTMLDivElement;
-                        current.className = "banner banner1";
+                        current.className = "banner";
                     }
                 }}
             >
