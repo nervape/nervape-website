@@ -39,12 +39,13 @@
 
       .nav-area {
         position: relative;
-        margin-right: 24px;
-        height: 32px;
-
+        margin-right: 12px;
+        // height: 24px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
         display: flex;
         align-items: center;
-
+        transition: all 0.3s;
         cursor: pointer;
 
         .select-line {
@@ -57,6 +58,7 @@
         }
 
         .title-text {
+          padding: 6px 12px;
           font-weight: 500;
           font-size: 12px;
           line-height: 21px;
@@ -67,16 +69,26 @@
           height: 28px;
         }
       }
+      .nav-area:hover {
+        background: rgba(136, 136, 136, 0.2);
+      }
       .nav-area.action {
-        height: 32px;
+        // height: 24px;
         background: #f44d37;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
         border-radius: 6px;
-        padding: 0 16px;
-        margin-right: 14px;
+        // padding: 0 16px;
+        margin-right: 12px;
+      }
+      .nav-area.action:hover {
+        background: #e45c4a;
       }
       .nav-area.icon {
-        margin-right: 14px;
+        background: unset;
+        margin-right: 12px;
+      }
+      .nav-area.icon:hover {
+        background: unset;
       }
       .nav-area.icon:last-child {
         margin-right: 0;

@@ -9,16 +9,19 @@ import "swiper/css";
 import 'swiper/css/pagination';
 import { DataContext } from "../../utils/utils";
 
-import BoneListImage from "../../assets/campaign/bonelist.png";
+import BoneListWhatImage from "../../assets/campaign/bonelist_what.png";
+import BoneListHowImage from "../../assets/campaign/bonelist_how.png";
 
 const boneList = [
     {
         name: 'WHAT IS BONELIST?',
-        desc: 'The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.'
+        desc: 'The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.',
+        image: BoneListWhatImage
     },
     {
         name: 'HOW TO GET BONELIST?',
-        desc: 'The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.'
+        desc: 'The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.',
+        image: BoneListHowImage
     }
 ];
 
@@ -27,7 +30,7 @@ function BoneListItem(props: any) {
 
     return (
         <div className="bl-item">
-            <img loading="lazy" src={BoneListImage} alt="BoneListImage" />
+            <img loading="lazy" src={item.image} alt="BoneListImage" />
             <div className="info">
                 <div className="name">{item.name}</div>
                 <div className="desc">{item.desc}</div>
@@ -42,8 +45,10 @@ function CampaignItem(props: { campaign: Campaign }) {
     const startDate = new Date(campaign.startTime).toLocaleDateString("en-US");
     const endDate = new Date(campaign.endTime).toLocaleDateString("en-US");
     return (
-        <div className="campaign-item">
-            <img loading="lazy" src={campaign.reward?.cover_image_url || campaign.reward?.image} alt="AwardCoverImage" />
+        <div className="campaign-item cursor">
+            <div className="cover-image">
+                <img loading="lazy" src={campaign.reward?.cover_image_url || campaign.reward?.image} alt="AwardCoverImage" />
+            </div>
             <div className="c-title">{campaign.title}</div>
             <div className="c-start-end-date">{`${startDate} - ${endDate}`}</div>
             <div className={`c-status ${campaign.timeline}`}>
@@ -60,7 +65,7 @@ function PoapBadgeItem(props: { poap: PoapBadge }) {
     const endDate = new Date(poap.end_date).toLocaleDateString("en-US");
 
     return (
-        <div className="poap-item">
+        <div className="poap-item cursor">
             <div className="p-info">
                 <div className="p-name">{poap.name}</div>
                 <div className="p-start-end-date">

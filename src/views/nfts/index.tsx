@@ -8,13 +8,12 @@ import SwiperCore, { Autoplay, Pagination } from "swiper";
 import "swiper/css";
 import 'swiper/css/pagination';
 
-import PlayIcon from '../../assets/icons/play_icon.png';
+import PlayIcon from '../../assets/icons/play_icon.svg';
 import FilterArrowIcon from '../../assets/icons/filter_arrow_icon.png';
 import FilterIcon from '../../assets/icons/filter_icon.png';
 import CloseIcon from '../../assets/icons/close_icon.png';
-import FullscrenIcon from '../../assets/icons/fullscreen.png';
-import DetailCloseIcon from '../../assets/nft/close_detail.png';
-import IconPreviewClose from "../../assets/gallery/preview-close-button.svg";
+import FullscrenIcon from '../../assets/nft/fullscreen.svg';
+import DetailCloseIcon from '../../assets/nft/close_detail.svg';
 import LoadingGif from "../../assets/gallery/loading.gif";
 import { DataContext } from "../../utils/utils";
 
@@ -41,7 +40,7 @@ function NftBannerVideo(props: BannerVideoProp) {
 }
 
 function PreviewModel(props: any) {
-    const {enableModuleUrl} = props;
+    const { enableModuleUrl } = props;
     return (
         <model-viewer
             class="model-viewer-class"
@@ -55,7 +54,7 @@ function PreviewModel(props: any) {
             // environment-image="shared-assets/environments/moon_1k.hdr"
             seamless-poster
             shadow-intensity="1"
-            >
+        >
             <div className="model-loading" slot="poster">
                 <img loading="lazy" className="model-loading-gif" src={LoadingGif} alt="" />
             </div>
@@ -64,7 +63,7 @@ function PreviewModel(props: any) {
 }
 
 function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
-    const {nft, close, fullscreen} = props;
+    const { nft, close, fullscreen } = props;
 
     const { windowWidth } = useContext(DataContext);
 
@@ -73,12 +72,16 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
                     <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
-                    { windowWidth !== 1200 && (
-                        <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
+                    {windowWidth !== 1200 && (
+                        <div className="close-detail-c">
+                            <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
+                        </div>
                     )}
-                    <img loading="lazy" onClick={fullscreen} className="full-screen cursor" src={FullscrenIcon} alt="FullscrenIcon" />
+                    <div className="fullscreen-c">
+                        <img loading="lazy" onClick={fullscreen} className="full-screen cursor" src={FullscrenIcon} alt="FullscrenIcon" />
+                    </div>
                 </div>
-                <div className="detail-info" style={{background: nft.card_background}}>
+                <div className="detail-info" style={{ background: nft.card_background }}>
                     <div className="info-content">
                         <div className="name">{nft.name}</div>
                         <div className="distribution">
@@ -101,14 +104,18 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
                             </div>
                         </div>
                         <div className="attributes flex">
-                            <div className="name flex-1">
-                                <div className="text">Name</div>
-                                <div className="value">{nft.short_name}</div>
-                            </div>
-                            <div className="birthday flex-1">
-                                <div className="text">Birthday</div>
-                                <div className="value">{nft.birthday && nft.birthday.replace(/-/g, '/')}</div>
-                            </div>
+                            {nft.type === 'Character' && (
+                                <>
+                                    <div className="name flex-1">
+                                        <div className="text">Name</div>
+                                        <div className="value">{nft.short_name}</div>
+                                    </div>
+                                    <div className="birthday flex-1">
+                                        <div className="text">Birthday</div>
+                                        <div className="value">{nft.birthday && nft.birthday.replace(/-/g, '/')}</div>
+                                    </div>
+                                </>
+                            )}
                             <div className="type flex-1">
                                 <div className="text">Type</div>
                                 <div className="value">{nft.type}</div>
@@ -122,12 +129,14 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
     );
 }
 
-function FullscreenPreview(props: {nft?: NFT, close: any}) {
+function FullscreenPreview(props: { nft?: NFT, close: any }) {
     const { nft, close } = props;
     return (
         <div className="fullscreen-container mask-cover">
             <PreviewModel enableModuleUrl={nft?.renderer}></PreviewModel>
-            <img loading="lazy" className="close-icon cursor" onClick={close} src={IconPreviewClose} alt="IconPreviewClose" />
+            <div className="close-c cursor">
+                <img loading="lazy" className="close-icon transform-center" onClick={close} src={DetailCloseIcon} alt="IconPreviewClose" />
+            </div>
         </div>
     );
 }
@@ -243,9 +252,13 @@ export default function NFTPage() {
                                             {/* <img loading="lazy" src={IconMap.get(banner.type)} className="icon" alt="" /> */}
                                             <div className="type">{`${banner.type} NFT`.toUpperCase()}</div>
                                         </div>
-                                        <img loading="lazy" src={PlayIcon} onClick={() => {
-                                            setPromoVideoUrl(banner.promoVideoUrl);
-                                        }} className="play-icon cursor" alt="" />
+                                        <div
+                                            className="play-icon-c cursor"
+                                            onClick={() => {
+                                                setPromoVideoUrl(banner.promoVideoUrl);
+                                            }}>
+                                            <img loading="lazy" src={PlayIcon} className="play-icon" alt="" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -344,8 +357,8 @@ export default function NFTPage() {
                             {nfts?.map((nft, index) => {
                                 return (
                                     <div className="nft" key={index}>
-                                        <div 
-                                            className="cover-image cursor" 
+                                        <div
+                                            className="cover-image cursor"
                                             onClick={() => {
                                                 setShowNftCard(true);
                                                 setNftDetail(nft);
@@ -374,8 +387,8 @@ export default function NFTPage() {
                 }}></NftBannerVideo>
             )}
             {showNftCard && nftDetail && (
-                <NftCardDetail 
-                    nft={nftDetail} 
+                <NftCardDetail
+                    nft={nftDetail}
                     close={() => setShowNftCard(false)}
                     fullscreen={() => {
                         setShowNftCard(false);

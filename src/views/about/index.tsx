@@ -310,20 +310,24 @@ export default function AboutPage() {
                             questions.map((question, index) => {
                                 return (
                                     <div
-                                        onClick={() => {
-                                            let _questions = JSON.parse(JSON.stringify(questions));
-                                            _questions.map((q: any) => {
-                                                q.open = false;
-                                                return q;
-                                            })
-                                            _questions[index].open = !_questions[index].open;
-                                            setQuestions(_questions);
-                                        }}
                                         key={index}
                                         className={`question cursor ${question.open && 'open'}`}
                                         style={{ background: question.backgroundColor }}
                                     >
-                                        <div className="arrow">
+                                        <div 
+                                            className="arrow" 
+                                            onClick={() => {
+                                                let _questions = JSON.parse(JSON.stringify(questions));
+                                                _questions.map((q: any, i: number) => {
+                                                    if (i !== index) {
+                                                        q.open = false;
+                                                    }
+                                                    return q;
+                                                })
+                                                _questions[index].open = !_questions[index].open;
+                                                setQuestions(_questions);
+                                            }}
+                                        >
                                             <img loading="lazy" src={UpArrowIcon} alt="UpArrowIcon" />
                                         </div>
                                         <div className="q">
