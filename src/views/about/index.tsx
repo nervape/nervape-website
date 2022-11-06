@@ -31,37 +31,9 @@ export default function AboutPage() {
         nervapeApi.fnGetStaffs().then(res => {
             setHumans(res);
         })
-
-        setQuestions([
-            {
-                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
-                answer: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
-                open: false,
-                sort: 0,
-                backgroundColor: '#141D26'
-            },
-            {
-                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
-                answer: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
-                open: false,
-                sort: 0,
-                backgroundColor: '#282F41'
-            },
-            {
-                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
-                answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
-                open: false,
-                sort: 0,
-                backgroundColor: '#506077'
-            },
-            {
-                question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
-                answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
-                open: false,
-                sort: 0,
-                backgroundColor: '#9196A5'
-            }
-        ]);
+        nervapeApi.fnGetQuestions().then(res => {
+            setQuestions(res);
+        })
     }, []);
 
     return (
@@ -312,7 +284,7 @@ export default function AboutPage() {
                                     <div
                                         key={index}
                                         className={`question cursor ${question.open && 'open'}`}
-                                        style={{ background: question.backgroundColor }}
+                                        style={{ background: question.background }}
                                     >
                                         <div 
                                             className="arrow" 

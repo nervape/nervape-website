@@ -96,6 +96,7 @@ export default function NavHeader(props: any) {
         const currTop = getWindowScrollTop();
         if (currTop - lastTop > 0) {
           setHideHeader(true);
+          setDisableList(true);
         } else {
           setHideHeader(false);
         }
@@ -108,6 +109,13 @@ export default function NavHeader(props: any) {
     fnFilter();
   }
 
+  useEffect(() => {
+    if (!disableList) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [disableList]);
   useEffect(() => {
     scrollToTop();
     window.addEventListener('scroll', fnScrollPage, true)
@@ -139,67 +147,69 @@ export default function NavHeader(props: any) {
             setDisableList(!disableList);
           }}
         />
-        <ul
-          className={`btn-group ${disableList === true ? "active-group" : ""
-            }`}
-        >
-          {pages?.map((v: NavPageInfo, i: number) => {
-            if (v.title === 'WALLET' || v.title === 'BRIDGE') {
-              return (
-                <Tooltip
-                  key={i}
-                  title={() => {
-                    return (
-                      <p>Coming Soon!</p>
-                    );
-                  }}
-                  placement="bottom"
-                  trigger={['hover', 'click']}
-                  overlayClassName="tooltip"
-                  color="#506077"
-                >
-                  <div className={`nav-area ${v.type}`}>
+        <div className="header-menu">
+          <ul
+            className={`btn-group ${disableList === true ? "active-group" : ""
+              }`}
+          >
+            {pages?.map((v: NavPageInfo, i: number) => {
+              if (v.title === 'WALLET' || v.title === 'BRIDGE') {
+                return (
+                  <Tooltip
+                    key={i}
+                    title={() => {
+                      return (
+                        <p>Coming Soon!</p>
+                      );
+                    }}
+                    placement="bottom"
+                    trigger={['hover', 'click']}
+                    overlayClassName="tooltip"
+                    color="#506077"
+                  >
+                    <div className={`nav-area ${v.type}`}>
+                      <div className="title-text">{v.title}</div>
+                    </div>
+                  </Tooltip>
+                );
+              } else {
+                return (
+                  <div
+                    className={`nav-area ${v.type}`}
+                    key={i}
+                    onClick={() => {
+                      setDisableList(true);
+                      NavTool.fnJumpToPage(v.url);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
                     <div className="title-text">{v.title}</div>
                   </div>
-                </Tooltip>
-              );
-            } else {
-              return (
-                <div
-                  className={`nav-area ${v.type}`}
-                  key={i}
-                  onClick={() => {
-                    setDisableList(true);
-                    NavTool.fnJumpToPage(v.url);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <div className="title-text">{v.title}</div>
-                </div>
-              );
-            }
-          })}
-          <div className={`icon-nav-c ${windowWidth === 375 && 'mobile'}`}>
-            <div
-              className={`nav-area icon`}
-              onClick={() => {
-                setDisableList(true);
-                window.open('https://twitter.com/Nervapes')
-              }}
-            >
-              <img className="icon-image" src={twitter} alt="" />
+                );
+              }
+            })}
+            <div className={`icon-nav-c ${windowWidth === 375 && 'mobile'}`}>
+              <div
+                className={`nav-area icon`}
+                onClick={() => {
+                  setDisableList(true);
+                  window.open('https://twitter.com/Nervapes')
+                }}
+              >
+                <img className="icon-image" src={twitter} alt="" />
+              </div>
+              <div
+                className={`nav-area icon`}
+                onClick={() => {
+                  setDisableList(true);
+                  window.open('https://discord.com/invite/7br6nvuNHP')
+                }}
+              >
+                <img className="icon-image" src={discord} alt="" />
+              </div>
             </div>
-            <div
-              className={`nav-area icon`}
-              onClick={() => {
-                setDisableList(true);
-                window.open('https://discord.com/invite/7br6nvuNHP')
-              }}
-            >
-              <img className="icon-image" src={discord} alt="" />
-            </div>
-          </div>
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
   );

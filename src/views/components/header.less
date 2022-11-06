@@ -165,13 +165,21 @@
       .hamburger {
         display: block;
       }
-
+      .header-menu {
+        width: 100vw;
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+        background: rgba(255, 255, 255, 0.5);
+      }
       .btn-group {
         position: absolute;
-        top: 100%;
+        padding-top: 64px;
+        top: 0;
         width: 100%;
         background: rgba(27, 33, 47, 0.95);
-        padding: 16px 14px;
+        padding: 64px 14px 16px;
         flex-direction: column;
         height: auto;
 
@@ -183,6 +191,7 @@
           margin-bottom: 14px;
           margin-right: 0;
           width: 100%;
+          background: unset;
           .select-line {
             position: absolute;
             margin-top: 8px;
@@ -211,6 +220,9 @@
             height: 40px;
           }
         }
+        .nav-area:hover {
+          background: unset;
+        }
       }
 
       .active-group {
@@ -220,6 +232,9 @@
     .header.disable {
       position: fixed;
       background: rgba(27, 33, 47, 0.95);
+      .header-menu {
+        height: 100vh;
+      }
     }
   }
 }

@@ -11,6 +11,6 @@ export class Question {
     question: string = "";
     answer: string = "";
     sort: number = 0;
-    backgroundColor: string = "";
+    background: string = "";
     open: boolean = false;
 }
