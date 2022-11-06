@@ -22,6 +22,7 @@ export default function AboutPage() {
     const [humans, setHumans] = useState<Staff[]>([]);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currIndex, setCurrIndex] = useState(-1);
+    const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
 
     const { windowWidth } = useContext(DataContext);
 
@@ -285,10 +286,13 @@ export default function AboutPage() {
                                         key={index}
                                         className={`question cursor ${question.open && 'open'}`}
                                         style={{ background: question.background }}
-                                    >
-                                        <div 
-                                            className="arrow" 
-                                            onClick={() => {
+                                        onMouseDown={(e) => {
+                                            console.log('down', e)
+                                            setClickPosition({ x: e.clientX, y: e.clientY })
+                                        }}
+                                        onMouseUp={(e) => {
+                                            console.log('up', e)
+                                            if (e.clientX == clickPosition.x && e.clientY == clickPosition.y) {
                                                 let _questions = JSON.parse(JSON.stringify(questions));
                                                 _questions.map((q: any, i: number) => {
                                                     if (i !== index) {
@@ -298,7 +302,13 @@ export default function AboutPage() {
                                                 })
                                                 _questions[index].open = !_questions[index].open;
                                                 setQuestions(_questions);
-                                            }}
+                                            }
+                                            setClickPosition({ x: 0, y: 0 })
+                                        }}
+                                    >
+                                        <div className="hover-cover"></div>
+                                        <div
+                                            className="arrow"
                                         >
                                             <img loading="lazy" src={UpArrowIcon} alt="UpArrowIcon" />
                                         </div>
