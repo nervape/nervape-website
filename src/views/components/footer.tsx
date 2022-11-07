@@ -12,7 +12,7 @@ export default function Footer() {
     
     return (
         <div className={`footer ${isMobile && 'mobile'}`}>
-            <div className="copy">@2022 Nervape</div>
+            <div className="copy">@&nbsp;2022&nbsp;&nbsp;Nervape</div>
             <div className="footer-item">
                 <div className="wiki">Nervape Wiki</div>
                 <div className="brand-assets">

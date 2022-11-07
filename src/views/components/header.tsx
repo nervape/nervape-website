@@ -94,10 +94,10 @@ export default function NavHeader(props: any) {
       }
       timer = setTimeout(() => {
         const currTop = getWindowScrollTop();
-        if (currTop - lastTop > 0) {
+        if (currTop - lastTop > 10) {
           setHideHeader(true);
           setDisableList(true);
-        } else {
+        } else if (currTop - lastTop < -10) {
           setHideHeader(false);
         }
         lastTop = currTop;
@@ -136,7 +136,7 @@ export default function NavHeader(props: any) {
           src={logo}
           onClick={() => {
             setDisableList(true);
-            NavTool.fnJumpToPage((pages as NavPageInfo[])[0].url);
+            NavTool.fnJumpToPage('');
             window.scrollTo(0, 0);
           }}
         />

@@ -16,6 +16,7 @@ import NFTPage from "./nfts";
 import { NavTool } from "../route/navi-tool";
 import PageView from "./components/page-view";
 import StoryProfile from "./stories/profile/profile";
+import HomePage from "./home";
 
 export function App() {
   NavTool.navigation = useNavigate();
@@ -24,6 +25,14 @@ export function App() {
   return (
     <div className="app">
         <Routes>
+          <Route
+            path=""
+            element={
+              <PageView activeIndex={0} disableFooter={true}>
+                <HomePage />
+              </PageView>
+            }
+          />
           <Route
             path="/about"
             element={
@@ -64,7 +73,7 @@ export function App() {
               </PageView>
             }
           />
-          <Route path="*" element={<Navigate to="/about" />} />
+          <Route path="*" element={<Navigate to="" />} />
         </Routes>
     </div>
   );
