@@ -164,9 +164,21 @@
       .logo {
         width: 80.4px;
       }
-      .hamburger {
-        display: block;
+      .hamburger-c {
+        width: 24px;
+        height: 24px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .hamburger {
+          display: block;
+          width: 12px;
+          height: 12px;
+        }
       }
+      
       .header-menu {
         width: 100vw;
         position: absolute;
@@ -233,9 +245,12 @@
     }
     .header.disable {
       position: fixed;
-      background: rgba(27, 33, 47, 0.95);
+      // background: rgba(27, 33, 47, 0.95);
       .header-menu {
         height: 100vh;
+      }
+      .hamburger-c {
+        background: rgba(136, 136, 136, 0.2);
       }
     }
   }

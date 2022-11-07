@@ -140,13 +140,15 @@ export default function NavHeader(props: any) {
             window.scrollTo(0, 0);
           }}
         />
-        <img
-          className="hamburger"
-          src={hamburger}
-          onClick={(e) => {
-            setDisableList(!disableList);
-          }}
-        />
+        <div className="hamburger-c">
+          <img
+            className="hamburger"
+            src={hamburger}
+            onClick={(e) => {
+              setDisableList(!disableList);
+            }}
+          />
+        </div>
         <div className="header-menu">
           <ul
             className={`btn-group ${disableList === true ? "active-group" : ""
