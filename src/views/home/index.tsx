@@ -1,15 +1,13 @@
 import React from "react";
 import "./index.less";
 
-import NervapeVideo from '../../assets/Nervape_Video.mp4';
-import Footer from "../components/footer";
 import { NavTool } from "../../route/navi-tool";
 
 export default function HomePage() {
     return (
         <div className="home-container main-container">
             <div className="video-content">
-                <video src={NervapeVideo} loop preload="true" autoPlay muted></video>
+                <video src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/cf840997-c84e-4546-a6aa-e746e35b40ae.mp4" loop preload="true" autoPlay muted></video>
                 <div className="about-here">
                     Enter The Third Continent
                     <button 
