@@ -17,6 +17,8 @@ import DetailCloseIcon from '../../assets/nft/close_detail.svg';
 import LoadingGif from "../../assets/gallery/loading.gif";
 import { DataContext } from "../../utils/utils";
 
+import { Parallax } from 'rc-scroll-anim';
+
 declare global {
     namespace JSX {
         interface IntrinsicElements {
@@ -228,44 +230,64 @@ export default function NFTPage() {
     }, [filters])
     return (
         <div className="nft-container main-container">
-            <Swiper
-                autoplay={{ delay: 20000 }}
-                speed={1000}
-                loop
-                pagination={{ clickable: true }}
-                onSlideChange={() => console.log('slide change')}
+            <Parallax
+                animation={{ translateY: '-100vh', playScale: [1, 2.5] }}
+                style={{ transform: 'translateY(0)' }}
+                location="home-slider"
+                className="swiper-c"
             >
-                {banners?.map((banner, index) => {
-                    return (
-                        <SwiperSlide key={index}>
-                            <div className="banner-image">
-                                <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
-                            </div>
-                            <div className="cover-mask"></div>
-                            <div className="banner-info">
-                                <div className="info-item">
-                                    <div className="name">{banner.name}</div>
-                                    <div className="job">{banner.job.toUpperCase()}</div>
-                                    <div className="type-video">
-                                        <div className="type-c">
-                                            <embed src={IconMap.get(banner.type)} className="icon" type="" />
-                                            {/* <img loading="lazy" src={IconMap.get(banner.type)} className="icon" alt="" /> */}
-                                            <div className="type">{`${banner.type} NFT`.toUpperCase()}</div>
+                <Swiper
+                    autoplay={{ delay: 5000 }}
+                    speed={1000}
+                    loop
+
+                    pagination={{ clickable: true }}
+                    onSlideChange={() => console.log('slide change')}
+                >
+                    {banners?.map((banner, index) => {
+                        return (
+                            <SwiperSlide key={index}>
+                                {({ isActive }) => (
+                                    <>
+                                        <div className="banner-image">
+                                            <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                                         </div>
-                                        <div
-                                            className="play-icon-c cursor"
-                                            onClick={() => {
-                                                setPromoVideoUrl(banner.promoVideoUrl);
-                                            }}>
-                                            <img loading="lazy" src={PlayIcon} className="play-icon" alt="" />
+                                        <div className="cover-mask"></div>
+                                        <div className={`banner-info ${isActive ? 'active' : 'notActive'}`}>
+                                            <div className="info-item">
+                                                <div className="name">{banner.name}</div>
+                                                <div className="job">{banner.job.toUpperCase()}</div>
+                                                <div className="type-video">
+                                                    <div className="type-c">
+                                                        <embed src={IconMap.get(banner.type)} className="icon" type="" />
+                                                        {/* <img loading="lazy" src={IconMap.get(banner.type)} className="icon" alt="" /> */}
+                                                        <div className="type">{`${banner.type} NFT`.toUpperCase()}</div>
+                                                    </div>
+                                                    <div
+                                                        className="play-icon-c cursor"
+                                                        onClick={() => {
+                                                            setPromoVideoUrl(banner.promoVideoUrl);
+                                                        }}>
+                                                        <img loading="lazy" src={PlayIcon} className="play-icon" alt="" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    );
-                })}
-            </Swiper>
+                                    </>
+                                )}
+                            </SwiperSlide>
+                        );
+                    })}
+                </Swiper>
+                <Parallax
+                    animation={{ opacity: 1, playScale: [1, 2.5] }}
+                    style={{ opacity: 0 }}
+                    location="home-slider"
+                    className="swiper-mask"
+                >
+                </Parallax>
+            </Parallax>
+            <div className="home-slider" id="home-slider"></div>
             <div className="nfts-content">
                 <div className="content">
                     <div className="filter-items">
