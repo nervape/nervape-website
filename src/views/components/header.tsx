@@ -149,10 +149,15 @@ export default function NavHeader(props: any) {
             }}
           />
         </div>
-        <div className="header-menu">
+        <div
+          className="header-menu"
+          onClick={() => {
+            setDisableList(true);
+          }}
+        >
           <ul
-            className={`btn-group ${disableList === true ? "active-group" : ""
-              }`}
+            className={`btn-group ${disableList === true ? "active-group" : ""}`}
+            onClick={(e) => { e.stopPropagation() }}
           >
             {pages?.map((v: NavPageInfo, i: number) => {
               if (v.title === 'WALLET' || v.title === 'BRIDGE') {
@@ -177,7 +182,7 @@ export default function NavHeader(props: any) {
               } else {
                 return (
                   <div
-                    className={`nav-area ${v.type}`}
+                    className={`nav-area ${v.type} ${activeIndex == i + 1 ? 'active' : ''}`}
                     key={i}
                     onClick={() => {
                       setDisableList(true);

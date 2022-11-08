@@ -21,6 +21,7 @@ import { NavTool } from "../../route/navi-tool";
 import { DataContext, isMobile, scrollToTop } from "../../utils/utils";
 
 import { Parallax } from 'rc-scroll-anim';
+import Footer from "../components/footer";
 
 export default function AboutPage() {
     const [humans, setHumans] = useState<Staff[]>([]);
@@ -143,7 +144,7 @@ export default function AboutPage() {
                         <div
                             className="onging-saga cursor"
                             onClick={() => {
-                                NavTool.fnJumpToPage('/story');
+                                window.open('/story');
                                 scrollToTop();
                             }}
                         >
@@ -177,8 +178,8 @@ export default function AboutPage() {
                         <div
                             className="more-detail cursor"
                             onClick={() => {
-                                NavTool.fnJumpToPage('/nft');
-                                scrollToTop();
+                                // window.open('/nft');
+                                // scrollToTop();
                             }}
                         >
                             <div className="a">More Detail</div>
@@ -299,6 +300,9 @@ export default function AboutPage() {
 
             <section className="bottom-section">
                 <img loading="lazy" src={AboutBottom} alt="AboutBottom" />
+            </section>
+            <section className="page-footer">
+                <Footer></Footer>
             </section>
         </div>
     );

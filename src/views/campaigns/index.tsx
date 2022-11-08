@@ -9,6 +9,8 @@ import "swiper/css";
 import 'swiper/css/pagination';
 import { DataContext } from "../../utils/utils";
 
+import { Parallax } from 'rc-scroll-anim';
+
 import BoneListWhatImage from "../../assets/campaign/bonelist_what.png";
 import BoneListHowImage from "../../assets/campaign/bonelist_how.png";
 
@@ -45,7 +47,14 @@ function CampaignItem(props: { campaign: Campaign }) {
     const startDate = new Date(campaign.startTime).toLocaleDateString("en-US");
     const endDate = new Date(campaign.endTime).toLocaleDateString("en-US");
     return (
-        <div className="campaign-item cursor">
+        <div 
+            className="campaign-item cursor" 
+            onClick={() => {
+                if (campaign.nft_claim_url) {
+                    window.open(campaign.nft_claim_url)
+                }
+            }}
+        >
             <div className="cover-image">
                 <img loading="lazy" src={campaign.reward?.cover_image_url || campaign.reward?.image} alt="AwardCoverImage" />
             </div>
@@ -65,7 +74,14 @@ function PoapBadgeItem(props: { poap: PoapBadge }) {
     const endDate = new Date(poap.end_date).toLocaleDateString("en-US");
 
     return (
-        <div className="poap-item cursor">
+        <div 
+            className="poap-item cursor"
+            onClick={() => {
+                if (poap.redirect_url) {
+                    window.open(poap.redirect_url)
+                }
+            }}
+        >
             <div className="p-info">
                 <div className="p-name">{poap.name}</div>
                 <div className="p-start-end-date">
@@ -86,7 +102,6 @@ export default function CampaignPage() {
     const [poapBadges, setPoapBadges] = useState<PoapBadge[]>([]);
 
     const { windowWidth } = useContext(DataContext);
-    console.log(windowWidth);
     SwiperCore.use([Autoplay, Pagination]);
 
     useEffect(() => {
@@ -105,19 +120,34 @@ export default function CampaignPage() {
 
     return (
         <div className="campaigns-container main-container">
-            <Swiper
-                onSlideChange={() => console.log('slide change')}
+            <Parallax
+                animation={{ translateY: '-100vh', playScale: [1, 2.5] }}
+                style={{ transform: 'translateY(0)' }}
+                location="home-slider"
+                className="swiper-c"
             >
-                {banners?.map((banner, index) => {
-                    return (
-                        <SwiperSlide key={index}>
-                            <div className="banner-image">
-                                <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
-                            </div>
-                        </SwiperSlide>
-                    );
-                })}
-            </Swiper>
+                <Swiper
+                    onSlideChange={() => console.log('slide change')}
+                >
+                    {banners?.map((banner, index) => {
+                        return (
+                            <SwiperSlide key={index}>
+                                <div className="banner-image">
+                                    <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
+                                </div>
+                            </SwiperSlide>
+                        );
+                    })}
+                </Swiper>
+                <Parallax
+                    animation={{ opacity: 1, playScale: [1, 2.5] }}
+                    style={{ opacity: 0 }}
+                    location="home-slider"
+                    className="swiper-mask"
+                >
+                </Parallax>
+            </Parallax>
+            <div className="home-slider" id="home-slider"></div>
             <div className="bone-list">
                 <div className="bl-content">
                     <div className="title">BONELIST 🦴</div>

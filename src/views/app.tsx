@@ -36,7 +36,7 @@ export function App() {
           <Route
             path="/about"
             element={
-              <PageView activeIndex={0}>
+              <PageView activeIndex={1} disableFooter={true}>
                 <AboutPage />
               </PageView>
             }
@@ -44,7 +44,7 @@ export function App() {
           <Route
             path="/nft"
             element={
-              <PageView activeIndex={1}>
+              <PageView activeIndex={3}>
                 <NFTPage />
               </PageView>
             }
@@ -68,7 +68,7 @@ export function App() {
           <Route
             path="/campaign"
             element={
-              <PageView activeIndex={3}>
+              <PageView activeIndex={4}>
                 <CampaignPage />
               </PageView>
             }

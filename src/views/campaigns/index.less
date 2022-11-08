@@ -1,6 +1,24 @@
 .campaigns-container {
     padding-top: 0 !important;
     min-height: 100vh !important;
+    .swiper-c {
+        height: 100vh;
+        min-height: 100%;
+        width: 100vw;
+        overflow: hidden;
+        position: fixed;
+        z-index: 0;
+        top: 0px;
+    }
+    .swiper-mask {
+        width: 100vw;
+        height: 100vh;
+        background: #000000;
+        z-index: 2;
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+    }
     .swiper {
         width: 100vw;
         height: 100vh;
@@ -34,7 +52,20 @@
         }
     }
 
+    .home-slider {
+        height: 100vh;
+        max-height: 100%;
+        width: 100vw;
+        position: relative;
+        background: 0 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0;
+        max-height: 100%;
+    }
+
     .bone-list {
+        position: relative;
         width: 100%;
         height: 763px;
         background: #242E38;
@@ -365,6 +396,12 @@
 
 @media screen and (max-width: 750px) {
     .campaigns-container {
+        .swiper-c {
+            height: 100vw;
+        }
+        .swiper-mask {
+            height: 100vw;
+        }
         .swiper {
             height: 100vw;
             .swiper-wrapper {
@@ -382,6 +419,9 @@
                     }
                 }
             }
+        }
+        .home-slider {
+            height: 100vw;
         }
         .bone-list {
             height: 1231px;

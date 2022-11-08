@@ -353,11 +353,14 @@ export default function NFTPage() {
                             <div className="filter-selected-items">
                                 {query.origin?.map(origin => {
                                     return (
-                                        <div className="filter-selected" key={origin}>
-                                            <span>{origin}</span>
-                                            <img loading="lazy" src={CloseIcon} onClick={() => {
+                                        <div 
+                                            className="filter-selected"
+                                            onClick={() => {
                                                 delSelectedFilter(origin);
-                                            }} alt="CloseIcon" />
+                                            }}
+                                            key={origin}>
+                                            <span>{origin}</span>
+                                            <img loading="lazy" src={CloseIcon} alt="CloseIcon" />
                                         </div>
                                     )
                                 })}

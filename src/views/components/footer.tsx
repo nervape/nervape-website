@@ -16,7 +16,7 @@ export default function Footer() {
             <div className="footer-item">
                 <div className="wiki">Nervape Wiki</div>
                 <div className="brand-assets">
-                  <a href="https://tourmaline-elderberry-f93.notion.site/Nervape-Brand-Assets-b7c52ca6f17c492e87cd18b5496da8f0">
+                  <a target="_block" href="https://tourmaline-elderberry-f93.notion.site/Nervape-Brand-Assets-b7c52ca6f17c492e87cd18b5496da8f0">
                     Brand Assets
                   </a>
                 </div>

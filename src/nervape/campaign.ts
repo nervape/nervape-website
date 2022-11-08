@@ -30,6 +30,6 @@ export class PoapBadge {
   end_date: string = "";
   status: boolean = true;
   sort: number = 0;
-  
+  redirect_url: string = "";
   timeline: string = "";
 }
