@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import AboutBg from '../../assets/about/effect/about_bg.png';
-import AboutPlanetLarge from '../../assets/about/effect/about_planet_large.png';
-import AboutPlanetDark from '../../assets/about/effect/about_planet_dark.png';
-import AboutLittlePlanet from '../../assets/about/effect/about_little_planets.png';
-import AboutLight from '../../assets/about/effect/about_light.png';
+import WallpaperLight from '../../assets/about/wallpaper_light.png';
 import Bonelist from '../../assets/about/bonelist.svg';
 import AboutStory01 from '../../assets/about/about_story-01.png';
 import AboutStory02 from '../../assets/about/about_story-02.png';
@@ -27,14 +23,12 @@ export default function AboutPage() {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currIndex, setCurrIndex] = useState(-1);
     const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
-    const [innerHeight, setInnerHeight] = useState(0);
 
     const { windowWidth } = useContext(DataContext);
 
     const bannerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setInnerHeight(window.innerHeight / 2 - 56);
         nervapeApi.fnGetStaffs().then(res => {
             setHumans(res);
         })
@@ -42,77 +36,116 @@ export default function AboutPage() {
             setQuestions(res);
         })
     }, []);
-    if (innerHeight <= 0) return <></>;
 
     return (
         <div className="about-container main-container">
             <div className="banner" ref={bannerRef}>
-                <img loading="lazy" src={AboutBg} alt="bannerUrl" />
+                <img loading="lazy" src={WallpaperLight} alt="bannerUrl" />
             </div>
 
             <section className="intro-section">
-                <div className="intro-top" id="intro-top">
-                    <Parallax
-                        animation={{ opacity: 0, ease: 'linear', top: '600px', playScale: [0.9, 1.3] }}
-                        style={{ opacity: 1, top: `${innerHeight}px` }}
-                        location="intro-top"
-                        className="intro-top-text"
-                    >
-                        Nervape is a Metaverse with 3D NFTs and Story Shaped by Community.
-                    </Parallax>
-                </div>
-
-                <div className="planet-large" id="planet-large">
-                    <Parallax
-                        animation={{ top: '300px', opacity: 0, playScale: [0.9, 1.3] }}
-                        style={{ top: '0', opacity: 1 }}
-                        location="planet-large"
-                        className="light-c"
-                    >
-                        <img className="light" src={AboutLight} alt="AboutLight" />
-                    </Parallax>
-                    <Parallax
-                        animation={{ scale: 1.1, playScale: [0.8, 1.5] }}
-                        style={{ scale: 1 }}
-                        className="little-planet-c"
-                    >
-                        <img className="little-planet" src={AboutLittlePlanet} alt="AboutLittlePlanet" />
-                    </Parallax>
-
-                    <img className="dark-img" src={AboutPlanetDark} alt="AboutPlanetDark" />
-                    <Parallax
-                        animation={{ opacity: 1, playScale: [0.95, 1.2] }}
-                        style={{ opacity: 0 }}
-                    >
-                        <img className="light-img" src={AboutPlanetLarge} alt="AboutPlanetLarge" />
-                    </Parallax>
-                </div>
-
-                <div className="intro-bottom" id="intro-bottom">
-                    <Parallax
-                        animation={[
-                            { opacity: 1, bottom: '-230px', playScale: [1, 1.4] }
-                        ]}
-                        location="intro-bottom"
-                        style={{ opacity: 0, bottom: '-454px' }}
-                        className="intro-content"
-                    >
-                        <div className="p">It begins with a dream,</div>
-                        <div className="p p1">a dream seen by seekers and believers</div>
-                        <div className="p p1">that inhabit the waking world.</div>
-                        <div className="p p1">Trudging through life, day by day,</div>
-                        <div className="p">they yearn for change, for freedom,</div>
-                        <div className="p p1">freedom that was found only in dreams.</div>
-                        <div className="p p1">Or so we once believed.</div>
-                        <br />
-                        <div className="p">Do you dare to seek the unknown?</div>
-                        <div className="p p1">To embrace adventure?</div>
-                        <div className="p p1">To explore the limits of your strength and courage?</div>
-                        <br />
-                        <div className="p p1">The Third Continent awaits for those who accept the journey.</div>
-                        {/* <img loading="lazy" src={Bonelist} alt="" /> */}
-                    </Parallax>
-
+                <Parallax
+                    animation={{ opacity: 0, playScale: [1, 1.5] }}
+                    style={{ opacity: 1 }}
+                >
+                    <div className="intro-top">
+                        <div className="text">Nervape is a Storytelling and Customizable 3D Metaverse Brand.</div>
+                    </div>
+                </Parallax>
+                <div className="intro-bottom">
+                    <div className="intro-content">
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p">It begins with a dream,</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Seen by seekers and believers of the waking world.</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Living day by day, yet yearning for change, </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">For freedom could only be found within dreams,</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p">Or so we believe. </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Will you dare to seek the unknown? </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">Will you dare to seek the unknown? </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p">To embrace adventure?</div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">To explore the limits of your strength and courage? </div>
+                        </Parallax>
+                        <Parallax
+                            animation={[
+                                { opacity: 1, playScale: [0, 0.4] },
+                                { opacity: 0, playScale: [0.2, 0.6] }
+                            ]}
+                            style={{ opacity: 0 }}
+                        >
+                            <div className="p p1">The Third Continent awaits for those who take the leap of faith.</div>
+                        </Parallax>
+                        <img loading="lazy" src={Bonelist} alt="" />
+                    </div>
                 </div>
             </section>
             <Parallax
@@ -120,11 +153,11 @@ export default function AboutPage() {
                     playScale: [0, 0],
                     onStart: () => {
                         const current = bannerRef.current as unknown as HTMLDivElement;
-                        // current.className = "banner banner1";
+                        current.className = "banner banner1";
                     },
                     onStartBack: () => {
                         const current = bannerRef.current as unknown as HTMLDivElement;
-                        // current.className = "banner";
+                        current.className = "banner";
                     }
                 }}
             >

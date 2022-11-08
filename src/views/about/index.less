@@ -1,9 +1,9 @@
 .about-container {
   padding-top: 0 !important;
   min-height: 100vh !important;
-  .banner {
+  .banner, .planet-large {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh + 400px);
     position: fixed;
     overflow-x: hidden;
     top: 0;
@@ -11,12 +11,35 @@
     img {
       width: 100%;
       object-fit: cover;
-      // object-position: top;
+      object-position: top;
       position: absolute;
       display: block;
       left: 50%;
       transform: translateX(-50%);
       height: 100%;
+    }
+  }
+  .light-c, .little-planet-c {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+  }
+  .planet-large {
+    position: relative;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+    .light-img {
+      z-index: 9;
+      position: absolute;
+    }
+    .dark-img {
+      // position: relative;
     }
   }
   .banner.banner1 {
@@ -25,16 +48,20 @@
   }
   .intro-section {
     width: 100%;
+    overflow: hidden;
     background: #141d26;
     .intro-top {
+      z-index: 0;
+      width: 100%;
       height: 100vh;
-      position: relative;
-      .text {
+      position: absolute;
+      top: 0;
+      .text, .intro-top-text {
         letter-spacing: 0;
         position: absolute;
-        top: 50%;
+        // top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 0);
         width: 864px;
         font-size: 36px;
         line-height: 43px;
@@ -44,19 +71,20 @@
       }
     }
     .intro-bottom {
-      position: relative;
+      position: absolute;
+      top: 0;
+      width: 100%;
       height: 100vh;
       .intro-content {
         position: absolute;
-        top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 0);
         letter-spacing: 0;
         font-size: 14px;
         line-height: 34px;
         text-align: center;
-        padding: 165px 0;
         color: #ffffff;
+        z-index: 99;
         img {
           width: 40px;
           height: 40px;
@@ -492,7 +520,7 @@
 
     .intro-section {
       .intro-top {
-        .text {
+        .intro-top-text {
           width: 347px;
           font-size: 24px;
           line-height: 29px;

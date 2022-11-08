@@ -229,7 +229,7 @@ export default function NFTPage() {
     return (
         <div className="nft-container main-container">
             <Swiper
-                autoplay={{ delay: 50000 }}
+                autoplay={{ delay: 20000 }}
                 speed={1000}
                 loop
                 pagination={{ clickable: true }}
