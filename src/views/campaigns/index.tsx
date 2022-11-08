@@ -16,8 +16,8 @@ import BoneListHowImage from "../../assets/campaign/bonelist_how.png";
 
 const boneList = [
     {
-        name: 'WHAT IS BONELIST?',
-        desc: 'The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.',
+        name: 'WHAT IS THE BONELIST?',
+        desc: 'Some people may call it a whitelist or a wishlist, but in the Third Continent…Nervapes call it the Bonelist! Guaranteed mint, NFT drops, and other collaborations available exclusively for holders on the Bonelist.',
         image: BoneListWhatImage
     },
     {

@@ -133,13 +133,14 @@ export default function AboutPage() {
                     <div className="storytelling-intro">
                         <h3 className="title">STORYTELLING</h3>
                         <p className="desc">
-                            The Nervape project is an ongoing saga and a story of
-                            friendship, courage, and trust among the first
-                            Nervapes that arrive at the Third Continent. As the
-                            Nervapes continue to explore the Third Continent, new
-                            characters, unique features of the land, and fantasy
-                            elements will be added as 3D NFTs to the Nervos
-                            blockchain.
+                            Nervape’s story consists of three main chapters as well as side stories with open endings.
+                            Our story is about courage, friendship, discovery, decentralization, and community collaboration.
+                            We seek to answer: “What is a decentralized world and how can we get there?”
+                        </p>
+                        <p className="desc">
+                            Nervape’s story is vast and diverse; here, there is room for magic and science to coexist.
+                            Like a human neuron, story transmits information and connects us to life.
+                            Nervape’s narrative is the source of everything and is a seed waiting to grow.
                         </p>
                         <div
                             className="onging-saga cursor"
@@ -163,7 +164,7 @@ export default function AboutPage() {
             </Parallax>
 
             <section className="customizable-section">
-                <div className="title">“YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF”</div>
+                <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
                 <div className="custom-cover">
                     <img loading="lazy" src={windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
                 </div>
@@ -171,9 +172,13 @@ export default function AboutPage() {
                     <div className="custom-content">
                         <div className="title">CUSTOMIZABLE NFT COLLECTION</div>
                         <div className="desc">
-                            <p>Creat your own character, Nervape is for everyone.</p>
-                            <p>The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.</p>
-                            <p>The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.</p>
+                            <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
+                            <p>
+                                Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.
+                                You get to choose what role your Nervape avatar plays as well all the apparel assets you want your avatar to wear. 
+                                We didn’t give Nervapes any facial features on purpose so that THEY CAN BE ANYBODY AND ANYBODY CAN BE THEM. 
+                                We are excited to see what Nervape will evolve into as it is shaped by the community’s creativity.
+                            </p>
                         </div>
                         <div
                             className="more-detail cursor"
@@ -190,8 +195,8 @@ export default function AboutPage() {
             </section>
             <section className="humans-section">
                 <div className="humans-content">
-                    <h3 className="title">The Humans and Other Creature Behind the Nervape</h3>
-                    <p className="desc">A group of simple creatures with a wild mind.</p>
+                    <h3 className="title">The Humans and Other Creatures Behind Nervape</h3>
+                    <p className="desc">A group of humans, Nervapes, and a bear…united by their wild minds.</p>
                     <div className="humans">
                         {humans.length ? (
                             humans.map((human, index) => {
