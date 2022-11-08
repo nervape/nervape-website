@@ -4,41 +4,10 @@ import { Campaign } from "../nervape/campaign";
 import { NFT } from "../nervape/nft";
 import { Story, CHAPTER_TYPE, ChapterList } from "../nervape/story";
 import { NavTool } from "../route/navi-tool";
-import { Chapter } from "../views/pages/stories-list";
 
 export class WebMock {
   public static typeData = ["Featured", "Character", "Scene", "Item"];
   public static chapterData: ChapterList[] = [];
-  public static fnGroupStory(stories: Story[]) {
-    const chapters = [
-      {
-        name: "Chapter I",
-        stories: [],
-      },
-      {
-        name: "Chapter II",
-        stories: [],
-      },
-      {
-        name: "Chapter III",
-        stories: [],
-      },
-    ] as Chapter[];
-    const chapterName: CHAPTER_TYPE[] = [
-      "Chapter I",
-      "Chapter II",
-      "Chapter III",
-    ];
-    for (let i = 0; i < stories.length; ++i) {
-      const story = stories[i];
-      const chpIdx = chapterName.indexOf(story.chapter);
-      if (chpIdx !== -1) {
-        chapters[chpIdx].stories.push(story);
-      }
-    }
-
-    return chapters;
-  }
 
   public static fnRelateStoryAndNft(stories: Story[], nfts: NFT[]) {
     for (let i = 0; i < stories.length; ++i) {
