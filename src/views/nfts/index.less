@@ -111,6 +111,9 @@
             }
           }
         }
+        .banner-info.notActive {
+            animation: hide 0.3s linear forwards;
+        }
         .banner-info.active {
           animation: show 1.5s 0.3s linear forwards;
         }
@@ -143,6 +146,7 @@
         height: 10px;
         margin: 0 10px;
         background: rgba(255, 255, 255, 0.5);
+        opacity: 1;
       }
       .swiper-pagination-bullet.swiper-pagination-bullet-active {
         background: #ffffff;
@@ -931,7 +935,19 @@
 }
 
 @keyframes show {
+  0% {
+    opacity: 0;
+  }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

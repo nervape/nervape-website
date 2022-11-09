@@ -19,10 +19,10 @@ export default function Story() {
             <div className="story-header">
                 <div className="title">NERVAPE SAGA</div>
                 <div className="desc">
-                    Our story unfolds in 3 chapters that follow the Nervapes’ journey to find the Third Continent.
-                    If the Nervapes make it to the Third Continent, what awaits them will be beyond expectations.
-                    They will continue onwards to explore the vast Third Continent and meet new characters,
-                    discover unique features of the land, and find fantasy elements that will be added as 3D NFTs to the blockchain.
+                    Our story unfolds in 3 chapters that follow the Nervapes’ journey to find the Third Continent. 
+                    If the Nervapes make it to the Third Continent, what awaits them will be beyond expectations. 
+                    The Third Continent is vast, with the opportunity to meet new characters, 
+                    discover unique features of the land, and find fantasy elements that can be added as 3D NFTs to the blockchain.
                 </div>
             </div>
             <div className="story-content">

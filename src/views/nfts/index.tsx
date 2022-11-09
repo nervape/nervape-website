@@ -238,7 +238,7 @@ export default function NFTPage() {
             >
                 <Swiper
                     autoplay={{ delay: 5000 }}
-                    speed={1000}
+                    speed={1500}
                     loop
                     pagination={{ clickable: true }}
                 >

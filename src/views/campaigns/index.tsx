@@ -14,30 +14,33 @@ import { Parallax } from 'rc-scroll-anim';
 import BoneListWhatImage from "../../assets/campaign/bonelist_what.png";
 import BoneListHowImage from "../../assets/campaign/bonelist_how.png";
 
-const boneList = [
-    {
-        name: 'WHAT IS THE BONELIST?',
-        desc: 'Some people may call it a whitelist or a wishlist, but in the Third Continent…Nervapes call it the Bonelist! Guaranteed mint, NFT drops, and other collaborations available exclusively for holders on the Bonelist.',
-        image: BoneListWhatImage
-    },
-    {
-        name: 'HOW TO GET BONELIST?',
-        desc: 'The Nervape project is an ongoing saga and a story of friendship, courage, and trust among the first Nervapes that arrive at the Third Continent. As the Nervapes continue to explore the Third Continent, new characters, unique features of the land, and fantasy elements will be added as 3D NFTs to the Nervos blockchain.',
-        image: BoneListHowImage
-    }
-];
-
-function BoneListItem(props: any) {
-    const { item } = props;
-
+function BoneList() {
     return (
-        <div className="bl-item">
-            <img loading="lazy" src={item.image} alt="BoneListImage" />
-            <div className="info">
-                <div className="name">{item.name}</div>
-                <div className="desc">{item.desc}</div>
+        <>
+            <div className="bl-item">
+                <img loading="lazy" src={BoneListWhatImage} alt="BoneListImage" />
+                <div className="info">
+                    <div className="name">WHAT IS THE BONELIST?</div>
+                    <div className="desc">
+                        Some people may call it a whitelist or a wishlist, but in the Third Continent…Nervapes call it the Bonelist!
+                        <br />
+                        Holders on the Bonelist receive guaranteed access to mint NFTs, NFT drops, and other exclusive collaborations.
+                        <br />
+                        Why call it the Bonelist? <a target="_block" href="https://www.youtube.com/watch?v=QSxI0OOjR0Y&t=15s">https://www.youtube.com/watch?v=QSxI0OOjR0Y&t=15s</a>
+                    </div>
+                </div>
+            </div><div className="bl-item">
+                <img loading="lazy" src={BoneListHowImage} alt="BoneListImage" />
+                <div className="info">
+                    <div className="name">HOW TO GET BONELIST?</div>
+                    <div className="desc">
+                        - Follow our <a target="_block" href="https://twitter.com/Nervapes">Twitter account</a> and join our <a target="_block" href="https://t.co/gp3jceAzrj">Discord</a> to get the latest updates about future collaboration airdrop events.
+                        <br />
+                        - Participate in our community events and contribute to the building of the Nervape community.
+                    </div>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -47,8 +50,8 @@ function CampaignItem(props: { campaign: Campaign }) {
     const startDate = new Date(campaign.startTime).toLocaleDateString("en-US");
     const endDate = new Date(campaign.endTime).toLocaleDateString("en-US");
     return (
-        <div 
-            className="campaign-item cursor" 
+        <div
+            className="campaign-item cursor"
             onClick={() => {
                 if (campaign.nft_claim_url) {
                     window.open(campaign.nft_claim_url)
@@ -74,7 +77,7 @@ function PoapBadgeItem(props: { poap: PoapBadge }) {
     const endDate = new Date(poap.end_date).toLocaleDateString("en-US");
 
     return (
-        <div 
+        <div
             className="poap-item cursor"
             onClick={() => {
                 if (poap.redirect_url) {
@@ -152,8 +155,7 @@ export default function CampaignPage() {
                 <div className="bl-content">
                     <div className="title">BONELIST 🦴</div>
                     <div className="bl-what-how">
-                        <BoneListItem item={boneList[0]}></BoneListItem>
-                        <BoneListItem item={boneList[1]}></BoneListItem>
+                        <BoneList></BoneList>
                     </div>
                 </div>
             </div>

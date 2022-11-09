@@ -54,12 +54,12 @@ export default function AboutPage() {
             <section className="intro-section">
                 <div className="intro-top" id="intro-top">
                     <Parallax
-                        animation={{ opacity: 0, ease: 'linear', top: '600px', playScale: [0.9, 1.3] }}
+                        animation={{ opacity: 0, ease: 'linear', top: `${innerHeight + 300}px`, playScale: [0.9, 1.3] }}
                         style={{ opacity: 1, top: `${innerHeight}px` }}
                         location="intro-top"
                         className="intro-top-text"
                     >
-                        Nervape is a Metaverse with 3D NFTs and Story Shaped by Community.
+                        Nervape is a Metaverse with an Ongoing Story and 3D NFTs Shaped by the Community.
                     </Parallax>
                 </div>
 
@@ -111,7 +111,7 @@ export default function AboutPage() {
                         <div className="p p1">To explore the limits of your strength and courage?</div>
                         <br />
                         <div className="p p1">The Third Continent awaits for those who accept the journey.</div>
-                        {/* <img loading="lazy" src={Bonelist} alt="" /> */}
+                        <img loading="lazy" src={Bonelist} alt="" />
                     </Parallax>
 
                 </div>
