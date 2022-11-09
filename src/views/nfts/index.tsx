@@ -346,6 +346,12 @@ export default function NFTPage() {
                                                             return (
                                                                 <div className="children cursor" key={j} onClick={() => {
                                                                     const _filters = JSON.parse(JSON.stringify(filters));
+                                                                    _filters[i].items.map((filter: { checked: boolean; }, index: number) => {
+                                                                        if (index !== j) {
+                                                                            filter.checked = false;
+                                                                        }
+                                                                        return filter;
+                                                                    });
                                                                     _filters[i].items[j].checked = !_filters[i].items[j].checked;
                                                                     setFilters(_filters);
                                                                 }}>
