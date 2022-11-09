@@ -269,6 +269,11 @@ export default function NFTPage() {
                                                         <img loading="lazy" src={PlayIcon} className="play-icon" alt="" />
                                                     </div>
                                                 </div>
+                                                {banner.status && (
+                                                    <div className={`c-status ${banner.status}`}>
+                                                        <div className="span">{banner.status}</div>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </>
@@ -351,7 +356,7 @@ export default function NFTPage() {
                             <div className="filter-selected-items">
                                 {query.origin?.map(origin => {
                                     return (
-                                        <div 
+                                        <div
                                             className="filter-selected cursor"
                                             onClick={() => {
                                                 delSelectedFilter(origin);
@@ -364,7 +369,7 @@ export default function NFTPage() {
                                 })}
                                 {query.type?.map(type => {
                                     return (
-                                        <div 
+                                        <div
                                             className="filter-selected cursor"
                                             onClick={() => {
                                                 delSelectedFilter(type);

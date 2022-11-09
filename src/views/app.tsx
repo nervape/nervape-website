@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import {
   HashRouter,
   Navigate,
@@ -17,12 +17,18 @@ import { NavTool } from "../route/navi-tool";
 import PageView from "./components/page-view";
 import StoryProfile from "./stories/profile/profile";
 import HomePage from "./home";
+import MaintenancePage from "./maintenance";
 
 export function App() {
   NavTool.navigation = useNavigate();
   NavTool.location = useLocation();
 
-  document.addEventListener('gesturestart', (e) => { e.preventDefault() })
+  const [maintenance, setMaintenance] = useState(false);
+
+  if (maintenance) {
+    return <MaintenancePage></MaintenancePage>;
+  }
+  
   return (
     <div className="app">
         <Routes>

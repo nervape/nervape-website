@@ -82,6 +82,7 @@ export class NFT_BANNER {
   type: NFT_TYPE = "";
   published: boolean = false;
   sort: number = 0;
+  status: string = "";
 }
 
 export class NFT_QUERY {
