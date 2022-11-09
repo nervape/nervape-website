@@ -292,7 +292,7 @@ export default function AboutPage() {
                                         {question.open ? (
                                             <div className="a">
                                                 <div className="a-l">A:</div>
-                                                <div className="a-r">{question.answer}</div>
+                                                <div className="a-r" dangerouslySetInnerHTML={{ __html: question.answer }}></div>
                                             </div>
                                         ) : ''}
                                     </div>
