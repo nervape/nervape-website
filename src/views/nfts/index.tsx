@@ -240,9 +240,7 @@ export default function NFTPage() {
                     autoplay={{ delay: 5000 }}
                     speed={1000}
                     loop
-
                     pagination={{ clickable: true }}
-                    onSlideChange={() => console.log('slide change')}
                 >
                     {banners?.map((banner, index) => {
                         return (
@@ -354,7 +352,7 @@ export default function NFTPage() {
                                 {query.origin?.map(origin => {
                                     return (
                                         <div 
-                                            className="filter-selected"
+                                            className="filter-selected cursor"
                                             onClick={() => {
                                                 delSelectedFilter(origin);
                                             }}
@@ -366,11 +364,14 @@ export default function NFTPage() {
                                 })}
                                 {query.type?.map(type => {
                                     return (
-                                        <div className="filter-selected" key={type}>
-                                            <span>{type}</span>
-                                            <img loading="lazy" className="cursor" src={CloseIcon} onClick={() => {
+                                        <div 
+                                            className="filter-selected cursor"
+                                            onClick={() => {
                                                 delSelectedFilter(type);
-                                            }} alt="CloseIcon" />
+                                            }}
+                                            key={type}>
+                                            <span>{type}</span>
+                                            <img loading="lazy" src={CloseIcon} alt="CloseIcon" />
                                         </div>
                                     )
                                 })}
