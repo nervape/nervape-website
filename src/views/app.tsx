@@ -22,6 +22,7 @@ export function App() {
   NavTool.navigation = useNavigate();
   NavTool.location = useLocation();
 
+  document.addEventListener('gesturestart', (e) => { e.preventDefault() })
   return (
     <div className="app">
         <Routes>
