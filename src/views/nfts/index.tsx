@@ -252,7 +252,7 @@ export default function NFTPage() {
                                         <div className="banner-image">
                                             <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                                         </div>
-                                        <div className="cover-mask"></div>
+                                        {/* <div className="cover-mask"></div> */}
                                         <div className={`banner-info ${isActive ? 'active' : 'notActive'}`}>
                                             <div className="info-item">
                                                 <div className="name">{banner.name}</div>

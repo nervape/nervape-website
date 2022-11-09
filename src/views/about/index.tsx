@@ -187,7 +187,7 @@ export default function AboutPage() {
                                 // scrollToTop();
                             }}
                         >
-                            <div className="a">More Detail</div>
+                            <div className="a">DETAIL</div>
                             <img loading="lazy" src={ArrowIcon} alt="ArrowIcon" />
                         </div>
                     </div>
