@@ -11,7 +11,7 @@ export default function HomePage() {
                     <source src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/cf840997-c84e-4546-a6aa-e746e35b40ae.mp4"/>
                 </video>
                 <div className="about-here">
-                    Enter The Third Continent
+                    <div className="text">Enter The Third Continent</div>
                     <button 
                         className="here-btn cursor"
                         onClick={() => {

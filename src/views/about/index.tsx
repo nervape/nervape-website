@@ -5,6 +5,7 @@ import AboutPlanetLarge from '../../assets/about/effect/about_planet_large.png';
 import AboutPlanetDark from '../../assets/about/effect/about_planet_dark.png';
 import AboutLittlePlanet from '../../assets/about/effect/about_little_planets.png';
 import AboutLight from '../../assets/about/effect/about_light.png';
+import AboutLightSmall from '../../assets/about/effect/light_small.png';
 import Bonelist from '../../assets/about/bonelist.svg';
 import AboutStory01 from '../../assets/about/about_story-01.png';
 import AboutStory02 from '../../assets/about/about_story-02.png';
@@ -35,7 +36,7 @@ export default function AboutPage() {
     const bannerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setInnerHeight(window.innerHeight / 2 -  56);
+        setInnerHeight(window.innerHeight / 2);
         nervapeApi.fnGetStaffs().then(res => {
             setHumans(res);
         })
@@ -52,26 +53,42 @@ export default function AboutPage() {
             </div>
 
             <section className="intro-section">
-                <div className="intro-top" id="intro-top">
-                    <Parallax
-                        animation={{ opacity: 0, ease: 'linear', top: `${innerHeight + 300}px`, playScale: [0.9, 1.4] }}
-                        style={{ opacity: 1, top: `${innerHeight}px` }}
-                        location="intro-top"
-                        className="intro-top-text"
-                    >
-                        Nervape is a Metaverse with an Ongoing Story and 3D NFTs Shaped by the Community.
-                    </Parallax>
-                </div>
+                {windowWidth !== 375 && (
+                    <div className="intro-top" id="intro-top">
+                        <Parallax
+                            animation={{ opacity: 0, top: `${innerHeight + 300}px`, playScale: [1, 1.3] }}
+                            style={{ opacity: 1, top: `${innerHeight}px` }}
+                            location="intro-top"
+                            className="intro-top-text"
+                        >
+                            Nervape is a Metaverse with an Ongoing Story and 3D NFTs Shaped by the Community.
+                        </Parallax>
+                    </div>
+                )}
 
                 <div className="planet-large" id="planet-large">
-                    <Parallax
-                        animation={{ top: '300px', opacity: 0, playScale: [0.9, 1.3] }}
-                        style={{ top: '0', opacity: 1 }}
-                        location="planet-large"
-                        className="light-c"
-                    >
-                        <img className="light" src={AboutLight} alt="AboutLight" />
-                    </Parallax>
+                    {windowWidth !== 375 ? (
+                        <Parallax
+                            animation={{ top: '400px', opacity: 0, playScale: [1, 1.3] }}
+                            style={{ top: '0', opacity: 1 }}
+                            location="planet-large"
+                            className="light-c"
+                        >
+                            <img className="light" src={AboutLight} alt="AboutLight" />
+                        </Parallax>
+                    ) : (
+                        <>
+                            <Parallax
+                                animation={{ top: '400px', opacity: 0, playScale: [1, 1.3] }}
+                                style={{ top: '0', opacity: 1 }}
+                                location="planet-large"
+                                className="light-c small"
+                            >
+                                <img className="light" src={AboutLightSmall} alt="AboutLightSmall" />
+                                <div className="intro-top-text">Nervape is a Metaverse with an Ongoing Story and 3D NFTs Shaped by the Community.</div>
+                            </Parallax>
+                        </>
+                    )}
                     <Parallax
                         animation={{ scale: 1.1, playScale: [0.8, 1.5] }}
                         style={{ scale: 1 }}
@@ -105,11 +122,9 @@ export default function AboutPage() {
                         <div className="p">they yearn for change, for freedom,</div>
                         <div className="p p1">freedom that was found only in dreams.</div>
                         <div className="p p1">Or so we once believed.</div>
-                        <br />
                         <div className="p">Do you dare to seek the unknown?</div>
                         <div className="p p1">To embrace adventure?</div>
                         <div className="p p1">To explore the limits of your strength and courage?</div>
-                        <br />
                         <div className="p p1">The Third Continent awaits for those who accept the journey.</div>
                         <img loading="lazy" src={Bonelist} alt="" />
                     </Parallax>
@@ -175,8 +190,8 @@ export default function AboutPage() {
                             <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
                             <p>
                                 Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.
-                                You get to choose what role your Nervape avatar plays as well all the apparel assets you want your avatar to wear. 
-                                We didn’t give Nervapes any facial features on purpose so that THEY CAN BE ANYBODY AND ANYBODY CAN BE THEM. 
+                                You get to choose what role your Nervape avatar plays as well all the apparel assets you want your avatar to wear.
+                                We didn’t give Nervapes any facial features on purpose so that THEY CAN BE ANYBODY AND ANYBODY CAN BE THEM.
                                 We are excited to see what Nervape will evolve into as it is shaped by the community’s creativity.
                             </p>
                         </div>

@@ -142,13 +142,23 @@ export default function CampaignPage() {
                         );
                     })}
                 </Swiper>
-                <Parallax
-                    animation={{ opacity: 1, playScale: [1, 2.5] }}
-                    style={{ opacity: 0 }}
-                    location="home-slider"
-                    className="swiper-mask"
-                >
-                </Parallax>
+                {windowWidth !== 375 ? (
+                    <Parallax
+                        animation={{ opacity: 1, playScale: [1, 2.5] }}
+                        style={{ opacity: 0 }}
+                        location="home-slider"
+                        className="swiper-mask"
+                    >
+                    </Parallax>
+                ) : banners?.length && (
+                    <Parallax
+                        animation={{ opacity: 1, playScale: [1, 1.8] }}
+                        style={{ opacity: 0 }}
+                        location="home-slider"
+                        className="swiper-mask"
+                    >
+                    </Parallax>
+                )}
             </Parallax>
             <div className="home-slider" id="home-slider"></div>
             <div className="bone-list">
