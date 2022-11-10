@@ -2,43 +2,12 @@ import moment from "moment";
 import { nervapeApi } from "../api/nervape-api";
 import { Campaign } from "../nervape/campaign";
 import { NFT } from "../nervape/nft";
-import { Story, CHAPTER_TYPE } from "../nervape/story";
+import { Story, CHAPTER_TYPE, ChapterList } from "../nervape/story";
 import { NavTool } from "../route/navi-tool";
-import { Chapter } from "../views/pages/stories-list";
 
 export class WebMock {
   public static typeData = ["Featured", "Character", "Scene", "Item"];
-  public static chapterData: CHAPTER_TYPE[] = ["Chapter I", "Chapter II", "Chapter III"];
-  public static fnGroupStory(stories: Story[]) {
-    const chapters = [
-      {
-        name: "Chapter I",
-        stories: [],
-      },
-      {
-        name: "Chapter II",
-        stories: [],
-      },
-      {
-        name: "Chapter III",
-        stories: [],
-      },
-    ] as Chapter[];
-    const chapterName: CHAPTER_TYPE[] = [
-      "Chapter I",
-      "Chapter II",
-      "Chapter III",
-    ];
-    for (let i = 0; i < stories.length; ++i) {
-      const story = stories[i];
-      const chpIdx = chapterName.indexOf(story.chapter);
-      if (chpIdx !== -1) {
-        chapters[chpIdx].stories.push(story);
-      }
-    }
-
-    return chapters;
-  }
+  public static chapterData: ChapterList[] = [];
 
   public static fnRelateStoryAndNft(stories: Story[], nfts: NFT[]) {
     for (let i = 0; i < stories.length; ++i) {
@@ -101,66 +70,43 @@ export class WebMock {
   public static storyData: Story[] | null = null;
   public static nftData: NFT[] | null = null;
 
-  public static async fnGetMockInfo() {
-    if (WebMock.storyData === null) {
-      WebMock.storyData = (await nervapeApi.fnGetStoryList()) as Story[];
-    }
-    let storyData = WebMock.storyData;
- 
-    if (WebMock.nftData === null) {
-      WebMock.nftData = (await nervapeApi.fnGetSyncFromMibao()) as NFT[];
-    }
-    let nftData = WebMock.nftData;
-
-    console.log(storyData);
-
-    const { stories, nfts } = WebMock.fnRelateStoryAndNft(storyData, nftData);
-    const chapters = WebMock.fnGroupStory(stories);
-    const latestStory = stories.find((v) => v.latest);
-    const latestNft = nfts.find((v) => v.latest);
-
-    const campaigns = WebMock.fnSetCompainData(nfts);
-    console.log(nfts);
-    return {
-      latestStory,
-      stories,
-      chapters,
-
-      nfts,
-      latestNft,
-
-      campaigns,
-    };
-  }
-
   public static async fnGetNftMockInfo(latest: boolean, type?: string | null) {
     type = type || NavTool.fnQueryParam("type");
     if (type === null) {
       type = NavTool.fnStdNavStr(WebMock.typeData[0]);
     }
-    const data = await nervapeApi.fnGetNfts(type, latest);
+    // const data = await nervapeApi.fnGetNfts(type, latest);
     return {
-      nfts: data.normalNfts,
-      latestNft: data.latestNfts.length > 0 ? data.latestNfts[0] : null
+      nfts: [], // data.normalNfts,
+      latestNft: null // data.latestNfts.length > 0 ? data.latestNfts[0] : null
     }
   }
 
-  public static async fnGetStoryMockInfo(latest: boolean, chapter?: string | null) {
-    chapter = chapter || NavTool.fnQueryParam('chapter');
-    if (chapter === null) {
-      chapter = WebMock.chapterData[0]
+  public static async fnGetChaptersMockInfo() {
+    if (!WebMock.chapterData.length) {
+      WebMock.chapterData = await nervapeApi.fnGetChapters();
     }
-    let _chapter = chapter;
-    WebMock.chapterData.forEach(chap => {
-      if (NavTool.fnStdNavStr(chap) === NavTool.fnStdNavStr(chapter as string)) {
-        _chapter = chap;
-      }
-    })
-    const data = await nervapeApi.fnGetStories(_chapter, latest);
+    return WebMock.chapterData;
+  }
+
+  public static fnGetChapterIdByName(chapterName?: string | null) : string {
+    if (!chapterName) return WebMock.chapterData[0]._id;
+    const chapters : ChapterList[] = WebMock.chapterData.filter(item => NavTool.fnStdNavStr(item.name) == NavTool.fnStdNavStr(chapterName));
+    if (chapters.length) return chapters[0]._id;
+    return '';
+  }
+  public static async fnGetStoryMockInfo(latest: boolean, chapter?: ChapterList) {
+    const chapterData: ChapterList[] = await WebMock.fnGetChaptersMockInfo();
+
+    const chapterName = chapter?.name || NavTool.fnQueryParam('chapter');
+    // 获取_id
+    const _id = this.fnGetChapterIdByName(chapterName);
+    
+    const data = await nervapeApi.fnGetStories(_id, latest);
     return {
       stories: data.normalStories,
       latestStory: data.latestStories.length > 0 ? data.latestStories[0] : null,
-      chapters: WebMock.chapterData
+      chapters: chapterData
     }
   }
 

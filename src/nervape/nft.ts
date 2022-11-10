@@ -1,14 +1,16 @@
 import { Story, Story_NFT_List } from "./story";
-import iconScene from "../assets/gallery/scene.svg";
-import iconCharacter from "../assets/gallery/character.svg";
-import iconItem from "../assets/gallery/item.svg";
+import iconScene from "../assets/icons/scene.png";
+import iconCharacter from "../assets/icons/character.png";
+import iconItem from "../assets/icons/item.png";
+import iconSpecial from "../assets/icons/special.png";
 
-export type NFT_TYPE = "" | "Character" | "Scene" | "Item";
+export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special";
 
 export const IconMap = new Map<NFT_TYPE, string>();
 IconMap.set("Character", iconCharacter);
 IconMap.set("Scene", iconScene);
 IconMap.set("Item", iconItem);
+IconMap.set("Special", iconSpecial);
 
 export class NFT {
   id: string = "";
@@ -35,6 +37,13 @@ export class NFT {
 
   // ===== > info from mibao
   stories: Story[] = [];
+  origin: string = "";
+  short_name: string = "";
+  birthday: string = "";
+  card_background: string = "";
+  job: string = "";
+
+  id_range: string = "";
 }
 
 export class NFT_List {
@@ -61,4 +70,35 @@ export class NFT_List {
   is_banned: boolean = false;
 
   stories: Story_NFT_List[] = [];
+}
+
+export class NFT_BANNER {
+  _id: string = "";
+  imageUrl4k: string = "";
+  imageUrlsmail: string = "";
+  promoVideoUrl: string = "";
+  name: string = "";
+  job: string = "";
+  type: NFT_TYPE = "";
+  published: boolean = false;
+  sort: number = 0;
+  status: string = "";
+}
+
+export class NFT_QUERY {
+  name?: string;
+  origin?: string[];
+  type?: string[];
+}
+
+export class NFT_FILTER_ITEM {
+  name: string = "";
+  count: number = 0;
+  checked: boolean = false;
+}
+
+export class NFT_FILTER {
+  name: string = "";
+  open: boolean = true;
+  items: NFT_FILTER_ITEM[] = [];
 }

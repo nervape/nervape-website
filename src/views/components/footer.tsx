@@ -1,94 +1,33 @@
-import React, { Component } from "react";
-import "./footer.less";
-import logo from "../../assets/logo/logo_nervape.svg";
-import twitter from "../../assets/icons/twitter.svg";
-import discord from "../../assets/icons/discord.svg";
-import instagram from "../../assets/icons/instagram.svg";
-import socialmedia from "../../assets/icons/socialmedia.svg";
-import github from "../../assets/icons/github.svg";
-import email from "../../assets/icons/email.svg";
+import React, { useContext, useEffect, useState } from 'react';
+import { DataContext, getWindowWidthRange } from '../../utils/utils';
+import './footer.less';
 
-export class Footer extends Component {
-  public domRoot: HTMLElement | null = null;
+export default function Footer() {
+    const [isMobile, setIsMobile] = useState(false);
+    const { windowWidth } = useContext(DataContext);
 
-  render() {
+    useEffect(() => {
+        setIsMobile(!(windowWidth !== 375));
+    }, [windowWidth]);
+
     return (
-      <div
-        className="footer"
-        ref={(el) => {
-          this.domRoot = el;
-        }}
-      >
-        <div className="top-line">
-          <img className="logo" src={logo} />
-          <div className="icon-group">
-            <a
-              className="icon"
-              target="_blank"
-              href="https://twitter.com/Nervapes"
-            >
-              <img src={twitter} />
-            </a>
-
-            <a
-              className="icon"
-              target="_blank"
-              href="https://discord.com/invite/7br6nvuNHP"
-            >
-              <img src={discord} />
-            </a>
-
-            <a
-              className="icon"
-              target="_blank"
-              href="https://www.instagram.com/nervapes/"
-            >
-              <img src={instagram} />
-            </a>
-
-            <a
-              className="icon"
-              target="_blank"
-              href="https://medium.com/@Nervape"
-            >
-              <img src={socialmedia} />
-            </a>
-
-            <a
-              className="icon"
-              target="_blank"
-              href="https://github.com/nervape"
-            >
-              <img src={github} />
-            </a>
-
-            <a
-              className="icon"
-              target="_blank"
-              href="mailto:creative@nervape.com"
-            >
-              <img src={email} />
-            </a>
-          </div>
+        <div className={`footer ${isMobile && 'mobile'}`}>
+            <div className="copy">@&nbsp;2022&nbsp;&nbsp;Nervape</div>
+            <div className="footer-item">
+                <div className="wiki">
+                    <a target="_block" href="https://tourmaline-elderberry-f93.notion.site/Nervape-Community-Wiki-e46261f411ed42e19b859f48da06fe63">
+                        Nervape Wiki
+                    </a>
+                </div>
+                <div className="brand-assets">
+                    <a target="_block" href="https://tourmaline-elderberry-f93.notion.site/Nervape-Brand-Assets-b7c52ca6f17c492e87cd18b5496da8f0">
+                        Brand Assets
+                    </a>
+                </div>
+                <div className="contact-us">
+                    <a href="mailto:creative@nervape.com">Contact Us</a>
+                </div>
+            </div>
         </div>
-        <div className="bottom-line">
-          <a
-            className="brand-assets"
-            target="_blank"
-            href="https://tourmaline-elderberry-f93.notion.site/Nervape-Brand-Assets-b7c52ca6f17c492e87cd18b5496da8f0"
-          >
-            Brand Assets
-          </a>
-
-          <a
-            className="join-us"
-            target="_blank"
-            href="https://tourmaline-elderberry-f93.notion.site/Nervape-Job-Board-7b62e55294cf4010bf6fae57f3cb47d0"
-          >
-            Join Us
-          </a>
-        </div>
-      </div>
     );
-  }
 }

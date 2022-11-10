@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import {
   HashRouter,
   Navigate,
@@ -7,28 +7,43 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import 'antd/dist/antd.css';
 import "./app.less";
-import { NavHeader } from "./components/header";
-import { AboutPage } from "./pages/about";
-import { CampaignPage } from "./pages/campaign";
-import { Gallery } from "./pages/gallery";
-import { StoriesPage } from "./pages/stories";
-import { Footer } from "./components/footer";
+import AboutPage from "./about";
+import CampaignPage from "./campaigns";
+import Story from "./stories";
+import NFTPage from "./nfts";
 import { NavTool } from "../route/navi-tool";
 import PageView from "./components/page-view";
-import { StoryDetailPage } from "./pages/stories-detail";
+import StoryProfile from "./stories/profile/profile";
+import HomePage from "./home";
+import MaintenancePage from "./maintenance";
 
 export function App() {
   NavTool.navigation = useNavigate();
   NavTool.location = useLocation();
 
+  const [maintenance, setMaintenance] = useState(false);
+
+  if (maintenance) {
+    return <MaintenancePage></MaintenancePage>;
+  }
+  
   return (
     <div className="app">
         <Routes>
           <Route
+            path=""
+            element={
+              <PageView activeIndex={0} disableFooter={true}>
+                <HomePage />
+              </PageView>
+            }
+          />
+          <Route
             path="/about"
             element={
-              <PageView activeIndex={0}>
+              <PageView activeIndex={1} disableFooter={true}>
                 <AboutPage />
               </PageView>
             }
@@ -36,8 +51,8 @@ export function App() {
           <Route
             path="/nft"
             element={
-              <PageView activeIndex={1}>
-                <Gallery />
+              <PageView activeIndex={3}>
+                <NFTPage />
               </PageView>
             }
           />
@@ -45,27 +60,27 @@ export function App() {
             path="/story"
             element={
               <PageView activeIndex={2}>
-                <StoriesPage />
+                <Story />
               </PageView>
             }
           />
           <Route
             path="/story/:id"
             element={
-              <PageView activeIndex={2}>
-                <StoryDetailPage />
+              <PageView activeIndex={2} disableFooter={true}>
+                <StoryProfile />
               </PageView>
             }
           />
           <Route
             path="/campaign"
             element={
-              <PageView activeIndex={3}>
+              <PageView activeIndex={4}>
                 <CampaignPage />
               </PageView>
             }
           />
-          <Route path="*" element={<Navigate to="/about" />} />
+          <Route path="*" element={<Navigate to="" />} />
         </Routes>
     </div>
   );

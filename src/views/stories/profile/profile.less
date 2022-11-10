@@ -1,0 +1,209 @@
+.story-profile-container {
+  padding-top: 0 !important;
+  min-height: 100vh !important;
+  .banner,
+  .header-sketch {
+    height: calc(100vh + 157.5px);
+  }
+  .banner {
+    width: 100vw;
+    position: fixed;
+    overflow-x: hidden;
+    top: 0;
+    left: 0;
+    img {
+      width: 100%;
+      object-fit: cover;
+      // object-position: top;
+      position: absolute;
+      display: block;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+    }
+  }
+  .profile-content {
+    position: relative;
+    top: 0;
+    .header-sketch {
+      width: 100vw;
+      position: relative;
+      overflow-x: hidden;
+      top: 0;
+      left: 0;
+      img {
+        width: 100%;
+        object-fit: cover;
+        // object-position: top;
+        position: absolute;
+        display: block;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+      }
+    }
+    .story-content {
+      // letter-spacing: -0.05em;
+      margin-top: -5px;
+      color: #e7edf5;
+      .profile-info {
+        margin: 0 auto;
+        width: 1000px;
+        padding-top: 1em;
+        .chapter-name,
+        .story-serial {
+          font-size: 12px;
+          line-height: 14px;
+          padding-bottom: 20px;
+          span {
+            font-weight: 800;
+          }
+        }
+        .story-serial {
+          padding-bottom: 20px;
+        }
+        .story-name {
+          font-weight: 800;
+          font-size: 36px;
+          line-height: 43px;
+          padding-bottom: 40px;
+        }
+        .sr-content {
+          font-size: 14px;
+          // line-height: 17px;
+          p {
+            margin-bottom: 0 !important;
+          }
+        }
+      }
+    }
+    .footer-sketch {
+      width: 100vw;
+      // height: 200px;
+      height: auto;
+      overflow-x: hidden;
+      position: relative;
+      img {
+        width: 100%;
+        object-fit: cover;
+        object-position: top;
+        // position: absolute;
+        display: block;
+        left: 50%;
+        // transform: translateX(-50%);
+        height: 100%;
+      }
+      .sr-nav-footer {
+        width: 1000px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 17px;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17px;
+        text-align: center;
+
+        color: #ffffff;
+
+        .sr-previous {
+          float: left;
+          left: 0px;
+          margin: auto;
+
+          cursor: pointer;
+        }
+        .sr-next {
+          float: right;
+          right: 0px;
+          margin: auto;
+
+          cursor: pointer;
+        }
+      }
+    }
+    .page-footer {
+      bottom: 0;
+      position: absolute;
+      width: 100vw;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .story-profile-container {
+    .profile-content {
+      .story-content {
+        .profile-info {
+          width: 347px;
+        }
+      }
+      .footer-sketch {
+        height: 200px;
+        img {
+          object-fit: cover;
+          object-position: top;
+          position: absolute;
+          display: block;
+          left: 50%;
+          transform: translateX(-50%);
+          height: 100%;
+        }
+        .sr-nav-footer {
+          width: 347px;
+          top: 63px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+  .story-profile-container {
+    .profile-content {
+      .story-content {
+        .profile-info {
+          width: 600px;
+        }
+      }
+      .footer-sketch {
+        .sr-nav-footer {
+          width: 600px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+}
+
+@media screen and (max-width: 2560px) and (min-width: 1440px) {
+  .story-profile-container {
+    .banner,
+    .header-sketch {
+      height: calc(100vh + 180px);
+    }
+    .profile-content {
+      .story-content {
+      }
+    }
+  }
+}
+@media screen and (max-width: 3840px) and (min-width: 2560px) {
+  .story-profile-container {
+    .banner,
+    .header-sketch {
+      height: calc(100vh + 180px);
+    }
+    .profile-content {
+      .story-content {
+      }
+      .footer-sketch {
+        // height: 300px;
+      }
+    }
+  }
+}
