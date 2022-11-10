@@ -23,7 +23,7 @@ export function App() {
   NavTool.navigation = useNavigate();
   NavTool.location = useLocation();
 
-  const [maintenance, setMaintenance] = useState(true);
+  const [maintenance, setMaintenance] = useState(false);
 
   if (maintenance) {
     return <MaintenancePage></MaintenancePage>;

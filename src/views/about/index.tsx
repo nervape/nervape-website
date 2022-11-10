@@ -35,7 +35,7 @@ export default function AboutPage() {
     const bannerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setInnerHeight(window.innerHeight / 2 - 56);
+        setInnerHeight(window.innerHeight / 2 -  56);
         nervapeApi.fnGetStaffs().then(res => {
             setHumans(res);
         })
@@ -54,7 +54,7 @@ export default function AboutPage() {
             <section className="intro-section">
                 <div className="intro-top" id="intro-top">
                     <Parallax
-                        animation={{ opacity: 0, ease: 'linear', top: `${innerHeight + 300}px`, playScale: [0.9, 1.3] }}
+                        animation={{ opacity: 0, ease: 'linear', top: `${innerHeight + 300}px`, playScale: [0.9, 1.4] }}
                         style={{ opacity: 1, top: `${innerHeight}px` }}
                         location="intro-top"
                         className="intro-top-text"
