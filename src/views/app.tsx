@@ -24,8 +24,9 @@ export function App() {
   NavTool.location = useLocation();
 
   const [maintenance, setMaintenance] = useState(false);
+  const host = window.location.host;
 
-  if (maintenance) {
+  if (maintenance && host == 'www.nervape.com') {
     return <MaintenancePage></MaintenancePage>;
   }
   
