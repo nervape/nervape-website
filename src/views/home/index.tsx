@@ -10,6 +10,7 @@ export default function HomePage() {
                 <video playsInline loop preload="true" autoPlay muted>
                     <source src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e94e2283-b43d-4910-82e0-8e672ca4ed0e.mp4"/>
                 </video>
+                <div className="video-mask"></div>
                 <div className="about-here">
                     <div className="text">Enter The Third Continent</div>
                     <button 
