@@ -8,7 +8,7 @@ export default function HomePage() {
         <div className="home-container main-container">
             <div className="video-content">
                 <video playsInline loop preload="true" autoPlay muted>
-                    <source src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/cf840997-c84e-4546-a6aa-e746e35b40ae.mp4"/>
+                    <source src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e94e2283-b43d-4910-82e0-8e672ca4ed0e.mp4"/>
                 </video>
                 <div className="about-here">
                     <div className="text">Enter The Third Continent</div>
