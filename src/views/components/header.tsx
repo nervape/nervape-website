@@ -187,7 +187,7 @@ export default function NavHeader(props: any) {
                     onClick={() => {
                       setDisableList(true);
                       if (v.title === 'BRIDGE') {
-                        window.location.href = v.url;
+                        window.location.href = window.location.origin + v.url;
                       } else {
                         NavTool.fnJumpToPage(v.url);
                       }
