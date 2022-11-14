@@ -52,14 +52,14 @@ const pages = [
   },
   {
     title: "WALLET",
-    url: "",
+    url: "/wallet",
     type: "navbar",
     image: "",
   },
   {
     title: "BRIDGE",
-    url: "",
-    type: "action",
+    url: "/bridge",
+    type: "navbar",
     image: "",
   },
   // {
@@ -160,7 +160,7 @@ export default function NavHeader(props: any) {
             onClick={(e) => { e.stopPropagation() }}
           >
             {pages?.map((v: NavPageInfo, i: number) => {
-              if (v.title === 'WALLET' || v.title === 'BRIDGE') {
+              if (v.title === 'WALLET') {
                 return (
                   <Tooltip
                     key={i}
@@ -186,7 +186,11 @@ export default function NavHeader(props: any) {
                     key={i}
                     onClick={() => {
                       setDisableList(true);
-                      NavTool.fnJumpToPage(v.url);
+                      if (v.title === 'BRIDGE') {
+                        window.location.href = v.url;
+                      } else {
+                        NavTool.fnJumpToPage(v.url);
+                      }
                       window.scrollTo(0, 0);
                     }}
                   >
