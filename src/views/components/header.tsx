@@ -160,44 +160,23 @@ export default function NavHeader(props: any) {
             onClick={(e) => { e.stopPropagation() }}
           >
             {pages?.map((v: NavPageInfo, i: number) => {
-              if (v.title === 'WALLET') {
-                return (
-                  <Tooltip
-                    key={i}
-                    title={() => {
-                      return (
-                        <p>Coming Soon!</p>
-                      );
-                    }}
-                    placement="bottom"
-                    trigger={['hover', 'click']}
-                    overlayClassName="tooltip"
-                    color="#506077"
-                  >
-                    <div className={`nav-area ${v.type}`}>
-                      <div className="title-text">{v.title}</div>
-                    </div>
-                  </Tooltip>
-                );
-              } else {
-                return (
-                  <div
-                    className={`nav-area ${v.type} ${activeIndex == i + 1 ? 'active' : ''}`}
-                    key={i}
-                    onClick={() => {
-                      setDisableList(true);
-                      if (v.title === 'BRIDGE') {
-                        window.open(v.url, '_self');
-                      } else {
-                        NavTool.fnJumpToPage(v.url);
-                      }
-                      window.scrollTo(0, 0);
-                    }}
-                  >
-                    <div className="title-text">{v.title}</div>
-                  </div>
-                );
-              }
+              return (
+                <div
+                  className={`nav-area ${v.type} ${activeIndex == i + 1 ? 'active' : ''}`}
+                  key={i}
+                  onClick={() => {
+                    setDisableList(true);
+                    if (v.title === 'BRIDGE' || v.title === 'WALLET') {
+                      window.open(v.url, '_self');
+                    } else {
+                      NavTool.fnJumpToPage(v.url);
+                    }
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  <div className="title-text">{v.title}</div>
+                </div>
+              );
             })}
             <div className={`icon-nav-c ${windowWidth === 375 && 'mobile'}`}>
               <div
