@@ -124,6 +124,16 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
                             </div>
                         </div>
                         <div className="description">{nft.description}</div>
+                        <div className="btn-groups">
+                            <button
+                                className="btn cursor"
+                                onClick={() => {
+                                    window.open(nft.yokaiUrl);
+                                }}
+                            >
+                                BUY ON YOKAI
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

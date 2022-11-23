@@ -44,6 +44,8 @@ export class NFT {
   job: string = "";
 
   id_range: string = "";
+
+  yokaiUrl: string = "";
 }
 
 export class NFT_List {
