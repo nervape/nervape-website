@@ -195,16 +195,16 @@ export default function AboutPage() {
                                 We are excited to see what Nervape will evolve into as it is shaped by the community’s creativity.
                             </p>
                         </div>
-                        {/* <div
+                        <div
                             className="more-detail cursor"
                             onClick={() => {
-                                // window.open('/nft');
-                                // scrollToTop();
+                                window.open('https://medium.com/@Nervape/customize-your-nft-e2ed3c460d33');
+                                scrollToTop();
                             }}
                         >
                             <div className="a">DETAIL</div>
                             <img loading="lazy" src={ArrowIcon} alt="ArrowIcon" />
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </section>

@@ -26,7 +26,7 @@ function BoneList() {
                         <br />
                         Holders on the Bonelist receive guaranteed access to mint NFTs, NFT drops, and other exclusive collaborations.
                         <br />
-                        Why call it the Bonelist? <a target="_block" href="https://www.youtube.com/watch?v=QSxI0OOjR0Y&t=15s">https://www.youtube.com/watch?v=QSxI0OOjR0Y&t=15s</a>
+                        Why call it the <a target="_block" href="https://www.youtube.com/watch?v=QSxI0OOjR0Y&t=15s">Bonelist</a>? 
                     </div>
                 </div>
             </div><div className="bl-item">
@@ -74,7 +74,7 @@ function PoapBadgeItem(props: { poap: PoapBadge }) {
     const { poap } = props;
 
     const startDate = new Date(poap.start_date).toLocaleDateString("en-US");
-    const endDate = new Date(poap.end_date).toLocaleDateString("en-US");
+    const endDate = poap.end_date ? new Date(poap.end_date).toLocaleDateString("en-US") : "";
 
     return (
         <div
@@ -88,7 +88,7 @@ function PoapBadgeItem(props: { poap: PoapBadge }) {
             <div className="p-info">
                 <div className="p-name">{poap.name}</div>
                 <div className="p-start-end-date">
-                    <div className="date">{`${startDate} - ${endDate}`}</div>
+                    <div className="date">{`${startDate} ${endDate ? '- ' + endDate : ''}`}</div>
                     <div className={`p-status ${poap.timeline}`}>{poap.timeline}</div>
                 </div>
             </div>
@@ -184,7 +184,7 @@ export default function CampaignPage() {
             <div className="poap-badges">
                 <div className="poap-content">
                     <div className="title">
-                        POAP <span>BADGE</span>
+                        BADGE <span>AWARD</span>
                     </div>
                     <div className="poap-list">
                         {poapBadges.map((poap, index) => {
