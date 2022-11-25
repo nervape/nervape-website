@@ -199,7 +199,6 @@ export default function AboutPage() {
                             className="more-detail cursor"
                             onClick={() => {
                                 window.open('https://medium.com/@Nervape/customize-your-nft-e2ed3c460d33');
-                                scrollToTop();
                             }}
                         >
                             <div className="a">DETAIL</div>
