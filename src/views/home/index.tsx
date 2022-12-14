@@ -12,8 +12,15 @@ export default function HomePage() {
     return (
         <div className="home-container main-container">
             <div className="video-content">
-                <video id="video" playsInline loop preload="true" autoPlay muted>
-                    <source src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e94e2283-b43d-4910-82e0-8e672ca4ed0e.mp4"/>
+                <video 
+                    id="video" 
+                    playsInline
+                    loop
+                    preload="true"
+                    autoPlay
+                    muted
+                    poster="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/3548f780-dd56-40b0-beff-095d57e45604.png">
+                    <source src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/2d713e68-9317-4d69-9c8e-b0046cd11816.mp4"/>
                 </video>
                 <div className="video-mask"></div>
                 <div className="b-content">
