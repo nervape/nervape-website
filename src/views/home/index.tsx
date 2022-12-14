@@ -19,7 +19,7 @@ export default function HomePage() {
                     preload="true"
                     autoPlay
                     muted
-                    poster="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/3548f780-dd56-40b0-beff-095d57e45604.png">
+                    poster="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b6fb72fc-80d3-48de-bbaa-6ce45330b48a.png">
                     <source src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/2d713e68-9317-4d69-9c8e-b0046cd11816.mp4"/>
                 </video>
                 <div className="video-mask"></div>
