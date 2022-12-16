@@ -24,8 +24,10 @@ export default function HomePage() {
                     muted
                     src={windowWidth !== 375 
                         ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/2d713e68-9317-4d69-9c8e-b0046cd11816.mp4" 
-                        : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/6b652312-0b0f-40cc-b467-8d0d9190c4b9.mp4"}
-                    poster="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b6fb72fc-80d3-48de-bbaa-6ce45330b48a.png">
+                        : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/0133fdd5-e104-4b6f-bc5d-02a3c811c353.mp4"}
+                    poster={windowWidth !== 375
+                        ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b6fb72fc-80d3-48de-bbaa-6ce45330b48a.png"
+                        : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/a10bf54e-a4c0-4dbe-b8a4-995d9fef55b7.png"}>
                 </video>
                 <div className="video-mask"></div>
                 <div className="b-content">
