@@ -123,7 +123,9 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
                                 <div className="value">{nft.type}</div>
                             </div>
                         </div>
-                        <div className="description">{nft.description}</div>
+                        <div className="description">
+                            <div className="desc-c">{nft.description}</div>
+                        </div>
                         <div className="btn-groups">
                             <button
                                 className="btn cursor"
@@ -411,6 +413,7 @@ export default function NFTPage() {
                                         <div
                                             className="cover-image cursor"
                                             onClick={() => {
+                                                document.body.style.overflow = 'hidden';
                                                 setShowNftCard(true);
                                                 setNftDetail(nft);
                                             }}
@@ -440,14 +443,22 @@ export default function NFTPage() {
             {showNftCard && nftDetail && (
                 <NftCardDetail
                     nft={nftDetail}
-                    close={() => setShowNftCard(false)}
+                    close={() => {
+                        document.body.style.overflow = 'auto';
+                        setShowNftCard(false)
+                    }}
                     fullscreen={() => {
                         setShowNftCard(false);
                         setShowFullscreen(true);
                     }}></NftCardDetail>
             )}
             {showFullscreen && (
-                <FullscreenPreview nft={nftDetail} close={() => setShowFullscreen(false)}></FullscreenPreview>
+                <FullscreenPreview 
+                    nft={nftDetail} 
+                    close={() => {
+                        document.body.style.overflow = 'auto';
+                        setShowFullscreen(false)
+                    }}></FullscreenPreview>
             )}
         </div>
     );
