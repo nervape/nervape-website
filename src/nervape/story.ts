@@ -36,6 +36,13 @@ export class Story {
   background: string = "";
   headerSketch: string = "";
   footerSketch: string = "";
+
+  sideStoryOpen: boolean = false;
+  sideStoryIcon: string = "";
+  sideStoryIconHover: string = "";
+  sideStoryName: string = "";
+  sideStoryCover: string = "";
+  sideStoryDesc: string = "";
 }
 
 export class Story_NFT_List {

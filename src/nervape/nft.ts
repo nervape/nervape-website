@@ -46,6 +46,7 @@ export class NFT {
   id_range: string = "";
 
   yokaiUrl: string = "";
+  character_icon: string = "";
 }
 
 export class NFT_List {
