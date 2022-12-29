@@ -14,15 +14,18 @@ import { Parallax } from 'rc-scroll-anim';
 function SideStoryDetail(props: any) {
     const { close, story } = props;
     return (
-        <div className={`side-story-detail mask-cover`} onClick={close}>
+        <div 
+            className={`side-story-detail mask-cover`} 
+            style={{background: story.sideStoryBackground}}
+            onClick={close}>
             <div className="side-content" onClick={e => {
                 e.stopPropagation();
             }}>
                 <div className="side-top">
                     <div className="side-l">
                         <div className="chapter-name">
-                            <span>{story?.serial}</span>
-                            {` | Sidestory`}
+                            {/* <span>{story?.serial}</span> */}
+                            {`Side Story`}
                         </div>
                         <div className="story-name">{story?.sideStoryName}</div>
                     </div>

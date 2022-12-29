@@ -43,6 +43,7 @@ export class Story {
   sideStoryName: string = "";
   sideStoryCover: string = "";
   sideStoryDesc: string = "";
+  sideStoryBackground: string = "";
 }
 
 export class Story_NFT_List {
