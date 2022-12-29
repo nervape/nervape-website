@@ -15,8 +15,8 @@ function SideStoryDetail(props: any) {
     const { close, story } = props;
     return (
         <div 
-            className={`side-story-detail mask-cover`} 
-            style={{background: story.sideStoryBackground}}
+            className="side-story-detail mask-cover"
+            style={{ background: story?.sideStoryBackground }}
             onClick={close}>
             <div className="side-content" onClick={e => {
                 e.stopPropagation();
