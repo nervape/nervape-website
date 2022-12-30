@@ -121,8 +121,7 @@ export default function StoryProfile(props: any) {
                     </div>
                     <div className="side-info">
                         <div className="title">
-                            <span>SIDE STORY:</span>
-                            {story.sideStoryName}
+                            {story.sideStorySerial}
                         </div>
                         <div className="nfts">
                             {story.nfts.map((nft) => {

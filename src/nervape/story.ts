@@ -41,6 +41,7 @@ export class Story {
   sideStoryIcon: string = "";
   sideStoryIconHover: string = "";
   sideStoryName: string = "";
+  sideStorySerial: string = "";
   sideStoryCover: string = "";
   sideStoryDesc: string = "";
   sideStoryBackground: string = "";
