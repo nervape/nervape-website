@@ -25,7 +25,7 @@ function SideStoryDetail(props: any) {
                     <div className="side-l">
                         <div className="chapter-name">
                             {/* <span>{story?.serial}</span> */}
-                            {`Side Story`}
+                            {story.sideStorySerial}
                         </div>
                         <div className="story-name">{story?.sideStoryName}</div>
                     </div>
