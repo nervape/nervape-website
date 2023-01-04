@@ -17,7 +17,10 @@ function SideStoryDetail(props: any) {
         <div 
             className="side-story-detail mask-cover"
             style={{ background: story?.sideStoryBackground }}
-            onClick={close}>
+            onClick={close}
+            onTouchMove={e => {
+                e.preventDefault();
+            }}>
             <div className="side-content" onClick={e => {
                 e.stopPropagation();
             }}>
