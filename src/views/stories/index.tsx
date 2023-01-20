@@ -46,7 +46,7 @@ export default function Story() {
                                     {chapter.stories?.map((story, _index) => {
                                         return (
                                             <div className="item story-item cursor" onClick={() => {
-                                                NavTool.fnJumpToPage(`/story/${story?._id}`)
+                                                NavTool.fnJumpToPage(`/story/${story?.urlMask}`)
                                             }} key={_index}>
                                                 <img loading="lazy" className="image-url dishover" src={story.imageUrl} alt="imageUrl" />
                                                 <img loading="lazy" className="image-url hover" src={story.hoverImageUrl} alt="imageUrl" />

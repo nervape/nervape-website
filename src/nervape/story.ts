@@ -14,6 +14,7 @@ export class Story {
   chapterId?: Chapter;
   serial: string = "";
   title: string = "";
+  urlMask: string = "";
   overview: string = "";
   content: string = "";
 
