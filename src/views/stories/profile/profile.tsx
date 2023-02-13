@@ -14,7 +14,7 @@ import { Parallax } from 'rc-scroll-anim';
 function SideStoryDetail(props: any) {
     const { close, story } = props;
     return (
-        <div 
+        <div
             className="side-story-detail mask-cover"
             style={{ background: story?.sideStoryBackground }}
             onClick={close}
@@ -145,10 +145,25 @@ export default function StoryProfile(props: any) {
         );
     }
 
+    const fnGetBanner = () => {
+        const urls = story?.bannerUrl.split('.');
+        if (urls.length > 1 && urls[urls.length - 1] === 'mp4') {
+            return <video 
+                    id="video" 
+                    playsInline
+                    loop
+                    preload="true"
+                    autoPlay
+                    muted 
+                    src={story?.bannerUrl}></video>
+        }
+        return <img loading="lazy" src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
+    }
+
     return (
         <div className="story-profile-container main-container" key={keyId}>
             <div className="banner">
-                <img loading="lazy" src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
+                {fnGetBanner()}
             </div>
             <div className="profile-content">
                 <div className="header-sketch">
