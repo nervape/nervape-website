@@ -1,3 +1,6 @@
+import { BigNumberish } from '@ethersproject/bignumber';
+import { formatUnits } from '@ethersproject/units';
+
 import { createContext } from "react";
 
 export const DataContext = createContext({ windowWidth: window.innerWidth });
@@ -25,6 +28,15 @@ export function scrollToTop() {
     }, 100);
 }
 
+export const parseBalance = (value: BigNumberish, decimals = 18) => formatUnits(value, decimals);
+
 export function isMobile() {
-    return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+    const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+    );
+    return flag;
+}
+
+export function isMetaMaskMobile() {
+    return /MetaMaskMobile/.test(navigator.userAgent);
 }

@@ -18,6 +18,14 @@ import PageView from "./components/page-view";
 import StoryProfile from "./stories/profile/profile";
 import HomePage from "./home";
 import MaintenancePage from "./maintenance";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+import { godWoken } from "../utils/Chain";
+import WallectPage from "./wallet";
 
 export function App() {
   NavTool.navigation = useNavigate();
@@ -29,9 +37,38 @@ export function App() {
   if (maintenance && host == 'www.nervape.com') {
     return <MaintenancePage></MaintenancePage>;
   }
-  
+
+  const chains = [godWoken];
+
+  const { provider, webSocketProvider } = configureChains(chains, [
+    alchemyProvider({ apiKey: 'BbyuzUYnWmVjjGxGfgHnkUluVj2fiHBo' }),
+    publicProvider()
+  ]);
+
+  const wagmiClient = createClient({
+    autoConnect: true,
+    connectors: [
+      new MetaMaskConnector({ chains }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          qrcode: true
+        }
+      }),
+      new CoinbaseWalletConnector({
+        chains,
+        options: {
+          appName: 'Nervape Wallet'
+        }
+      })
+    ],
+    provider,
+    webSocketProvider
+  });
+
   return (
-    <div className="app">
+    <WagmiConfig client={wagmiClient}>
+      <div className="app">
         <Routes>
           <Route
             path=""
@@ -81,8 +118,17 @@ export function App() {
               </PageView>
             }
           />
+          <Route
+            path="/wallet"
+            element={
+              <PageView activeIndex={5}  disableFooter={true}>
+                <WallectPage></WallectPage>
+              </PageView>
+            }>
+          </Route>
           <Route path="*" element={<Navigate to="" />} />
         </Routes>
-    </div>
+      </div>
+    </WagmiConfig>
   );
 }

@@ -1,0 +1,28 @@
+.switch-chain {
+    width: 100%;
+    height: 0;
+    background: #f05757;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 99;
+    transition: all 0.3s;
+    .bg {
+        text-align: center;
+        .tip {
+            font-size: 12px;
+            padding: 10px;
+            line-height: 24px;
+            text-align: center;
+            letter-spacing: -0.05em;
+            color: #ffffff;
+            span {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+.switch-chain.show {
+    opacity: 1;
+    height: auto;
+    visibility: visible;
+}

@@ -1,0 +1,79 @@
+.poap-badge-container {
+    width: 100%;
+    background: #282F41;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    min-height: 237px;
+    color: #FFFFFF;
+    margin-bottom: 28px;
+    .title {
+        padding: 20px 20px 16px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+    }
+    .badge-content {
+        display: -webkit-box;
+        overflow-x: scroll;
+        margin: 0 auto;
+        width: 960px;
+        min-height: 138px;
+        padding-bottom: 16px;
+        &::-webkit-scrollbar {
+            width: 100%;
+            background: #202530;
+            border-radius: 6px;
+            height: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #40485C;
+            border-radius: 6px;
+        }
+        .badge-cover {
+            width: 138px;
+            height: 138px;
+            margin-right: 16px;
+            border-radius: 6px;
+            overflow: hidden;
+            &:last-child {
+                margin-right: 0;
+            }
+            .cover-image {
+                width: 100%;
+                height: 100%;
+                border-radius: 6px;
+                transition: all 0.3s;
+            }
+        }
+        .badge-cover:hover {
+            .cover-image {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+    .poap-badge-container {
+        .badge-content {
+            width: 560px;
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .poap-badge-container {
+        min-height: 173px;
+        .badge-content {
+            width: 307px;
+            min-height: 100px;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            .badge-cover {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    }
+}

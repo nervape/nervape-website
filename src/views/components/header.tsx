@@ -52,7 +52,7 @@ const pages = [
   },
   {
     title: "WALLET",
-    url: "https://www.nervape.com/wallet/",
+    url: "/wallet",
     type: "navbar",
     image: "",
   },
@@ -166,7 +166,7 @@ export default function NavHeader(props: any) {
                   key={i}
                   onClick={() => {
                     setDisableList(true);
-                    if (v.title === 'BRIDGE' || v.title === 'WALLET') {
+                    if (v.title === 'BRIDGE') {
                       window.open(v.url, '_self');
                     } else {
                       NavTool.fnJumpToPage(v.url);

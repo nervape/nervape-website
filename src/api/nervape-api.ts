@@ -6,7 +6,7 @@ console.log();
 
 class NervapeApi {
   //@ts-ignore
-  public baseUrl = import.meta.env.VITE_API_BASE_URL;
+  public baseUrl = import.meta.env.VITE_API_HOST;
 
   private _fnDealResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
