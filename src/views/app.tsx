@@ -1,3 +1,4 @@
+/* @vite-ignore */
 import React, { Component, useEffect, useRef, useState } from "react";
 import {
   HashRouter,
@@ -27,7 +28,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { godWoken } from "../utils/Chain";
 import WallectPage from "./wallet";
 
-export function App() {
+export default function App() {
   NavTool.navigation = useNavigate();
   NavTool.location = useLocation();
 
@@ -121,7 +122,7 @@ export function App() {
           <Route
             path="/wallet"
             element={
-              <PageView activeIndex={5}  disableFooter={true}>
+              <PageView activeIndex={5} disableFooter={true}>
                 <WallectPage></WallectPage>
               </PageView>
             }>

@@ -1,10 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useEffect, useRef, useState } from 'react';
 import './index.less';
-// import './assets/fonts/ethnocentric_book_macroman/stylesheet.css';
-// import 'react-toastify/dist/ReactToastify.css';
-
 import { Address, Amount, NervosAddressVersion } from '@lay2/pw-core';
 import { useAccount, useNetwork } from 'wagmi';
 import { UnipassV3Wrapper } from '../../utils/UnipassV3Wrapper';
