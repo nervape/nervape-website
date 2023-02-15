@@ -232,7 +232,7 @@ export default function NFT_CONTENT(props: any) {
     }, [address, nftCoverImages, loginWalletType]);
 
     return (
-        <div className="nft-container">
+        <div className="wallet-nft-container">
             <div className="nft-content">
                 <div className="type-content">
                     <div className="type-tabs">

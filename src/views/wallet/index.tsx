@@ -222,7 +222,7 @@ export default function WallectPage() {
                     <Footer></Footer>
                 </>
             ) : (
-                <div className={`home-container show`}>
+                <div className={`wallet-home-container show`}>
                     <SwitchChain
                         show={switchChain}
                         setSwitchChain={setSwitchChain}

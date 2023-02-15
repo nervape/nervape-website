@@ -353,6 +353,7 @@ const History = (
         if (loginWalletType !== LoginWalletType.UNIPASS_V3) {
             fnGetHistories(address);
         } else {
+            console.log('fnGetUnipassHistories');
             fnGetUnipassHistories(address);
         }
     }, [address, loginWalletType]);

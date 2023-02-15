@@ -64,7 +64,7 @@ export default function HistoryDetail(props: {
     function showType() {
         if (loginWalletType !== LoginWalletType.UNIPASS_V3) {
             if (history.transferType !== TransferType.TRANSFER)
-                return history.transferType.toLowerCase();
+                return history.transferType?.toLowerCase();
             if (address === history.from) return 'send';
             return 'receive';
         }
