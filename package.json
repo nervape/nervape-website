@@ -33,6 +33,7 @@
     "react-router-dom": "^6.2.1",
     "swiper": "^8.4.4",
     "swr": "^1.2.0",
+    "terser": "^5.16.3",
     "up-ckb-alpha-test": "^0.1.5",
     "up-core-test": "0.1.12",
     "wagmi": "^0.11.5"
