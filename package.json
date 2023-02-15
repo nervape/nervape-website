@@ -54,18 +54,21 @@
     "less": "^4.1.2",
     "os-browserify": "^0.3.0",
     "process": "^0.11.10",
-    "ts-node": "8.6.2",
     "react-copy-to-clipboard": "^5.1.0",
     "shx": "0.3.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.1.1",
+    "ts-node": "8.6.2",
     "typechain": "7.0.1",
     "typescript": "^4.5.4",
-    "vite": "^2.8.0",
+    "vite": "3.2.5",
     "vm-browserify": "^1.1.2"
   },
   "resolutions": {
-    "ethereumjs-abi": "https://registry.npmjs.org/ethereumjs-abi/-/ethereumjs-abi-0.6.8.tgz"
+    "ethereumjs-abi": "https://registry.npmjs.org/ethereumjs-abi/-/ethereumjs-abi-0.6.8.tgz",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
+    "graphql": "^16.5.0"
   },
   "browserslist": {
     "production": [
