@@ -76,7 +76,7 @@ export class UnipassV3Wrapper {
     private _collector?: IndexerCollector;
 
     public async init() {
-        this._collector = new IndexerCollector(CONFIG.CKB_INDEXER_RPC_URL);
+        this._collector = new IndexerCollector(CONFIG.CKB_INDEXER_RPC_URL as string);
 
         UP.config({
             domain: CONFIG.UNIPASS_URL
@@ -103,7 +103,7 @@ export class UnipassV3Wrapper {
 
         const provider = new UPCoreSimpleProvider(
             this.username,
-            CONFIG.UNIPASS_ASSET_LOCK_CODE_HASH
+            CONFIG.UNIPASS_ASSET_LOCK_CODE_HASH as string
         );
         const fromAddress = provider.address;
         const toAddress = new Address(toLayerOneAddress, AddressType.ckb);
@@ -111,7 +111,7 @@ export class UnipassV3Wrapper {
         console.log('[getNFTTransferSignMessage-fromAddress]', fromAddress);
         console.log('[getNFTTransferSignMessage-toAddress]', toAddress);
 
-        const rpc = new RPC(CONFIG.CKB_NODE_RPC_URL);
+        const rpc = new RPC(CONFIG.CKB_NODE_RPC_URL as string);
         const cells = await Promise.all(outpoints.map(x => Cell.loadFromBlockchain(rpc, x)));
         console.log('[cells]', cells);
 
@@ -125,7 +125,7 @@ export class UnipassV3Wrapper {
             cells,
             builderOption,
             cellDeps,
-            new BasicCollector(CONFIG.CKB_INDEXER_RPC_URL),
+            new BasicCollector(CONFIG.CKB_INDEXER_RPC_URL as string),
             receiverLayerTwoEthereumAddress
         );
         const transaction = await builder.build();
@@ -139,7 +139,7 @@ export class UnipassV3Wrapper {
     async transferCKB(toLayerOneAddress: string, amount: Amount): Promise<string> {
         const provider = new UPCoreSimpleProvider(
             this.username,
-            CONFIG.UNIPASS_ASSET_LOCK_CODE_HASH
+            CONFIG.UNIPASS_ASSET_LOCK_CODE_HASH as string
         );
         const fromAddress = provider.address;
         const toAddress = new Address(toLayerOneAddress, AddressType.ckb);
@@ -159,7 +159,7 @@ export class UnipassV3Wrapper {
             amount,
             builderOption,
             [],
-            new BasicCollector(CONFIG.CKB_INDEXER_RPC_URL)
+            new BasicCollector(CONFIG.CKB_INDEXER_RPC_URL as string)
         );
         const transaction = await builder.build();
 
@@ -177,7 +177,7 @@ export class UnipassV3Wrapper {
 
     async getBalance() {
         this.layerOneAddress = UPCKB.getCKBAddress(this.username);
-        const indexerCollector = new IndexerCollector(CONFIG.CKB_INDEXER_RPC_URL);
+        const indexerCollector = new IndexerCollector(CONFIG.CKB_INDEXER_RPC_URL as string);
         const balance = await indexerCollector.getBalance(this.layerOneAddress);
         this.myBalance = balance.toString();
     }
@@ -189,7 +189,7 @@ export class UnipassV3Wrapper {
         const signer = new DefaultSigner(provider);
         const signedTx = await signer.sign(tx);
 
-        const rpc = new RPC(CONFIG.CKB_NODE_RPC_URL);
+        const rpc = new RPC(CONFIG.CKB_NODE_RPC_URL as string);
         return this.sendUPLockTransaction(provider.usernameHash, signedTx, rpc, oldCellDeps);
     }
 

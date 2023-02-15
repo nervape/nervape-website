@@ -7,10 +7,10 @@ import { HISTORY, HISTORY_NFT, TransferType, TRANSFER_STATUS_STRING } from './hi
 import { LoginWalletType } from '../../../utils/Wallet';
 
 export const contractAddress = new Map<string, string>();
-contractAddress.set("character", CONFIG.L2_CHARACTER_ADDRESS);
-contractAddress.set("scene", CONFIG.L2_SCENE_ADDRESS);
-contractAddress.set("item", CONFIG.L2_ITEM_ADDRESS);
-contractAddress.set("special", CONFIG.L2_SPECIAL_ADDRESS);
+contractAddress.set("character", CONFIG.L2_CHARACTER_ADDRESS as string);
+contractAddress.set("scene", CONFIG.L2_SCENE_ADDRESS as string);
+contractAddress.set("item", CONFIG.L2_ITEM_ADDRESS as string);
+contractAddress.set("special", CONFIG.L2_SPECIAL_ADDRESS as string);
 
 export default function HistoryDetail(props: {
     close: Function;

@@ -15,7 +15,7 @@ export type CkbIndexerCell = {
 
 export async function getNFTsAtAddress(address: Address) {
     const addressLockScript = address.toLockScript().serializeJson();
-    const response = await fetch(CONFIG.CKB_INDEXER_RPC_URL, {
+    const response = await fetch(CONFIG.CKB_INDEXER_RPC_URL as string, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -172,7 +172,7 @@ export class NFT {
                 method: 'get_cells',
                 params: cellsFilter
             };
-            const response = await fetch(CONFIG.CKB_INDEXER_RPC_URL, {
+            const response = await fetch(CONFIG.CKB_INDEXER_RPC_URL as string, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
@@ -218,7 +218,7 @@ export class NFT {
                 method: 'get_cells',
                 params: cellsFilter
             };
-            const response = await fetch(CONFIG.CKB_INDEXER_RPC_URL, {
+            const response = await fetch(CONFIG.CKB_INDEXER_RPC_URL as string, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
