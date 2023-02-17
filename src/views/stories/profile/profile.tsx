@@ -155,7 +155,7 @@ export default function StoryProfile(props: any) {
                     preload="true"
                     autoPlay
                     muted 
-                    src={story?.bannerUrl}></video>
+                    src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall}></video>
         }
         return <img loading="lazy" src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
     }
