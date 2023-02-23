@@ -72,14 +72,13 @@ export default function HistoryDetail(props: {
     }
 
     const UnipassCKB = () => {
-        console.log(history);
         return (
             <div className="row one nft-row">
                 <div className="label bridged-nft">
-                    {history.type.includes('send') ? 'Sent Amount' : 'Received Amount'}:
+                    {history?.type?.includes('send') ? 'Sent Amount' : 'Received Amount'}:
                 </div>
                 <div className="nfts">
-                    <div className="ckb">{history.amount} CKB</div>
+                    <div className="ckb">{history?.amount} CKB</div>
                 </div>
             </div>
         );

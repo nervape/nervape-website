@@ -4,16 +4,21 @@ import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
 import twitter from "../../assets/icons/twitter.svg";
 import discord from "../../assets/icons/discord.svg";
+import NacpLogo from '../../assets/logo/logo_nacp.svg';
+import MNacpLogo from '../../assets/logo/m_nacp_logo.svg';
 
 import { NavTool } from "../../route/navi-tool";
 import { DataContext, getWindowScrollTop, scrollToTop } from "../../utils/utils";
 import { Tooltip } from "antd";
+import WalletConnect from "./wallet-connect";
+import { Types } from "../../utils/reducers";
 
 export interface NavPageInfo {
   title: string;
   url: string;
   type: string;
   image: string;
+  mImage?: string;
 }
 
 export interface INavProps {
@@ -26,6 +31,13 @@ interface INavState extends INavProps {
 }
 
 const pages = [
+  {
+    title: "",
+    url: "",
+    type: "logo",
+    image: NacpLogo,
+    mImage: MNacpLogo
+  },
   {
     title: "ABOUT",
     url: "/about",
@@ -47,12 +59,6 @@ const pages = [
   {
     title: "CAMPAIGN",
     url: "/campaign",
-    type: "navbar",
-    image: "",
-  },
-  {
-    title: "WALLET",
-    url: "/wallet",
     type: "navbar",
     image: "",
   },
@@ -81,7 +87,7 @@ export default function NavHeader(props: any) {
   const [disableList, setDisableList] = useState(true);
   const [hideHeader, setHideHeader] = useState(false);
 
-  const { windowWidth } = useContext(DataContext);
+  const { state, dispatch } = useContext(DataContext);
 
   const fnFilter = useCallback(filterNfts(), []);
 
@@ -159,28 +165,39 @@ export default function NavHeader(props: any) {
             className={`btn-group ${disableList === true ? "active-group" : ""}`}
             onClick={(e) => { e.stopPropagation() }}
           >
+            {state.windowWidth === 375 && (
+              <div className="nav-area wallet-login">
+                <WalletConnect></WalletConnect>
+              </div>
+            )}
             {pages?.map((v: NavPageInfo, i: number) => {
               return (
                 <div
-                  className={`nav-area ${v.type} ${activeIndex == i + 1 ? 'active' : ''}`}
+                  className={`nav-area cursor ${v.type} ${activeIndex == i ? 'active' : ''}`}
                   key={i}
                   onClick={() => {
                     setDisableList(true);
+                    dispatch({
+                      type: Types.HideLoginModal
+                    })
                     if (v.title === 'BRIDGE') {
                       window.open(v.url, '_self');
                     } else {
+                      if (v.type === 'logo') return;
                       NavTool.fnJumpToPage(v.url);
                     }
                     window.scrollTo(0, 0);
                   }}
                 >
-                  <div className="title-text">{v.title}</div>
+                  {v.type === 'logo' 
+                    ? (<div className="nacp-logo"><img className="icon-image" src={state.windowWidth === 375 ? v.mImage : v.image} alt="" /></div>) 
+                    : (<div className="title-text">{v.title}</div>)}
                 </div>
               );
             })}
-            <div className={`icon-nav-c ${windowWidth === 375 && 'mobile'}`}>
+            <div className={`icon-nav-c ${state.windowWidth === 375 && 'mobile'}`}>
               <div
-                className={`nav-area icon`}
+                className={`nav-area cursor icon`}
                 onClick={() => {
                   setDisableList(true);
                   window.open('https://twitter.com/Nervapes')
@@ -189,7 +206,7 @@ export default function NavHeader(props: any) {
                 <img className="icon-image" src={twitter} alt="" />
               </div>
               <div
-                className={`nav-area icon`}
+                className={`nav-area cursor icon`}
                 onClick={() => {
                   setDisableList(true);
                   window.open('https://discord.com/invite/7br6nvuNHP')
@@ -198,8 +215,15 @@ export default function NavHeader(props: any) {
                 <img className="icon-image" src={discord} alt="" />
               </div>
             </div>
+
+            {state.windowWidth !== 375 && (
+              <div className="nav-area wallet-login">
+                <WalletConnect></WalletConnect>
+              </div>
+            )}
           </ul>
         </div>
+      
       </div>
     </div>
   );

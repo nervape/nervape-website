@@ -73,7 +73,7 @@ export default function NftCardDetail(props: {
     const [messages, setMessages] = useState<string[]>([]);
     const [showMessages, setShowMessages] = useState(false);
     const [receiverAddress, setReceiverAddress] = useState('');
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
 
     async function fnTransferFrom(to: string, tokenId: BigNumberish) {
         setLoading(true);
@@ -108,7 +108,7 @@ export default function NftCardDetail(props: {
                 <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                     <div className="preview-model">
                         <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
-                        {windowWidth !== 1200 && (
+                        {state.windowWidth !== 1200 && (
                             <div className="close-detail-c">
                                 <img
                                     loading="lazy"

@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './index.less';
-import { Address, Amount, NervosAddressVersion } from '@lay2/pw-core';
+import { Amount } from '@lay2/pw-core';
 import { useAccount, useNetwork } from 'wagmi';
 import { UnipassV3Wrapper } from '../../utils/UnipassV3Wrapper';
-import Login from '../components/login/login';
 import Account from '../components/account/account';
 import History from '../components/history/history';
 import Footer from '../components/footer';
-import { scrollToTop } from '../../utils/utils';
+import { DataContext, scrollToTop } from '../../utils/utils';
 import PoapBadge from '../components/poap-badge/poap-badge';
 import NFT_CONTENT, { TransferSuccess } from '../components/nft/nft';
 import {
@@ -20,23 +19,23 @@ import {
 
 import { PoapItem, PoapWrapper } from '../../utils/poap';
 import { getNFTNameCoverImg, getPublishedPoaps, insertTransferCkbHistory } from '../../utils/api';
-import MaintenancePage from '../maintenance';
-import LoadingModal from '../components/loading/loading';
 import SwitchChain from '../components/switchChain';
 import { CONFIG } from '../../utils/config';
 import { NFT } from '../../utils/nft-utils';
 import TransferCkb from '../components/transfer';
 import { useUnipassBalance } from '../../hooks/useUnipassBalance';
 import ChainInfo from '../components/switchChain/chain-info';
+import { Types } from '../../utils/reducers';
 
 export default function WallectPage() {
-    const [layerOneAddress, setLayerOneAddress] = useState<Address>();
+    const { dispatch } = useContext(DataContext);
+
     const [layerOneWrapper, setLayerOneWrapper] = useState<UnipassV3Wrapper>();
 
     const [switchChain, setSwitchChain] = useState(false);
     const [showChainInfo, setShowChainInfo] = useState(false);
 
-    const { connector: activeConnector, address, isConnected } = useAccount();
+    const { address } = useAccount();
     const { chain } = useNetwork();
 
     // 当前链接钱包的地址
@@ -44,26 +43,19 @@ export default function WallectPage() {
     // 当前链接的钱包
     const [loginWalletType, setLoginWalletType] = useState<LoginWalletType>();
 
-    const [isInitPage, setIsInitPage] = useState(false);
-
     const [nftCoverImages, setNftCoverImages] = useState<NFT[]>([]);
     const historyRef = useRef();
 
     // UNIPASS V3 钱包 Balance
     const [balance, setBalance] = useState('0.0');
-    const [loading, setLoading] = useState(false);
+
+    const setLoading = (flag: boolean) => {
+        dispatch({
+            type: flag ? Types.ShowLoading : Types.HideLoading
+        })
+    }
     const [showTransfer, setShowTransfer] = useState(false);
     const [showTransferSuccess, setShowTransferSuccess] = useState(false);
-
-    const [maintenance, setMaintenance] = useState(false);
-    const { host } = window.location;
-
-    if (maintenance && host === 'www.nervape.com') {
-        return <MaintenancePage></MaintenancePage>;
-    }
-
-    const [tabs, setTabs] = useState(['NFT', 'HISTORY']);
-    const [selectTab, setSelectTab] = useState('NFT');
 
     // 是否展示徽章
     const [showPoapBadge, setShowPoapBadge] = useState(true);
@@ -87,27 +79,9 @@ export default function WallectPage() {
         setBalance(layerOneWrapper.myBalance);
     }
 
-    async function connectUnipass() {
-        (async () => {
-            try {
-                setLoading(true);
-                const wrapper = new UnipassV3Wrapper();
-                await wrapper.init();
-                await wrapper.connect();
-                setLoading(false);
-                setLayerOneWrapper(wrapper);
-                setLayerOneAddress(wrapper.layerOneAddress);
-                setBalance(wrapper.myBalance);
-            } catch (err) {
-                setLoading(false);
-            }
-        })();
-    }
-
     async function initLogin() {
         const _storage = getStorage();
         if (!_storage) {
-            setIsInitPage(true);
             return;
         }
         if (currentAddress) return;
@@ -127,7 +101,6 @@ export default function WallectPage() {
         } else {
             clearStorage();
         }
-        setIsInitPage(true);
     }
 
     async function fnNFTNameCoverImg() {
@@ -148,7 +121,7 @@ export default function WallectPage() {
 
     useEffect(() => {
         if (loginWalletType === LoginWalletType.WALLET_CONNECT) {
-            if (!chain || chain.id !== CONFIG.GODWOKEN_CHAIN_ID) {
+            if (!chain || ![CONFIG.GODWOKEN_CHAIN_ID, CONFIG.ETHEREUM_CHAIN_ID].includes(chain.id)) {
                 setSwitchChain(true);
             } else {
                 setSwitchChain(false);
@@ -157,21 +130,6 @@ export default function WallectPage() {
             }
         }
     }, [chain, loginWalletType]);
-
-    useEffect(() => {
-        if (layerOneAddress) {
-            const _address = layerOneAddress.toCKBAddress(NervosAddressVersion.latest);
-            setCurrentAddress(_address);
-            setLoginWalletType(LoginWalletType.UNIPASS_V3);
-            setStorage({
-                type: LoginWalletType.UNIPASS_V3,
-                address: _address,
-                username: layerOneWrapper?.username,
-                layerOneAddress
-            });
-            scrollToTop();
-        }
-    }, [layerOneAddress]);
 
     useEffect(() => {
         if (!address || !chain) return;
@@ -204,19 +162,9 @@ export default function WallectPage() {
         setLoading(false);
     };
 
-    if (!isInitPage) return <></>;
-
     return (
-        <>
-            {!currentAddress ? (
-                <>
-                    <Login
-                        connectUnipass={connectUnipass}
-                        currentAddress={currentAddress}
-                    ></Login>
-                    <Footer></Footer>
-                </>
-            ) : (
+        <div className="wallet-page">
+            {currentAddress && (
                 <div className={`wallet-home-container show`}>
                     <SwitchChain
                         show={switchChain}
@@ -224,21 +172,23 @@ export default function WallectPage() {
                         setShowChainInfo={setShowChainInfo}
                     ></SwitchChain>
                     <div className="container">
-                        <Account
-                            loginWalletType={loginWalletType || ''}
-                            address={currentAddress}
-                            balance={balance}
-                            showTransfer={() => {
-                                setShowTransfer(true);
-                                document.body.style.overflow = 'hidden';
-                            }}
-                        ></Account>
+                        {loginWalletType === LoginWalletType.UNIPASS_V3 && (
+                            <Account
+                                loginWalletType={loginWalletType || ''}
+                                address={currentAddress}
+                                balance={balance}
+                                showTransfer={() => {
+                                    setShowTransfer(true);
+                                    document.body.style.overflow = 'hidden';
+                                }}
+                            ></Account>
+                        )}
 
                         {showPoapBadge && loginWalletType !== LoginWalletType.UNIPASS_V3 && (
                             <PoapBadge badges={badges}></PoapBadge>
                         )}
                         <div className="tabs-container">
-                            <div className="tabs flex-center">
+                            {/* <div className="tabs flex-center">
                                 {tabs.map((tab, index) => (
                                     <div
                                         className={`tab ${selectTab === tab ? 'active' : ''}`}
@@ -250,35 +200,33 @@ export default function WallectPage() {
                                         {tab}
                                     </div>
                                 ))}
-                            </div>
+                            </div> */}
                             <div className="content">
-                                {selectTab === 'NFT' ? (
-                                    <NFT_CONTENT
-                                        setLoading={setLoading}
-                                        nftCoverImages={nftCoverImages}
-                                        loginWalletType={loginWalletType}
-                                        address={currentAddress}
-                                        setShowTransferSuccess={setShowTransferSuccess}
-                                        balance={balance}
-                                        switchChain={switchChain}
-                                    ></NFT_CONTENT>
-                                ) : (
-                                    <History
-                                        ref={historyRef}
-                                        setLoading={setLoading}
-                                        loginWalletType={loginWalletType as LoginWalletType}
-                                        nftCoverImages={nftCoverImages}
-                                        address={currentAddress}
-                                        updateBalance={updateUnipassCkbBalance}
-                                    ></History>
-                                )}
+                                <NFT_CONTENT
+                                    setLoading={setLoading}
+                                    nftCoverImages={nftCoverImages}
+                                    loginWalletType={loginWalletType}
+                                    address={currentAddress}
+                                    setShowTransferSuccess={setShowTransferSuccess}
+                                    balance={balance}
+                                    switchChain={switchChain}
+                                ></NFT_CONTENT>
+
+                                <History
+                                    ref={historyRef}
+                                    setLoading={setLoading}
+                                    loginWalletType={loginWalletType as LoginWalletType}
+                                    nftCoverImages={nftCoverImages}
+                                    address={currentAddress}
+                                    updateBalance={updateUnipassCkbBalance}
+                                ></History>
                             </div>
                         </div>
                     </div>
                     <Footer></Footer>
                 </div>
             )}
-            <LoadingModal show={loading}></LoadingModal>
+            {/* <LoadingModal show={loading}></LoadingModal> */}
             <ChainInfo
                 show={showChainInfo}
                 close={() => {
@@ -300,13 +248,12 @@ export default function WallectPage() {
                 close={() => setShowTransferSuccess(false)}
                 viewHistory={() => {
                     scrollToTop();
-                    if (selectTab === 'HISTORY') {
-                        const current = historyRef.current as any;
-                        current.fnGetUnipassHistories(currentAddress);
-                    }
-                    setSelectTab('HISTORY');
+                    // if (selectTab === 'HISTORY') {
+                    //     const current = historyRef.current as any;
+                    //     current.fnGetUnipassHistories(currentAddress);
+                    // }
                 }}
             ></TransferSuccess>
-        </>
+        </div>
     );
 }

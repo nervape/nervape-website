@@ -234,6 +234,7 @@ export default function NFT_CONTENT(props: any) {
     return (
         <div className="wallet-nft-container">
             <div className="nft-content">
+                <div className="nft-title">NFT</div>
                 <div className="type-content">
                     <div className="type-tabs">
                         {types.map((type: string) => {

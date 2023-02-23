@@ -1,12 +1,11 @@
 .account {
     width: 100%;
-    padding-top: 64px;
     padding-bottom: 28px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     letter-spacing: -0.05em;
-    .wallet-address, .wallet-balance {
+    .wallet-balance {
         color: #FFFFFF;
         flex: 1;
         height: 113px;
@@ -63,67 +62,8 @@
             }
         }
     }
-    .wallet-address {
-        margin-right: 20px;
-    }
-    .wallet-address.METAMASK {
-        background: #23B894;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
-    }
-    .wallet-address.UNIPASS_V3 {
-        background: #5037E8;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
-    }
 }
 
-.account-dropmenu {
-    background: rgba(244, 77, 55, 0.9);
-    border-radius: 20px;
-    height: 112px;
-    // top: 220px !important;
-    .ant-dropdown-menu {
-        background-color: unset;
-        box-shadow: unset;
-        padding: 0;
-        margin: auto 8px;
-        li:hover {
-            background-color: unset;
-        }
-        li {
-            text-align: center;
-            height: 56px;
-            line-height: 56px;
-            padding: 0;
-            cursor: pointer;
-            .ant-dropdown-menu-title-content {
-                transition: all 0.1s;
-                height: 40px;
-                width: 100%;
-                line-height: 40px;
-            }
-            .ant-dropdown-menu-title-content:hover {
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-            }
-            span {
-                color: #ffffff;
-                font-size: 14px;
-            }
-            .logout-out {
-                border: unset;
-                color: #ffffff;
-                font-size: 14px;
-                width: 100px;
-                height: 40px;
-                background: unset;
-                border-radius: 6px;
-            }
-        }
-        li:first-child {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-    }
-}
 
 @media screen and (min-width: 750px) and (max-width: 1440px) {
     .account-dropmenu {
@@ -134,10 +74,6 @@
 @media screen and (max-width: 750px) {
     .account {
         display: block;
-        .wallet-address {
-            margin-right: 0;
-            margin-bottom: 28px;
-        }
         .title {
             font-size: 20px;
         }

@@ -239,7 +239,7 @@ const History = (
     const [showDetail, setShowDetail] = useState(false);
     const [timer, setTimer] = useState<any>();
 
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
 
     async function fnGetHistories(_address: string, showLoading = true) {
         if (showLoading) {
@@ -377,6 +377,7 @@ const History = (
     return (
         <>
             <div className={`history-content ${loginWalletType}`}>
+                <div className="nft-title">History</div>
                 <div className="title-tabs">
                     {loginWalletType !== LoginWalletType.UNIPASS_V3 && (
                         <div className="index">NFT ID</div>
@@ -384,7 +385,7 @@ const History = (
                     <div className="type">Type</div>
                     <div className="date">Timestamp</div>
                     <div className="status">Status</div>
-                    {windowWidth !== 375 && <div className="number">TX</div>}
+                    {state.windowWidth !== 375 && <div className="number">TX</div>}
                 </div>
                 <div className="histories">
                     {histories.map((history, index) => (
@@ -394,7 +395,7 @@ const History = (
                             address={address}
                             loginWalletType={loginWalletType}
                             showHistoryDetail={showHistoryDetail}
-                            showTx={windowWidth !== 375}
+                            showTx={state.windowWidth !== 375}
                         ></HistoryItem>
                     ))}
                 </div>
