@@ -209,7 +209,7 @@ export default function NFT_CONTENT(props: any) {
     }
 
     useEffect(() => {
-        if (loginWalletType === LoginWalletType.UNIPASS_V3) return;
+        if (!loginWalletType || loginWalletType === LoginWalletType.UNIPASS_V3) return;
         if (!tokenIds.length || !selectedType || !nftCoverImages.length) return;
         fetchERC721NFTS();
     }, [tokenIds, selectedType, nftCoverImages, loginWalletType]);
@@ -222,7 +222,7 @@ export default function NFT_CONTENT(props: any) {
     }, [nfts, selectedType]);
 
     useEffect(() => {
-        if (!address || !nftCoverImages.length) return;
+        if (!loginWalletType || !address || !nftCoverImages.length) return;
         if (loginWalletType === LoginWalletType.UNIPASS_V3) {
             fetchMNFTs();
         } else {

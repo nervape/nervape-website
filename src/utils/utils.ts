@@ -9,7 +9,9 @@ export const initialState = {
     loading: false,
     loadingNumber: 0,
     showLoginModal: false,
-    currentAddress: ''
+    currentAddress: '',
+    layerOneWrapper: undefined,
+    loginWalletType: undefined
 }
 
 export const DataContext = createContext<{

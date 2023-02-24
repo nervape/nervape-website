@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import "./index.less";
 import { BrowserRouter, HashRouter } from "react-router-dom";
 import moment from "moment-timezone";
@@ -7,7 +7,7 @@ import { StrictMode } from "react";
 
 moment.tz.setDefault("Asia/Shanghai");
 
-ReactDOM.render(
+render(
   <StrictMode>
     <BrowserRouter>
       <App />

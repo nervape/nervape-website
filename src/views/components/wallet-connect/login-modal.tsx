@@ -16,7 +16,13 @@ export default function LoginModal(props: any) {
 
     // unipass v3 address
     const [layerOneAddress, setLayerOneAddress] = useState<Address>();
-    const [layerOneWrapper, setLayerOneWrapper] = useState<UnipassV3Wrapper>();
+
+    const setLayerOneWrapper = (wrapper: UnipassV3Wrapper) => {
+        dispatch({
+            type: Types.LayerOneWrapper,
+            value: wrapper
+        })
+    }
 
     const setLoading = (flag: boolean) => {
         dispatch({
@@ -36,7 +42,7 @@ export default function LoginModal(props: any) {
             setStorage({
                 type: LoginWalletType.UNIPASS_V3,
                 address: _address,
-                username: layerOneWrapper?.username,
+                username: state.layerOneWrapper?.username,
                 layerOneAddress
             });
         }

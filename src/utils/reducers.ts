@@ -1,4 +1,6 @@
+import { UnipassV3Wrapper } from "./UnipassV3Wrapper";
 import { getWindowWidthRange } from "./utils";
+import { LoginWalletType } from "./Wallet";
 
 export enum Types {
     UpdateWindowWith = 'UpdateWindowWith',
@@ -7,7 +9,8 @@ export enum Types {
     ShowLoginModal = 'ShowLoginModal',
     HideLoginModal = 'HideLoginModal',
     CurrentAddress = 'CurrentAddress',
-    B = 'b'
+    LayerOneWrapper = 'LayerOneWrapper',
+    LoginWalletType = 'LoginWalletType'
 }
 
 export type InitialStateType = {
@@ -16,9 +19,11 @@ export type InitialStateType = {
     loadingNumber: number;
     showLoginModal: boolean;
     currentAddress: string;
+    layerOneWrapper: UnipassV3Wrapper | undefined;
+    loginWalletType: LoginWalletType | undefined;
 }
 
-export const globalReducer = (state, action) => {
+export const globalReducer = (state: InitialStateType, action) => {
     switch (action.type) {
         case Types.UpdateWindowWith:
             return {
@@ -58,6 +63,16 @@ export const globalReducer = (state, action) => {
             return {
                 ...state,
                 currentAddress: action.value
+            }
+        case Types.LayerOneWrapper:
+            return {
+                ...state,
+                layerOneWrapper: action.value
+            }
+        case Types.LoginWalletType:
+            return {
+                ...state,
+                loginWalletType: action.value
             }
         default: return state;
     }

@@ -21,8 +21,13 @@ import { Types } from "../../../utils/reducers";
 export default function WallectConnect(props: any) {
     const { state, dispatch } = useContext(DataContext);
 
-    const [layerOneWrapper, setLayerOneWrapper] = useState<UnipassV3Wrapper>();
-    
+    const setLayerOneWrapper = (wrapper: UnipassV3Wrapper) => {
+        dispatch({
+            type: Types.LayerOneWrapper,
+            value: wrapper
+        })
+    }
+
     // 当前链接钱包的地址
     const setCurrentAddress = (_address: string) => {
         dispatch({
@@ -32,8 +37,12 @@ export default function WallectConnect(props: any) {
     }
 
     // 当前链接的钱包
-    const [loginWalletType, setLoginWalletType] = useState<LoginWalletType>();
-
+    const setLoginWalletType = (type: string) => {
+        dispatch({
+            type: Types.LoginWalletType,
+            value: type
+        })
+    }
     // Wallet Connect
     const { connector: activeConnector, address, isConnected } = useAccount();
     const { chain } = useNetwork();
@@ -80,6 +89,7 @@ export default function WallectConnect(props: any) {
                 wrapper.layerOneAddress = _storageJson.layerOneAddress;
                 setLayerOneWrapper(wrapper);
                 await wrapper.init();
+                await wrapper.getBalance();
             }
         } else {
             clearStorage();
@@ -99,7 +109,7 @@ export default function WallectConnect(props: any) {
             address,
             username: ''
         });
-    }, [address, loginWalletType, chain]);
+    }, [address, state.loginWalletType, chain]);
 
     const _items: MenuProps['items'] = [
         {
@@ -202,7 +212,7 @@ export default function WallectConnect(props: any) {
     ];
 
     const walletIcon = () => {
-        if (loginWalletType === LoginWalletType.UNIPASS_V3) return NervosLogo;
+        if (state.loginWalletType === LoginWalletType.UNIPASS_V3) return NervosLogo;
         // 检查是否支持当前网络
         if (!chain || ![CONFIG.GODWOKEN_CHAIN_ID, CONFIG.ETHEREUM_CHAIN_ID].includes(chain.id)) {
             return InfoIcon;
@@ -212,7 +222,7 @@ export default function WallectConnect(props: any) {
 
     useEffect(() => {
         setItems([]);
-        if (loginWalletType === LoginWalletType.WALLET_CONNECT) {
+        if (state.loginWalletType === LoginWalletType.WALLET_CONNECT) {
             if (!chain || ![CONFIG.GODWOKEN_CHAIN_ID, CONFIG.ETHEREUM_CHAIN_ID].includes(chain.id)) {
                 setItems(_items1);
             } else {
@@ -221,7 +231,7 @@ export default function WallectConnect(props: any) {
         } else {
             setItems(_items);
         }
-    }, [chain, loginWalletType]);
+    }, [chain, state.loginWalletType]);
 
     useEffect(() => {
         const subLength = 5;
@@ -247,7 +257,7 @@ export default function WallectConnect(props: any) {
                         CONNECT
                     </button>
                 ) : (
-                    <div className={`wallet-address cursor ${loginWalletType}`}>
+                    <div className={`wallet-address cursor ${state.loginWalletType}`}>
                         <Dropdown
                             menu={{ items }}
                             trigger={['click', 'hover']}
@@ -277,7 +287,7 @@ export default function WallectConnect(props: any) {
                         <div className="login-icon"></div>
                     </div>
                 ) : (
-                    <div className={`wallet-address cursor ${loginWalletType}`}>
+                    <div className={`wallet-address cursor ${state.loginWalletType}`}>
                         <Dropdown
                             menu={{ items }}
                             trigger={['click', 'hover']}
