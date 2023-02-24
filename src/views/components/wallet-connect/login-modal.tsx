@@ -67,7 +67,7 @@ export default function LoginModal(props: any) {
 
     return (
         <div
-            className={`login-modal ${(!state.currentAddress && activeIndex == 5) && 'opacity'} ${(!state.currentAddress && (state.showLoginModal || activeIndex == 5)) && 'show'}`}
+            className={`login-modal ${(!state.currentAddress && activeIndex == 6) && 'opacity'} ${(!state.currentAddress && (state.showLoginModal || activeIndex == 6)) && 'show'}`}
             onClick={() => {
                 document.body.style.overflow = 'auto';
                 setLoginModal(false);

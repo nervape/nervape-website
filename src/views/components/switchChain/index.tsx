@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SwitchChainError, useSwitchNetwork } from 'wagmi';
+import { mainnet, SwitchChainError, useSwitchNetwork } from 'wagmi';
 import { godWoken } from '../../../utils/Chain';
 import { getWallectConnect } from '../../../utils/Wallet';
 import './index.less';
@@ -45,7 +45,7 @@ export default function SwitchChain(props: {
                 }}
             >
                 <div className="tip">
-                    Nervape Wallet does not support current network. Please{' '}
+                    Nervape Wallet does not support current network. Please switch to {' '}
                     <span
                         className="cursor"
                         onClick={async () => {
@@ -63,7 +63,27 @@ export default function SwitchChain(props: {
                             console.log('switchNetworkAsync');
                         }}
                     >
-                        switch to Godwoken Mainnet
+                        Godwoken Mainnet
+                    </span>
+                    {' '} or {' '}
+                    <span
+                        className="cursor"
+                        onClick={async () => {
+                            if (!switchNetworkAsync) {
+                                setShowChainInfo(true);
+                                document.body.style.overflow = 'hidden';
+                                return;
+                            }
+                            if (excludeWalletList.includes(wallectConnectInfo?.peerMeta?.name)) {
+                                setShowChainInfo(true);
+                                document.body.style.overflow = 'hidden';
+                                return;
+                            }
+                            await switchNetworkAsync?.(mainnet.id);
+                            console.log('switchNetworkAsync');
+                        }}
+                    >
+                        Ethereum Mainnet
                     </span>
                 </div>
             </div>

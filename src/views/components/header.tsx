@@ -146,7 +146,7 @@ export default function NavHeader(props: any) {
             window.scrollTo(0, 0);
           }}
         />
-        <div className="hamburger-c">
+        <div className="hamburger-c cursor">
           <img
             className="hamburger"
             src={hamburger}
@@ -165,9 +165,9 @@ export default function NavHeader(props: any) {
             className={`btn-group ${disableList === true ? "active-group" : ""}`}
             onClick={(e) => { e.stopPropagation() }}
           >
-            {state.windowWidth === 375 && (
+            {state.windowWidth <= 750 && (
               <div className="nav-area wallet-login">
-                <WalletConnect></WalletConnect>
+                <WalletConnect setDisableList={setDisableList}></WalletConnect>
               </div>
             )}
             {pages?.map((v: NavPageInfo, i: number) => {
@@ -190,12 +190,12 @@ export default function NavHeader(props: any) {
                   }}
                 >
                   {v.type === 'logo' 
-                    ? (<div className="nacp-logo"><img className="icon-image" src={state.windowWidth === 375 ? v.mImage : v.image} alt="" /></div>) 
+                    ? (<div className="nacp-logo"><img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" /></div>) 
                     : (<div className="title-text">{v.title}</div>)}
                 </div>
               );
             })}
-            <div className={`icon-nav-c ${state.windowWidth === 375 && 'mobile'}`}>
+            <div className={`icon-nav-c ${state.windowWidth <= 750 && 'mobile'}`}>
               <div
                 className={`nav-area cursor icon`}
                 onClick={() => {
@@ -216,7 +216,7 @@ export default function NavHeader(props: any) {
               </div>
             </div>
 
-            {state.windowWidth !== 375 && (
+            {state.windowWidth > 750 && (
               <div className="nav-area wallet-login">
                 <WalletConnect></WalletConnect>
               </div>
