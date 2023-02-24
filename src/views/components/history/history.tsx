@@ -344,7 +344,8 @@ const History = (
 
     useImperativeHandle(ref, () => {
         return {
-            fnGetUnipassHistories
+            fnGetUnipassHistories,
+            fnGetHistories
         };
     });
 
