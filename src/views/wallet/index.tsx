@@ -188,7 +188,11 @@ export default function WallectPage() {
                 close={() => setShowTransferSuccess(false)}
                 viewHistory={() => {
                     const current = historyRef.current as any;
-                    current.fnGetUnipassHistories(state.currentAddress);
+                    if (state.loginWalletType === LoginWalletType.UNIPASS_V3) {
+                        current.fnGetUnipassHistories(state.currentAddress);
+                    } else {
+                        current.fnGetHistories(state.currentAddress);
+                    } 
                 }}
             ></TransferSuccess>
         </div>
