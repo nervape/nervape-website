@@ -67,14 +67,14 @@ function PreviewModel(props: any) {
 function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
     const { nft, close, fullscreen } = props;
 
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
 
     return (
         <div className="nft-card-detail-container mask-cover" onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
                     <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
-                    {windowWidth !== 1200 && (
+                    {state.windowWidth !== 1200 && (
                         <div className="close-detail-c">
                             <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
                         </div>
@@ -168,7 +168,7 @@ export default function NFTPage() {
     const [showFullscreen, setShowFullscreen] = useState(false);
     const [nftDetail, setNftDetail] = useState<NFT>();
 
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
 
     SwiperCore.use([Autoplay, Pagination]);
 
@@ -260,7 +260,7 @@ export default function NFTPage() {
                                 {({ isActive }) => (
                                     <>
                                         <div className="banner-image">
-                                            <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
+                                            <img loading="lazy" src={state.windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                                         </div>
                                         {/* <div className="cover-mask"></div> */}
                                         <div className={`banner-info ${isActive ? 'active' : 'notActive'}`}>
@@ -294,7 +294,7 @@ export default function NFTPage() {
                         );
                     })}
                 </Swiper>
-                {windowWidth !== 375 ? (
+                {state.windowWidth !== 375 ? (
                     <Parallax
                         animation={{ opacity: 1, playScale: [1, 2.5] }}
                         style={{ opacity: 0 }}
@@ -317,7 +317,7 @@ export default function NFTPage() {
                 <div className="content">
                     <div className="filter-items">
                         <div className="input-c">
-                            <div className={`filter-menu ${windowWidth == 1200 && 'hidden'}`} onClick={() => {
+                            <div className={`filter-menu ${state.windowWidth == 1200 && 'hidden'}`} onClick={() => {
                                 setShowMFilter(!showMFilter);
                             }}>
                                 <img loading="lazy" src={FilterIcon} alt="FilterIcon" />
@@ -343,12 +343,12 @@ export default function NFTPage() {
                                     return (
                                         <div className="filter" key={i}>
                                             <div className="f-title cursor" onClick={() => {
-                                                if (windowWidth !== 1200) return;
+                                                if (state.windowWidth !== 1200) return;
                                                 const _filters = JSON.parse(JSON.stringify(filters));
                                                 _filters[i].open = !_filters[i].open;
                                                 setFilters(_filters);
                                             }}>
-                                                <img loading="lazy" className={`filter-arrow-icon ${!filter.open && 'close'} ${windowWidth !== 1200 && 'hidden'}`} src={FilterArrowIcon} alt="filterArrowIcon" />
+                                                <img loading="lazy" className={`filter-arrow-icon ${!filter.open && 'close'} ${state.windowWidth !== 1200 && 'hidden'}`} src={FilterArrowIcon} alt="filterArrowIcon" />
                                                 <div className="name">{filter.name}</div>
                                             </div>
                                             {

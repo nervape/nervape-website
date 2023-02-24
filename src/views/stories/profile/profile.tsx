@@ -49,7 +49,7 @@ export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story | undefined>();
     const [isRead, setIsRead] = useState(false);
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
     const [keyId, setKeyId] = useState(0);
     const [showSide, setShowSide] = useState(false);
 
@@ -148,7 +148,7 @@ export default function StoryProfile(props: any) {
     return (
         <div className="story-profile-container main-container" key={keyId}>
             <div className="banner">
-                <img loading="lazy" src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
+                <img loading="lazy" src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
             </div>
             <div className="profile-content">
                 <div className="header-sketch">
