@@ -1,4 +1,6 @@
 import React, { Component, ReactNode, useEffect, useReducer, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { NavTool } from "../../route/navi-tool";
 import { globalReducer, Types } from "../../utils/reducers";
 import { DataContext, getWindowWidthRange, initialState } from "../../utils/utils";
 import Footer from "./footer";
@@ -12,6 +14,8 @@ interface PageViewState {
 }
 
 export default function PageView(props: any) {
+  NavTool.navigation = useNavigate();
+  NavTool.location = useLocation();
   const { children, activeIndex, disableFooter } = props;
 
   const [state, dispatch] = useReducer(globalReducer, initialState);

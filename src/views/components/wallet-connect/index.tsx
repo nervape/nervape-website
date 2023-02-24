@@ -47,6 +47,10 @@ export default function WallectConnect(props: any) {
     const { connector: activeConnector, address, isConnected } = useAccount();
     const { chain } = useNetwork();
 
+    useEffect(() => {
+        console.log(isConnected, activeConnector)
+    }, [isConnected, activeConnector]);
+
     const setShowLogin = (flag: boolean) => {
         console.log('setShowLogin')
         dispatch({

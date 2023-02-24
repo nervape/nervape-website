@@ -78,23 +78,22 @@ export default function NftCardDetail(props: {
     async function fnTransferFrom(to: string, tokenId: BigNumberish) {
         setLoading(true);
         try {
-            
+            const { hash } = await writeContract({
+                mode: 'recklesslyUnprepared',
+                address: ContractMap[nft.type],
+                abi: Nervape_ABI,
+                functionName: 'transferFrom',
+                args: [address, to, tokenId],
+                chainId: godWoken.id
+            });
+            console.log('WALLET_CONNECT', hash);
+            if (hash) {
+                await insertHistories(address, to, hash, tokenId as number);
+                close();
+                showTransferSuccess(true);
+            }
         } catch (error) {
             console.log(error);
-        }
-        const { hash } = await writeContract({
-            mode: 'recklesslyUnprepared',
-            address: ContractMap[nft.type],
-            abi: Nervape_ABI,
-            functionName: 'transferFrom',
-            args: [address, to, tokenId],
-            chainId: godWoken.id
-        });
-        console.log('WALLET_CONNECT', hash);
-        if (hash) {
-            await insertHistories(address, to, hash, tokenId as number);
-            close();
-            showTransferSuccess(true);
         }
         setLoading(false);
     }
