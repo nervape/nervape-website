@@ -74,7 +74,7 @@ export default function App() {
           <Route
             path=""
             element={
-              <PageView activeIndex={0} disableFooter={true}>
+              <PageView disableFooter={true}>
                 <HomePage />
               </PageView>
             }

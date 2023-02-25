@@ -3,8 +3,6 @@ import React, { forwardRef, useContext, useEffect, useImperativeHandle, useState
 import { getHistories, getUnipassCkbHistories, getUnipassHistories } from '../../../utils/api';
 import HistoryDetail from './detail';
 import './history.less';
-// import FailedIcon from '../../assets/images/history/failed.png';
-// import PendingIcon from '../../assets/images/history/pending.png';
 import { NFT, NFT_TYPE_VALUE } from '../../../utils/nft-utils';
 import { LoginWalletType } from '../../../utils/Wallet';
 import { DataContext } from '../../../utils/utils';

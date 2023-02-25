@@ -15,7 +15,6 @@ export const CONFIG = {
     PW_CORE_CHAIN_ID: parseInt(import.meta.env.VITE_PW_CORE_CHAIN_ID),
     // eslint-disable-next-line radix
     GODWOKEN_CHAIN_ID: parseInt(import.meta.env.VITE_GODWOKEN_CHAIN_ID),
-    ETHEREUM_CHAIN_ID: parseInt(import.meta.env.VITE_ETHEREUM_CHAIN_ID),
 
     UNIPASS_URL: import.meta.env.VITE_UNIPASS_URL,
     UNIPASS_ASSET_LOCK_CODE_HASH: import.meta.env.VITE_UNIPASS_ASSET_LOCK_CODE_HASH,

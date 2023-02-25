@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { DataContext, getWindowWidthRange } from '../../utils/utils';
+import { DataContext } from '../../utils/utils';
 import './footer.less';
 
 export default function Footer() {

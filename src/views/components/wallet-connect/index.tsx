@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CONFIG } from "../../../utils/config";
 import { DataContext } from "../../../utils/utils";
 import './index.less';
 
-import { clearStorage, getStorage, getWallectConnect, LoginWalletType, setStorage, WALLET_CONNECT } from '../../../utils/Wallet';
-import { mainnet, useAccount, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
+import { clearStorage, getStorage, LoginWalletType, setStorage, WALLET_CONNECT } from '../../../utils/Wallet';
+import { mainnet, useAccount, useDisconnect, useNetwork } from "wagmi";
 import { UnipassV3Wrapper } from "../../../utils/UnipassV3Wrapper";
 import { Dropdown, MenuProps, message } from "antd";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -16,6 +15,7 @@ import InfoIcon from '../../../assets/icons/info_icon.svg';
 import Logout from "../logout";
 import { Types } from "../../../utils/reducers";
 import { godWoken } from "../../../utils/Chain";
+import { SwitchChainSpan } from "../switchChain";
 
 export default function WallectConnect(props: any) {
     const { setDisableList } = props;
@@ -115,11 +115,12 @@ export default function WallectConnect(props: any) {
             <button
                 className="nervape-asset cursor"
                 onClick={() => {
+                    setOpen(false);
                     NavTool.fnJumpToPage('/wallet');
                     window.scrollTo(0, 0);
                 }}
             >
-                MY NERVAPE ASSETS
+                My Nervape Assets
             </button>
         );
     }
@@ -144,7 +145,7 @@ export default function WallectConnect(props: any) {
                 className="logout-out cursor"
                 onClick={() => {
                     // sessionStorage.removeItem('UP-A');
-                    // clearStorage();
+                    setOpen(false);
                     setShowLogout(true);
                 }}
             >
@@ -152,67 +153,18 @@ export default function WallectConnect(props: any) {
             </button>
         );
     }
-    const [excludeWalletList] = useState(['Trust Wallet']);
-    const [wallectConnectInfo, setWalletConnectInfo] = useState<any>(null);
-
-    const wallectConnect = getWallectConnect();
-    
-    const { switchNetworkAsync } = useSwitchNetwork({
-        chainId: godWoken.id,
-        throwForSwitchChainNotSupported: true,
-        onError(error: any) {
-            const { cause } = error;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            if (!/user rejected (the )?request/i.test((cause as any).message)) {
-                // setShowChainInfo(true);
-                document.body.style.overflow = 'hidden';
-            }
-        }
-    });
     
     const SwitchChainTip = () => {
         return (
             <div className="wallet-chain-tip">
                 Nervape Wallet does not support current network. Please switch to {' '}
-                <span
-                    className="cursor"
-                    onClick={async () => {
-                        if (!switchNetworkAsync) {
-                            // setShowChainInfo(true);
-                            document.body.style.overflow = 'hidden';
-                            return;
-                        }
-                        if (excludeWalletList.includes(wallectConnectInfo?.peerMeta?.name)) {
-                            // setShowChainInfo(true);
-                            document.body.style.overflow = 'hidden';
-                            return;
-                        }
-                        await switchNetworkAsync?.(godWoken.id);
-                        console.log('switchNetworkAsync');
-                    }}
-                >
-                    Godwoken Mainnet
-                </span>
+                <SwitchChainSpan
+                        title={'Godwoken Mainnet'}
+                        chainId={godWoken.id}></SwitchChainSpan>
                 {' '} or {' '}
-                <span
-                    className="cursor"
-                    onClick={async () => {
-                        if (!switchNetworkAsync) {
-                            // setShowChainInfo(true);
-                            document.body.style.overflow = 'hidden';
-                            return;
-                        }
-                        if (excludeWalletList.includes(wallectConnectInfo?.peerMeta?.name)) {
-                            // setShowChainInfo(true);
-                            document.body.style.overflow = 'hidden';
-                            return;
-                        }
-                        await switchNetworkAsync?.(mainnet.id);
-                        console.log('switchNetworkAsync');
-                    }}
-                >
-                    Ethereum Mainnet
-                </span>
+                <SwitchChainSpan
+                        title={'Ethereum Mainnet'}
+                        chainId={mainnet.id}></SwitchChainSpan>
             </div>
         );
     }
@@ -253,7 +205,7 @@ export default function WallectConnect(props: any) {
     const walletIcon = () => {
         if (state.loginWalletType === LoginWalletType.UNIPASS_V3) return NervosLogo;
         // 检查是否支持当前网络
-        if (!chain || ![CONFIG.GODWOKEN_CHAIN_ID, CONFIG.ETHEREUM_CHAIN_ID].includes(chain.id)) {
+        if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
             return InfoIcon;
         }
         return GodwokenLogo;
@@ -262,7 +214,7 @@ export default function WallectConnect(props: any) {
     useEffect(() => {
         setItems([]);
         if (state.loginWalletType === LoginWalletType.WALLET_CONNECT) {
-            if (!chain || ![CONFIG.GODWOKEN_CHAIN_ID, CONFIG.ETHEREUM_CHAIN_ID].includes(chain.id)) {
+            if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
                 setItems(_items1);
             } else {
                 setItems(_items);
@@ -288,7 +240,7 @@ export default function WallectConnect(props: any) {
             {state.windowWidth > 750 ? (
                 !state.currentAddress ? (
                     <button
-                        className="login-image cursor"
+                        className="login-image hover cursor"
                         onClick={() => {
                             document.body.style.overflow = 'hidden';
                             setShowLogin(true)
@@ -299,7 +251,7 @@ export default function WallectConnect(props: any) {
                     <div className={`wallet-address cursor ${state.loginWalletType}`}>
                         <Dropdown
                             menu={{ items }}
-                            trigger={['click', 'hover']}
+                            trigger={['hover']}
                             overlayClassName="wallet-connect-dropmenu"
                             onOpenChange={_open => {
                                 setOpen(_open);
@@ -348,7 +300,7 @@ export default function WallectConnect(props: any) {
                             }} alt="" />
                         </div>
                         {
-                            (!chain || ![CONFIG.GODWOKEN_CHAIN_ID, CONFIG.ETHEREUM_CHAIN_ID].includes(chain.id)) && (
+                            (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) && (
                                 <div className="address-item switch-chain-item">
                                     {SwitchChainTip()}
                                 </div>

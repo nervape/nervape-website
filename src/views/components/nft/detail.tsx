@@ -16,6 +16,7 @@ import { CONFIG } from '../../../utils/config';
 import './detail.less';
 import { insertHistories } from '../../../utils/api';
 import { godWoken } from '../../../utils/Chain';
+import { useNetwork } from 'wagmi';
 
 function Message(props: { message: string }) {
     const {message} = props;
@@ -53,7 +54,6 @@ export default function NftCardDetail(props: {
     close: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fullscreen: any;
-    switchChain: boolean;
     address: string;
     loginWalletType: LoginWalletType;
     setLoading: Function;
@@ -63,7 +63,6 @@ export default function NftCardDetail(props: {
         nft,
         close,
         fullscreen,
-        switchChain,
         loginWalletType,
         address,
         setLoading,
@@ -74,6 +73,8 @@ export default function NftCardDetail(props: {
     const [showMessages, setShowMessages] = useState(false);
     const [receiverAddress, setReceiverAddress] = useState('');
     const { state } = useContext(DataContext);
+
+    const { chain } = useNetwork();
 
     async function fnTransferFrom(to: string, tokenId: BigNumberish) {
         setLoading(true);
@@ -193,7 +194,7 @@ export default function NftCardDetail(props: {
                                         >
                                             VIEW ON YOKAI
                                         </button>
-                                        {!switchChain && (
+                                        {chain && chain.id === godWoken.id && (
                                             <button
                                                 className="btn cursor"
                                                 onClick={() => {

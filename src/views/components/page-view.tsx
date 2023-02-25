@@ -1,8 +1,8 @@
-import React, { Component, ReactNode, useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NavTool } from "../../route/navi-tool";
 import { globalReducer, Types } from "../../utils/reducers";
-import { DataContext, getWindowWidthRange, initialState } from "../../utils/utils";
+import { DataContext, initialState } from "../../utils/utils";
 import Footer from "./footer";
 import NavHeader from "./header";
 import LoadingModal from "./loading/loading";

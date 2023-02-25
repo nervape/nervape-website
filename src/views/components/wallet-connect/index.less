@@ -2,7 +2,7 @@
     .login-image {
         height: 32px;
         padding: 0 12px;
-        background: linear-gradient(90deg, rgba(244, 77, 55, 0.2) 0%, rgba(244, 77, 55, 0) 100%);
+        background: rgba(244, 77, 55, 0.4);
         border: 1px solid #F44D37;
         border-radius: 20px;
         color: #ffffff;
@@ -10,12 +10,15 @@
         transition: all 0.3s;
         font-size: 12px;
         font-weight: 500;
+        &.hover:hover {
+            background: rgba(136, 136, 136, 0.2);
+        }
     }
 
     .wallet-address {
         color: #FFFFFF;
         height: 32px;
-        background: linear-gradient(90deg, rgba(244, 77, 55, 0.2) 0%, rgba(244, 77, 55, 0) 100%);
+        background: rgba(244, 77, 55, 0.4);
         border: 1px solid #F44D37;
         border-radius: 20px;
 
@@ -66,12 +69,13 @@
 
         li {
             text-align: center;
-            line-height: 42px;
-            padding: 0;
+            padding: 8px 0;
             cursor: unset;
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
             .ant-dropdown-menu-title-content {
+                height: 32px;
+                line-height: 32px;
                 transition: all 0.1s;
                 width: 100%;
 
@@ -92,7 +96,7 @@
 
             .ant-dropdown-menu-title-content:hover {
                 background: rgba(255, 255, 255, 0.1);
-                // border-radius: 12px;
+                border-radius: 15px;
             }
 
             span {

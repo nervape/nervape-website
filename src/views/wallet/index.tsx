@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import './index.less';
 import { Amount } from '@lay2/pw-core';
-import { useAccount, useNetwork } from 'wagmi';
+import { mainnet, useNetwork } from 'wagmi';
 import Account from '../components/account/account';
 import History from '../components/history/history';
 import Footer from '../components/footer';
@@ -13,17 +13,15 @@ import { LoginWalletType } from '../../utils/Wallet';
 import { PoapItem, PoapWrapper } from '../../utils/poap';
 import { getNFTNameCoverImg, getPublishedPoaps, insertTransferCkbHistory } from '../../utils/api';
 import SwitchChain from '../components/switchChain';
-import { CONFIG } from '../../utils/config';
 import { NFT } from '../../utils/nft-utils';
 import TransferCkb from '../components/transfer';
 import { useUnipassBalance } from '../../hooks/useUnipassBalance';
 import ChainInfo from '../components/switchChain/chain-info';
 import { Types } from '../../utils/reducers';
+import { godWoken } from '../../utils/Chain';
 
 export default function WallectPage() {
     const { state, dispatch } = useContext(DataContext);
-
-    // const [layerOneWrapper, setLayerOneWrapper] = useState<UnipassV3Wrapper>();
 
     const [switchChain, setSwitchChain] = useState(false);
     const [showChainInfo, setShowChainInfo] = useState(false);
@@ -85,7 +83,7 @@ export default function WallectPage() {
     useEffect(() => {
         console.log('chain', chain);
         if (state.loginWalletType === LoginWalletType.WALLET_CONNECT) {
-            if (!chain || ![CONFIG.GODWOKEN_CHAIN_ID, CONFIG.ETHEREUM_CHAIN_ID].includes(chain.id)) {
+            if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
                 setSwitchChain(true);
             } else {
                 setSwitchChain(false);
@@ -150,7 +148,6 @@ export default function WallectPage() {
                                     address={state.currentAddress}
                                     setShowTransferSuccess={setShowTransferSuccess}
                                     balance={balance}
-                                    switchChain={switchChain}
                                 ></NFT_CONTENT>
 
                                 <History

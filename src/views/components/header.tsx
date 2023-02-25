@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
@@ -9,7 +9,6 @@ import MNacpLogo from '../../assets/logo/m_nacp_logo.svg';
 
 import { NavTool } from "../../route/navi-tool";
 import { DataContext, getWindowScrollTop, scrollToTop } from "../../utils/utils";
-import { Tooltip } from "antd";
 import WalletConnect from "./wallet-connect";
 import { Types } from "../../utils/reducers";
 
@@ -68,18 +67,6 @@ const pages = [
     type: "navbar",
     image: "",
   },
-  // {
-  //   title: "",
-  //   url: "https://twitter.com/Nervapes",
-  //   image: twitter,
-  //   type: "icon"
-  // },
-  // {
-  //   title: "",
-  //   url: "https://discord.com/invite/7br6nvuNHP",
-  //   image: discord,
-  //   type: "icon"
-  // }
 ];
 
 export default function NavHeader(props: any) {
@@ -142,7 +129,7 @@ export default function NavHeader(props: any) {
           src={logo}
           onClick={() => {
             setDisableList(true);
-            NavTool.fnJumpToPage('');
+            NavTool.fnJumpToPage('/');
             window.scrollTo(0, 0);
           }}
         />

@@ -104,8 +104,7 @@ export default function NFT_CONTENT(props: any) {
         address,
         loginWalletType,
         setLoading,
-        nftCoverImages,
-        switchChain
+        nftCoverImages
     } = props;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -275,7 +274,6 @@ export default function NFT_CONTENT(props: any) {
                     loginWalletType={loginWalletType}
                     address={address}
                     nft={nftDetail}
-                    switchChain={switchChain}
                     close={() => {
                         setShowNftCard(false);
                         disableOverflowBody(false);
