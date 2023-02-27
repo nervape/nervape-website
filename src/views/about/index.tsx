@@ -31,7 +31,7 @@ export default function AboutPage() {
     const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
     const [innerHeight, setInnerHeight] = useState(0);
 
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
 
     const bannerRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +53,7 @@ export default function AboutPage() {
             </div>
 
             <section className="intro-section">
-                {windowWidth !== 375 && (
+                {state.windowWidth !== 375 && (
                     <div className="intro-top" id="intro-top">
                         <Parallax
                             animation={{ opacity: 0, top: `${innerHeight + 300}px`, playScale: [1, 1.3] }}
@@ -67,7 +67,7 @@ export default function AboutPage() {
                 )}
 
                 <div className="planet-large" id="planet-large">
-                    {windowWidth !== 375 ? (
+                    {state.windowWidth !== 375 ? (
                         <Parallax
                             animation={{ top: '400px', opacity: 0, playScale: [1, 1.3] }}
                             style={{ top: '0', opacity: 1 }}
@@ -181,7 +181,7 @@ export default function AboutPage() {
             <section className="customizable-section">
                 <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
                 <div className="custom-cover">
-                    <img loading="lazy" src={windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
                 </div>
                 <div className="customizable-collection">
                     <div className="custom-content">
@@ -216,7 +216,7 @@ export default function AboutPage() {
                             humans.map((human, index) => {
                                 return (
                                     <div
-                                        className={`human ${windowWidth !== 375 ? 'pc' : 'mobile'} ${currIndex === index && 'open'}`}
+                                        className={`human ${state.windowWidth !== 375 ? 'pc' : 'mobile'} ${currIndex === index && 'open'}`}
                                         style={{ zIndex: humans.length - index }}
                                         key={index}
                                         onClick={() => {

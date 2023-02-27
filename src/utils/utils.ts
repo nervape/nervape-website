@@ -1,13 +1,33 @@
-import { createContext } from "react";
+import { BigNumberish } from '@ethersproject/bignumber';
+import { formatUnits } from '@ethersproject/units';
 
-export const DataContext = createContext({ windowWidth: window.innerWidth });
+import React, { createContext } from "react";
+import { InitialStateType } from './reducers';
+
+export const initialState = {
+    windowWidth: window.innerWidth,
+    loading: false,
+    loadingNumber: 0,
+    showLoginModal: false,
+    currentAddress: '',
+    layerOneWrapper: undefined,
+    loginWalletType: undefined
+}
+
+export const DataContext = createContext<{
+    state: InitialStateType;
+    dispatch: React.Dispatch<any>
+}>({
+    state: initialState,
+    dispatch: () => null
+});
 
 
 // eslint-disable-next-line consistent-return
 export function getWindowWidthRange() {
     const width = window.innerWidth;
-    if (width < 750) return 375;
-    if (width >= 750 && width < 1200) return 750;
+    if (width <= 750) return 375;
+    if (width > 750 && width <= 1200) return 750;
     return 1200;
 }
 
@@ -25,6 +45,15 @@ export function scrollToTop() {
     }, 100);
 }
 
+export const parseBalance = (value: BigNumberish, decimals = 18) => formatUnits(value, decimals);
+
 export function isMobile() {
-    return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+    const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+    );
+    return flag;
+}
+
+export function isMetaMaskMobile() {
+    return /MetaMaskMobile/.test(navigator.userAgent);
 }

@@ -1,0 +1,304 @@
+.login {
+    margin: 0 auto;
+    opacity: 0;
+    z-index: -1;
+    .content {
+        padding-top: 0;
+        position: relative;
+    }
+    .top {
+        position: relative;
+        margin: 0 auto;
+        .title {
+            z-index: 1;
+            width: 100%;
+            color: #ffffff;
+            text-align: center;
+            font-weight: 800;
+            font-size: 56px;
+            line-height: 95px;
+        }
+
+        .mask-cover {
+            width: 100%;
+            overflow: hidden;
+            height: 337.5px;
+            text-align: center;
+            position: relative;
+            .mask-group {
+                width: 1440px;
+                height: 100%;
+                display: block;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .bottom-content {
+            margin: -1px auto 0;
+            background: #506077;
+            padding-bottom: calc(100vh - 95px - 64px - 337.5px - 40px);
+            .login-btn {
+                height: 40px;
+                text-align: center;
+                .login-image {
+                    height: 40px;
+                    width: 240px;
+                    border: unset;
+                    background: #f44d37;
+                    color: #ffffff;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                }
+                .login-image:first-child {
+                    margin-right: 16px;
+                }
+                .login-image:hover {
+                    background: #e45c4a;
+                }
+            }
+        }
+    }
+
+    .bottom {
+        margin-top: -40px;
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 100vh;
+        background: #506077;
+    }
+}
+.login.show {
+    opacity: 1;
+    z-index: 1;
+}
+.login-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(232, 232, 232, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9999;
+    .login-content {
+        width: 600px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(27, 33, 47, 0.95);
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+        border-radius: 16px;
+        
+        .wallet-way {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            padding: 32px;
+            .line {
+                height: 226px;
+                width: 0.5px;
+                border: 1px solid #595D64;
+                margin: 0 20px;
+            }
+            .godwoken-content {
+                width: 240px;
+            }
+            .nervos-l1-content {
+                align-self: flex-start;
+            }
+            .godwoken-content, .nervos-l1-content {
+                .title {
+                    font-size: 12px;
+                    line-height: 24px;
+                    font-weight: 700;
+                    text-align: left;
+                    letter-spacing: -0.05em;
+                    color: #ffffff;
+                    padding-bottom: 20px;
+                }
+                .btn-groups {
+                    text-align: left;
+                    .btn {
+                        text-align: left;
+                        width: 240px;
+                        height: 54px;
+                        border: 1px solid #F44D37;
+                        border-radius: 6px;
+                        background: transparent;
+                        color: #ffffff;
+                        font-size: 12px;
+                        font-weight: 500;
+                        margin-bottom: 20px;
+                        transition: all 0.3s;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        &:hover {
+                            background: rgba(255, 255, 255, 0.1);
+                        }
+                        .wallet-icon {
+                            width: 30px;
+                            height: 30px;
+                            margin-left: 16px;
+                            margin-right: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.login-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.login::-webkit-scrollbar {
+    width: 0;
+}
+
+@media screen and (min-width: 2560px) {
+    .login {
+        .content {
+            padding-top: 0;
+            position: relative;
+            // top: 50%;
+            // transform: translateY(-50%);
+        }
+        .top {
+            .bottom-content {
+                // top: calc(50% + 480px);
+                padding-bottom: calc(100vh - 95px - 64px - 900px - 40px);
+            }
+            .mask-cover {
+                height: 900px;
+                .mask-group {
+                    width: 3840px;
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width: 1440px) and (max-width: 2560px) {
+    .login {
+        .content {
+            padding-top: 0;
+            position: relative;
+            // top: 50%;
+            // transform: translateY(-50%);
+        }
+        .top {
+            .title {
+
+            }
+            .bottom-content {
+                // top: calc(50% + 330px);
+                padding-bottom: calc(100vh - 95px - 64px - 600px - 40px);
+            }
+            .mask-cover {
+                height: 600px;
+                .mask-group {
+                    width: 2560px;
+                }
+            }
+        }
+        .bottom {
+            position: absolute;
+        }
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1440px) {
+    .login {
+        .content {
+        }
+        .top {
+            .bottom-content {
+                // top: calc(50% + 200px);
+                padding-bottom: calc(100vh - 95px - 64px - 337.5px - 40px);
+            }
+            .mask-cover {
+                height: 337.5px;
+                .mask-group {
+                    width: 1440px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .login {
+        .content {
+            position: absolute;
+            width: 100%;
+            top: calc(50% - 64px);
+            transform: translateY(-50%);
+        }
+        .top {
+            .title {
+                font-size: 48px;
+                line-height: 58px;
+                top: -84px;
+            }
+
+            .bottom-content {
+                // top: calc(50% + 130px);
+                padding-bottom: 0 !important;
+            }
+            .mask-cover {
+                height: 168.75px;
+                .mask-group {
+                    width: 750px;
+                }
+            }
+
+            .bottom-content {
+                bottom: unset;
+                .login-btn {
+                    width: 240px;
+                    margin: 0 auto;
+                    .login-image {
+                        width: 100%;
+                    }
+                    .login-image:first-child {
+                        margin-right: 0;
+                        margin-bottom: 16px;
+                    }
+                }
+            }
+        }
+        .bottom {
+            margin-top: -1px;
+            height: calc(50vh - 133px + 33px);
+        }
+    }
+
+    .login-modal {
+        .login-content {
+            width: 347px;
+            .wallet-way {
+                flex-direction: column;
+                .line {
+                    width: 100%;
+                    height: 0.5px;
+                    margin: 41px 0 20px;
+                }
+                .godwoken-content, .nervos-l1-content {
+                    width: 100%;
+                    .btn-groups {
+                        .btn {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

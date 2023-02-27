@@ -1,20 +1,29 @@
-import React, { Component, useEffect, useState } from "react";
-import { DataContext, getWindowWidthRange } from "../../utils/utils";
+import React, { useEffect, useReducer } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { NavTool } from "../../route/navi-tool";
+import { globalReducer, Types } from "../../utils/reducers";
+import { DataContext, initialState } from "../../utils/utils";
 import Footer from "./footer";
 import NavHeader from "./header";
+import LoadingModal from "./loading/loading";
 import "./page-view.less";
+import LoginModal from "./wallet-connect/login-modal";
 
 interface PageViewState {
   windowWidth: number
 }
 
 export default function PageView(props: any) {
-  const [windowWidth, setWindowWidth] = useState(0);
+  NavTool.navigation = useNavigate();
+  NavTool.location = useLocation();
   const { children, activeIndex, disableFooter } = props;
 
+  const [state, dispatch] = useReducer(globalReducer, initialState);
+
   function fnResizeWindow() {
-    const width = getWindowWidthRange();
-    setWindowWidth(width);
+    dispatch({
+      type: Types.UpdateWindowWith
+    });
   }
 
   useEffect(() => {
@@ -26,7 +35,7 @@ export default function PageView(props: any) {
   }, []);
 
   return (
-    <DataContext.Provider value={{ windowWidth: windowWidth }}>
+    <DataContext.Provider value={{ state, dispatch }}>
       <div className="page-view">
         <div className="page-header">
           <NavHeader
@@ -45,6 +54,8 @@ export default function PageView(props: any) {
             )}
           </>
         </div>
+        <LoadingModal show={state.loading}></LoadingModal>
+        <LoginModal activeIndex={activeIndex} ></LoginModal>
       </div>
     </DataContext.Provider>
   );

@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
 import { NavTool } from "../../../route/navi-tool";
-import { DataContext, getWindowScrollTop, scrollToTop } from "../../../utils/utils";
+import { DataContext, scrollToTop } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 import CharacterDefaultIcon from "../../../assets/story/character_default.svg";
@@ -49,7 +49,7 @@ export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story | undefined>();
     const [isRead, setIsRead] = useState(false);
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
     const [keyId, setKeyId] = useState(0);
     const [showSide, setShowSide] = useState(false);
 
@@ -155,9 +155,9 @@ export default function StoryProfile(props: any) {
                     preload="true"
                     autoPlay
                     muted 
-                    src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall}></video>
+                    src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall}></video>
         }
-        return <img loading="lazy" src={windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
+        return <img loading="lazy" src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
     }
 
     return (

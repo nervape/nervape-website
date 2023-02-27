@@ -1,0 +1,201 @@
+.wallect-connect-modal {
+    .login-image {
+        height: 32px;
+        padding: 0 12px;
+        background: rgba(244, 77, 55, 0.4);
+        border: 1px solid #F44D37;
+        border-radius: 20px;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 12px;
+        font-weight: 500;
+        &.hover:hover {
+            background: rgba(136, 136, 136, 0.2);
+        }
+    }
+
+    .wallet-address {
+        color: #FFFFFF;
+        height: 32px;
+        background: rgba(244, 77, 55, 0.4);
+        border: 1px solid #F44D37;
+        border-radius: 20px;
+
+        .address {
+            border-radius: 20px;
+            width: 200px;
+            height: 100%;
+            line-height: 32px;
+            display: inline-flex;
+            align-items: center;
+
+            img {
+                width: 24px;
+                height: 24px;
+                margin-left: 4px;
+            }
+
+            .span {
+                min-width: 145px;
+                font-size: 14px;
+                font-weight: 500;
+                padding: 0 6px 0 4px;
+            }
+        }
+
+        .address.open {
+            background: rgba(244, 77, 55, 0.9);
+        }
+    }
+}
+
+.wallet-connect-dropmenu {
+    background: rgba(244, 77, 55, 0.9);
+    border-radius: 20px;
+    // height: 126px;
+    // top: 220px !important;
+    width: 200px;
+
+    .ant-dropdown-menu {
+        background-color: unset;
+        box-shadow: unset;
+        padding: 0;
+        margin: auto 8px;
+
+        li:hover {
+            background: unset;
+        }
+
+        li {
+            text-align: center;
+            padding: 8px 0;
+            cursor: unset;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+            .ant-dropdown-menu-title-content {
+                height: 32px;
+                line-height: 32px;
+                transition: all 0.1s;
+                width: 100%;
+
+                .wallet-chain-tip {
+                    background: #FFFFFF;
+                    padding: 10px;
+                    color: #F44D37;
+                    font-size: 12px;
+                    border-radius: 15px;
+                    line-height: 16px;
+                    margin: 8px 0;
+                    span {
+                        color: #F44D37;
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .ant-dropdown-menu-title-content:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+            }
+
+            span {
+                color: #ffffff;
+                font-size: 12px;
+            }
+
+            .logout-out,
+            .nervape-asset,
+            .copy-address {
+                border: unset;
+                color: #ffffff;
+                font-size: 12px;
+                width: 100%;
+                height: 100%;
+                background: unset;
+                border-radius: 6px;
+
+                &:hover {}
+            }
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .wallect-connect-modal {
+        .m-connect-group {
+            display: flex;
+            align-items: center;
+            .login-image {
+                width: 100%;
+                height: 100%;
+                flex: 1;
+                text-align: left;
+            }
+            .logout-btn {
+                width: 28px;
+                height: 28px;
+                background: #D9D9D9;
+                border-radius: 50%;
+                margin-right: 16px;
+            }
+        }
+        .m-wallet-address {
+            color: #F44D37;
+            .address-item {
+                height: 40px;
+                margin-bottom: 16px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                img {
+                    width: 28px;
+                    height: 28px;
+                    margin-left: 16px;
+                    margin-right: 8px;
+                }
+                .span {
+                    flex: 1;
+                    text-align: left;
+                }
+                .span, .copy-address, .nervape-asset {
+                    font-size: 16px;
+                    font-weight: 700;
+                }
+                .copy-address, .nervape-asset {
+                    background: unset;
+                    border: unset;
+                    width: 100%;
+                    height: 100%;
+                    text-align: left;
+                    padding-left: 16px;
+                }
+                .logout-btn {
+                    background: #D9D9D9;
+                    border-radius: 50%;
+                    margin-right: 16px;
+                }
+            }
+            .address {
+                display: flex;
+                align-items: center;
+            }
+            .switch-chain-item {
+                text-align: left;
+                margin-left: 16px;
+                margin-right: 16px;
+                border: 1px solid #F44D37;
+                border-radius: 15px;
+                padding: 12px;
+                height: auto;
+                span {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

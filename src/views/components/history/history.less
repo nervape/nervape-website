@@ -1,0 +1,163 @@
+.history-content {
+    width: 100%;
+    background: #282f41;
+    border-radius: 16px;
+    .nft-title {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.05em;
+        color: #ffffff;
+        padding: 16px 16px 0;
+    }
+    .title-tabs,
+    .history {
+        width: 968px;
+        font-size: 12px;
+        display: flex;
+
+        align-items: center;
+        text-align: center;
+        .index,
+        .number,
+        .date,
+        .type,
+        .status {
+            // width: 25%;
+            flex: 1;
+        }
+        .index, .number {
+            a {
+                color: #a9b0bb;
+                text-decoration: underline;
+            }
+        }
+        .status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg {
+                fill: #A9B0BB;
+                transition: all 0.3s;
+            }
+            &.pending, &.progress {
+                animation: spin 2s infinite;
+            }
+        }
+        .date {
+            line-height: 14px;
+        }
+        .type {
+            .span {
+                padding: 2px 10.5px;
+                border-radius: 2px;
+                transition: all 0.3s;
+                letter-spacing: -0.05em;
+                margin: 0 auto;
+            }
+            &.send {
+                .span {
+                    background: #5C3721;
+                    color: #E47A4C;
+                }
+            }
+            &.receive {
+                .span {
+                    background: #602D51;
+                    color: #C955A6;
+                }
+            }
+            &.bridge {
+                .span {
+                    background: #403C7B;
+                    color: #A6A2D8;
+                }
+            }
+            &.mint {
+                .span {
+                    background: #204A47;
+                    color: #499791;
+                }
+            }
+            
+        }
+    }
+    .title-tabs {
+        color: #ffffff;
+        height: 48px;
+        font-weight: 700;
+        margin: 0 auto;
+        border-bottom: 1px solid #595d64;
+    }
+    .histories {
+        height: 256px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .history {
+        transition: all 0.3s;
+        color: #a9b0bb;
+        height: 36px;
+        margin: 16px auto;
+        cursor: pointer;
+    }
+    .history:hover {
+        background: rgba(89, 93, 100, 0.5);
+        color: #FFFFFF;
+        .status {
+            svg {
+                fill: #FFFFFF;
+            }
+        }
+    }
+    &.METAMASK, &.WALLETCONNECT {
+        .type {
+            .span {
+                padding: 0;
+                width: 50px;
+                height: 18px;
+            }
+        }
+    }
+
+    &.UNIPASS_V3 {
+        .type {
+            .span {
+                padding: 0;
+                width: 80px;
+                height: 18px;
+            }
+        }
+    }
+}
+
+.histories::-webkit-scrollbar {
+    width: 0;
+}
+
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+    .history-content {
+        .title-tabs,
+        .history {
+            width: 568px;
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .history-content {
+        .title-tabs,
+        .history {
+            width: 315px;
+            .index, .date {
+                width: 97.5px;
+                flex: none;
+            }
+        }
+        .history {
+            .index {
+                word-break: break-all;
+            }
+        }
+    }
+}

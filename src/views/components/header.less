@@ -41,14 +41,13 @@
 
       .nav-area {
         position: relative;
-        margin-right: 12px;
-        // height: 24px;
+        margin-right: 16px;
+        height: 32px;
         background: rgba(0, 0, 0, 0.2);
         border-radius: 6px;
         display: flex;
         align-items: center;
         transition: all 0.3s;
-        cursor: pointer;
 
         .select-line {
           position: absolute;
@@ -60,41 +59,62 @@
         }
 
         .title-text {
-          padding: 6px 12px;
+          padding: 0 12px;
           font-weight: 500;
           font-size: 12px;
           line-height: 21px;
           color: #ffffff;
         }
+
         .icon-image {
-          width: 28px;
-          height: 28px;
+          width: 20px;
+          height: 20px;
         }
       }
+
+      .nav-area.logo {
+        width: auto;
+
+        .nacp-logo {
+          padding: 5px 8px;
+
+          .icon-image {
+            width: 58.52px;
+            height: 22px;
+          }
+        }
+      }
+
+      .nav-area.wallet-login {
+        background: unset;
+        &:hover {
+          background: unset;
+        }
+      }
+
       .nav-area:hover {
         background: rgba(136, 136, 136, 0.2);
       }
+
       .nav-area.active {
         background: #f44d37;
       }
+
       .nav-area.icon {
-        background: unset;
-        margin-right: 12px;
+        padding: 6px;
+        margin-right: 16px;
       }
-      .nav-area.icon:hover {
-        background: unset;
-      }
-      .nav-area.icon:last-child {
-        margin-right: 0;
-      }
+
       .icon-nav-c {
         display: inline-flex;
       }
+
       .nav-area-active {
         .title-text {
           color: #ffffff;
           font-weight: bold;
         }
+
         .select-line {
           display: block;
         }
@@ -118,15 +138,18 @@
   width: 150px;
   border-radius: 8px;
   max-width: unset;
+
   .ant-tooltip-content {
     font-size: 12px;
     font-weight: 500;
+
     .ant-tooltip-inner {
       text-align: center;
       height: 46px;
       line-height: 46px;
       padding: 0 !important;
       border-radius: 8px !important;
+
       p {
         margin-bottom: 0;
       }
@@ -137,25 +160,12 @@
 @media screen and (max-width: 1200px) {
   .header-container {
     .header {
-      .logo {
-      }
-
-      .btn-group {
-        .nav-area {
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .header-container {
-    .header {
       padding: 0px 14px;
 
       .logo {
         width: 80.4px;
       }
+
       .hamburger-c {
         width: 40px;
         height: 40px;
@@ -164,40 +174,48 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
         .hamburger {
           display: block;
           width: 20px;
           height: 20px;
         }
       }
-      
+
       .header-menu {
         width: 100vw;
         position: absolute;
         z-index: -1;
         left: 0;
         top: 0;
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(27, 33, 47, 0.95);
       }
+
       .btn-group {
         position: absolute;
         padding-top: 64px;
         top: 0;
         width: 100%;
-        background: rgba(27, 33, 47, 0.95);
         padding: 64px 14px 16px;
         flex-direction: column;
+        align-items: flex-start;
         height: auto;
 
         .nav-area {
           height: 40px;
           text-align: center;
-          justify-content: center;
+          justify-content: flex-start;
           margin-top: 0;
-          margin-bottom: 14px;
+          margin-bottom: 32px;
           margin-right: 0;
           width: 100%;
           background: unset;
+          
+          .title-text {
+            font-size: 16px;
+            padding: 0 16px;
+          }
+
           .select-line {
             position: absolute;
             margin-top: 8px;
@@ -206,30 +224,75 @@
             width: 4px;
           }
         }
+
+        .nav-area.wallet-login {
+          margin-top: 32px;
+          height: auto;
+          margin-bottom: 0;
+          padding-bottom: 16px;
+          border-radius: 0;
+          border-bottom: 1px solid #595D64;
+          .wallect-connect-modal {
+            width: 100%;
+            .m-connect-group {
+              height: 40px;
+              line-height: 40px;
+              display: flex;
+              .login-image {
+                background: none;
+                border: none;
+                color: #F44D37;
+                font-size: 16px;
+                font-weight: 700;
+                padding: 0 16px;
+              }
+            }
+          }
+        }
+
         .nav-area.active {
-          background: #f44d37;
+          background: unset;
           border-radius: 6px;
         }
+
         .nav-area.action {
           height: 40px;
           padding: 0;
           margin-right: 0;
           margin-bottom: 24px;
         }
+
+        .nav-area.logo {
+          margin-top: 16px;
+          width: 100%;
+          .nacp-logo {
+            padding: 4px 16px;
+            .icon-image {
+              width: 72px;
+              height: 32px;
+            }
+          }
+        }
         .icon-nav-c {
           display: flex;
           height: 40px;
+          padding-left: 16px;
+
           .nav-area.icon:first-child {
             margin-right: 24px;
           }
+
           .nav-area.icon {
+            padding: 0;
             margin-bottom: 16px;
           }
+
           .icon-image {
             width: 40px;
             height: 40px;
           }
         }
+
         .nav-area:hover {
           background: unset;
         }
@@ -239,15 +302,26 @@
         display: none;
       }
     }
+
     .header.disable {
       position: fixed;
+
       // background: rgba(27, 33, 47, 0.95);
       .header-menu {
         height: 100vh;
       }
+
       .hamburger-c {
         background: rgba(136, 136, 136, 0.2);
       }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+  .header-container {
+    .header {
+      padding: 0px 40px;
     }
   }
 }

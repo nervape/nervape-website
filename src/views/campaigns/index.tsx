@@ -104,7 +104,7 @@ export default function CampaignPage() {
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const [poapBadges, setPoapBadges] = useState<PoapBadge[]>([]);
 
-    const { windowWidth } = useContext(DataContext);
+    const { state } = useContext(DataContext);
     SwiperCore.use([Autoplay, Pagination]);
 
     useEffect(() => {
@@ -136,13 +136,13 @@ export default function CampaignPage() {
                         return (
                             <SwiperSlide key={index}>
                                 <div className="banner-image">
-                                    <img loading="lazy" src={windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
+                                    <img loading="lazy" src={state.windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                                 </div>
                             </SwiperSlide>
                         );
                     })}
                 </Swiper>
-                {windowWidth !== 375 ? (
+                {state.windowWidth !== 375 ? (
                     <Parallax
                         animation={{ opacity: 1, playScale: [1, 2.5] }}
                         style={{ opacity: 0 }}

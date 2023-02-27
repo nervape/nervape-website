@@ -1,0 +1,130 @@
+.login-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(232, 232, 232, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9999;
+    transition: all 0.3s;
+
+    &.opacity {
+        background: rgba(0, 0, 0, 0);
+        z-index: 0;
+    }
+
+    .login-content {
+        width: 600px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transform-origin: center;
+        background: rgba(27, 33, 47, 0.95);
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+        border-radius: 16px;
+        transition: all 0.5s;
+
+        .wallet-way {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            padding: 32px;
+
+            .line {
+                height: 226px;
+                width: 0.5px;
+                border: 1px solid #595D64;
+                margin: 0 20px;
+            }
+
+            .godwoken-content {
+                width: 240px;
+            }
+
+            .nervos-l1-content {
+                align-self: flex-start;
+            }
+
+            .godwoken-content,
+            .nervos-l1-content {
+                .title {
+                    font-size: 12px;
+                    line-height: 24px;
+                    font-weight: 700;
+                    text-align: left;
+                    letter-spacing: -0.05em;
+                    color: #ffffff;
+                    padding-bottom: 20px;
+                }
+
+                .btn-groups {
+                    text-align: left;
+
+                    .btn {
+                        text-align: left;
+                        width: 240px;
+                        height: 54px;
+                        border: 1px solid #F44D37;
+                        border-radius: 6px;
+                        background: transparent;
+                        color: #ffffff;
+                        font-size: 12px;
+                        font-weight: 500;
+                        margin-bottom: 20px;
+                        transition: all 0.3s;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+
+                        &:hover {
+                            background: rgba(255, 255, 255, 0.1);
+                        }
+
+                        .wallet-icon {
+                            width: 30px;
+                            height: 30px;
+                            margin-left: 16px;
+                            margin-right: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.login-modal.show {
+    opacity: 1;
+    visibility: visible;
+    .login-content {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .login-modal {
+        .login-content {
+            width: 347px;
+            .wallet-way {
+                flex-direction: column;
+                .line {
+                    width: 100%;
+                    height: 0.5px;
+                    margin: 41px 0 20px;
+                }
+                .godwoken-content, .nervos-l1-content {
+                    width: 100%;
+                    .btn-groups {
+                        .btn {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,199 @@
+.transfer-ckb {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(232, 232, 232, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 99;
+    .t-bg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transform-origin: center;
+        transition: all 0.5s;
+        width: 500px;
+        min-height: 434px;
+        background: #454f5c;
+        .t-content {
+            padding: 32px;
+            color: #ffffff;
+            .title {
+                font-size: 14px;
+                font-weight: 700;
+                padding-bottom: 32px;
+            }
+            .arrow-c {
+                text-align: center;
+                padding: 20px 0;
+                .arrow {
+                    width: 12px;
+                    height: 10.39px;
+                }
+            }
+            .transfer-c,
+            .recipient-c {
+                width: 436px;
+                min-height: 99px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 16px;
+                .top {
+                    padding: 20px 20px 16px 20px;
+                }
+                .bottom {
+                    padding: 0 20px 20px 20px;
+                }
+                .top,
+                .bottom {
+                    display: flex;
+                    .t-title {
+                        font-weight: 700;
+                        font-size: 14px;
+                        flex: 1;
+                    }
+                    .input {
+                        flex: 1;
+                        position: relative;
+                        input,
+                        textarea,
+                        .hidden-c {
+                            width: 100%;
+                            background: unset;
+                            border: unset;
+                            outline: none;
+                            color: rgba(255, 255, 255, 0.5);
+                            &::placeholder {
+                                color: rgba(255, 255, 255, 0.5);
+                            }
+                            &:focus {
+                                outline: none;
+                            }
+                            &::-webkit-inner-spin-button,
+                            &::-webkit-outer-spin-button {
+                                -webkit-appearance: none !important;
+                                margin: 0;
+                            }
+                        }
+                        textarea {
+                            padding: 0;
+                            height: 100%;
+                            min-height: 19px;
+                            position: absolute;
+                            top: 0;
+                            resize: none;
+                        }
+                    }
+                    .max {
+                        font-weight: 400;
+                        font-size: 14px;
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .transfer-c {
+                .bottom {
+                    padding: 0 20px 16px 20px;
+                }
+                .gas-fee {
+                    padding: 0 20px 20px 20px;
+                    text-align: right;
+                    color: #a9b0bb;
+                    font-size: 12px;
+                    font-weight: 500;
+                }
+            }
+            .recipient-c {
+                .input {
+                    width: 396px;
+                    .hidden-c {
+                        word-break: break-all;
+                        visibility: hidden;
+                    }
+                }
+            }
+
+            .error-message {
+                padding-top: 6px;
+                font-size: 12px;
+                line-height: 14px;
+                text-align: right;
+                color: #f05757;
+            }
+            .btn-groups {
+                padding-top: 32px;
+                display: flex;
+                flex-direction: row-reverse;
+                .btn {
+                    height: 40px;
+                    line-height: 40px;
+                    border-radius: 12px;
+                    font-weight: 500;
+                    font-size: 14px;
+                    padding: 0 16px;
+                    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+                    border: unset;
+                    transition: all 0.3s;
+                }
+                .cancel-btn {
+                    margin-right: 16px;
+                    background: #506077;
+                }
+                .confirm-btn {
+                    background: #888888;
+                    &.active {
+                        background: #f44d37;
+                        &:hover {
+                            background: #e45c4a;
+                        }
+                    }
+                }
+                .cancel-btn:hover {
+                    background: #6d7c93;
+                }
+            }
+        }
+    }
+}
+.transfer-ckb.show {
+    visibility: visible;
+    opacity: 1;
+    .t-bg {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .transfer-ckb {
+        .t-bg {
+            width: 347px;
+            min-height: 520px;
+            .t-content {
+                padding: 32px 16px;
+                .transfer-c,
+                .recipient-c {
+                    width: 315px;
+                    .top {
+                        .max {
+                            font-size: 12px;
+                        }
+                    }
+                }
+
+                .btn-groups {
+                    display: block;
+                    .btn {
+                        width: 100%;
+                        &:first-child {
+                            margin-bottom: 16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
