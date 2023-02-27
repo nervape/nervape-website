@@ -103,12 +103,12 @@ export default function NavHeader(props: any) {
   }
 
   useEffect(() => {
-    if (!disableList) {
+    if (!disableList || state.showLoginModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [disableList]);
+  }, [disableList, state.showLoginModal]);
   useEffect(() => {
     scrollToTop();
     window.addEventListener('scroll', fnScrollPage, true)

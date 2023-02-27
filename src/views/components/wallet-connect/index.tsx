@@ -12,6 +12,8 @@ import { NavTool } from "../../../route/navi-tool";
 import NervosLogo from '../../../assets/logo/nervos_logo.svg';
 import GodwokenLogo from '../../../assets/logo/godwoken_logo.svg';
 import InfoIcon from '../../../assets/icons/info_icon.svg';
+import ConnectIcon from '../../../assets/icons/connect.svg';
+import DisconnectIcon from '../../../assets/icons/disconnect.svg';
 import Logout from "../logout";
 import { Types } from "../../../utils/reducers";
 import { godWoken } from "../../../utils/Chain";
@@ -108,6 +110,7 @@ export default function WallectConnect(props: any) {
             address,
             username: ''
         });
+        document.body.style.overflow = 'auto';
     }, [address, state.loginWalletType, chain]);
 
     const NervapeAssets = () => {
@@ -211,6 +214,23 @@ export default function WallectConnect(props: any) {
         return GodwokenLogo;
     };
 
+    const connectOrDisIcon = () => {
+        return (
+            <img 
+                className="logout-btn"
+                src={state.currentAddress ? DisconnectIcon : ConnectIcon} 
+                onClick={() => {
+                    if (state.currentAddress) {
+                        setShowLogout(true);
+                    } else {
+                        setShowLogin(true);
+                        setDisableList(true);
+                        document.body.style.overflow = 'hidden';
+                    }
+                }} alt="" />
+        );
+    }
+
     useEffect(() => {
         setItems([]);
         if (state.loginWalletType === LoginWalletType.WALLET_CONNECT) {
@@ -276,28 +296,14 @@ export default function WallectConnect(props: any) {
                             }}>
                             CONNECT
                         </button>
-                        <img className="logout-btn" onClick={() => {
-                            if (state.currentAddress) {
-                                setShowLogout(true);
-                            } else {
-                                setShowLogin(true);
-                                setDisableList(true);
-                            }
-                        }} alt="" />
+                        {connectOrDisIcon()}
                     </div>
                 ) : (
                     <div className={`m-wallet-address ${state.loginWalletType}`}>
                         <div className={`address address-item cursor`}>
                             <img src={walletIcon()} alt="UnipassIcon" />
                             <div className="span">{formatAddress}</div>
-                            <img className="logout-btn" onClick={() => {
-                                if (state.currentAddress) {
-                                    setShowLogout(true);
-                                } else {
-                                    setShowLogin(true);
-                                    setDisableList(true);
-                                }
-                            }} alt="" />
+                            {connectOrDisIcon()}
                         </div>
                         {
                             (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) && (
