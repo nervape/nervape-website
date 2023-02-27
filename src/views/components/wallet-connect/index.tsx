@@ -46,7 +46,7 @@ export default function WallectConnect(props: any) {
         })
     }
     // Wallet Connect
-    const { address } = useAccount();
+    const { address, isConnected } = useAccount();
     const { chain } = useNetwork();
 
     const setShowLogin = (flag: boolean) => {
@@ -214,20 +214,22 @@ export default function WallectConnect(props: any) {
         return GodwokenLogo;
     };
 
+    async function loginOrLogout() {
+        if (state.currentAddress) {
+            setShowLogout(true);
+        } else {
+            setShowLogin(true);
+            setDisableList(true);
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
     const connectOrDisIcon = () => {
         return (
             <img 
                 className="logout-btn"
                 src={state.currentAddress ? DisconnectIcon : ConnectIcon} 
-                onClick={() => {
-                    if (state.currentAddress) {
-                        setShowLogout(true);
-                    } else {
-                        setShowLogin(true);
-                        setDisableList(true);
-                        document.body.style.overflow = 'hidden';
-                    }
-                }} alt="" />
+                alt="" />
         );
     }
 
@@ -286,31 +288,28 @@ export default function WallectConnect(props: any) {
                 )
             ) : (
                 !state.currentAddress ? (
-                    <div className="m-connect-group">
-                        <button
-                            className="login-image cursor"
-                            onClick={() => {
-                                document.body.style.overflow = 'hidden';
-                                setShowLogin(true);
-                                setDisableList(true);
-                            }}>
+                    <div className="m-connect-group cursor" onClick={loginOrLogout}>
+                        <button className="login-image">
                             CONNECT
                         </button>
                         {connectOrDisIcon()}
                     </div>
                 ) : (
                     <div className={`m-wallet-address ${state.loginWalletType}`}>
-                        <div className={`address address-item cursor`}>
+                        <div className={`address address-item cursor`} onClick={loginOrLogout}>
                             <img src={walletIcon()} alt="UnipassIcon" />
                             <div className="span">{formatAddress}</div>
                             {connectOrDisIcon()}
                         </div>
                         {
-                            (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) && (
-                                <div className="address-item switch-chain-item">
-                                    {SwitchChainTip()}
-                                </div>
-                            )
+                            state.loginWalletType === LoginWalletType.WALLET_CONNECT && 
+                                isConnected &&
+                                (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) && 
+                                (
+                                    <div className="address-item switch-chain-item">
+                                        {SwitchChainTip()}
+                                    </div>
+                                )
                         }
 
                         <div className="address-item cursor">
