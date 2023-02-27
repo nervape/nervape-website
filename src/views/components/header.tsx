@@ -11,6 +11,7 @@ import { NavTool } from "../../route/navi-tool";
 import { DataContext, getWindowScrollTop, scrollToTop } from "../../utils/utils";
 import WalletConnect from "./wallet-connect";
 import { Types } from "../../utils/reducers";
+import { Tooltip } from 'antd';
 
 export interface NavPageInfo {
   title: string;
@@ -163,6 +164,7 @@ export default function NavHeader(props: any) {
                   className={`nav-area cursor ${v.type} ${activeIndex == i ? 'active' : ''}`}
                   key={i}
                   onClick={() => {
+                    if (v.type === 'logo') return;
                     setDisableList(true);
                     dispatch({
                       type: Types.HideLoginModal
@@ -176,8 +178,25 @@ export default function NavHeader(props: any) {
                     window.scrollTo(0, 0);
                   }}
                 >
-                  {v.type === 'logo' 
-                    ? (<div className="nacp-logo"><img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" /></div>) 
+                  {v.type === 'logo'
+                    ? (
+                      <Tooltip
+                        key={i}
+                        title={() => {
+                          return (
+                            <p>Coming Soon!</p>
+                          );
+                        }}
+                        placement={state.windowWidth <= 750 ? 'right' : 'bottom'}
+                        trigger={['hover', 'click']}
+                        overlayClassName="tooltip"
+                        color="#506077"
+                      >
+                        <div className="nacp-logo">
+                          <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
+                        </div>
+                      </Tooltip>
+                    )
                     : (<div className="title-text">{v.title}</div>)}
                 </div>
               );
@@ -210,7 +229,7 @@ export default function NavHeader(props: any) {
             )}
           </ul>
         </div>
-      
+
       </div>
     </div>
   );
