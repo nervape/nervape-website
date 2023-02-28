@@ -33,7 +33,7 @@ interface INavState extends INavProps {
 const pages = [
   {
     title: "",
-    url: "",
+    url: "/nervape-composite",
     type: "logo",
     image: NacpLogo,
     mImage: MNacpLogo
@@ -164,7 +164,6 @@ export default function NavHeader(props: any) {
                   className={`nav-area cursor ${v.type} ${activeIndex == i ? 'active' : ''}`}
                   key={i}
                   onClick={() => {
-                    if (v.type === 'logo') return;
                     setDisableList(true);
                     dispatch({
                       type: Types.HideLoginModal
@@ -172,7 +171,7 @@ export default function NavHeader(props: any) {
                     if (v.title === 'BRIDGE') {
                       window.open(v.url, '_self');
                     } else {
-                      if (v.type === 'logo') return;
+                      // if (v.type === 'logo') return;
                       NavTool.fnJumpToPage(v.url);
                     }
                     window.scrollTo(0, 0);
@@ -180,22 +179,9 @@ export default function NavHeader(props: any) {
                 >
                   {v.type === 'logo'
                     ? (
-                      <Tooltip
-                        key={i}
-                        title={() => {
-                          return (
-                            <p>Coming Soon!</p>
-                          );
-                        }}
-                        placement={state.windowWidth <= 750 ? 'right' : 'bottom'}
-                        trigger={['hover', 'click']}
-                        overlayClassName="tooltip"
-                        color="#506077"
-                      >
-                        <div className="nacp-logo">
-                          <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
-                        </div>
-                      </Tooltip>
+                      <div className="nacp-logo">
+                        <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
+                      </div>
                     )
                     : (<div className="title-text">{v.title}</div>)}
                 </div>
