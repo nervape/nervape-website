@@ -156,18 +156,24 @@ export default function WallectConnect(props: any) {
             </button>
         );
     }
-    
+
     const SwitchChainTip = () => {
         return (
             <div className="wallet-chain-tip">
                 Nervape Wallet does not support current network. Please switch to {' '}
                 <SwitchChainSpan
-                        title={'Godwoken Mainnet'}
-                        chainId={godWoken.id}></SwitchChainSpan>
+                    setOpenClose={() => {
+                        setOpen(false);
+                    }}
+                    title={'Godwoken Mainnet'}
+                    chainId={godWoken.id}></SwitchChainSpan>
                 {' '} or {' '}
                 <SwitchChainSpan
-                        title={'Ethereum Mainnet'}
-                        chainId={mainnet.id}></SwitchChainSpan>
+                    setOpenClose={() => {
+                        setOpen(false);
+                    }}
+                    title={'Ethereum Mainnet'}
+                    chainId={mainnet.id}></SwitchChainSpan>
             </div>
         );
     }
@@ -226,9 +232,9 @@ export default function WallectConnect(props: any) {
 
     const connectOrDisIcon = () => {
         return (
-            <img 
+            <img
                 className="logout-btn"
-                src={state.currentAddress ? DisconnectIcon : ConnectIcon} 
+                src={state.currentAddress ? DisconnectIcon : ConnectIcon}
                 alt="" />
         );
     }
@@ -302,14 +308,14 @@ export default function WallectConnect(props: any) {
                             {connectOrDisIcon()}
                         </div>
                         {
-                            state.loginWalletType === LoginWalletType.WALLET_CONNECT && 
-                                isConnected &&
-                                (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) && 
-                                (
-                                    <div className="address-item switch-chain-item">
-                                        {SwitchChainTip()}
-                                    </div>
-                                )
+                            state.loginWalletType === LoginWalletType.WALLET_CONNECT &&
+                            isConnected &&
+                            (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) &&
+                            (
+                                <div className="address-item switch-chain-item">
+                                    {SwitchChainTip()}
+                                </div>
+                            )
                         }
 
                         <div className="address-item cursor">
