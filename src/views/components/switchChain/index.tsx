@@ -5,7 +5,7 @@ import { getWallectConnect } from '../../../utils/Wallet';
 import './index.less';
 
 export function SwitchChainSpan(props: any) {
-    const { title, setShowChainInfo, chainId } = props;
+    const { title, setShowChainInfo, chainId, setOpenClose } = props;
 
     const [excludeWalletList] = useState(['Trust Wallet']);
     const wallectConnect = getWallectConnect();
@@ -33,6 +33,7 @@ export function SwitchChainSpan(props: any) {
         <span
             className="cursor"
             onClick={async () => {
+                setOpenClose && setOpenClose()
                 if (!switchNetworkAsync) {
                     setShowChainInfo && setShowChainInfo(true);
                     document.body.style.overflow = 'hidden';
