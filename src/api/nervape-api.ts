@@ -87,6 +87,12 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+
+  public async fnSearchBonelist(address: string) {
+    const url = `${this.baseUrl}/bonelist/search`;
+    const res = await axios.post(url, { address });
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();

@@ -7,6 +7,7 @@ import UpArrowIcon from '../../assets/landing-page/up_arrow.svg';
 import { Question } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
+import { nervapeApi } from "../../api/nervape-api";
 
 export default function Composite() {
     const [showLandingPage, setShowLandingPage] = useState(false);
@@ -75,7 +76,14 @@ export default function Composite() {
                                         <input type="text" value={godwokenAddress} onInput={(e: any) => {
                                             setGodwokenAddress(e.target.value)
                                         }} placeholder="Godwoken address" />
-                                        <button className="check-btn cursor">CHECK</button>
+                                        <button 
+                                            className="check-btn cursor" 
+                                            onClick={async () => {
+                                                if (!godwokenAddress) return;
+                                                const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
+                                                console.log(res);
+                                                if (res.data.data >= 2) {}
+                                            }}>CHECK</button>
                                     </div>
                                     <div className="tip">
                                         To be notified as soon as we go live... Join Our <a className="cursor" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
