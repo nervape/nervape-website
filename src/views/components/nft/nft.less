@@ -203,6 +203,7 @@
             }
             .detail-info {
                 width: 500px;
+                height: 500px;
                 background: #454f5c;
                 &::-webkit-scrollbar {
                     width: 0;
@@ -211,6 +212,9 @@
                     padding: 32px;
                     color: #ffffff;
                     letter-spacing: -0.05em;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
                     .flex {
                         display: flex;
                     }
@@ -238,6 +242,7 @@
                     .contract.flex-1 {
                         margin-right: 0;
                         margin-bottom: 6px;
+                        flex: none;
                         .text {
                             padding: 6px 8px 0;
                         }
@@ -298,6 +303,7 @@
                         font-size: 14px;
                         line-height: 20px;
                         height: 178px;
+                        flex: 1;
                         overflow-y: scroll;
                         &::-webkit-scrollbar {
                             width: 0;
@@ -587,12 +593,17 @@
                             margin-top: 6px;
                         }
                         .description {
-                            height: 72px;
+                            // height: 72px;
+                            flex: none;
+                            height: auto;
                         }
                         .contract.flex-1 {
                             .value {
-                                font-size: 13px;
+                                font-size: 12px;
                             }
+                        }
+                        .btn-groups {
+                            padding-bottom: 120px;
                         }
                     }
                 }
