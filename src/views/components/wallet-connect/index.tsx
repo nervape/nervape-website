@@ -11,6 +11,7 @@ import { NavTool } from "../../../route/navi-tool";
 
 import NervosLogo from '../../../assets/logo/nervos_logo.svg';
 import GodwokenLogo from '../../../assets/logo/godwoken_logo.svg';
+import EthLogo from '../../../assets/logo/etherum.svg';
 import InfoIcon from '../../../assets/icons/info_icon.svg';
 import ConnectIcon from '../../../assets/icons/connect.svg';
 import DisconnectIcon from '../../../assets/icons/disconnect.svg';
@@ -217,7 +218,7 @@ export default function WallectConnect(props: any) {
         if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
             return InfoIcon;
         }
-        return GodwokenLogo;
+        return chain.id === godWoken.id ? GodwokenLogo : EthLogo;
     };
 
     async function loginOrLogout() {
