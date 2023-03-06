@@ -28,7 +28,7 @@ export class PoapWrapper {
                     poap.isHold = _oatPoaps.length > 0;
                 } else {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    const filters = _poaps.filter((_p: any) => {
+                    const filters = _poaps?.data.filter((_p: any) => {
                         const poapEventIds = poap.eventId.toString().split(',');
                         return poapEventIds.includes(_p.event.id.toString());
                     });

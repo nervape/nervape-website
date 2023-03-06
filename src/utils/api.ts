@@ -141,7 +141,7 @@ export async function getBridgeTokensUsed() {
 }
 
 export async function getAllHoldPoaps(address: string) {
-    const response = await fetch(`${CONFIG.POAP_API_URL}${address}`, {
+    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/campaign/poap_badges/all/hold/${address}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });

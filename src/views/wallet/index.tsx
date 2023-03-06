@@ -82,8 +82,9 @@ export default function WallectPage() {
 
     useEffect(() => {
         console.log('chain', chain);
+        if (!chain) return;
         if (state.loginWalletType === LoginWalletType.WALLET_CONNECT) {
-            if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
+            if (![godWoken.id, mainnet.id].includes(chain.id)) {
                 setSwitchChain(true);
             } else {
                 setSwitchChain(false);
