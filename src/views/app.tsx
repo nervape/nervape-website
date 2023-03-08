@@ -129,7 +129,7 @@ export default function App() {
             }>
           </Route>
           <Route
-            path="/nervape-composite"
+            path="/nacp"
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Composite></Composite>
