@@ -170,7 +170,7 @@ export default function NavHeader(props: any) {
                       type: Types.HideLoginModal
                     })
                     if (v.title === 'BRIDGE') {
-                      window.open(v.url, '_self');
+                      window.open(v.url);
                     } else {
                       if (v.type === 'logo') return;
                       NavTool.fnJumpToPage(v.url);
