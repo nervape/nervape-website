@@ -3,36 +3,86 @@ import './index.less';
 
 import LandingBanner from '../../assets/landing-page/banner.png';
 import DownArrow from '../../assets/landing-page/arrow_down.svg';
+import LeftArrow from '../../assets/landing-page/left_arrow.svg';
+import RightArrow from '../../assets/landing-page/right_arrow.svg';
 import DownArrowIcon from '../../assets/nacp/down_arrow.svg';
 import NacpTitle from '../../assets/nacp/nacp.svg';
 import NacpMTitle from '../../assets/nacp/nacp_m.svg';
 import TwitterIcon from '../../assets/nacp/twitter.svg';
 import DiscodeIcon from '../../assets/nacp/discode.svg';
-import FreeMint from '../../assets/nacp/free_mint.png';
-import { Question } from "../../nervape/composite";
+import { Intro, Parthership, Phase, Question } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
 import { DataContext } from "../../utils/utils";
 import { Tooltip } from "antd";
 
-export type Parthership = {
-    tag: string;
-    date: string;
-    title: string;
-    desc: string;
+import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
+import { EffectFade } from 'swiper';
+import "swiper/css";
+
+export function SwiperPrevButton(props: {index: number}) {
+    const { index } = props;
+    const swiper = useSwiper();
+
+    return (
+        <img
+            className={`arrow left-arrow cursor ${index !== 0 && 'show'}`}
+            src={LeftArrow}
+            onClick={() => {
+                swiper.slidePrev()
+            }}
+            alt="LeftArrow" />
+    );
 }
 
-export type Intro = {
-    cover: string;
-    title: string;
-    desc: string;
+export function SwiperNextButton(props: {index: number}) {
+    const { index } = props;
+    const swiper = useSwiper();
+
+    return (
+        <img
+            className={`arrow right-arrow cursor ${index !== 3 && 'show'}`}
+            src={RightArrow}
+            onClick={() => {
+                console.log(swiper)
+                swiper.slideNext()
+            }}
+            alt="RightArrow" />
+    );
+}
+
+export function SwiperContent(props: {phase: Phase; index: number}) {
+    const { phase, index } = props;
+    const swiperSlide = useSwiperSlide();
+
+    return (
+        <div className={`phase-step-swiper transition ${swiperSlide.isActive ? 'active' : ''}`} style={{ background: phase.background }}>
+            <div className="title-c flex-center">
+                <SwiperPrevButton index={index}></SwiperPrevButton>
+                <div className="title-date">
+                    <div className="phase-title">{phase.title}</div>
+                    <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
+                </div>
+                <SwiperNextButton index={index}></SwiperNextButton>
+            </div>
+            <div className="phase-assets flex-center">
+                {phase.assets.map((asset, _index) => {
+                    return (
+                        <div className="phase-asset" key={_index}>
+                            <div className="phase-asset-img"></div>
+                            <div className="phase-asset-name">{asset.name}</div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
 }
 
 export default function Composite() {
     const { state } = useContext(DataContext);
     const [showLandingPage, setShowLandingPage] = useState(false);
-    const [showBoneList, setShowBoneList] = useState(false);
     const [godwokenAddress, setGodwokenAddress] = useState('');
     const [isBonelist, setIsBonelist] = useState(false);
     const [open, setOpen] = useState(false);
@@ -42,12 +92,17 @@ export default function Composite() {
     const [parthershipItems, setParthershipItems] = useState<Parthership[]>([]);
 
     const [questions, setQuestions] = useState<Question[]>([]);
+    const [phases, setPhases] = useState<Phase[]>([]);
+
+
 
     const IntroItem = (props: { item: any; }) => {
         const { item } = props;
         return (
             <div className="intro-item">
-                <img className="intro-img" src={item.cover} alt="" />
+                <div className="intro-img-cover img-filter">
+                    <img className="intro-img" src={item.cover} alt="" />
+                </div>
                 <div className="intro-title">{item.title}</div>
                 <div className="intro-desc">{item.desc}</div>
             </div>
@@ -70,60 +125,30 @@ export default function Composite() {
 
     useEffect(() => {
         setShowLandingPage(true);
-        setIntroItems([
-            {
-                cover: FreeMint,
-                title: 'Free Mint',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-            },
-            {
-                cover: FreeMint,
-                title: 'Assemble Your Own PFP',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-            },
-            {
-                cover: FreeMint,
-                title: 'Assemble Your Own PFP',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-            }
-        ]);
-        setParthershipItems([
-            {
-                tag: 'NEW PARTNERSHIP',
-                date: '02/27/2023',
-                title: 'Latest Update Title',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-            },
-            {
-                tag: 'NEW PARTNERSHIP',
-                date: '02/27/2023',
-                title: 'Latest Update Title',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-            },
-            {
-                tag: 'NEW PARTNERSHIP',
-                date: '02/27/2023',
-                title: 'Latest Update Title',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-            }
-        ]);
-        const _questions = PfpMocks.fnGetQuestions();
-        setQuestions(_questions);
+        const { 
+            questionsData, 
+            introData, 
+            parthershipData, 
+            phaseData } = PfpMocks.fnGetNacpData();
+        setIntroItems(introData);
+        setParthershipItems(parthershipData);
+        setPhases(phaseData);
+        setQuestions(questionsData);
     }, []);
 
     return (
-        <div className="home-page">
+        <div className="home-page font-color">
             {showLandingPage && (
                 <div className="landing-page">
                     <section className="banner-section">
                         <img className="banner" src={LandingBanner} alt="" />
-                        <img src={DownArrow} className="cursor down-arrow"
+                        {/* <img src={DownArrow} className="cursor down-arrow"
                             onClick={() => {
                                 window.scrollTo({
                                     top: window.innerHeight,
                                     behavior: 'smooth'
                                 })
-                            }} alt="" />
+                            }} alt="" /> */}
                     </section>
                     <section className="composite-section">
                         <div className="nervape-composite">
@@ -177,7 +202,7 @@ export default function Composite() {
                                                         }}>CHECK</button>
                                                 </div>
                                                 <div className="tip">
-                                                    To be notified as soon as we go live... Join Our <a className="cursor" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
+                                                    To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
                                                 </div>
                                             </div>
                                         )}
@@ -187,13 +212,68 @@ export default function Composite() {
                         </div>
                     </section>
 
+                    <section className="minting-phases-section">
+                        <div className="minting-content">
+                            <div className="section-title">MINTING PHASES</div>
+                            <div className="desc">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                laboris nisi ut aliquip ex ea commodo consequat.
+                            </div>
+                            <div className="learn-more">
+                                <a href="##" className="font-color" target="_blank">Learn more</a>
+                            </div>
+                            <div className="phase-content flex-center">
+                                <div className="phase-img-cover img-filter">
+                                    <img className="phase-img" alt="" />
+                                </div>
+                                {state.windowWidth > 750 ? (
+                                    <div className="phase-step">
+                                        {phases.map((phase, index) => {
+                                            return (
+                                                <div key={index} className="phase-item img-filter" style={{ background: phase.background }}>
+                                                    <div className="phase-title">{phase.title}</div>
+                                                    <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <>
+                                        <Swiper
+                                            className="img-filter"
+                                            autoHeight={true}
+                                            effect={"fade"}
+                                            fadeEffect={
+                                                {
+                                                    crossFade: true,
+                                                    transformEl: '.phase-step-swiper'
+                                                }
+                                            }
+                                            modules={[EffectFade]}
+                                        >
+                                            {phases.map((phase, index) => {
+                                                return (
+                                                    <SwiperSlide key={index}>
+                                                        <SwiperContent phase={phase} index={index}></SwiperContent>
+                                                    </SwiperSlide>
+                                                );
+                                            })}
+                                        </Swiper>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </section>
+
                     <section className="what-new-section">
                         <div className="what-new-content">
-                            <div className="title">WHAT’S NEW?</div>
+                            <div className="section-title">WHAT’S NEW?</div>
                             <div className="new-parthership">
                                 {state.windowWidth > 750 && (
                                     <div className="new-left">
-                                        <div className="cover-image"></div>
+                                        <div className="cover-image img-filter"></div>
                                         <ParthershipItem item={parthershipItems[0]}></ParthershipItem>
                                     </div>
                                 )}
@@ -217,17 +297,17 @@ export default function Composite() {
                         <div className="partner-content">
                             <div className="partner-top flex-align">
                                 <div className="top-left">
-                                    <div className="title">PARTNER PROGRAM</div>
+                                    <div className="section-title">PARTNER PROGRAM</div>
                                     <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
                                     <div className="join-us cursor">JOIN US</div>
                                 </div>
-                                <div className="top-right"></div>
+                                <div className="top-right img-filter"></div>
                             </div>
                             <div className="partner-artists">
                                 <div className="artist-title">PARTNER ARTISTS</div>
                                 <div className="artist-imgs flex-center">
                                     {[1, 2, 3, 4].map(m => {
-                                        return <img key={m} className="artist-img" alt="" />
+                                        return <img key={m} className="artist-img img-filter" alt="" />
                                     })}
                                 </div>
                             </div>
@@ -241,7 +321,7 @@ export default function Composite() {
                         )}
 
                         <div className="qa-content">
-                            <h3 className="title">Q&A</h3>
+                            <h3 className="section-title">Q&A</h3>
                             <div className="questions">
                                 {questions.length ? (
                                     questions.map((question, index) => {
@@ -295,7 +375,7 @@ export default function Composite() {
 
                     <section className="join-section">
                         <div className="join-content">
-                            <div className="title">JOIN OUR COMMUNITY</div>
+                            <div className="section-title">JOIN OUR COMMUNITY</div>
                             <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
                             <div className="join-icons">
                                 <img

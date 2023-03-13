@@ -1,8 +1,25 @@
+.font-color {
+    color: #0D1014;
+}
+
 .home-page {
     transition: all 0.3s;
     font-family: 'hoss-round' !important;
 
     .landing-page {
+        
+        .img-filter {
+            border: 1px solid #000000;
+            filter: drop-shadow(4px 4px 0px #000000);
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 57px;
+            letter-spacing: normal;
+        }
+
         .banner-section {
             width: 100vw;
             height: 100vh;
@@ -44,7 +61,6 @@
                     }
 
                     .description {
-                        color: #435365;
                         font-weight: 500;
                         font-size: 20px;
                         line-height: 26px;
@@ -68,11 +84,18 @@
                     }
 
                     .intro-item {
-                        .intro-img {
+                        .intro-img-cover {
                             width: 360px;
                             height: 360px;
                             border-radius: 40px;
+
+                            .intro-img {
+                                width: 360px;
+                                height: 360px;
+                                border-radius: 40px;
+                            }
                         }
+
 
                         .intro-title {
                             padding-top: 24px;
@@ -81,14 +104,12 @@
                             font-size: 32px;
                             line-height: 38px;
                             text-align: left;
-                            color: #435365;
                         }
 
                         .intro-desc {
                             font-weight: 500;
                             font-size: 20px;
                             line-height: 24px;
-                            color: #435365;
                             letter-spacing: normal;
                         }
                     }
@@ -100,14 +121,13 @@
                             font-weight: 700;
                             font-size: 24px;
                             line-height: 29px;
-                            color: #435365;
                             padding-bottom: 4px;
                         }
 
                         .address-input {
                             width: 100%;
                             height: 39px;
-                            border: 1px solid #435365;
+                            border: 1px solid #0D1014;
                             border-radius: 16px;
                             display: flex;
 
@@ -121,10 +141,10 @@
                                 font-size: 16px;
                                 line-height: 19px;
                                 letter-spacing: normal;
-                                color: rgba(67, 83, 101, 1);
+                                color: rgba(13, 16, 20, 1);
 
                                 &::placeholder {
-                                    color: rgba(67, 83, 101, 0.8);
+                                    color: rgba(13, 16, 20, 0.8);
                                 }
 
                                 &:focus {
@@ -150,12 +170,10 @@
                         .tip {
                             font-size: 12px;
                             line-height: 14px;
-                            color: #435365;
                             padding-top: 8px;
                             letter-spacing: normal;
 
                             a {
-                                color: #435365;
                                 font-weight: 700;
                                 text-decoration: underline;
                             }
@@ -172,13 +190,6 @@
                 padding: 128px 0;
                 margin: 0 auto;
                 width: 1120px;
-
-                .title {
-                    font-size: 48px;
-                    font-weight: 900;
-                    line-height: 57px;
-                    color: #435365;
-                }
 
                 .new-parthership {
                     padding-top: 32px;
@@ -209,7 +220,6 @@
                                 font-size: 12px;
                                 line-height: 24px;
                                 text-align: right;
-                                color: #435365;
                             }
                         }
 
@@ -218,7 +228,6 @@
                             font-weight: 700;
                             font-size: 24px;
                             line-height: 29px;
-                            color: #435365;
                         }
 
                         .parthership-desc {
@@ -227,7 +236,6 @@
                             font-size: 16px;
                             line-height: 24px;
                             letter-spacing: normal;
-                            color: #435365;
                         }
                     }
 
@@ -262,12 +270,89 @@
                             .view-btn {
                                 padding: 0 10px;
                                 height: 44px;
-                                border: 1px solid #435365;
+                                border: 1px solid #0D1014;
                                 border-radius: 16px;
-                                color: #435365;
                                 font-weight: 500;
                                 font-size: 16px;
                                 line-height: 44px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .minting-phases-section {
+            background: #FECD42;
+
+            .minting-content {
+                width: 1120px;
+                padding: 128px 0;
+                margin: 0 auto;
+
+                .desc {
+                    font-weight: 500;
+                    font-size: 20px;
+                    line-height: 24px;
+                    padding-top: 32px;
+                    letter-spacing: normal;
+                }
+
+                .learn-more {
+                    padding-top: 8px;
+
+                    a {
+                        font-size: 16px;
+                        font-weight: 700;
+                        line-height: 19px;
+                        text-decoration-line: underline;
+                    }
+                }
+
+                .phase-content {
+                    padding-top: 64px;
+
+                    .phase-img-cover {
+                        width: 480px;
+                        height: 480px;
+                        border-radius: 40px;
+
+                        img {
+                            background-color: #FFFFFF;
+                            width: 480px;
+                            height: 480px;
+                            border-radius: 40px;
+                        }
+                    }
+
+                    .phase-step {
+                        padding-left: 16px;
+                        width: 624px;
+
+                        .phase-item {
+                            width: 100%;
+                            height: 108px;
+                            margin-bottom: 16px;
+                            border-radius: 16px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            padding: 0 32px;
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+
+                            .phase-title {
+                                font-weight: 700;
+                                font-size: 32px;
+                                line-height: 38px;
+                            }
+
+                            .phase-date {
+                                font-weight: 600;
+                                font-size: 12px;
+                                line-height: 14px;
                             }
                         }
                     }
@@ -287,21 +372,13 @@
                     .top-left {
                         flex: 1;
 
-                        .title {
-                            font-weight: 900;
-                            font-size: 48px;
-                            line-height: 57px;
-                            color: #435365;
-                            padding-bottom: 32px;
-                        }
-
                         .desc {
+                            padding-top: 32px;
                             width: 440px;
                             letter-spacing: normal;
                             font-weight: 500;
                             font-size: 20px;
                             line-height: 26px;
-                            color: #435365;
                             padding-bottom: 32px;
                         }
 
@@ -333,7 +410,6 @@
                         font-weight: 700;
                         font-size: 32px;
                         line-height: 38px;
-                        color: #435365;
                         padding-bottom: 32px;
                     }
 
@@ -373,16 +449,8 @@
                 flex: 1;
                 padding: 128px 0 128px 40px;
 
-                .title {
-                    font-weight: 900;
-                    font-size: 48px;
-                    line-height: 57px;
-                    color: #435365;
-                    text-align: left;
-                    margin-bottom: 64px;
-                }
-
                 .questions {
+                    padding-top: 64px;
                     width: 520px;
                     letter-spacing: normal;
 
@@ -427,12 +495,8 @@
                             }
                         }
 
-                        .q {
-                            color: #435365;
-                        }
-
                         .a {
-                            color: rgba(67, 83, 101, 0.8);
+                            color: rgba(13, 16, 20, 0.8);
                             opacity: 0;
                             height: 0;
                             overflow: hidden;
@@ -465,20 +529,11 @@
                 margin: 0 auto;
                 width: 1120px;
 
-                .title {
-                    font-weight: 900;
-                    font-size: 48px;
-                    line-height: 57px;
-                    color: #435365;
-                    letter-spacing: normal;
-                    padding-bottom: 32px;
-                }
-
                 .desc {
+                    padding-top: 32px;
                     font-weight: 500;
                     font-size: 20px;
                     line-height: 26px;
-                    color: #435365;
                     letter-spacing: normal;
                     padding-bottom: 32px;
                 }
@@ -518,7 +573,7 @@
     }
 }
 
-@media screen and (min-width: 1920px) {
+@media screen and (min-width: 1440px) {
     .home-page {
         .landing-page {
             .composite-section {
@@ -539,6 +594,12 @@
                             }
                         }
                     }
+                }
+            }
+
+            .minting-phases-section {
+                .minting-content {
+                    width: 1320px;
                 }
             }
 
@@ -663,9 +724,14 @@
                         }
 
                         .intro-item {
-                            .intro-img {
+                            .intro-img-cover {
                                 width: 480px;
                                 height: 480px;
+
+                                .intro-img {
+                                    width: 480px;
+                                    height: 480px;
+                                }
                             }
                         }
 
@@ -691,6 +757,108 @@
                                 .parthership-item {
                                     &:last-child {
                                         margin-bottom: 48px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .minting-phases-section {
+                .minting-content {
+                    width: 670px;
+
+                    .phase-content {
+                        display: block;
+
+                        .phase-img-cover {
+                            width: 670px;
+                            height: 670px;
+
+                            img {
+                                width: 670px;
+                                height: 670px;
+                            }
+                        }
+
+                        .swiper {
+                            border: none;
+                        }
+
+                        .phase-step-swiper {
+                            border-radius: 40px;
+                            margin-top: 16px;
+
+                            &.active {
+                                opacity: 1;
+
+                                .phase-assets {
+                                    opacity: 1;
+                                }
+                            }
+                            .title-c {
+                                padding: 16px;
+
+                                .arrow {
+                                    opacity: 0;
+                                    width: 40px;
+                                    height: 40px;
+
+                                    &.show {
+                                        opacity: 1;
+                                    }
+                                }
+
+                                .title-date {
+                                    flex: 1;
+                                    text-align: center;
+
+                                    .phase-title {
+                                        font-weight: 700;
+                                        font-size: 32px;
+                                        line-height: 38px;
+                                    }
+
+                                    .phase-date {
+                                        font-weight: 700;
+                                        font-size: 12px;
+                                        line-height: 14px;
+                                    }
+                                }
+                            }
+
+                            .phase-assets {
+                                flex-wrap: wrap;
+                                padding: 16px;
+                                opacity: 0;
+                                transition: all 0.8s;
+
+                                .phase-asset {
+                                    width: 80px;
+                                    height: 66px;
+                                    margin-right: 16px;
+                                    margin-bottom: 24px;
+
+                                    &:nth-child(6n) {
+                                        margin-right: 0;
+                                    }
+                                    
+                                    .phase-asset-img {
+                                        width: 48px;
+                                        height: 48px;
+                                        border-radius: 50%;
+                                        margin: 0 auto;
+                                        background: #646464;
+                                    }
+
+                                    .phase-asset-name {
+                                        font-weight: 700;
+                                        font-size: 12px;
+                                        line-height: 14px;
+                                        letter-spacing: normal;
+                                        text-align: center;
+                                        padding-top: 4px;
                                     }
                                 }
                             }
@@ -747,7 +915,7 @@
                 .qa-content {
                     padding: 128px 0;
 
-                    .title {
+                    .section-title {
                         width: 670px;
                         margin: 0 auto 48px;
                     }
@@ -771,6 +939,15 @@
 @media screen and (max-width: 750px) {
     .home-page {
         .landing-page {
+            .img-filter {
+                filter: drop-shadow(0px 5px 0px -1px #000000);
+            }
+
+            .section-title {
+                font-size: 32px;
+                line-height: 38px;
+            }
+
             .composite-section {
                 .nervape-composite {
                     width: 347px;
@@ -801,9 +978,14 @@
                         }
 
                         .intro-item {
-                            .intro-img {
+                            .intro-img-cover {
                                 width: 347px;
                                 height: 347px;
+
+                                .intro-img {
+                                    width: 347px;
+                                    height: 347px;
+                                }
                             }
 
                             .intro-title {
@@ -831,10 +1013,6 @@
                     padding: 96px 0 128px;
                     width: 347px;
 
-                    .title {
-                        font-size: 32px;
-                    }
-
                     .new-parthership {
                         padding-top: 48px;
                         height: auto;
@@ -853,6 +1031,109 @@
                 }
             }
 
+            .minting-phases-section {
+                .minting-content {
+                    width: 347px;
+
+                    .phase-content {
+                        display: block;
+
+                        .phase-img-cover {
+                            width: 347px;
+                            height: 347px;
+
+                            img {
+                                width: 347px;
+                                height: 347px;
+                            }
+                        }
+
+                        .swiper {
+                            border: none;
+                        }
+
+                        .phase-step-swiper {
+                            border-radius: 40px;
+                            margin-top: 16px;
+                            // opacity: 0;
+
+                            &.active {
+                                opacity: 1;
+
+                                .phase-assets {
+                                    opacity: 1;
+                                }
+                            }
+                            .title-c {
+                                padding: 16px;
+
+                                .arrow {
+                                    opacity: 0;
+                                    width: 40px;
+                                    height: 40px;
+
+                                    &.show {
+                                        opacity: 1;
+                                    }
+                                }
+
+                                .title-date {
+                                    flex: 1;
+                                    text-align: center;
+
+                                    .phase-title {
+                                        font-weight: 700;
+                                        font-size: 32px;
+                                        line-height: 38px;
+                                    }
+
+                                    .phase-date {
+                                        font-weight: 700;
+                                        font-size: 12px;
+                                        line-height: 14px;
+                                    }
+                                }
+                            }
+
+                            .phase-assets {
+                                flex-wrap: wrap;
+                                padding: 16px;
+                                opacity: 0;
+                                transition: all 0.8s;
+
+                                .phase-asset {
+                                    width: 80px;
+                                    height: 66px;
+                                    margin-right: 16px;
+                                    margin-bottom: 24px;
+
+                                    &:nth-child(3n) {
+                                        margin-right: 0;
+                                    }
+                                    
+                                    .phase-asset-img {
+                                        width: 48px;
+                                        height: 48px;
+                                        border-radius: 50%;
+                                        margin: 0 auto;
+                                        background: #646464;
+                                    }
+
+                                    .phase-asset-name {
+                                        font-weight: 700;
+                                        font-size: 12px;
+                                        line-height: 14px;
+                                        letter-spacing: normal;
+                                        text-align: center;
+                                        padding-top: 4px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             .partner-program-section {
                 .partner-content {
                     width: 347px;
@@ -862,10 +1143,6 @@
                         display: block;
 
                         .top-left {
-                            .title {
-                                font-size: 32px;
-                            }
-
                             .desc {
                                 width: 100%;
                             }
@@ -915,8 +1192,7 @@
                 .qa-content {
                     padding: 96px 0 128px;
 
-                    .title {
-                        font-size: 32px;
+                    .section-title {
                         width: 347px;
                         margin: 0 auto 48px;
                     }
@@ -940,11 +1216,6 @@
                 .join-content {
                     padding: 96px 0 128px;
                     width: 347px;
-
-                    .title {
-                        font-size: 32px;
-                        line-height: 38px;
-                    }
                 }
             }
         }
