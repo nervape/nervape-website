@@ -232,12 +232,12 @@ export default function Composite() {
                                     <div className="phase-step">
                                         {phases.map((phase, index) => {
                                             return (
-                                                <div key={index} className="phase-item transition img-filter" style={{ background: phase.background }}>
-                                                    <div className="origin-item transition">
+                                                <div key={index} className="phase-item transition-1 img-filter" style={{ background: phase.background }}>
+                                                    <div className="origin-item transition-1">
                                                         <div className="phase-title">{phase.title}</div>
                                                         <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
                                                     </div>
-                                                    <div className="hover-item transition flex-center">
+                                                    <div className="hover-item transition-1 flex-center">
                                                         <div className="editable">Editable Assets</div>
                                                         {phase.assets.map((asset, _index) => {
                                                             return (
