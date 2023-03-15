@@ -20,6 +20,7 @@ export class Parthership {
 }
 
 export class Phase {
+    cover: string = '';
     title: string = '';
     startDate: string = '';
     endDate: string = '';

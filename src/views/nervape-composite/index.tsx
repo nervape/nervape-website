@@ -93,15 +93,15 @@ export default function Composite() {
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [phases, setPhases] = useState<Phase[]>([]);
-
+    const [phaseCover, setPhaseCover] = useState('');
 
 
     const IntroItem = (props: { item: any; }) => {
         const { item } = props;
         return (
             <div className="intro-item">
-                <div className="intro-img-cover img-filter">
-                    <img className="intro-img" src={item.cover} alt="" />
+                <div className="intro-img-cover">
+                    <img className="intro-img img-filter" src={item.cover} alt="" />
                 </div>
                 <div className="intro-title">{item.title}</div>
                 <div className="intro-desc">{item.desc}</div>
@@ -225,14 +225,21 @@ export default function Composite() {
                                 <a href="##" className="font-color" target="_blank">Learn more</a>
                             </div>
                             <div className="phase-content flex-center">
-                                <div className="phase-img-cover img-filter">
-                                    <img className="phase-img" alt="" />
+                                <div className="phase-img-cover">
+                                    <img style={{background: phaseCover}} className="phase-img img-filter" alt="" />
                                 </div>
                                 {state.windowWidth > 750 ? (
                                     <div className="phase-step">
                                         {phases.map((phase, index) => {
                                             return (
-                                                <div key={index} className="phase-item transition-1 img-filter" style={{ background: phase.background }}>
+                                                <div 
+                                                    key={index} 
+                                                    className="phase-item transition-1 img-filter" 
+                                                    style={{ background: phase.background }}
+                                                    onMouseOver={() => {
+                                                        setPhaseCover(phase.background);
+                                                    }}
+                                                    >
                                                     <div className="origin-item transition-1">
                                                         <div className="phase-title">{phase.title}</div>
                                                         <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
@@ -265,6 +272,9 @@ export default function Composite() {
                                                 }
                                             }
                                             modules={[EffectFade]}
+                                            onSlideChange={(e) => {
+                                                setPhaseCover(phases[e.activeIndex].background);
+                                            }}
                                         >
                                             {phases.map((phase, index) => {
                                                 return (

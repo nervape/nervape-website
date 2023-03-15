@@ -75,6 +75,7 @@ const parthershipData: Parthership[] = [
 const phaseData: Phase[] = [
     {
         title: 'PHASE 1',
+        cover: '',
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#FFF5C1',
@@ -91,6 +92,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 2',
+        cover: '',
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#FEA063',
@@ -111,6 +113,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 3',
+        cover: '',
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#A8E9C2',
@@ -143,6 +146,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 4',
+        cover: '',
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#C5BAF7',
