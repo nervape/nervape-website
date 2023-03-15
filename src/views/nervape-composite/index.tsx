@@ -21,7 +21,7 @@ import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
 import { EffectFade } from 'swiper';
 import "swiper/css";
 
-export function SwiperPrevButton(props: {index: number}) {
+export function SwiperPrevButton(props: { index: number }) {
     const { index } = props;
     const swiper = useSwiper();
 
@@ -36,7 +36,7 @@ export function SwiperPrevButton(props: {index: number}) {
     );
 }
 
-export function SwiperNextButton(props: {index: number}) {
+export function SwiperNextButton(props: { index: number }) {
     const { index } = props;
     const swiper = useSwiper();
 
@@ -52,7 +52,7 @@ export function SwiperNextButton(props: {index: number}) {
     );
 }
 
-export function SwiperContent(props: {phase: Phase; index: number}) {
+export function SwiperContent(props: { phase: Phase; index: number }) {
     const { phase, index } = props;
     const swiperSlide = useSwiperSlide();
 
@@ -125,10 +125,10 @@ export default function Composite() {
 
     useEffect(() => {
         setShowLandingPage(true);
-        const { 
-            questionsData, 
-            introData, 
-            parthershipData, 
+        const {
+            questionsData,
+            introData,
+            parthershipData,
             phaseData } = PfpMocks.fnGetNacpData();
         setIntroItems(introData);
         setParthershipItems(parthershipData);
@@ -232,9 +232,22 @@ export default function Composite() {
                                     <div className="phase-step">
                                         {phases.map((phase, index) => {
                                             return (
-                                                <div key={index} className="phase-item img-filter" style={{ background: phase.background }}>
-                                                    <div className="phase-title">{phase.title}</div>
-                                                    <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
+                                                <div key={index} className="phase-item transition img-filter" style={{ background: phase.background }}>
+                                                    <div className="origin-item transition">
+                                                        <div className="phase-title">{phase.title}</div>
+                                                        <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
+                                                    </div>
+                                                    <div className="hover-item transition flex-center">
+                                                        <div className="editable">Editable Assets</div>
+                                                        {phase.assets.map((asset, _index) => {
+                                                            return (
+                                                                <div className="phase-asset" key={_index}>
+                                                                    <div className="phase-asset-img"></div>
+                                                                    <div className="phase-asset-name">{asset.name}</div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
                                                 </div>
                                             );
                                         })}

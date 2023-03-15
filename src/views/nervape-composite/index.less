@@ -7,7 +7,7 @@
     font-family: 'hoss-round' !important;
 
     .landing-page {
-        
+
         .img-filter {
             border: 1px solid #000000;
             filter: drop-shadow(4px 4px 0px #000000);
@@ -339,21 +339,84 @@
                             justify-content: center;
                             padding: 0 32px;
 
+                            position: relative;
+
                             &:last-child {
                                 margin-bottom: 0;
                             }
 
-                            .phase-title {
-                                font-weight: 700;
-                                font-size: 32px;
-                                line-height: 38px;
+                            .origin-item {
+                                opacity: 1;
+                                transform: translateY(0);
+                                position: absolute;
+
+                                .phase-title {
+                                    font-weight: 700;
+                                    font-size: 32px;
+                                    line-height: 38px;
+                                }
+
+                                .phase-date {
+                                    font-weight: 600;
+                                    font-size: 12px;
+                                    line-height: 14px;
+                                }
                             }
 
-                            .phase-date {
-                                font-weight: 600;
-                                font-size: 12px;
-                                line-height: 14px;
+                            .hover-item {
+                                opacity: 0;
+                                transform: translateY(20px);
+                                position: absolute;
+
+                                .editable {
+                                    width: 62px;
+                                    font-weight: 500;
+                                    font-size: 16px;
+                                    line-height: 19px;
+                                    text-align: center;
+                                }
+
+                                .phase-asset {
+                                    width: 80px;
+                                    height: 66px;
+
+                                    &:nth-child(6n) {
+                                        margin-right: 0;
+                                    }
+
+                                    .phase-asset-img {
+                                        width: 48px;
+                                        height: 48px;
+                                        border-radius: 50%;
+                                        margin: 0 auto;
+                                        background: #646464;
+                                    }
+
+                                    .phase-asset-name {
+                                        font-weight: 700;
+                                        font-size: 12px;
+                                        line-height: 14px;
+                                        letter-spacing: normal;
+                                        text-align: center;
+                                        padding-top: 4px;
+                                    }
+                                }
                             }
+
+                            &:hover {
+                                filter: drop-shadow(0 0 0px #000000);
+                                transform: translate(4px, 4px);
+                                
+                                .origin-item {
+                                    opacity: 0;
+                                    transform: translateY(-20px);
+                                }
+                                .hover-item {
+                                    opacity: 1;
+                                    transform: translateY(0);
+                                }
+                            }
+
                         }
                     }
                 }
@@ -499,6 +562,7 @@
                             color: rgba(13, 16, 20, 0.8);
                             opacity: 0;
                             height: 0;
+                            font-weight: 400;
                             overflow: hidden;
 
                             &.show {
@@ -797,6 +861,7 @@
                                     opacity: 1;
                                 }
                             }
+
                             .title-c {
                                 padding: 16px;
 
@@ -843,7 +908,7 @@
                                     &:nth-child(6n) {
                                         margin-right: 0;
                                     }
-                                    
+
                                     .phase-asset-img {
                                         width: 48px;
                                         height: 48px;
@@ -1064,6 +1129,7 @@
                                     opacity: 1;
                                 }
                             }
+
                             .title-c {
                                 padding: 16px;
 
@@ -1110,7 +1176,7 @@
                                     &:nth-child(3n) {
                                         margin-right: 0;
                                     }
-                                    
+
                                     .phase-asset-img {
                                         width: 48px;
                                         height: 48px;
