@@ -1,6 +1,8 @@
 import { Question, Intro, Parthership, Phase } from "../nervape/composite";
 
-import FreeMint from '../assets/nacp/free_mint.png';
+import Landing01 from '../assets/nacp/Landing-01.png';
+import Landing02 from '../assets/nacp/Landing-02.png';
+import Landing03 from '../assets/nacp/Landing-03.png';
 
 const questionsData: Question[] = [
     {
@@ -35,17 +37,17 @@ const questionsData: Question[] = [
 
 const introData: Intro[] = [
     {
-        cover: FreeMint,
+        cover: Landing01,
         title: 'Free Mint',
         desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
-        cover: FreeMint,
+        cover: Landing02,
         title: 'Assemble Your Own PFP',
         desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
-        cover: FreeMint,
+        cover: Landing03,
         title: 'Assemble Your Own PFP',
         desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     }
