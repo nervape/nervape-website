@@ -28,6 +28,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { godWoken } from "../utils/Chain";
 import WallectPage from "./wallet";
 import Composite from "./nervape-composite";
+import Nacp from "./nervape-composite/create";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -133,6 +134,14 @@ export default function App() {
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Composite></Composite>
+              </PageView>
+            }>
+          </Route>
+          <Route
+            path="/nacp/create"
+            element={
+              <PageView activeIndex={0} disableFooter={true}>
+                <Nacp></Nacp>
               </PageView>
             }>
           </Route>

@@ -21,7 +21,7 @@ class NervapeApi {
     return data.data;
   }
 
-  public async fnGetChapters() : Promise<ChapterList[]> {
+  public async fnGetChapters(): Promise<ChapterList[]> {
     const url = `${this.baseUrl}/chapter/all`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
@@ -91,6 +91,22 @@ class NervapeApi {
   public async fnSearchBonelist(address: string) {
     const url = `${this.baseUrl}/bonelist/search`;
     const res = await axios.post(url, { address });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetNonce() {
+    const url = `${this.baseUrl}/nacp/nonce`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnSendForVerify(message: string, signature: string) {
+    const url = `${this.baseUrl}/nacp/verify`;
+    const res = await axios.post(url, JSON.stringify({ message, signature }), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     return this._fnDealResponse(res, url);
   }
 }
