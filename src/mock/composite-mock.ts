@@ -4,6 +4,21 @@ import Landing01 from '../assets/nacp/Landing-01.png';
 import Landing02 from '../assets/nacp/Landing-02.png';
 import Landing03 from '../assets/nacp/Landing-03.png';
 
+import AssetIconSkin from '../assets/nacp/assets/assets_icon-01.png';
+import AssetIconBg from '../assets/nacp/assets/assets_icon-02.png';
+import AssetIconSuit from '../assets/nacp/assets/assets_icon-03.png';
+import AssetIconUpper from '../assets/nacp/assets/assets_icon-04.png';
+import AssetIconLower from '../assets/nacp/assets/assets_icon-05.png';
+import AssetIconHeadwear from '../assets/nacp/assets/assets_icon-06.png';
+import AssetIconMask from '../assets/nacp/assets/assets_icon-07.png';
+import AssetIconEyewear from '../assets/nacp/assets/assets_icon-08.png';
+import AssetIconMouth from '../assets/nacp/assets/assets_icon-09.png';
+import AssetIconEars from '../assets/nacp/assets/assets_icon-10.png';
+import AssetIconTatto from '../assets/nacp/assets/assets_icon-11.png';
+import AssetIconAccessory from '../assets/nacp/assets/assets_icon-12.png';
+import AssetIconHandheld from '../assets/nacp/assets/assets_icon-13.png';
+import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.png';
+
 const questionsData: Question[] = [
     {
         answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
@@ -83,11 +98,11 @@ const phaseData: Phase[] = [
         background: '#FFF5C1',
         assets: [
             {
-                cover: '',
+                cover: AssetIconSkin,
                 name: 'Skin'
             },
             {
-                cover: '',
+                cover: AssetIconBg,
                 name: 'Background'
             }
         ]
@@ -100,15 +115,15 @@ const phaseData: Phase[] = [
         background: '#FEA063',
         assets: [
             {
-                cover: '',
+                cover: AssetIconLower,
                 name: 'Lower Body'
             },
             {
-                cover: '',
+                cover: AssetIconUpper,
                 name: 'Upper Body'
             },
             {
-                cover: '',
+                cover: AssetIconSuit,
                 name: 'Suit'
             }
         ]
@@ -121,27 +136,27 @@ const phaseData: Phase[] = [
         background: '#A8E9C2',
         assets: [
             {
-                cover: '',
+                cover: AssetIconEars,
                 name: 'Ears'
             },
             {
-                cover: '',
+                cover: AssetIconMouth,
                 name: 'Mouth'
             },
             {
-                cover: '',
+                cover: AssetIconEyewear,
                 name: 'Eyewear'
             },
             {
-                cover: '',
+                cover: AssetIconMask,
                 name: 'Mask'
             },
             {
-                cover: '',
+                cover: AssetIconHeadwear,
                 name: 'Headwear'
             },
             {
-                cover: '',
+                cover: AssetIconTatto,
                 name: 'Tattoo'
             }
         ]
@@ -154,15 +169,15 @@ const phaseData: Phase[] = [
         background: '#C5BAF7',
         assets: [
             {
-                cover: '',
+                cover: AssetIconAccessory,
                 name: 'Accessory'
             },
             {
-                cover: '',
+                cover: AssetIconHandheld,
                 name: 'Handheld'
             },
             {
-                cover: '',
+                cover: AssetIconSpecial,
                 name: 'Special'
             }
         ]

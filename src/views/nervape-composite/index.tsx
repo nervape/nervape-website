@@ -3,6 +3,7 @@ import './index.less';
 
 import LandingBanner from '../../assets/landing-page/banner.png';
 import DownArrow from '../../assets/landing-page/arrow_down.svg';
+import QAImage from '../../assets/nacp/Q&A.png';
 import LeftArrow from '../../assets/landing-page/left_arrow.svg';
 import RightArrow from '../../assets/landing-page/right_arrow.svg';
 import DownArrowIcon from '../../assets/nacp/down_arrow.svg';
@@ -339,7 +340,7 @@ export default function Composite() {
                     <section className="qa-section flex-justify">
                         {state.windowWidth > 750 && (
                             <div className="qa-image-c">
-                                <div className="qa-image"></div>
+                                <img src={QAImage} className="qa-image" alt="QAImage" />
                             </div>
                         )}
 
