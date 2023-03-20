@@ -4,20 +4,20 @@ import Landing01 from '../assets/nacp/Landing-01.png';
 import Landing02 from '../assets/nacp/Landing-02.png';
 import Landing03 from '../assets/nacp/Landing-03.png';
 
-import AssetIconSkin from '../assets/nacp/assets/assets_icon-01.png';
-import AssetIconBg from '../assets/nacp/assets/assets_icon-02.png';
-import AssetIconSuit from '../assets/nacp/assets/assets_icon-03.png';
-import AssetIconUpper from '../assets/nacp/assets/assets_icon-04.png';
-import AssetIconLower from '../assets/nacp/assets/assets_icon-05.png';
-import AssetIconHeadwear from '../assets/nacp/assets/assets_icon-06.png';
-import AssetIconMask from '../assets/nacp/assets/assets_icon-07.png';
-import AssetIconEyewear from '../assets/nacp/assets/assets_icon-08.png';
-import AssetIconMouth from '../assets/nacp/assets/assets_icon-09.png';
-import AssetIconEars from '../assets/nacp/assets/assets_icon-10.png';
-import AssetIconTatto from '../assets/nacp/assets/assets_icon-11.png';
-import AssetIconAccessory from '../assets/nacp/assets/assets_icon-12.png';
-import AssetIconHandheld from '../assets/nacp/assets/assets_icon-13.png';
-import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.png';
+import AssetIconSkin from '../assets/nacp/assets/assets_icon-01.svg';
+import AssetIconBg from '../assets/nacp/assets/assets_icon-02.svg';
+import AssetIconSuit from '../assets/nacp/assets/assets_icon-03.svg';
+import AssetIconUpper from '../assets/nacp/assets/assets_icon-04.svg';
+import AssetIconLower from '../assets/nacp/assets/assets_icon-05.svg';
+import AssetIconHeadwear from '../assets/nacp/assets/assets_icon-06.svg';
+import AssetIconMask from '../assets/nacp/assets/assets_icon-07.svg';
+import AssetIconEyewear from '../assets/nacp/assets/assets_icon-08.svg';
+import AssetIconMouth from '../assets/nacp/assets/assets_icon-09.svg';
+import AssetIconEars from '../assets/nacp/assets/assets_icon-10.svg';
+import AssetIconTattoo from '../assets/nacp/assets/assets_icon-11.svg';
+import AssetIconAccessory from '../assets/nacp/assets/assets_icon-12.svg';
+import AssetIconHandheld from '../assets/nacp/assets/assets_icon-13.svg';
+import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.svg';
 
 const questionsData: Question[] = [
     {
@@ -115,16 +115,16 @@ const phaseData: Phase[] = [
         background: '#FEA063',
         assets: [
             {
-                cover: AssetIconLower,
-                name: 'Lower Body'
+                cover: AssetIconSuit,
+                name: 'Suit'
             },
             {
                 cover: AssetIconUpper,
                 name: 'Upper Body'
             },
             {
-                cover: AssetIconSuit,
-                name: 'Suit'
+                cover: AssetIconLower,
+                name: 'Lower Body'
             }
         ]
     },
@@ -136,27 +136,27 @@ const phaseData: Phase[] = [
         background: '#A8E9C2',
         assets: [
             {
-                cover: AssetIconEars,
-                name: 'Ears'
-            },
-            {
-                cover: AssetIconMouth,
-                name: 'Mouth'
-            },
-            {
-                cover: AssetIconEyewear,
-                name: 'Eyewear'
+                cover: AssetIconHeadwear,
+                name: 'Headwear'
             },
             {
                 cover: AssetIconMask,
                 name: 'Mask'
             },
             {
-                cover: AssetIconHeadwear,
-                name: 'Headwear'
+                cover: AssetIconEyewear,
+                name: 'Eyewear'
             },
             {
-                cover: AssetIconTatto,
+                cover: AssetIconMouth,
+                name: 'Mouth'
+            },
+            {
+                cover: AssetIconEars,
+                name: 'Ears'
+            },
+            {
+                cover: AssetIconTattoo,
                 name: 'Tattoo'
             }
         ]
