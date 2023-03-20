@@ -150,7 +150,9 @@ export default function Composite() {
                             preload="true"
                             autoPlay
                             muted
-                            src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/PfpAssets/18f3c218-9386-4880-9d82-3acfd35a2595.mp4">
+                            src={state.windowWidth !== 375 
+                                ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/PfpAssets/18f3c218-9386-4880-9d82-3acfd35a2595.mp4" 
+                                : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/PfpAssets/6571452b-9e7e-459e-866c-acbd7c3e260c.mp4"}>
                         </video>
                         {/* <img src={DownArrow} className="cursor down-arrow"
                             onClick={() => {
