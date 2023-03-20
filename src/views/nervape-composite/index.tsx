@@ -71,7 +71,7 @@ export function SwiperContent(props: { phase: Phase; index: number }) {
                 {phase.assets.map((asset, _index) => {
                     return (
                         <div className="phase-asset" key={_index}>
-                            <div className="phase-asset-img"></div>
+                            <img src={asset.cover} className="phase-asset-img" alt="phase-asset-img" />
                             <div className="phase-asset-name">{asset.name}</div>
                         </div>
                     );
@@ -240,6 +240,9 @@ export default function Composite() {
                                                     onMouseOver={() => {
                                                         setPhaseCover(phase.background);
                                                     }}
+                                                    onMouseOut={() => {
+                                                        setPhaseCover('');
+                                                    }}
                                                     >
                                                     <div className="origin-item transition-1">
                                                         <div className="phase-title">{phase.title}</div>
@@ -250,7 +253,7 @@ export default function Composite() {
                                                         {phase.assets.map((asset, _index) => {
                                                             return (
                                                                 <div className="phase-asset" key={_index}>
-                                                                    <div className="phase-asset-img"></div>
+                                                                    <img src={asset.cover} className="phase-asset-img" alt="phase-asset-img" />
                                                                     <div className="phase-asset-name">{asset.name}</div>
                                                                 </div>
                                                             );
