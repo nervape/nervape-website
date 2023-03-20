@@ -27,6 +27,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { godWoken } from "../utils/Chain";
 import WallectPage from "./wallet";
+import Composite from "./nervape-composite";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -124,6 +125,14 @@ export default function App() {
             element={
               <PageView activeIndex={6} disableFooter={true}>
                 <WallectPage></WallectPage>
+              </PageView>
+            }>
+          </Route>
+          <Route
+            path="/nacp"
+            element={
+              <PageView activeIndex={0} disableFooter={true}>
+                <Composite></Composite>
               </PageView>
             }>
           </Route>
