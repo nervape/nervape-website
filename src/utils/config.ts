@@ -35,6 +35,7 @@ export const CONFIG = {
     L2_ITEM_ADDRESS: import.meta.env.VITE_LAYER_TWO_NERVAPE_ITEM_ADDRESS,
     L2_SPECIAL_ADDRESS: import.meta.env.VITE_LAYER_TWO_NERVAPE_SPECIAL_ADDRESS,
 
+    NACP_ADDRESS: import.meta.env.VITE_NACP_ADDRESS,
     // POAP
     POAP_API_URL: import.meta.env.VITE_POAP_API_URL,
 

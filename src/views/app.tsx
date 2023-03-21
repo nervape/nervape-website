@@ -25,7 +25,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import { godWoken } from "../utils/Chain";
+import { godWoken, godWokenTestnet } from "../utils/Chain";
 import WallectPage from "./wallet";
 import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
@@ -41,7 +41,7 @@ export default function App() {
     return <MaintenancePage></MaintenancePage>;
   }
 
-  const chains = [godWoken, mainnet];
+  const chains = [godWoken, godWokenTestnet, mainnet];
 
   const { provider, webSocketProvider } = configureChains(chains, [
     alchemyProvider({ apiKey: 'BbyuzUYnWmVjjGxGfgHnkUluVj2fiHBo' }),

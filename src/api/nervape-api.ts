@@ -109,6 +109,36 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
+
+  public async fnCreateNacp(address: string, payload: any) {
+    const url = `${this.baseUrl}/nacp/create`;
+    const res = await axios.post(url, JSON.stringify({ address, payload }), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetSignature(ids: string[]) {
+    const url = `${this.baseUrl}/nacp/sign`;
+    const res = await axios.post(url, JSON.stringify({ ids }), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetNacps(address: string) {
+    const url = `${this.baseUrl}/nacp/list?address=${address}`;
+    const res = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();
