@@ -11,14 +11,17 @@ export default function Nacp() {
 
     const { data, isError, isLoading, isSuccess, signMessageAsync } = useSignMessage();
 
-    const createSiweMessage = (_address: string, statement: string) => {
+    const createSiweMessage = async (_address: string, statement: string) => {
+        const res = await nervapeApi.fnGetNonce();
+
         const message = new SiweMessage({
             domain,
             address: _address,
             statement,
             uri: origin,
             version: '1',
-            chainId: mainnet.id
+            chainId: mainnet.id,
+            nonce: res
         });
 
         return message.prepareMessage();
@@ -27,7 +30,7 @@ export default function Nacp() {
     const signInWithEthereum = async () => {
         if (!address) return false;
 
-        const message = createSiweMessage(address, 'Sign in with Ethereum to the app.');
+        const message = await createSiweMessage(address, 'Sign in with Ethereum to the app.');
 
         const signature = await signMessageAsync({ message });
 
@@ -36,11 +39,18 @@ export default function Nacp() {
         console.log('signInWithEthereum', res);
     }
 
+    const getInformation = async () => {
+        await nervapeApi.fnGetInformation()
+    }
+
     return (
         <div className="nacp-container main-container">
             <button className="sign-btn" onClick={async () => {
                 await signInWithEthereum();
             }}>SignIn With Ethereum</button>
+            <button className="sign-btn" onClick={async () => {
+                await getInformation();
+            }}>Get Information</button>
         </div>
     );
 }

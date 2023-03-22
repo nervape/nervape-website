@@ -96,7 +96,17 @@ class NervapeApi {
 
   public async fnGetNonce() {
     const url = `${this.baseUrl}/nacp/nonce`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetInformation() {
+    const url = `${this.baseUrl}/nacp/personal_infomation`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
     return this._fnDealResponse(res, url);
   }
 
@@ -105,7 +115,8 @@ class NervapeApi {
     const res = await axios.post(url, JSON.stringify({ message, signature }), {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     });
     return this._fnDealResponse(res, url);
   }
