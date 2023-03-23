@@ -161,7 +161,7 @@ export default function NavHeader(props: any) {
             {pages?.map((v: NavPageInfo, i: number) => {
               return (
                 <div
-                  className={`nav-area cursor ${v.type} ${activeIndex == i ? 'active' : ''}`}
+                  className={`nav-area cursor ${v.type} ${(activeIndex == i || (i == 0 && activeIndex == 7)) ? 'active' : ''}`}
                   key={i}
                   onClick={() => {
                     setDisableList(true);

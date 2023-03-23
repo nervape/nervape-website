@@ -39,6 +39,13 @@ export default function WallectConnect(props: any) {
         })
     }
 
+    const setIsInit = (isInit: boolean) => {
+        dispatch({
+            type: Types.IsInit,
+            value: isInit
+        })
+    }
+
     // 当前链接的钱包
     const setLoginWalletType = (type: string) => {
         dispatch({
@@ -77,10 +84,11 @@ export default function WallectConnect(props: any) {
 
     async function initLogin() {
         const _storage = getStorage();
-        if (!_storage) {
+        if (!_storage || state.currentAddress) {
+            setIsInit(true);
             return;
         }
-        if (state.currentAddress) return;
+
         const _storageJson: WALLET_CONNECT = JSON.parse(_storage);
         if (_storageJson?.expiredAt && new Date().getTime() <= _storageJson?.expiredAt) {
             setLoginWalletType(_storageJson.type);
@@ -96,6 +104,8 @@ export default function WallectConnect(props: any) {
         } else {
             clearStorage();
         }
+
+        setIsInit(true);
     }
 
     useEffect(() => {

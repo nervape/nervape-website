@@ -65,9 +65,11 @@ export default function LoginModal(props: any) {
         })();
     }
 
+    if (!state.isInit) return <></>;
+
     return (
         <div
-            className={`login-modal ${(!state.currentAddress && activeIndex == 6) && 'opacity'} ${(!state.currentAddress && (state.showLoginModal || activeIndex == 6)) && 'show'}`}
+            className={`login-modal ${(!state.currentAddress && (activeIndex == 6 || activeIndex == 7)) && 'opacity'} ${(!state.currentAddress && (state.showLoginModal || activeIndex == 6 || activeIndex == 7)) && 'show'}`}
             onClick={() => {
                 document.body.style.overflow = 'auto';
                 setLoginModal(false);

@@ -20,6 +20,15 @@ class NervapeApi {
     }
     return data.data;
   }
+  
+  private _fnDealSessionResponse(res: AxiosResponse, url: string) {
+    if (res.status !== 200) {
+      console.warn(res);
+      throw `request failed:${url} `;
+    }
+
+    return res.data;
+  }
 
   public async fnGetChapters(): Promise<ChapterList[]> {
     const url = `${this.baseUrl}/chapter/all`;
@@ -102,12 +111,12 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
   
-  public async fnGetInformation() {
-    const url = `${this.baseUrl}/nacp/personal_infomation`;
+  public async fnVerifyLogin() {
+    const url = `${this.baseUrl}/nacp/verify/login`;
     const res = await axios.get(url, {
       withCredentials: true
     });
-    return this._fnDealResponse(res, url);
+    return this._fnDealSessionResponse(res, url);
   }
 
   public async fnSendForVerify(message: string, signature: string) {
@@ -126,7 +135,8 @@ class NervapeApi {
     const res = await axios.post(url, JSON.stringify({ address, payload }), {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     });
     return this._fnDealResponse(res, url);
   }
@@ -136,7 +146,8 @@ class NervapeApi {
     const res = await axios.post(url, JSON.stringify({ ids }), {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     });
     return this._fnDealResponse(res, url);
   }
@@ -146,7 +157,8 @@ class NervapeApi {
     const res = await axios.get(url, {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     });
     return this._fnDealResponse(res, url);
   }

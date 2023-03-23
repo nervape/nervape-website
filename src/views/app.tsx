@@ -140,7 +140,7 @@ export default function App() {
           <Route
             path="/nacp/create"
             element={
-              <PageView activeIndex={0} disableFooter={true}>
+              <PageView activeIndex={7} disableFooter={true}>
                 <Nacp></Nacp>
               </PageView>
             }>
