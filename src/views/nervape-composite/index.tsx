@@ -17,7 +17,9 @@ import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
 import { DataContext } from "../../utils/utils";
 import { Tooltip } from "antd";
-
+import { Parallax, OverPack } from 'rc-scroll-anim';
+import TweenOne from 'rc-tween-one';
+import QueueAnim from 'rc-queue-anim';
 import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
 import { EffectFade } from 'swiper';
 import "swiper/css";
@@ -110,8 +112,8 @@ export default function Composite() {
         );
     }
 
-    const ParthershipItem = (props: { item: any; }) => {
-        const { item } = props;
+    const ParthershipItem = (props: { item: any; index: number; }) => {
+        const { item, index } = props;
         return (
             <div className="parthership-item">
                 <div className="parthership-tag">
@@ -162,193 +164,252 @@ export default function Composite() {
                                 })
                             }} alt="" /> */}
                     </section>
+
                     <section className="composite-section">
-                        <div className="nervape-composite">
-                            <div className="composite">
-                                <div className="title transition">
-                                    <img src={state.windowWidth === 375 ? NacpMTitle : NacpTitle} />
-                                </div>
-                                <div className="description">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                    nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                            </div>
-                        </div>
-                        <div className="intro-items">
-                            {introItems.map((item, index) => {
-                                return (
-                                    <div className="intro-content" key={index}>
-                                        <IntroItem item={item}></IntroItem>
-                                        {index == 0 && (
-                                            <div className="bone-list">
-                                                <div className="title">Bonelist Lookup</div>
-                                                <div className="address-input">
-                                                    <Tooltip
-                                                        title={() => {
-                                                            return (
-                                                                <p>{isBonelist ? 'In Bonelist' : 'Not In Bonelist'}</p>
-                                                            );
-                                                        }}
-                                                        placement="bottom"
-                                                        overlayClassName="bonelist-tooltip"
-                                                        color="#506077"
-                                                        open={open}>
-                                                        <input type="text" value={godwokenAddress} onInput={(e: any) => {
-                                                            setGodwokenAddress(e.target.value)
-                                                            setOpen(false);
-                                                        }} placeholder="Ethereum address" />
-                                                    </Tooltip>
-                                                    <button
-                                                        className="check-btn cursor"
-                                                        onClick={async () => {
-                                                            if (!godwokenAddress) return;
-                                                            const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
-                                                            console.log(res);
-                                                            setOpen(true);
-                                                            setIsBonelist(res > 0);
-                                                        }}>CHECK</button>
-                                                </div>
-                                                <div className="tip">
-                                                    To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
-                                                </div>
-                                            </div>
-                                        )}
+                        <OverPack playScale={0.5} style={{ overflow: 'hidden' }}>
+                            <TweenOne className="nervape-composite"
+                                key="0" animation={{ opacity: 1, translateY: 0 }} style={{ opacity: 0, transform: 'translateY(30px)' }}>
+                                <div className="composite">
+                                    <div className="title transition">
+                                        <img src={state.windowWidth === 375 ? NacpMTitle : NacpTitle} />
                                     </div>
-                                );
-                            })}
-                        </div>
+                                    <div className="description">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                        nisi ut aliquip ex ea commodo consequat.
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                                        sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </div>
+                                </div>
+                            </TweenOne>
+                            <div className="composite-content">
+                                <QueueAnim key="queue"
+                                    className="intro-items"
+                                    style={{ float: 'left', position: 'relative', left: '0' }}>
+                                    {introItems.map((item, index) => {
+                                        return (
+                                            <div className="intro-content" key={index}>
+                                                <IntroItem item={item}></IntroItem>
+                                                {index == 0 && (
+                                                    <div className="bone-list">
+                                                        <div className="title">Bonelist Lookup</div>
+                                                        <div className="address-input">
+                                                            <Tooltip
+                                                                title={() => {
+                                                                    return (
+                                                                        <p>{isBonelist ? 'In Bonelist' : 'Not In Bonelist'}</p>
+                                                                    );
+                                                                }}
+                                                                placement="bottom"
+                                                                overlayClassName="bonelist-tooltip"
+                                                                color="#506077"
+                                                                open={open}>
+                                                                <input type="text" value={godwokenAddress} onInput={(e: any) => {
+                                                                    setGodwokenAddress(e.target.value)
+                                                                    setOpen(false);
+                                                                }} placeholder="Ethereum address" />
+                                                            </Tooltip>
+                                                            <button
+                                                                className="check-btn cursor"
+                                                                onClick={async () => {
+                                                                    if (!godwokenAddress) return;
+                                                                    const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
+                                                                    console.log(res);
+                                                                    setOpen(true);
+                                                                    setIsBonelist(res > 0);
+                                                                }}>CHECK</button>
+                                                        </div>
+                                                        <div className="tip">
+                                                            To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </QueueAnim>
+                            </div>
+                        </OverPack>
                     </section>
 
                     <section className="minting-phases-section">
                         <div className="minting-content">
-                            <div className="section-title">MINTING PHASES</div>
-                            <div className="desc">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                laboris nisi ut aliquip ex ea commodo consequat.
-                            </div>
-                            <div className="learn-more">
-                                <a href="##" className="font-color" target="_blank">Learn more</a>
-                            </div>
-                            <div className="phase-content flex-center">
-                                <div className="phase-img-cover">
-                                    <img style={{ background: phaseCover }} className="phase-img img-filter" alt="" />
-                                </div>
-                                {state.windowWidth > 750 ? (
-                                    <div className="phase-step">
-                                        {phases.map((phase, index) => {
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className="phase-item transition-1 img-filter"
-                                                    style={{ background: phase.background }}
-                                                    onMouseOver={() => {
-                                                        setPhaseCover(phase.background);
-                                                    }}
-                                                    onMouseOut={() => {
-                                                        setPhaseCover('');
-                                                    }}
-                                                >
-                                                    <div className="origin-item transition-1">
-                                                        <div className="phase-title">{phase.title}</div>
-                                                        <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
-                                                    </div>
-                                                    <div className="hover-item transition-1 flex-center">
-                                                        <div className="editable">Editable Assets</div>
-                                                        {phase.assets.map((asset, _index) => {
-                                                            return (
-                                                                <div className="phase-asset" key={_index}>
-                                                                    <img src={asset.cover} className="phase-asset-img" alt="phase-asset-img" />
-                                                                    <div className="phase-asset-name">{asset.name}</div>
-                                                                </div>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                            <OverPack>
+                                <TweenOne key="1" animation={{ opacity: 1, translateY: 0 }} style={{ opacity: 0, transform: 'translateY(30px)' }}>
+                                    <div className="section-title">MINTING PHASES</div>
+                                    <div className="desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                        laboris nisi ut aliquip ex ea commodo consequat.
                                     </div>
-                                ) : (
-                                    <>
-                                        <Swiper
-                                            className="img-filter"
-                                            autoHeight={true}
-                                            effect={"fade"}
-                                            fadeEffect={
-                                                {
-                                                    crossFade: true,
-                                                    transformEl: '.phase-step-swiper'
-                                                }
-                                            }
-                                            modules={[EffectFade]}
-                                            onSlideChange={(e) => {
-                                                setPhaseCover(phases[e.activeIndex].background);
-                                            }}
+                                    <div className="learn-more">
+                                        <a href="##" className="font-color" target="_blank">Learn more</a>
+                                    </div>
+                                </TweenOne>
+
+                                <div className="phase-content flex-center">
+                                    <TweenOne key="2" animation={{ opacity: 1, translateX: 0 }}
+                                        style={{ opacity: 0, transform: 'translateX(-50px)' }}>
+                                        <div className="phase-img-cover">
+                                            <img style={{ background: phaseCover }} className="phase-img img-filter" alt="" />
+                                        </div>
+                                    </TweenOne>
+
+                                    {state.windowWidth > 750 ? (
+                                        <QueueAnim className="phase-step"
+                                            type="right"
+                                            animConfig={[
+                                                { opacity: [1, 0], translateX: [0, -50] },
+                                                { opacity: [1, 0], translateX: [0, 50] }
+                                            ]}
                                         >
                                             {phases.map((phase, index) => {
                                                 return (
-                                                    <SwiperSlide key={index}>
-                                                        <SwiperContent phase={phase} index={index}></SwiperContent>
-                                                    </SwiperSlide>
+                                                    <div
+                                                        key={index}
+                                                        className="phase-item transition-1 img-filter"
+                                                        style={{ background: phase.background }}
+                                                        onMouseOver={() => {
+                                                            setPhaseCover(phase.background);
+                                                        }}
+                                                        onMouseOut={() => {
+                                                            setPhaseCover('');
+                                                        }}
+                                                    >
+                                                        <div className="origin-item transition-1">
+                                                            <div className="phase-title">{phase.title}</div>
+                                                            <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
+                                                        </div>
+                                                        <div className="hover-item transition-1 flex-center">
+                                                            <div className="editable">Editable Assets</div>
+                                                            {phase.assets.map((asset, _index) => {
+                                                                return (
+                                                                    <div className="phase-asset" key={_index}>
+                                                                        <img src={asset.cover} className="phase-asset-img" alt="phase-asset-img" />
+                                                                        <div className="phase-asset-name">{asset.name}</div>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+
                                                 );
                                             })}
-                                        </Swiper>
-                                    </>
-                                )}
-                            </div>
+                                        </QueueAnim>
+                                    ) : (
+                                        <>
+                                            <Swiper
+                                                className="img-filter"
+                                                autoHeight={true}
+                                                effect={"fade"}
+                                                fadeEffect={
+                                                    {
+                                                        crossFade: true,
+                                                        transformEl: '.phase-step-swiper'
+                                                    }
+                                                }
+                                                modules={[EffectFade]}
+                                                onSlideChange={(e) => {
+                                                    setPhaseCover(phases[e.activeIndex].background);
+                                                }}
+                                            >
+                                                {phases.map((phase, index) => {
+                                                    return (
+                                                        <SwiperSlide key={index}>
+                                                            <SwiperContent phase={phase} index={index}></SwiperContent>
+                                                        </SwiperSlide>
+                                                    );
+                                                })}
+                                            </Swiper>
+                                        </>
+                                    )}
+                                </div>
+                            </OverPack>
                         </div>
                     </section>
 
                     <section className="what-new-section">
                         <div className="what-new-content">
-                            <div className="section-title">WHAT’S NEW?</div>
-                            <div className="new-parthership">
-                                {state.windowWidth > 750 && (
-                                    <div className="new-left">
-                                        <div className="cover-image img-filter"></div>
-                                        <ParthershipItem item={parthershipItems[0]}></ParthershipItem>
-                                    </div>
-                                )}
+                            <OverPack>
+                                <TweenOne key="what-1" animation={{ opacity: 1, translateY: 0 }} style={{ opacity: 0, transform: 'translateY(30px)' }}>
+                                    <div className="section-title">WHAT’S NEW?</div>
+                                </TweenOne>
 
-                                <div className="new-right">
-                                    <div className="parthership-items">
-                                        {parthershipItems.map((item, index) => {
-                                            return (
-                                                <ParthershipItem key={index} item={item}></ParthershipItem>
-                                            );
-                                        })}
-                                    </div>
-                                    <div className="view-all">
-                                        <div className="view-btn cursor">VIEW ALL</div>
+                                <div className="new-parthership">
+                                    {state.windowWidth > 750 && (
+                                        <div className="new-left">
+                                            <TweenOne key="what-2" animation={{ opacity: 1, translateX: 0 }} style={{ opacity: 0, transform: 'translateX(-30px)' }}>
+                                                <div className="cover-image img-filter"></div>
+                                            </TweenOne>
+
+                                            <TweenOne key="what-3" animation={{ opacity: 1, translateY: 0 }} style={{ opacity: 0, transform: 'translateY(30px)' }}>
+                                                <ParthershipItem item={parthershipItems[0]} index={0}></ParthershipItem>
+                                            </TweenOne>
+                                        </div>
+                                    )}
+
+                                    <div className="new-right">
+                                        <QueueAnim
+                                            delay={300}
+                                            animConfig={[
+                                                { opacity: [1, 0], translateY: [0, -100] },
+                                                { opacity: [1, 0], translateY: [0, 100] }
+                                            ]}
+                                            className="parthership-items">
+                                            {parthershipItems.map((item, index) => {
+                                                return (
+                                                    <ParthershipItem key={index} item={item} index={index}></ParthershipItem>
+                                                );
+                                            })}
+                                        </QueueAnim>
+
+                                        <TweenOne key="what-4" animation={{ opacity: 1, delay: 1000 }} style={{ opacity: 0 }}>
+                                            <div className="view-all">
+                                                <div className="view-btn cursor">VIEW ALL</div>
+                                            </div>
+                                        </TweenOne>
                                     </div>
                                 </div>
-                            </div>
+                            </OverPack>
                         </div>
                     </section>
                     <section className="partner-program-section">
                         <div className="partner-content">
-                            <div className="partner-top flex-align">
-                                <div className="top-left">
-                                    <div className="section-title">PARTNER PROGRAM</div>
-                                    <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
-                                    <div className="join-us cursor">JOIN US</div>
+                            <OverPack>
+                                <div className="partner-top flex-align">
+                                    <TweenOne className="top-left" key="partner-1" animation={{ opacity: 1, translateX: 0 }}
+                                        style={{ opacity: 0, transform: 'translateX(-50px)' }}>
+                                        <div className="section-title">PARTNER PROGRAM</div>
+                                        <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
+                                        <div className="join-us cursor">JOIN US</div>
+                                    </TweenOne>
+                                    <TweenOne key="partner-2" animation={{ opacity: 1, duration: 500 }}
+                                        style={{ opacity: 0 }}>
+                                        <div className="top-right img-filter"></div>
+                                    </TweenOne>
                                 </div>
-                                <div className="top-right img-filter"></div>
-                            </div>
-                            <div className="partner-artists">
-                                <div className="artist-title">PARTNER ARTISTS</div>
-                                <div className="artist-imgs flex-center">
-                                    {[1, 2, 3, 4].map(m => {
-                                        return <img key={m} className="artist-img img-filter" alt="" />
-                                    })}
+                                <div className="partner-artists">
+                                    <TweenOne key="partner-3" animation={{ opacity: 1, translateY: 0 }}
+                                        style={{ opacity: 0, transform: 'translateY(50px)' }}>
+                                        <div className="artist-title">PARTNER ARTISTS</div>
+                                    </TweenOne>
+
+                                    <QueueAnim
+                                        className="artist-imgs"
+                                        type="right"
+                                        animConfig={[
+                                            { opacity: [1, 0], translateX: [0, -50] },
+                                            { opacity: [1, 0], translateX: [0, 50] }
+                                        ]}>
+                                        {[1, 2, 3, 4].map(m => {
+                                            return <img key={m} className="artist-img img-filter" alt="" />
+                                        })}
+                                    </QueueAnim>
                                 </div>
-                            </div>
+                            </OverPack>
                         </div>
                     </section>
                     <section className="qa-section flex-justify">
@@ -413,24 +474,28 @@ export default function Composite() {
 
                     <section className="join-section">
                         <div className="join-content">
-                            <div className="section-title">JOIN OUR COMMUNITY</div>
-                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
-                            <div className="join-icons">
-                                <img
-                                    className="cursor"
-                                    onClick={() => {
-                                        window.open('https://twitter.com/Nervapes')
-                                    }}
-                                    src={TwitterIcon}
-                                    alt="TwitterIcon" />
-                                <img
-                                    className="cursor"
-                                    onClick={() => {
-                                        window.open('https://discord.com/invite/7br6nvuNHP')
-                                    }}
-                                    src={DiscodeIcon}
-                                    alt="DiscodeIcon" />
-                            </div>
+                            <Parallax
+                                animation={{ opacity: 1, translateY: 0, playScale: [0, 0.5] }}
+                                style={{ opacity: 0, transform: 'translateY(100px)' }}>
+                                <div className="section-title">JOIN OUR COMMUNITY</div>
+                                <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
+                                <div className="join-icons">
+                                    <img
+                                        className="cursor"
+                                        onClick={() => {
+                                            window.open('https://twitter.com/Nervapes')
+                                        }}
+                                        src={TwitterIcon}
+                                        alt="TwitterIcon" />
+                                    <img
+                                        className="cursor"
+                                        onClick={() => {
+                                            window.open('https://discord.com/invite/7br6nvuNHP')
+                                        }}
+                                        src={DiscodeIcon}
+                                        alt="DiscodeIcon" />
+                                </div>
+                            </Parallax>
                         </div>
                         <Footer></Footer>
                     </section>

@@ -9,7 +9,7 @@
     .landing-page {
 
         .img-filter {
-            border: 1px solid #000000;
+            border: 2px solid #000000;
             filter: drop-shadow(4px 4px 0px #000000);
         }
 
@@ -71,13 +71,20 @@
 
             }
 
-            .intro-items {
-                display: flex;
-                justify-content: center;
-                padding-bottom: 128px;
+            .composite-content {
+                width: 1120px;
+                margin: 0 auto;
+            }
 
+            .intro-items {
+                padding-bottom: 128px;
+                margin: 0 auto;
+                
                 .intro-content {
-                    width: 360px;
+                    position: relative;
+                    float: left;
+                    // width: 360px;
+                    width: calc((1120px - 128px) / 3);
                     margin-right: 64px;
 
                     &:last-child {
@@ -86,13 +93,13 @@
 
                     .intro-item {
                         .intro-img-cover {
-                            width: 360px;
-                            height: 360px;
+                            width: 100%;
+                            height: 100%;
                             border-radius: 40px;
 
                             .intro-img {
-                                width: 360px;
-                                height: 360px;
+                                width: 100%;
+                                height: 100%;
                                 border-radius: 40px;
                             }
                         }
@@ -196,7 +203,7 @@
                     padding-top: 32px;
                     height: 800px;
                     display: flex;
-                    align-items: center;
+                    // align-items: center;
 
                     .parthership-item {
                         .parthership-tag {
@@ -263,6 +270,7 @@
 
                     .new-right {
                         .parthership-items {
+                            padding-top: 47px;
                             .parthership-item {
                                 margin-bottom: 32px;
                                 padding: 24px;
@@ -327,6 +335,7 @@
 
                 .phase-content {
                     padding-top: 64px;
+                    align-items: unset;
 
                     .phase-img-cover {
                         width: 480px;
@@ -335,8 +344,8 @@
 
                         img {
                             background-color: #FFFFFF;
-                            width: 480px;
-                            height: 480px;
+                            width: 476px;
+                            height: 476px;
                             border-radius: 40px;
                         }
                     }
@@ -347,7 +356,7 @@
 
                         .phase-item {
                             width: 100%;
-                            height: 108px;
+                            height: 106px;
                             margin-bottom: 16px;
                             border-radius: 16px;
                             display: flex;
@@ -483,6 +492,7 @@
 
                 .partner-artists {
                     padding-top: 128px;
+                    min-height: 376px;
 
                     .artist-title {
                         font-weight: 700;
@@ -510,7 +520,7 @@
 
         .qa-section {
             position: relative;
-            background: #A9EAC3;
+            background: #C9E4F7;
 
             .qa-image-c {
                 flex: 1;
@@ -518,7 +528,7 @@
                 .qa-image {
                     width: 100%;
                     height: 960px;
-                    object-fit: cover;
+                    object-fit: contain;
                     border-radius: 40px;
                 }
             }
@@ -659,6 +669,16 @@
                 .nervape-composite {
                     width: 1320px;
                 }
+
+                .composite-content {
+                    width: 1320px;
+
+                    .intro-items {
+                        .intro-content {
+                            width: calc((1320px - 128px) / 3);
+                        }
+                    }
+                }
             }
 
             .what-new-section {
@@ -686,6 +706,12 @@
                     }
 
                     .partner-artists {
+                        min-height: 392px;
+
+                        .artist-title {
+                            padding-bottom: 48px;
+                        }
+
                         .artist-imgs {
                             .artist-img {
                                 width: 306px;
@@ -742,6 +768,7 @@
 
                     .partner-artists {
                         padding-top: 80px;
+                        min-height: 326px;
                     }
                 }
             }
@@ -793,6 +820,10 @@
                         }
                     }
                 }
+                
+                .composite-content {
+                    width: 670px;
+                }
 
                 .intro-items {
                     width: 670px;
@@ -802,6 +833,8 @@
                     .intro-content {
                         width: 480px;
                         margin: 0 auto 96px;
+                        left: 50%;
+                        transform: translateX(-50%) !important;
 
                         &:first-child,
                         &:last-child {
@@ -835,6 +868,7 @@
                     .new-parthership {
                         padding-top: 48px;
                         height: auto;
+                        min-height: 724px;
                         display: block;
 
                         .new-right {
@@ -974,6 +1008,7 @@
 
                     .partner-artists {
                         padding-top: 80px;
+                        min-height: 389px;
 
                         .artist-title {
                             padding-bottom: 0;
@@ -1048,6 +1083,10 @@
                     }
                 }
 
+                .composite-content {
+                    width: 347px;
+                }
+
                 .intro-items {
                     width: 347px;
                     margin: 0 auto;
@@ -1101,6 +1140,7 @@
                     .new-parthership {
                         padding-top: 48px;
                         height: auto;
+                        min-height: 876px;
                         display: block;
 
                         .new-right {
@@ -1249,6 +1289,7 @@
 
                     .partner-artists {
                         padding-top: 80px;
+                        min-height: 226.5px;
 
                         .artist-title {
                             padding-bottom: 0;
