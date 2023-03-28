@@ -19,6 +19,9 @@ import AssetIconAccessory from '../assets/nacp/assets/assets_icon-12.svg';
 import AssetIconHandheld from '../assets/nacp/assets/assets_icon-13.svg';
 import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.svg';
 
+import Phase1Cover from '../assets/nacp/phases/minting_1.gif';
+import Phase2Cover from '../assets/nacp/phases/minting_2.gif';
+
 const questionsData: Question[] = [
     {
         answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
@@ -92,7 +95,7 @@ const parthershipData: Parthership[] = [
 const phaseData: Phase[] = [
     {
         title: 'PHASE 1',
-        cover: '',
+        cover: Phase1Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#FFF5C1',
@@ -109,7 +112,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 2',
-        cover: '',
+        cover: Phase2Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#FEA063',
@@ -130,7 +133,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 3',
-        cover: '',
+        cover: Phase1Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#A8E9C2',
@@ -163,7 +166,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 4',
-        cover: '',
+        cover: Phase2Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#C5BAF7',

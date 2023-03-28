@@ -3,6 +3,7 @@ import './index.less';
 
 import LandingBanner from '../../assets/landing-page/banner.png';
 import DownArrow from '../../assets/landing-page/arrow_down.svg';
+import PhaseDefaultCover from '../../assets/nacp/phases/minting_0.png';
 import QAImage from '../../assets/nacp/Q&A.png';
 import LeftArrow from '../../assets/landing-page/left_arrow.svg';
 import RightArrow from '../../assets/landing-page/right_arrow.svg';
@@ -96,7 +97,7 @@ export default function Composite() {
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [phases, setPhases] = useState<Phase[]>([]);
-    const [phaseCover, setPhaseCover] = useState('');
+    const [phaseCover, setPhaseCover] = useState(PhaseDefaultCover);
 
 
     const IntroItem = (props: { item: any; }) => {
@@ -254,7 +255,7 @@ export default function Composite() {
                                     <TweenOne key="2" animation={{ opacity: 1, translateX: 0 }}
                                         style={{ opacity: 0, transform: 'translateX(-50px)' }}>
                                         <div className="phase-img-cover">
-                                            <img style={{ background: phaseCover }} className="phase-img img-filter" alt="" />
+                                            <img src={phaseCover} className="phase-img img-filter" alt="" />
                                         </div>
                                     </TweenOne>
 
@@ -273,10 +274,10 @@ export default function Composite() {
                                                         className="phase-item transition-1 img-filter"
                                                         style={{ background: phase.background }}
                                                         onMouseOver={() => {
-                                                            setPhaseCover(phase.background);
+                                                            setPhaseCover(phase.cover);
                                                         }}
                                                         onMouseOut={() => {
-                                                            setPhaseCover('');
+                                                            setPhaseCover(PhaseDefaultCover);
                                                         }}
                                                     >
                                                         <div className="origin-item transition-1">
@@ -313,7 +314,7 @@ export default function Composite() {
                                                 }
                                                 modules={[EffectFade]}
                                                 onSlideChange={(e) => {
-                                                    setPhaseCover(phases[e.activeIndex].background);
+                                                    setPhaseCover(phases[e.activeIndex].cover);
                                                 }}
                                             >
                                                 {phases.map((phase, index) => {
