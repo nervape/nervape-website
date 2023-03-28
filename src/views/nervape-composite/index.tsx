@@ -25,6 +25,15 @@ import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
 import { EffectFade } from 'swiper';
 import "swiper/css";
 
+class OverPackCustomize extends OverPack {
+    always?: boolean;
+
+    constructor(props: any, always: boolean) {
+        super(props);
+        this.always = always;
+    }
+}
+
 export function SwiperPrevButton(props: { index: number }) {
     const { index } = props;
     const swiper = useSwiper();
@@ -168,7 +177,7 @@ export default function Composite() {
                         </section>
 
                         <section className="composite-section">
-                            <OverPack always={false} playScale={0.3} style={{ overflow: 'hidden' }}>
+                            <OverPackCustomize always={false} playScale={0.3} style={{ overflow: 'hidden' }}>
                                 <TweenOne className="nervape-composite"
                                     key="0" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                     <div className="composite">
@@ -232,7 +241,7 @@ export default function Composite() {
                                         })}
                                     </div>
                                 </div>
-                            </OverPack>
+                            </OverPackCustomize>
                         </section>
 
                         <section className="minting-phases-section">
