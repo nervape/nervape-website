@@ -18,7 +18,8 @@ import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
 import { DataContext } from "../../utils/utils";
 import { Tooltip } from "antd";
-import { Parallax, OverPack } from 'rc-scroll-anim';
+// "build": "tsc --noEmit && vite build", 打包报错, build 命令先去除 TS 检测
+import { OverPack } from 'rc-scroll-anim';
 import TweenOne from 'rc-tween-one';
 import QueueAnim from 'rc-queue-anim';
 import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
