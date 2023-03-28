@@ -238,7 +238,7 @@ export default function Composite() {
 
                         <section className="minting-phases-section">
                             <div className="minting-content">
-                                <OverPack always={false} playScale={0.3}>
+                                <OverPack always={false} playScale={0.6}>
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">MINTING PHASES</div>
                                         <div className="desc">
@@ -266,8 +266,8 @@ export default function Composite() {
                                                 delay={200}
                                                 duration={1000}
                                                 animConfig={[
-                                                    { opacity: [1, 0], translateY: [0, -100] },
-                                                    { opacity: [1, 0], translateY: [0, 100] }
+                                                    { opacity: [1, 0], translateY: [0, -50] },
+                                                    { opacity: [1, 0], translateY: [0, 50] }
                                                 ]}
                                             >
                                                 {phases.map((phase, index) => {
