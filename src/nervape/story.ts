@@ -37,6 +37,8 @@ export class Story {
   background: string = "";
   headerSketch: string = "";
   footerSketch: string = "";
+  headerSketchSmall: string = "";
+  footerSketchSmall: string = "";
 
   sideStoryOpen: boolean = false;
   sideStoryIcon: string = "";

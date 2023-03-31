@@ -167,7 +167,7 @@ export default function StoryProfile(props: any) {
             </div>
             <div className="profile-content">
                 <div className="header-sketch">
-                    <img loading="lazy" src={story?.headerSketch} alt="headerSketch" />
+                    <img loading="lazy" src={state.windowWidth !== 375 ? story?.headerSketch : (story?.headerSketchSmall || story?.headerSketch)} alt="headerSketch" />
                 </div>
                 <div className="story-content" style={{ background: story?.background }}>
                     <Parallax
@@ -185,7 +185,7 @@ export default function StoryProfile(props: any) {
                         </div>
                     </Parallax>
                     <div className="footer-sketch">
-                        <img loading="lazy" src={story?.footerSketch} alt="footerSketch" />
+                        <img loading="lazy" src={state.windowWidth !== 375 ? story?.footerSketch : (story?.footerSketchSmall || story?.footerSketch)} alt="footerSketch" />
                         <div className="sr-nav-footer">
                             {fnPrev()}
                             {fnNext()}
