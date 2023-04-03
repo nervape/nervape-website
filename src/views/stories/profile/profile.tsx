@@ -8,8 +8,11 @@ import Footer from "../../components/footer";
 import "./profile.less";
 import CharacterDefaultIcon from "../../../assets/story/character_default.svg";
 import SideCloseIcon from "../../../assets/story/close.svg";
+import InfoIcon from '../../../assets/story/info.svg';
 
 import { Parallax } from 'rc-scroll-anim';
+import { useAccount } from "wagmi";
+import { Types } from "../../../utils/reducers";
 
 function SideStoryDetail(props: any) {
     const { close, story } = props;
@@ -49,9 +52,13 @@ export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story | undefined>();
     const [isRead, setIsRead] = useState(false);
-    const { state } = useContext(DataContext);
+    const [hasTake, setHasTake] = useState(false);
+    const { state, dispatch } = useContext(DataContext);
     const [keyId, setKeyId] = useState(0);
     const [showSide, setShowSide] = useState(false);
+
+    // 钱包相关
+    const { address, isConnected } = useAccount();
 
     useEffect(() => {
         if (!params.id) return;
@@ -59,6 +66,14 @@ export default function StoryProfile(props: any) {
             setStory(res);
         })
     }, [params.id]);
+
+    useEffect(() => {
+        if (!address || !isConnected || !story) return;
+
+        nervapeApi.fnQueryHasTakeQuiz(address, story.id).then(res => {
+            setHasTake(res >= 0);
+        });
+    }, [address, isConnected, story]);
 
     if (!story) return <></>;
 
@@ -148,16 +163,66 @@ export default function StoryProfile(props: any) {
     const fnGetBanner = () => {
         const urls = story?.bannerUrl.split('.');
         if (urls.length > 1 && urls[urls.length - 1] === 'mp4') {
-            return <video 
-                    id="video" 
-                    playsInline
-                    loop
-                    preload="true"
-                    autoPlay
-                    muted 
-                    src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall}></video>
+            return <video
+                id="video"
+                playsInline
+                loop
+                preload="true"
+                autoPlay
+                muted
+                src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall}></video>
         }
         return <img loading="lazy" src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
+    }
+
+    const fnQuiz = () => {
+        const questions = story?.questions;
+
+        if (story?.collectable && questions?.length) {
+            return (
+                <div className="quiz-btn-container flex-align">
+                    <div className="quiz-left flex-align">
+                        <div className="quiz">QUIZ</div>
+                        <div className="info-icon">
+                            <img src={InfoIcon} alt="infoIcon" />
+                        </div>
+                    </div>
+
+                    <div className="quiz-right flex-align">
+                        {!isConnected ? (
+                            <div className="connect-tip">
+                                <button className="connect-btn quiz-btn cursor"
+                                    onClick={() => {
+                                        dispatch({
+                                            type: Types.ShowLoginModal,
+                                        })
+                                    }}>Connect Wallet</button>
+                                to take the quiz and win reward.
+                            </div>
+                        ) :
+                            !hasTake ? (
+                                <div className="take-quiz">
+                                    <button className="take-quiz-btn quiz-btn cursor"
+                                        onClick={() => {
+                                            console.log('Take Quiz');
+                                        }}>Take Quiz</button>
+                                </div>
+                            ) : (
+                                <div className="claim-reward">
+                                    Quiz completed.
+                                    <button className="connect-btn quiz-btn cursor"
+                                        onClick={() => {
+                                            console.log('Claim Reward');
+                                        }}>Claim Reward</button>
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+            );
+        }
+
+        return <></>;
     }
 
     return (
@@ -182,6 +247,7 @@ export default function StoryProfile(props: any) {
                             <div className="story-name">{story?.title}</div>
                             <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
                             {story.sideStoryOpen && fnSideStory()}
+                            {fnQuiz()}
                         </div>
                     </Parallax>
                     <div className="footer-sketch">

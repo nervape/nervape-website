@@ -48,6 +48,17 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
 
+  public async fnQueryHasTakeQuiz(address: string, storyId: string) {
+    const url = `${this.baseUrl}/story/website/hasTakeQuiz`;
+    const res = await axios.get(url, {
+      params: {
+        address,
+        storyId
+      }
+    });
+    return this._fnDealResponse(res, url);
+  }
+
   public async fnGetCampaigns() {
     const url = `${this.baseUrl}/campaign/website`;
     const res = await axios.get(url);

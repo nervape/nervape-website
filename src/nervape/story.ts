@@ -46,6 +46,9 @@ export class Story {
   sideStoryCover: string = "";
   sideStoryDesc: string = "";
   sideStoryBackground: string = "";
+
+  collectable: boolean = false;
+  questions?: [] = [];
 }
 
 export class Story_NFT_List {
