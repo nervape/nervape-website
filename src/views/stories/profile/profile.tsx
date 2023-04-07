@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
 import { NavTool } from "../../../route/navi-tool";
-import { DataContext, scrollToTop } from "../../../utils/utils";
+import { DataContext, scrollToTop, shuffle } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 import CharacterDefaultIcon from "../../../assets/story/character_default.svg";
@@ -11,8 +11,11 @@ import SideCloseIcon from "../../../assets/story/close.svg";
 import InfoIcon from '../../../assets/story/info.svg';
 
 import { Parallax } from 'rc-scroll-anim';
-import { useAccount } from "wagmi";
+import { useAccount, useSignMessage } from "wagmi";
 import { Types } from "../../../utils/reducers";
+import StoryQuestionPop from "../question/question";
+import { SiweMessage } from "siwe";
+import { godWokenTestnet } from "../../../utils/Chain";
 
 function SideStoryDetail(props: any) {
     const { close, story } = props;
@@ -56,13 +59,48 @@ export default function StoryProfile(props: any) {
     const { state, dispatch } = useContext(DataContext);
     const [keyId, setKeyId] = useState(0);
     const [showSide, setShowSide] = useState(false);
+    const [showQuiz, setShowQuiz] = useState(false);
 
     // 钱包相关
     const { address, isConnected } = useAccount();
 
+    const domain = window.location.host;
+    const origin = window.location.origin;
+
+    const { signMessageAsync } = useSignMessage();
+
+    const createSiweMessage = async (_address: string, statement: string) => {
+        const res = await nervapeApi.fnGetStoryQuizNonce();
+
+        const message = new SiweMessage({
+            domain,
+            address: _address,
+            statement,
+            uri: origin,
+            version: '1',
+            chainId: godWokenTestnet.id,
+            nonce: res
+        });
+
+        return message.prepareMessage();
+    }
+
+    const signInWithEthereum = async () => {
+        if (!address || !story) return false;
+
+        const message = await createSiweMessage(address, 'Sign in with Ethereum to the app.');
+
+        const signature = await signMessageAsync({ message });
+
+        const res = await nervapeApi.fnStoryQuizVerify(message, signature, story?.id);
+
+        return res;
+    }
+
     useEffect(() => {
         if (!params.id) return;
         nervapeApi.fnGetStoryDetail(params.id).then(res => {
+            res.questions = shuffle(res.questions || []);
             setStory(res);
         })
     }, [params.id]);
@@ -71,7 +109,7 @@ export default function StoryProfile(props: any) {
         if (!address || !isConnected || !story) return;
 
         nervapeApi.fnQueryHasTakeQuiz(address, story.id).then(res => {
-            setHasTake(res >= 0);
+            setHasTake(res > 0);
         });
     }, [address, isConnected, story]);
 
@@ -204,7 +242,7 @@ export default function StoryProfile(props: any) {
                                 <div className="take-quiz">
                                     <button className="take-quiz-btn quiz-btn cursor"
                                         onClick={() => {
-                                            console.log('Take Quiz');
+                                            setShowQuiz(true);
                                         }}>Take Quiz</button>
                                 </div>
                             ) : (
@@ -269,6 +307,9 @@ export default function StoryProfile(props: any) {
                         document.body.style.overflow = 'auto';
                         setShowSide(false);
                     }}></SideStoryDetail>
+            )}
+            {showQuiz && (
+                <StoryQuestionPop show={showQuiz} questions={story?.questions || []} signInWithEthereum={signInWithEthereum}></StoryQuestionPop>
             )}
         </div>
     );

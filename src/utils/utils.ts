@@ -58,3 +58,15 @@ export function isMobile() {
 export function isMetaMaskMobile() {
     return /MetaMaskMobile/.test(navigator.userAgent);
 }
+
+export function shuffle(arr: []) {
+    let stack = [];
+
+    while(arr.length) {
+        let index = Math.floor(Math.random() * arr.length);
+        stack.push(arr[index]);
+        arr.splice(index, 1);
+    }
+
+    return stack;
+}

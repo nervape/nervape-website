@@ -173,6 +173,26 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetStoryQuizNonce() {
+    const url = `${this.baseUrl}/story/questions/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnStoryQuizVerify(message: string, signature: string, storyId: string) {
+    const url = `${this.baseUrl}/story/questions/verify`;
+    const res = await axios.post(url, JSON.stringify({ message, signature, storyId }), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
 }
 
 export const nervapeApi = new NervapeApi();
