@@ -55,7 +55,7 @@ function SideStoryDetail(props: any) {
 export default function StoryProfile(props: any) {
     const params = useParams();
     const [story, setStory] = useState<Story | undefined>();
-    const [isRead, setIsRead] = useState(false);
+    const [isInited, setIsInited] = useState(true);
     const [hasTake, setHasTake] = useState(false);
     const [hasTakeOat, setHasTakeOat] = useState(false);
     const { state, dispatch } = useContext(DataContext);
@@ -97,21 +97,22 @@ export default function StoryProfile(props: any) {
         const res = await nervapeApi.fnStoryQuizVerify(message, signature, story?.id);
 
         if (res) {
-            document.body.style.overflow = 'auto';
-
             nervapeApi.fnQueryHasTakeQuiz(address, story.id).then(async res => {
                 setHasTake(res > 0);
 
                 await _queryOatPoaps(address, story.galxeCampaignId);
             });
-
-            setShowQuiz(false);
         }
+        return res;
     }
 
     const _queryOatPoaps = async (_address: string, _campaignId: string) => {
         const _oatPoaps = await queryOatPoaps(_address, _campaignId);
         setHasTakeOat(_oatPoaps.length > 0);
+    }
+
+    const openGalxeUrl = () => {
+        window.open(`https://galxe.com/nervape/campaign/${story?.galxeCampaignId}`)
     }
 
     useEffect(() => {
@@ -130,6 +131,7 @@ export default function StoryProfile(props: any) {
             if (res > 0) {
                 await _queryOatPoaps(address, story.galxeCampaignId);
             }
+            setIsInited(true);
         });
     }, [address, isConnected, story]);
 
@@ -238,49 +240,50 @@ export default function StoryProfile(props: any) {
 
         if (story?.collectable && questions?.length) {
             return (
-                <div className="quiz-btn-container flex-align">
-                    <div className="quiz-left flex-align">
-                        <div className="quiz">QUIZ</div>
-                        <div className="info-icon">
-                            <img src={InfoIcon} alt="infoIcon" />
-                        </div>
-                    </div>
-
-                    <div className="quiz-right flex-align">
-                        {!isConnected ? (
-                            <div className="connect-tip">
-                                <button className="connect-btn quiz-btn cursor"
-                                    onClick={() => {
-                                        dispatch({
-                                            type: Types.ShowLoginModal,
-                                        })
-                                    }}>Connect Wallet</button>
-                                to take the quiz and win reward.
+                <div className="quiz-btn-container">
+                    <div className="quiz-btn-content flex-align">
+                        <div className="quiz-left flex-align">
+                            <div className="quiz">QUIZ</div>
+                            <div className="info-icon">
+                                <img src={InfoIcon} alt="infoIcon" />
                             </div>
-                        ) :
-                            !hasTake ? (
-                                <div className="take-quiz">
-                                    <button className="take-quiz-btn quiz-btn cursor"
-                                        onClick={() => {
-                                            document.body.style.overflow = 'hidden';
-                                            setShowQuiz(true);
-                                        }}>Take Quiz</button>
-                                </div>
-                            ) : !hasTakeOat ? (
-                                <div className="claim-reward">
-                                    Quiz completed.
+                        </div>
+
+                        <div className="quiz-right flex-align">
+                            {!isConnected ? (
+                                <div className="connect-tip">
                                     <button className="connect-btn quiz-btn cursor"
                                         onClick={() => {
-                                            console.log('Claim Reward');
-                                        }}>Claim Reward</button>
+                                            dispatch({
+                                                type: Types.ShowLoginModal,
+                                            })
+                                        }}>Connect Wallet</button>
+                                    to take the quiz and win reward.
                                 </div>
-                            ) : (
-                                <div className="claim-reward">
-                                    Quiz completed. Reward Claimed.
-                                </div>
-                            )
-
-                        }
+                            ) :
+                                !hasTake ? (
+                                    <div className="take-quiz">
+                                        <button className="take-quiz-btn quiz-btn cursor"
+                                            onClick={() => {
+                                                document.body.style.overflow = 'hidden';
+                                                setShowQuiz(true);
+                                            }}>Take Quiz</button>
+                                    </div>
+                                ) : !hasTakeOat ? (
+                                    <div className="claim-reward">
+                                        Quiz completed.
+                                        <button className="connect-btn quiz-btn cursor"
+                                            onClick={() => {
+                                                openGalxeUrl();
+                                            }}>Claim Reward</button>
+                                    </div>
+                                ) : (
+                                    <div className="claim-reward">
+                                        Quiz completed. Reward Claimed.
+                                    </div>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             );
@@ -311,7 +314,7 @@ export default function StoryProfile(props: any) {
                             <div className="story-name">{story?.title}</div>
                             <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
                             {story.sideStoryOpen && fnSideStory()}
-                            {fnQuiz()}
+                            {isInited && fnQuiz()}
                         </div>
                     </Parallax>
                     <div className="footer-sketch">
@@ -339,6 +342,7 @@ export default function StoryProfile(props: any) {
                     show={showQuiz}
                     questions={story?.questions || []}
                     signInWithEthereum={signInWithEthereum}
+                    openGalxeUrl={openGalxeUrl}
                     close={() => {
                         document.body.style.overflow = 'auto';
                         setShowQuiz(false);

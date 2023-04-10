@@ -3,11 +3,12 @@ import "./question.less";
 import { StoryQuestion, StoryQuestionType } from "../../../nervape/story";
 import { Checkbox, Radio } from "antd";
 
-export default function StoryQuestionPop(props: { show: boolean; questions: StoryQuestion[]; signInWithEthereum: Function; close: Function; }) {
-    const { show, questions, signInWithEthereum, close } = props;
+export default function StoryQuestionPop(props: { show: boolean; questions: StoryQuestion[]; signInWithEthereum: Function; close: Function; openGalxeUrl: Function; }) {
+    const { show, questions, signInWithEthereum, close, openGalxeUrl } = props;
     const [currIndex, setCurrIndex] = useState(0);
     const [answers, setAnswers] = useState<any[]>([]);
     const [errorMessage, setErrprMessage] = useState('');
+    const [completed, setCompleted] = useState(false);
 
     useEffect(() => {
         if (!questions.length) return;
@@ -58,7 +59,8 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                     if (currIndex == questions.length - 1) {
                         // Check and Submit
                         const data = await signInWithEthereum();
-                        console.log('signInWithEthereum', data);
+                        // console.log('signInWithEthereum', data);
+                        setCompleted(true);
                     } else {
                         setCurrIndex(currIndex + 1);
                     }
@@ -69,49 +71,79 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     }
 
     return (
-        <div className={`story-quiz-container ${show && 'show'}`} onClick={() => {close()}}>
+        <div className={`story-quiz-container ${show && 'show'}`} onClick={() => { close() }}>
             <div className="story-quiz-content" onClick={e => { e.stopPropagation(); }}>
                 <div className="question-content">
-                    <div className="quiz-index">{`Question ${currIndex + 1} of ${questions.length}`}</div>
-                    {questions[currIndex].coverImage && (
-                        <div className="cover-image">
-                            <img src={questions[currIndex].coverImage} alt="CoverImage" />
+                    <div className="question-top">
+                        <div className="quiz-index">{completed ? 'Quiz Completed' : `Question ${currIndex + 1} of ${questions.length}`}</div>
+                        {!completed && (
+                            <>
+                                {questions[currIndex].coverImage && (
+                                    <div className="cover-image">
+                                        <img src={questions[currIndex].coverImage} alt="CoverImage" />
+                                    </div>
+                                )}
+                                <div className="question-title">{questions[currIndex].title}</div>
+                            </>
+                        )}
+                    </div>
+                    <div className="question-center">
+                        {!completed ? (
+                            <>
+                                <div className="question-options">
+                                    {questions[currIndex].type == StoryQuestionType.Radio && (
+                                        <Radio.Group
+                                            options={questions[currIndex].options}
+                                            optionType="button"
+                                            onChange={(e) => {
+                                                let _answers = JSON.parse(JSON.stringify(answers));
+                                                _answers[currIndex].value = e.target.value;
+                                                setAnswers(_answers);
+                                            }}>
+                                        </Radio.Group>
+                                    )}
+                                    {
+                                        questions[currIndex].type == StoryQuestionType.Checkbox && (
+                                            <Checkbox.Group
+                                                options={questions[currIndex].options}
+                                                onChange={(e) => {
+                                                    let _answers = JSON.parse(JSON.stringify(answers));
+                                                    _answers[currIndex].value = e;
+                                                    setAnswers(_answers);
+                                                }}>
+                                            </Checkbox.Group>
+                                        )
+                                    }
+                                </div>
+                                {errorMessage && (
+                                    <div className="error-message">{errorMessage}</div>
+                                )}
+                            </>
+                        ) : (
+                            <div className="completed-content">
+                                <img className="completed-img" alt="" />
+                                <div className="completed-tip">
+                                    Congratulations! You have completed this quiz.
+                                    <br />
+                                    You can now claim your reward.
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {!completed ? (
+                        <div className="btn-groups">
+                            {currIndex > 0 && BackButton()}
+                            {NextButton()}
+                        </div>
+                    ) : (
+                        <div className="claim-reward">
+                            <button className="btn cursor" 
+                                onClick={() => {
+                                    openGalxeUrl();
+                                }}>CLAIM REWARD</button>
                         </div>
                     )}
-                    <div className="question-title">{questions[currIndex].title}</div>
-                    <div className="question-options">
-                        {questions[currIndex].type == StoryQuestionType.Radio && (
-                            <Radio.Group
-                                options={questions[currIndex].options}
-                                optionType="button"
-                                onChange={(e) => {
-                                    let _answers = JSON.parse(JSON.stringify(answers));
-                                    _answers[currIndex].value = e.target.value;
-                                    setAnswers(_answers);
-                                }}>
-                            </Radio.Group>
-                        )}
-                        {
-                            questions[currIndex].type == StoryQuestionType.Checkbox && (
-                                <Checkbox.Group
-                                    options={questions[currIndex].options}
-                                    onChange={(e) => {
-                                        let _answers = JSON.parse(JSON.stringify(answers));
-                                        _answers[currIndex].value = e;
-                                        setAnswers(_answers);
-                                    }}>
-                                </Checkbox.Group>
-                            )
-                        }
-                    </div>
-                    {errorMessage && (
-                        <div className="error-message">{errorMessage}</div>
-                    )}
-
-                    <div className="btn-groups">
-                        {currIndex > 0 && BackButton()}
-                        {NextButton()}
-                    </div>
                 </div>
             </div>
         </div>
