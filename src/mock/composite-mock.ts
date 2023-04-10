@@ -57,17 +57,17 @@ const introData: Intro[] = [
     {
         cover: Landing01,
         title: 'Free Mint',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        desc: 'Yup, that’s not a misprint. It’s FREE my fellow ape.  =) Able to get a bonelist (aka whitelist)? That means you get 2 guaranteed mints! Enter your ETH address in our lookup tool below to confirm.'
     },
     {
         cover: Landing02,
         title: 'Assemble Your Own PFP',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        desc: 'Want a PFP of your own? You get what you give! Express yourself and show your creativity by making your own Nervape PFP! '
     },
     {
         cover: Landing03,
-        title: 'Assemble Your Own PFP',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        title: 'Total Supply 7777',
+        desc: 'You like the number 7? We do too! A total of 7,777 NACPs will be issued with 7000 part of our public mint (including bonelist members), and 777 NACPs will be reserved for our team and collaborators.'
     }
 ];
 

@@ -8,6 +8,7 @@ import QAImage from '../../assets/nacp/Q&A.png';
 import LeftArrow from '../../assets/landing-page/left_arrow.svg';
 import RightArrow from '../../assets/landing-page/right_arrow.svg';
 import DownArrowIcon from '../../assets/nacp/down_arrow.svg';
+import NacpLandingPartner from '../../assets/nacp/NACP_landing_partner.svg';
 import NacpTitle from '../../assets/nacp/nacp.svg';
 import NacpMTitle from '../../assets/nacp/nacp_m.svg';
 import TwitterIcon from '../../assets/nacp/twitter.svg';
@@ -91,6 +92,7 @@ export default function Composite() {
     const [godwokenAddress, setGodwokenAddress] = useState('');
     const [isBonelist, setIsBonelist] = useState(false);
     const [open, setOpen] = useState(false);
+    const [joinUsClick, setJoinUsClick] = useState(false);
 
     const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
     const [introItems, setIntroItems] = useState<Intro[]>([]);
@@ -177,13 +179,13 @@ export default function Composite() {
                                             <img src={state.windowWidth === 375 ? NacpMTitle : NacpTitle} />
                                         </div>
                                         <div className="description">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                            nisi ut aliquip ex ea commodo consequat.
-                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                            dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                            sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                            Hey <span style={{ fontWeight: 700 }}>non-fungible</span> human being, you are the only one who can express yourself!
+                                            <br />
+                                            NERVAPE COMPOSITE (NACP) is Nervape’s customizable 2D PFP NFTs that let users express themselves. Build and mint your own ape PFPs by selecting from over 700 different design assets created by the team and our community!
+                                            <br /> <br />
+                                            Show your creativity.
+                                            Express yourself.
+                                            NACP.
                                         </div>
                                     </div>
                                 </TweenOne>
@@ -201,7 +203,7 @@ export default function Composite() {
                                                                 <Tooltip
                                                                     title={() => {
                                                                         return (
-                                                                            <p>{isBonelist ? 'In Bonelist' : 'Not In Bonelist'}</p>
+                                                                            <p>{isBonelist ? 'You’re a bonelist holder! Welcome to the Third Continent. 🦍' : 'You’re not a bonelist ape =(. No bones for you (yet). Try harder! Follow our Twitter or join our Discord for opportunities to get a bonelist! '}</p>
                                                                         );
                                                                     }}
                                                                     placement="bottom"
@@ -217,6 +219,7 @@ export default function Composite() {
                                                                     className="check-btn cursor"
                                                                     onClick={async () => {
                                                                         if (!godwokenAddress) return;
+                                                                        setOpen(false);
                                                                         const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
                                                                         console.log(res);
                                                                         setOpen(true);
@@ -242,14 +245,16 @@ export default function Composite() {
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">MINTING PHASES</div>
                                         <div className="desc">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                            laboris nisi ut aliquip ex ea commodo consequat.
+                                            NACP PFP has 14 different types of assets you can use to assemble your Nervape PFP.  
+                                            These asset classes will be released in four phases. Each phase will allow you to easily buy, trade, and sell your NACP!
+                                            <br /><br />
+                                            We encourage you to stick through all four phases to get the full PFP experience that our platform has to offer and to design the ape PFP you want!
+                                            <br />
+                                            Details coming soon!
                                         </div>
-                                        <div className="learn-more">
+                                        {/* <div className="learn-more">
                                             <a href="##" className="font-color" target="_blank">Learn more</a>
-                                        </div>
+                                        </div> */}
                                     </TweenOne>
 
                                     <div className="phase-content flex-center">
@@ -335,7 +340,7 @@ export default function Composite() {
                             </div>
                         </section>
 
-                        <section className="what-new-section">
+                        {/* <section className="what-new-section">
                             <div className="what-new-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="what-1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
@@ -380,23 +385,34 @@ export default function Composite() {
                                     </div>
                                 </OverPack>
                             </div>
-                        </section>
+                        </section> */}
                         <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <div className="partner-top flex-align">
                                         <TweenOne className="top-left" key="partner-1" animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}>
-                                            <div className="section-title">PARTNER PROGRAM</div>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
-                                            <div className="join-us cursor">JOIN US</div>
+                                            <div className="section-title">ARTIST PARTNER PROGRAM</div>
+                                            <div className="desc">We value co-creation! If you’re an artist with a passion for collaboration, work with us to help build NACP!</div>
+                                            <div 
+                                                className={`join-us disable-use-select cursor ${joinUsClick && 'click'}`} 
+                                                onMouseDown={() => {
+                                                    setJoinUsClick(true);
+                                                }}
+                                                onMouseUp={() => {
+                                                    setJoinUsClick(false);
+                                                }}
+                                                onMouseLeave={() => {
+                                                    setJoinUsClick(false);
+                                                }}>JOIN US
+                                            </div>
                                         </TweenOne>
                                         <TweenOne key="partner-2" animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}>
-                                            <div className="top-right img-filter"></div>
+                                            <img src={NacpLandingPartner} className="top-right" />
                                         </TweenOne>
                                     </div>
-                                    <div className="partner-artists">
+                                    {/* <div className="partner-artists">
                                         <TweenOne className="artist-title" key="partner-3" animation={{ opacity: 1, delay: 400, duration: 600 }}
                                             style={{ opacity: 0 }}>
                                             <div>PARTNER ARTISTS</div>
@@ -414,11 +430,11 @@ export default function Composite() {
                                                 );
                                             })}
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </OverPack>
                             </div>
                         </section>
-                        <section className="qa-section">
+                        {/* <section className="qa-section">
                             <div className="qa-container">
                                 <OverPack className="flex-justify" always={false} playScale={0.3}>
                                     {state.windowWidth > 750 && (
@@ -485,14 +501,14 @@ export default function Composite() {
                                     </div>
                                 </OverPack>
                             </div>
-                        </section>
+                        </section> */}
                     </div>
 
                     <section className="join-section">
                         <footer className="join-footer">
                             <div className="join-content">
                                 <div className="section-title">JOIN OUR COMMUNITY</div>
-                                <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
+                                <div className="desc">Don’t miss our NACP release! Join our community here!</div>
                                 <div className="join-icons">
                                     <img
                                         className="cursor"
