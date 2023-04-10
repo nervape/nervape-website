@@ -3,8 +3,8 @@ import "./question.less";
 import { StoryQuestion, StoryQuestionType } from "../../../nervape/story";
 import { Checkbox, Radio } from "antd";
 
-export default function StoryQuestionPop(props: { show: boolean; questions: StoryQuestion[]; signInWithEthereum: Function; }) {
-    const { show, questions, signInWithEthereum } = props;
+export default function StoryQuestionPop(props: { show: boolean; questions: StoryQuestion[]; signInWithEthereum: Function; close: Function; }) {
+    const { show, questions, signInWithEthereum, close } = props;
     const [currIndex, setCurrIndex] = useState(0);
     const [answers, setAnswers] = useState<any[]>([]);
     const [errorMessage, setErrprMessage] = useState('');
@@ -69,8 +69,8 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     }
 
     return (
-        <div className={`story-quiz-container ${show && 'show'}`}>
-            <div className="story-quiz-content">
+        <div className={`story-quiz-container ${show && 'show'}`} onClick={() => {close()}}>
+            <div className="story-quiz-content" onClick={e => { e.stopPropagation(); }}>
                 <div className="question-content">
                     <div className="quiz-index">{`Question ${currIndex + 1} of ${questions.length}`}</div>
                     {questions[currIndex].coverImage && (

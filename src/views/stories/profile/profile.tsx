@@ -16,6 +16,7 @@ import { Types } from "../../../utils/reducers";
 import StoryQuestionPop from "../question/question";
 import { SiweMessage } from "siwe";
 import { godWokenTestnet } from "../../../utils/Chain";
+import { queryOatPoaps } from "../../../utils/api";
 
 function SideStoryDetail(props: any) {
     const { close, story } = props;
@@ -56,6 +57,7 @@ export default function StoryProfile(props: any) {
     const [story, setStory] = useState<Story | undefined>();
     const [isRead, setIsRead] = useState(false);
     const [hasTake, setHasTake] = useState(false);
+    const [hasTakeOat, setHasTakeOat] = useState(false);
     const { state, dispatch } = useContext(DataContext);
     const [keyId, setKeyId] = useState(0);
     const [showSide, setShowSide] = useState(false);
@@ -94,7 +96,22 @@ export default function StoryProfile(props: any) {
 
         const res = await nervapeApi.fnStoryQuizVerify(message, signature, story?.id);
 
-        return res;
+        if (res) {
+            document.body.style.overflow = 'auto';
+
+            nervapeApi.fnQueryHasTakeQuiz(address, story.id).then(async res => {
+                setHasTake(res > 0);
+
+                await _queryOatPoaps(address, story.galxeCampaignId);
+            });
+
+            setShowQuiz(false);
+        }
+    }
+
+    const _queryOatPoaps = async (_address: string, _campaignId: string) => {
+        const _oatPoaps = await queryOatPoaps(_address, _campaignId);
+        setHasTakeOat(_oatPoaps.length > 0);
     }
 
     useEffect(() => {
@@ -108,8 +125,11 @@ export default function StoryProfile(props: any) {
     useEffect(() => {
         if (!address || !isConnected || !story) return;
 
-        nervapeApi.fnQueryHasTakeQuiz(address, story.id).then(res => {
+        nervapeApi.fnQueryHasTakeQuiz(address, story.id).then(async res => {
             setHasTake(res > 0);
+            if (res > 0) {
+                await _queryOatPoaps(address, story.galxeCampaignId);
+            }
         });
     }, [address, isConnected, story]);
 
@@ -242,10 +262,11 @@ export default function StoryProfile(props: any) {
                                 <div className="take-quiz">
                                     <button className="take-quiz-btn quiz-btn cursor"
                                         onClick={() => {
+                                            document.body.style.overflow = 'hidden';
                                             setShowQuiz(true);
                                         }}>Take Quiz</button>
                                 </div>
-                            ) : (
+                            ) : !hasTakeOat ? (
                                 <div className="claim-reward">
                                     Quiz completed.
                                     <button className="connect-btn quiz-btn cursor"
@@ -253,7 +274,12 @@ export default function StoryProfile(props: any) {
                                             console.log('Claim Reward');
                                         }}>Claim Reward</button>
                                 </div>
+                            ) : (
+                                <div className="claim-reward">
+                                    Quiz completed. Reward Claimed.
+                                </div>
                             )
+
                         }
                     </div>
                 </div>
@@ -309,7 +335,14 @@ export default function StoryProfile(props: any) {
                     }}></SideStoryDetail>
             )}
             {showQuiz && (
-                <StoryQuestionPop show={showQuiz} questions={story?.questions || []} signInWithEthereum={signInWithEthereum}></StoryQuestionPop>
+                <StoryQuestionPop
+                    show={showQuiz}
+                    questions={story?.questions || []}
+                    signInWithEthereum={signInWithEthereum}
+                    close={() => {
+                        document.body.style.overflow = 'auto';
+                        setShowQuiz(false);
+                    }}></StoryQuestionPop>
             )}
         </div>
     );

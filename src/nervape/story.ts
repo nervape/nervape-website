@@ -52,6 +52,7 @@ export class Story {
   sideStoryBackground: string = "";
 
   collectable: boolean = false;
+  galxeCampaignId: string = "";
   questions?: StoryQuestion[] = [];
 }
 
