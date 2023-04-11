@@ -401,6 +401,9 @@ export default function Composite() {
                                             <div className="desc">We value co-creation! If you’re an artist with a passion for collaboration, work with us to help build NACP!</div>
                                             <div 
                                                 className={`join-us disable-use-select cursor ${joinUsClick && 'click'}`} 
+                                                onClick={() => {
+                                                    window.open("https://docs.google.com/forms/d/e/1FAIpQLSf5z0cIt3VtwMYPhRyXwnfCb6p2oQo-XqtSqn7PYEq-i77rgA/viewform?usp=pp_url");
+                                                }}
                                                 onMouseDown={() => {
                                                     setJoinUsClick(true);
                                                 }}
