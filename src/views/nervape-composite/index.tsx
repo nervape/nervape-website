@@ -68,7 +68,7 @@ export function SwiperContent(props: { phase: Phase; index: number }) {
                 <SwiperPrevButton index={index}></SwiperPrevButton>
                 <div className="title-date">
                     <div className="phase-title">{phase.title}</div>
-                    <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
+                    {/* <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div> */}
                 </div>
                 <SwiperNextButton index={index}></SwiperNextButton>
             </div>
@@ -129,6 +129,11 @@ export default function Composite() {
             </div>
         );
     }
+
+    useEffect(() => {
+        if (!phases.length) return;
+        if (state.windowWidth <= 750) setPhaseCover(phases[0].cover);
+    }, [state.windowWidth, phases]);
 
     useEffect(() => {
         setShowLandingPage(true);
@@ -290,7 +295,7 @@ export default function Composite() {
                                                         >
                                                             <div className="origin-item transition-1">
                                                                 <div className="phase-title">{phase.title}</div>
-                                                                <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
+                                                                {/* <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div> */}
                                                             </div>
                                                             <div className="hover-item transition-1 flex-center">
                                                                 <div className="editable">Editable Assets</div>
@@ -403,6 +408,15 @@ export default function Composite() {
                                                     setJoinUsClick(false);
                                                 }}
                                                 onMouseLeave={() => {
+                                                    setJoinUsClick(false);
+                                                }}
+                                                onTouchStart={() => {
+                                                    setJoinUsClick(true);
+                                                }}
+                                                onTouchEnd={() => {
+                                                    setJoinUsClick(false);
+                                                }}
+                                                onTouchCancel={() => {
                                                     setJoinUsClick(false);
                                                 }}>JOIN US
                                             </div>

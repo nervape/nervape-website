@@ -21,6 +21,8 @@ import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.svg';
 
 import Phase1Cover from '../assets/nacp/phases/minting_1.gif';
 import Phase2Cover from '../assets/nacp/phases/minting_2.gif';
+import Phase3Cover from '../assets/nacp/phases/minting_3.gif';
+import Phase4Cover from '../assets/nacp/phases/minting_4.gif';
 
 const questionsData: Question[] = [
     {
@@ -133,7 +135,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 3',
-        cover: Phase1Cover,
+        cover: Phase3Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#A8E9C2',
@@ -166,7 +168,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 4',
-        cover: Phase2Cover,
+        cover: Phase4Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#C5BAF7',
