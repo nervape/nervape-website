@@ -19,6 +19,7 @@ import Logout from "../logout";
 import { Types } from "../../../utils/reducers";
 import { godWoken } from "../../../utils/Chain";
 import { SwitchChainSpan } from "../switchChain";
+import { queryGetVotes } from "../../../utils/snapshot";
 
 export default function WallectConnect(props: any) {
     const { setDisableList } = props;
@@ -110,6 +111,7 @@ export default function WallectConnect(props: any) {
 
     useEffect(() => {
         initLogin();
+        queryGetVotes("0x9e09396e7d9d47e47cf29e2d74cd9cb041e70d54bc43c1152abb137bf179ccce");
     }, []);
 
     useEffect(() => {
