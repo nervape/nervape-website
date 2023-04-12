@@ -224,7 +224,7 @@ export default function Composite() {
                                                                                         <>
                                                                                             🦴 You’re a bonelist holder!
                                                                                             <br />
-                                                                                             Welcome to the Third Continent. 🦧
+                                                                                            🦧 Welcome to the Third Continent. 
                                                                                         </>
                                                                                     ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
                                                                                 );
