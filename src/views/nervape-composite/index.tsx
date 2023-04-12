@@ -185,6 +185,8 @@ export default function Composite() {
                                                     <img className="banner-img banner-img-4" src={Banner14} alt="" />
 
                                                 </Parallax>
+                                            </div>
+                                            <div className="banner banner-1">
                                                 <img className="banner-img banner-img-2" src={Banner12} alt="" />
                                             </div>
                                         </div>
