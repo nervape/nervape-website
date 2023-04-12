@@ -165,26 +165,28 @@ export default function Composite() {
 
                                 <section className="banner-section" id="banner-section">
                                     <div className="banner-content">
-                                        <div className="banner">
-                                            <img className="banner-img banner-img-1" src={Banner11} alt="" />
-                                            <Parallax
-                                                animation={{ top: '-50px', opacity: 0, playScale: [1, 1.5] }}
-                                                style={{ top: 0, opacity: 1 }}
-                                                location="banner-section"
-                                                className="banner-img"
-                                            >
-                                                <img className="banner-img banner-img-3" src={Banner13} alt="" />
-                                            </Parallax>
-                                            <Parallax
-                                                animation={{ top: 0, opacity: 1, playScale: [1.5, 1.8] }}
-                                                style={{ top: '50px', opacity: 0 }}
-                                                location="banner-section"
-                                                className="banner-img"
-                                            >
-                                                <img className="banner-img banner-img-4" src={Banner14} alt="" />
+                                        <div className="banner-container">
+                                            <div className="banner">
+                                                <img className="banner-img banner-img-1" src={Banner11} alt="" />
+                                                <Parallax
+                                                    animation={{ top: '-50px', opacity: 0, playScale: [1, 1.5] }}
+                                                    style={{ top: 0, opacity: 1 }}
+                                                    location="banner-section"
+                                                    className="banner-img"
+                                                >
+                                                    <img className="banner-img banner-img-3" src={Banner13} alt="" />
+                                                </Parallax>
+                                                <Parallax
+                                                    animation={{ top: 0, opacity: 1, playScale: [1.5, 1.8] }}
+                                                    style={{ top: '50px', opacity: 0 }}
+                                                    location="banner-section"
+                                                    className="banner-img"
+                                                >
+                                                    <img className="banner-img banner-img-4" src={Banner14} alt="" />
 
-                                            </Parallax>
-                                            <img className="banner-img banner-img-2" src={Banner12} alt="" />
+                                                </Parallax>
+                                                <img className="banner-img banner-img-2" src={Banner12} alt="" />
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
