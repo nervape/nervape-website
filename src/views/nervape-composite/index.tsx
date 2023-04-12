@@ -268,10 +268,6 @@ export default function Composite() {
                                             <>
                                                 <span>SHOW YOUR CREATIVITY</span>
                                                 <span className="express-yourself">EXPRESS YOURSELF</span>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
                                             </>
                                         ) : ''}
                                     </li>
@@ -282,10 +278,6 @@ export default function Composite() {
                                         <span className="express-yourself">EXPRESS YOURSELF</span>
                                         {state.windowWidth > 750 ? (
                                             <>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
                                                 <span>SHOW YOUR CREATIVITY</span>
                                                 <span className="express-yourself">EXPRESS YOURSELF</span>
                                             </>
