@@ -297,7 +297,7 @@ export default function Composite() {
 
                         <section className="minting-phases-section">
                             <div className="minting-content">
-                                <OverPack always={false} playScale={`${state.windowWidth > 750 ? 0.6 : 0.3}`}>
+                                <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">MINTING PHASES</div>
                                         <div className="desc">
@@ -442,7 +442,7 @@ export default function Composite() {
                         </section> */}
                         <section className="partner-program-section">
                             <div className="partner-content">
-                                <OverPack always={false} playScale={0.3}>
+                                <OverPack always={false} playScale={0.2}>
                                     <div className="partner-top">
                                         <TweenOne className="top-left" key="partner-1" animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}>
