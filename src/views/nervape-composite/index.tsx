@@ -173,13 +173,13 @@ export default function Composite() {
                                             <img className="banner-img banner-img-3" src={Banner13} alt="" />
                                         </Parallax>
                                         <Parallax
-                                            animation={{ top: 0, opacity: 1, playScale: [1, 1.5] }}
+                                            animation={{ top: 0, opacity: 1, playScale: [1.5, 1.8] }}
                                             style={{ top: '50px', opacity: 0 }}
                                             location="banner-section"
                                             className="banner-img"
                                         >
                                             <img className="banner-img banner-img-4" src={Banner14} alt="" />
-                                            
+
                                         </Parallax>
                                         <img className="banner-img banner-img-2" src={Banner12} alt="" />
                                     </div>
@@ -285,16 +285,14 @@ export default function Composite() {
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">MINTING PHASES</div>
                                         <div className="desc">
-                                            NACP PFP has 14 different types of assets you can use to assemble your Nervape PFP.
-                                            These asset classes will be released in four phases. Each phase will allow you to easily buy, trade, and sell your NACP!
-                                            <br /><br />
-                                            We encourage you to stick through all four phases to get the full PFP experience that our platform has to offer and to design the ape PFP you want!
-                                            <br />
-                                            Details coming soon!
+                                            NACP PFP has 14 different types of assets you can use to assemble your Nervape PFP.  
+                                            These asset classes will be released in 4 phases. Each phase will allow you to easily buy, 
+                                            trade, and sell your NACP! We encourage you to stick through all 4 phases to get the full PFP experience 
+                                            that our platform has to offer and to design the ape PFP you want!
                                         </div>
-                                        {/* <div className="learn-more">
-                                            <a href="##" className="font-color" target="_blank">Learn more</a>
-                                        </div> */}
+                                        <div className="learn-more">
+                                            <a href="javascript:;" className="font-color">More details coming soon!</a>
+                                        </div>
                                     </TweenOne>
 
                                     <div className="phase-content flex-center">
