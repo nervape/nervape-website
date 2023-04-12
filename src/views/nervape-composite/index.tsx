@@ -8,7 +8,7 @@ import QAImage from '../../assets/nacp/Q&A.png';
 import LeftArrow from '../../assets/landing-page/left_arrow.svg';
 import RightArrow from '../../assets/landing-page/right_arrow.svg';
 import DownArrowIcon from '../../assets/nacp/down_arrow.svg';
-import NacpLandingPartner from '../../assets/nacp/NACP_landing_partner.svg';
+import NacpLandingPartner from '../../assets/nacp/NACP_landing_partner.png';
 import NacpTitle from '../../assets/nacp/nacp.svg';
 import NacpMTitle from '../../assets/nacp/nacp_m.svg';
 import TwitterIcon from '../../assets/nacp/twitter.svg';
@@ -264,7 +264,7 @@ export default function Composite() {
                                     <li>
                                         <span>SHOW YOUR CREATIVITY</span>
                                         <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 750 ? (
+                                        {state.windowWidth > 375 ? (
                                             <>
                                                 <span>SHOW YOUR CREATIVITY</span>
                                                 <span className="express-yourself">EXPRESS YOURSELF</span>
@@ -276,7 +276,7 @@ export default function Composite() {
                                     <li>
                                         <span>SHOW YOUR CREATIVITY</span>
                                         <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 750 ? (
+                                        {state.windowWidth > 375 ? (
                                             <>
                                                 <span>SHOW YOUR CREATIVITY</span>
                                                 <span className="express-yourself">EXPRESS YOURSELF</span>
