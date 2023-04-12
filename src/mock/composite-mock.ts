@@ -1,4 +1,4 @@
-import { Question, Intro, Parthership, Phase } from "../nervape/composite";
+import { Question, Intro, Parthership, Phase, Banner } from "../nervape/composite";
 
 import Landing01 from '../assets/nacp/Landing-01.png';
 import Landing02 from '../assets/nacp/Landing-02.png';
@@ -18,6 +18,18 @@ import AssetIconTattoo from '../assets/nacp/assets/assets_icon-11.svg';
 import AssetIconAccessory from '../assets/nacp/assets/assets_icon-12.svg';
 import AssetIconHandheld from '../assets/nacp/assets/assets_icon-13.svg';
 import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.svg';
+
+import Phase1Cover from '../assets/nacp/phases/minting_1.gif';
+import Phase2Cover from '../assets/nacp/phases/minting_2.gif';
+import Phase3Cover from '../assets/nacp/phases/minting_3.gif';
+import Phase4Cover from '../assets/nacp/phases/minting_4.gif';
+
+import Banner1Ape from '../assets/nacp/banner_1_ape.png';
+import Banner1Bg from '../assets/nacp/banner_1_bg.png';
+import Banner2Ape from '../assets/nacp/banner_2_ape.png';
+import Banner2Bg from '../assets/nacp/banner_2_bg.png';
+import Banner3Ape from '../assets/nacp/banner_3_ape.png';
+import Banner3Bg from '../assets/nacp/banner_3_bg.png';
 
 const questionsData: Question[] = [
     {
@@ -54,17 +66,17 @@ const introData: Intro[] = [
     {
         cover: Landing01,
         title: 'Free Mint',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        desc: 'Yup, that’s not a misprint. It’s FREE my fellow ape.  =) Able to get a bonelist (aka whitelist)? That means you get 2 guaranteed mints! Enter your ETH address in our lookup tool below to confirm.'
     },
     {
         cover: Landing02,
         title: 'Assemble Your Own PFP',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        desc: 'Want a PFP of your own? You get what you give! Express yourself and show your creativity by making your own Nervape PFP! '
     },
     {
         cover: Landing03,
-        title: 'Assemble Your Own PFP',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        title: 'Total Supply 7777',
+        desc: 'You like the number 7? We do too! A total of 7,777 NACPs will be issued with 7000 part of our public mint (including bonelist members), and 777 NACPs will be reserved for our team and collaborators.'
     }
 ];
 
@@ -92,7 +104,7 @@ const parthershipData: Parthership[] = [
 const phaseData: Phase[] = [
     {
         title: 'PHASE 1',
-        cover: '',
+        cover: Phase1Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#FFF5C1',
@@ -109,7 +121,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 2',
-        cover: '',
+        cover: Phase2Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#FEA063',
@@ -130,7 +142,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 3',
-        cover: '',
+        cover: Phase3Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#A8E9C2',
@@ -163,7 +175,7 @@ const phaseData: Phase[] = [
     },
     {
         title: 'PHASE 4',
-        cover: '',
+        cover: Phase4Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#C5BAF7',
@@ -184,8 +196,29 @@ const phaseData: Phase[] = [
     }
 ];
 
+const bannerData: Banner[] = [
+    {
+        startBackground: "rgba(30, 122, 214, 1)",
+        endBackground: "rgba(30, 122, 214, 0)",
+        ape: Banner1Ape,
+        qaBg: Banner1Bg
+    },
+    {
+        startBackground: "rgba(0, 82, 67, 1)",
+        endBackground: "rgba(0, 82, 67, 0)",
+        ape: Banner2Ape,
+        qaBg: Banner2Bg
+    },
+    {
+        startBackground: "rgba(255, 201, 0, 1)",
+        endBackground: "rgba(255, 201, 0, 0)",
+        ape: Banner3Ape,
+        qaBg: Banner3Bg
+    }
+]; 
+
 export class PfpMocks {
     public static fnGetNacpData() {
-        return { questionsData, introData, parthershipData, phaseData }
+        return { questionsData, introData, parthershipData, phaseData, bannerData }
     }
 }

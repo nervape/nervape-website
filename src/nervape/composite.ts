@@ -32,3 +32,10 @@ export class PhaseAsset {
     cover: string = '';
     name: string = '';
 }
+
+export class Banner {
+    startBackground: string = "";
+    endBackground: string = "";
+    ape: string = "";
+    qaBg: string = "";
+}
