@@ -160,7 +160,7 @@ export default function Composite() {
                 <div className="landing-page">
                     <div className="page-wrap">
                         <div className="nacp-header-content">
-                            <Parallax animation={{ backgroundColor: 'rgba(30, 122, 214, 0)', playScale: [1, 3] }}
+                            <Parallax animation={{ backgroundColor: 'rgba(30, 122, 214, 0)', playScale: [1, 3.5] }}
                                 style={{ background: '#1E7AD6' }}>
 
                                 <section className="banner-section" id="banner-section">
