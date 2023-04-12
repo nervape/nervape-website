@@ -160,94 +160,98 @@ export default function Composite() {
                 <div className="landing-page">
                     <div className="page-wrap">
                         <div className="nacp-header-content">
-                            <section className="banner-section" id="banner-section">
-                                <div className="banner-content">
-                                    <div className="banner">
-                                        <img className="banner-img banner-img-1" src={Banner11} alt="" />
-                                        <Parallax
-                                            animation={{ top: '-50px', opacity: 0, playScale: [1, 1.5] }}
-                                            style={{ top: 0, opacity: 1 }}
-                                            location="banner-section"
-                                            className="banner-img"
-                                        >
-                                            <img className="banner-img banner-img-3" src={Banner13} alt="" />
-                                        </Parallax>
-                                        <Parallax
-                                            animation={{ top: 0, opacity: 1, playScale: [1.5, 1.8] }}
-                                            style={{ top: '50px', opacity: 0 }}
-                                            location="banner-section"
-                                            className="banner-img"
-                                        >
-                                            <img className="banner-img banner-img-4" src={Banner14} alt="" />
+                            <Parallax animation={{ backgroundColor: 'rgba(30, 122, 214, 0)', playScale: [1, 3] }}
+                                style={{ background: '#1E7AD6' }}>
 
-                                        </Parallax>
-                                        <img className="banner-img banner-img-2" src={Banner12} alt="" />
-                                    </div>
-                                </div>
-                            </section>
+                                <section className="banner-section" id="banner-section">
+                                    <div className="banner-content">
+                                        <div className="banner">
+                                            <img className="banner-img banner-img-1" src={Banner11} alt="" />
+                                            <Parallax
+                                                animation={{ top: '-50px', opacity: 0, playScale: [1, 1.5] }}
+                                                style={{ top: 0, opacity: 1 }}
+                                                location="banner-section"
+                                                className="banner-img"
+                                            >
+                                                <img className="banner-img banner-img-3" src={Banner13} alt="" />
+                                            </Parallax>
+                                            <Parallax
+                                                animation={{ top: 0, opacity: 1, playScale: [1.5, 1.8] }}
+                                                style={{ top: '50px', opacity: 0 }}
+                                                location="banner-section"
+                                                className="banner-img"
+                                            >
+                                                <img className="banner-img banner-img-4" src={Banner14} alt="" />
 
-                            <section className="composite-section">
-                                <OverPack always={false} playScale={0.3} style={{ overflow: 'hidden' }}>
-                                    <TweenOne className="nervape-composite"
-                                        key="0" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
-                                        <div className="composite">
-                                            <div className="title transition">
-                                                <img src={state.windowWidth === 375 ? NacpMTitle : NacpTitle} />
-                                            </div>
-                                            <div className="description">
-                                                NERVAPE COMPOSITE (NACP) is Nervape’s customizable 2D PFP NFTs that let users express themselves. Build and mint your own ape PFPs by selecting from over 700 different design assets created by the team and our community!
-                                            </div>
-                                        </div>
-                                    </TweenOne>
-                                    <div className="composite-content" id="composite-content">
-                                        <div className="intro-items" style={{ float: 'left', position: 'relative', left: '0' }}>
-                                            {introItems.map((item, index) => {
-                                                return (
-                                                    <TweenOne className="intro-content"
-                                                        key={`composite-${index}`} animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }} style={{ opacity: 0 }}>
-                                                        <IntroItem item={item}></IntroItem>
-                                                        {index == 0 && (
-                                                            <div className="bone-list">
-                                                                <div className="title">Bonelist Lookup</div>
-                                                                <div className="address-input">
-                                                                    <Tooltip
-                                                                        title={() => {
-                                                                            return (
-                                                                                <p>{isBonelist ? 'You’re a bonelist holder! Welcome to the Third Continent. 🦍' : 'You’re not a bonelist ape =(. No bones for you (yet). Try harder! Follow our Twitter or join our Discord for opportunities to get a bonelist! '}</p>
-                                                                            );
-                                                                        }}
-                                                                        placement="bottom"
-                                                                        overlayClassName="bonelist-tooltip"
-                                                                        color="#506077"
-                                                                        open={open}>
-                                                                        <input type="text" value={godwokenAddress} onInput={(e: any) => {
-                                                                            setGodwokenAddress(e.target.value)
-                                                                            setOpen(false);
-                                                                        }} placeholder="Ethereum address" />
-                                                                    </Tooltip>
-                                                                    <button
-                                                                        className="check-btn cursor"
-                                                                        onClick={async () => {
-                                                                            if (!godwokenAddress) return;
-                                                                            setOpen(false);
-                                                                            const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
-                                                                            console.log(res);
-                                                                            setOpen(true);
-                                                                            setIsBonelist(res > 0);
-                                                                        }}>CHECK</button>
-                                                                </div>
-                                                                <div className="tip">
-                                                                    To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </TweenOne>
-                                                );
-                                            })}
+                                            </Parallax>
+                                            <img className="banner-img banner-img-2" src={Banner12} alt="" />
                                         </div>
                                     </div>
-                                </OverPack>
-                            </section>
+                                </section>
+
+                                <section className="composite-section">
+                                    <OverPack always={false} playScale={0.3} style={{ overflow: 'hidden' }}>
+                                        <TweenOne className="nervape-composite"
+                                            key="0" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
+                                            <div className="composite">
+                                                <div className="title transition">
+                                                    <img src={state.windowWidth === 375 ? NacpMTitle : NacpTitle} />
+                                                </div>
+                                                <div className="description">
+                                                    NERVAPE COMPOSITE (NACP) is Nervape’s customizable 2D PFP NFTs that let users express themselves. Build and mint your own ape PFPs by selecting from over 700 different design assets created by the team and our community!
+                                                </div>
+                                            </div>
+                                        </TweenOne>
+                                        <div className="composite-content" id="composite-content">
+                                            <div className="intro-items" style={{ float: 'left', position: 'relative', left: '0' }}>
+                                                {introItems.map((item, index) => {
+                                                    return (
+                                                        <TweenOne className="intro-content"
+                                                            key={`composite-${index}`} animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }} style={{ opacity: 0 }}>
+                                                            <IntroItem item={item}></IntroItem>
+                                                            {index == 0 && (
+                                                                <div className="bone-list">
+                                                                    <div className="title">Bonelist Lookup</div>
+                                                                    <div className="address-input">
+                                                                        <Tooltip
+                                                                            title={() => {
+                                                                                return (
+                                                                                    <p>{isBonelist ? 'You’re a bonelist holder! Welcome to the Third Continent. 🦍' : 'You’re not a bonelist ape =(. No bones for you (yet). Try harder! Follow our Twitter or join our Discord for opportunities to get a bonelist! '}</p>
+                                                                                );
+                                                                            }}
+                                                                            placement="bottom"
+                                                                            overlayClassName="bonelist-tooltip"
+                                                                            color="#506077"
+                                                                            open={open}>
+                                                                            <input type="text" value={godwokenAddress} onInput={(e: any) => {
+                                                                                setGodwokenAddress(e.target.value)
+                                                                                setOpen(false);
+                                                                            }} placeholder="Ethereum address" />
+                                                                        </Tooltip>
+                                                                        <button
+                                                                            className="check-btn cursor"
+                                                                            onClick={async () => {
+                                                                                if (!godwokenAddress) return;
+                                                                                setOpen(false);
+                                                                                const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
+                                                                                console.log(res);
+                                                                                setOpen(true);
+                                                                                setIsBonelist(res > 0);
+                                                                            }}>CHECK</button>
+                                                                    </div>
+                                                                    <div className="tip">
+                                                                        To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                        </TweenOne>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </OverPack>
+                                </section>
+                            </Parallax>
                         </div>
 
                         <div className="scroll-content">
@@ -285,9 +289,9 @@ export default function Composite() {
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">MINTING PHASES</div>
                                         <div className="desc">
-                                            NACP PFP has 14 different types of assets you can use to assemble your Nervape PFP.  
-                                            These asset classes will be released in 4 phases. Each phase will allow you to easily buy, 
-                                            trade, and sell your NACP! We encourage you to stick through all 4 phases to get the full PFP experience 
+                                            NACP PFP has 14 different types of assets you can use to assemble your Nervape PFP.
+                                            These asset classes will be released in 4 phases. Each phase will allow you to easily buy,
+                                            trade, and sell your NACP! We encourage you to stick through all 4 phases to get the full PFP experience
                                             that our platform has to offer and to design the ape PFP you want!
                                         </div>
                                         <div className="learn-more">
