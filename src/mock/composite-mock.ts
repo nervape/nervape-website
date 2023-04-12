@@ -1,4 +1,4 @@
-import { Question, Intro, Parthership, Phase } from "../nervape/composite";
+import { Question, Intro, Parthership, Phase, Banner } from "../nervape/composite";
 
 import Landing01 from '../assets/nacp/Landing-01.png';
 import Landing02 from '../assets/nacp/Landing-02.png';
@@ -23,6 +23,13 @@ import Phase1Cover from '../assets/nacp/phases/minting_1.gif';
 import Phase2Cover from '../assets/nacp/phases/minting_2.gif';
 import Phase3Cover from '../assets/nacp/phases/minting_3.gif';
 import Phase4Cover from '../assets/nacp/phases/minting_4.gif';
+
+import Banner1Ape from '../assets/nacp/banner_1_ape.png';
+import Banner1Bg from '../assets/nacp/banner_1_bg.png';
+import Banner2Ape from '../assets/nacp/banner_2_ape.png';
+import Banner2Bg from '../assets/nacp/banner_2_bg.png';
+import Banner3Ape from '../assets/nacp/banner_3_ape.png';
+import Banner3Bg from '../assets/nacp/banner_3_bg.png';
 
 const questionsData: Question[] = [
     {
@@ -189,8 +196,29 @@ const phaseData: Phase[] = [
     }
 ];
 
+const bannerData: Banner[] = [
+    {
+        startBackground: "rgba(30, 122, 214, 1)",
+        endBackground: "rgba(30, 122, 214, 0)",
+        ape: Banner1Ape,
+        qaBg: Banner1Bg
+    },
+    {
+        startBackground: "rgba(0, 82, 67, 1)",
+        endBackground: "rgba(0, 82, 67, 0)",
+        ape: Banner2Ape,
+        qaBg: Banner2Bg
+    },
+    {
+        startBackground: "rgba(255, 201, 0, 1)",
+        endBackground: "rgba(255, 201, 0, 0)",
+        ape: Banner3Ape,
+        qaBg: Banner3Bg
+    }
+]; 
+
 export class PfpMocks {
     public static fnGetNacpData() {
-        return { questionsData, introData, parthershipData, phaseData }
+        return { questionsData, introData, parthershipData, phaseData, bannerData }
     }
 }

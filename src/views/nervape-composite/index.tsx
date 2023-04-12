@@ -14,12 +14,10 @@ import NacpMTitle from '../../assets/nacp/nacp_m.svg';
 import TwitterIcon from '../../assets/nacp/twitter.svg';
 import DiscodeIcon from '../../assets/nacp/discode.svg';
 
-import Banner11 from '../../assets/nacp/1-1.png';
-import Banner12 from '../../assets/nacp/1-2.png';
-import Banner13 from '../../assets/nacp/1-3.png';
-import Banner14 from '../../assets/nacp/1-4.png';
+import BannerText1 from '../../assets/nacp/banner_text_1.png';
+import BannerText2 from '../../assets/nacp/banner_text_2.png';
 
-import { Intro, Parthership, Phase, Question } from "../../nervape/composite";
+import { Banner, Intro, Parthership, Phase, Question } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
@@ -107,6 +105,7 @@ export default function Composite() {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [phases, setPhases] = useState<Phase[]>([]);
     const [phaseCover, setPhaseCover] = useState(PhaseDefaultCover);
+    const [banner, setBanner] = useState<Banner>();
 
 
     const IntroItem = (props: { item: any; }) => {
@@ -147,11 +146,13 @@ export default function Composite() {
             questionsData,
             introData,
             parthershipData,
-            phaseData } = PfpMocks.fnGetNacpData();
+            phaseData,
+            bannerData } = PfpMocks.fnGetNacpData();
         setIntroItems(introData);
         setParthershipItems(parthershipData);
         setPhases(phaseData);
         setQuestions(questionsData);
+        setBanner(bannerData[Math.floor(Math.random() * bannerData.length)]);
     }, []);
 
     return (
@@ -160,34 +161,33 @@ export default function Composite() {
                 <div className="landing-page">
                     <div className="page-wrap">
                         <div className="nacp-header-content">
-                            <Parallax animation={{ backgroundColor: 'rgba(30, 122, 214, 0)', playScale: [1, 3.5] }}
-                                style={{ background: '#1E7AD6' }}>
+                            <Parallax animation={{ backgroundColor: banner?.endBackground, playScale: [1, 3.5] }}
+                                style={{ background: banner?.startBackground }}>
 
                                 <section className="banner-section" id="banner-section">
                                     <div className="banner-content">
                                         <div className="banner-container">
                                             <div className="banner">
-                                                <img className="banner-img banner-img-1" src={Banner11} alt="" />
+                                                <img className="banner-img banner-img-1" src={banner?.qaBg} alt="" />
                                                 <Parallax
-                                                    animation={{ top: '-50px', opacity: 0, playScale: [1, 1.5] }}
+                                                    animation={{ top: `${state.windowWidth > 750 ? '-50px' : '-20px'}`, opacity: 0, playScale: [1, 1.5] }}
                                                     style={{ top: 0, opacity: 1 }}
                                                     location="banner-section"
                                                     className="banner-img"
                                                 >
-                                                    <img className="banner-img banner-img-3" src={Banner13} alt="" />
+                                                    <img className="banner-img banner-img-2" src={BannerText1} alt="" />
                                                 </Parallax>
                                                 <Parallax
                                                     animation={{ top: 0, opacity: 1, playScale: [1.5, 1.8] }}
-                                                    style={{ top: '50px', opacity: 0 }}
+                                                    style={{ top: `${state.windowWidth > 750 ? '50px' : '20px'}`, opacity: 0 }}
                                                     location="banner-section"
                                                     className="banner-img"
                                                 >
-                                                    <img className="banner-img banner-img-4" src={Banner14} alt="" />
-
+                                                    <img className="banner-img banner-img-3" src={BannerText2} alt="" />
                                                 </Parallax>
                                             </div>
                                             <div className="banner banner-1">
-                                                <img className="banner-img banner-img-2" src={Banner12} alt="" />
+                                                <img className="banner-img banner-img-4" src={banner?.ape} alt="" />
                                             </div>
                                         </div>
                                     </div>
@@ -262,24 +262,32 @@ export default function Composite() {
                             <div className="scroll-list">
                                 <ul>
                                     <li>
-                                        <span>SHOW YOUR CREATIVITY.</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF.</span>
+                                        <span>SHOW YOUR CREATIVITY</span>
+                                        <span className="express-yourself">EXPRESS YOURSELF</span>
                                         {state.windowWidth > 750 ? (
                                             <>
-                                                <span>SHOW YOUR CREATIVITY.</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF.</span>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
                                             </>
                                         ) : ''}
                                     </li>
                                 </ul>
                                 <ul>
                                     <li>
-                                        <span>SHOW YOUR CREATIVITY.</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF.</span>
+                                        <span>SHOW YOUR CREATIVITY</span>
+                                        <span className="express-yourself">EXPRESS YOURSELF</span>
                                         {state.windowWidth > 750 ? (
                                             <>
-                                                <span>SHOW YOUR CREATIVITY.</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF.</span>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
                                             </>
                                         ) : ''}
                                     </li>
@@ -289,7 +297,7 @@ export default function Composite() {
 
                         <section className="minting-phases-section">
                             <div className="minting-content">
-                                <OverPack always={false} playScale={0.6}>
+                                <OverPack always={false} playScale={`${state.windowWidth > 750 ? 0.6 : 0.3}`}>
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">MINTING PHASES</div>
                                         <div className="desc">
@@ -435,11 +443,25 @@ export default function Composite() {
                         <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.3}>
-                                    <div className="partner-top flex-align">
+                                    <div className="partner-top">
                                         <TweenOne className="top-left" key="partner-1" animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}>
-                                            <div className="section-title">ARTIST PARTNER PROGRAM</div>
-                                            <div className="desc">We value co-creation! If you’re an artist with a passion for collaboration, work with us to help build NACP!</div>
+                                            <div className="section-title">
+                                                {state.windowWidth > 750 ? ('COLLABORATE WITH US!') : (
+                                                    <>
+                                                        COLLABORATE
+                                                        <br />
+                                                        WITH US!
+                                                    </>
+                                                )}
+                                            </div>
+                                            <div className="desc">
+                                                We value co-creation!
+                                                <br />
+                                                If you’re an artist or designer with a passion for collaboration,
+                                                <br />
+                                                join us in creating NACP assets together!
+                                            </div>
                                             <div
                                                 className={`join-us disable-use-select cursor ${joinUsClick && 'click'}`}
                                                 onClick={() => {
