@@ -225,7 +225,7 @@ export default function Composite() {
                                                                             }}
                                                                             placement="bottom"
                                                                             overlayClassName="bonelist-tooltip"
-                                                                            color="#506077"
+                                                                            color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
                                                                             open={open}>
                                                                             <input type="text" value={godwokenAddress} onInput={(e: any) => {
                                                                                 setGodwokenAddress(e.target.value)
@@ -588,7 +588,11 @@ export default function Composite() {
                         <footer className="join-footer">
                             <div className="join-content">
                                 <div className="section-title">JOIN OUR COMMUNITY</div>
-                                <div className="desc">Don’t miss our NACP release! Join our community here!</div>
+                                <div className="desc">
+                                    Don’t miss our NACP release!
+                                    <br />
+                                    An NACP PFP will open more doors for you in the Nervape ecosystem in the near future.
+                                </div>
                                 <div className="join-icons">
                                     <img
                                         className="cursor"
