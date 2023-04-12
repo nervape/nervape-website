@@ -298,9 +298,7 @@ export default function Composite() {
                                             trade, and sell your NACP! We encourage you to stick through all 4 phases to get the full PFP experience
                                             that our platform has to offer and to design the ape PFP you want!
                                         </div>
-                                        <div className="learn-more">
-                                            <a href="javascript:;" className="font-color">More details coming soon!</a>
-                                        </div>
+                                        <div className="learn-more">More details coming soon!</div>
                                     </TweenOne>
 
                                     <div className="phase-content flex-center">
