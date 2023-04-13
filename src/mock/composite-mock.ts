@@ -66,7 +66,7 @@ const introData: Intro[] = [
     {
         cover: Landing01,
         title: 'Free Mint',
-        desc: 'Yup, that’s not a misprint. It’s FREE my fellow ape.  =) Able to get a bonelist (aka whitelist)? That means you get 2 guaranteed mints! Enter your ETH address in our lookup tool below to confirm.'
+        desc: 'Yup, that’s not a misprint. It’s FREE my fellow ape! Were you able to get a bonelist (our whitelist)? That means you get **2** guaranteed mints! Enter your ETH address in our lookup tool below to confirm.'
     },
     {
         cover: Landing02,
@@ -76,7 +76,7 @@ const introData: Intro[] = [
     {
         cover: Landing03,
         title: 'Total Supply 7777',
-        desc: 'You like the number 7? We do too! A total of 7,777 NACPs will be issued with 7000 part of our public mint (including bonelist members), and 777 NACPs will be reserved for our team and collaborators.'
+        desc: 'You like the number 7? We do too! A total of 7,777 NACPs will be issued: 7,000 will be released in our public mint (with a priority for bonelist members) with the other 777 NACPs reserved for our team and collaborators.'
     }
 ];
 

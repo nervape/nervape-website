@@ -224,7 +224,7 @@ export default function Composite() {
                                                                                         <>
                                                                                             🦴 You’re a bonelist holder!
                                                                                             <br />
-                                                                                            🦧 Welcome to the Third Continent. 
+                                                                                            🦧 Welcome to the Third Continent.
                                                                                         </>
                                                                                     ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
                                                                                 );
@@ -587,7 +587,7 @@ export default function Composite() {
                                 <div className="desc">
                                     Don’t miss our NACP release!
                                     <br />
-                                    An NACP PFP will open more doors for you in the Nervape ecosystem in the near future.
+                                    An NACP PFP will open more doors for you in the Nervape ecosystem.
                                 </div>
                                 <div className="join-icons">
                                     <img
