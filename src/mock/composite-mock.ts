@@ -66,7 +66,7 @@ const introData: Intro[] = [
     {
         cover: Landing01,
         title: 'Free Mint',
-        desc: 'Yup, that’s not a misprint. It’s FREE my fellow ape! Were you able to get a bonelist (our whitelist)? That means you get **2** guaranteed mints! Enter your ETH address in our lookup tool below to confirm.'
+        desc: 'Yup, that’s not a misprint. It’s FREE my fellow ape! Were you able to get a bonelist (our whitelist)? That means you get <span style="font-weight: 600">2</span> guaranteed mints! Enter your ETH address in our lookup tool below to confirm.'
     },
     {
         cover: Landing02,

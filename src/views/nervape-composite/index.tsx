@@ -116,7 +116,7 @@ export default function Composite() {
                     <img className="intro-img img-filter" src={item.cover} alt="" />
                 </div>
                 <div className="intro-title">{item.title}</div>
-                <div className="intro-desc">{item.desc}</div>
+                <div className="intro-desc" dangerouslySetInnerHTML={{ __html: item.desc || "" }}></div>
             </div>
         );
     }
