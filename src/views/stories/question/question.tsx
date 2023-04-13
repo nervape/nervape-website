@@ -24,6 +24,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                 className="btn back-btn cursor"
                 onClick={() => {
                     setErrprMessage('');
+                    answers[currIndex - 1].value = "";
                     setCurrIndex(currIndex - 1);
                 }}>
                 BACK

@@ -155,6 +155,17 @@ export default function WallectConnect(props: any) {
         );
     }
 
+    const AvailableQuest = () => {
+        return (
+            <button
+                className="nervape-asset cursor"
+                onClick={() => {
+                    console.log('Available Quest');
+                }}>
+                {`Available Quest (1)`}
+            </button>
+        );
+    }
     const SignOut = () => {
         return (
             <button
@@ -200,6 +211,10 @@ export default function WallectConnect(props: any) {
             key: '1'
         },
         {
+            label: AvailableQuest(),
+            key: '3'
+        },
+        {
             label: SignOut(),
             key: '2'
         }
@@ -217,6 +232,10 @@ export default function WallectConnect(props: any) {
         {
             label: CopyAddress(),
             key: '1'
+        },
+        {
+            label: AvailableQuest(),
+            key: '3'
         },
         {
             label: SignOut(),
@@ -336,6 +355,9 @@ export default function WallectConnect(props: any) {
                         </div>
                         <div className="address-item cursor">
                             {NervapeAssets()}
+                        </div>
+                        <div className="address-item cursor">
+                            {AvailableQuest()}
                         </div>
                     </div>
                 )
