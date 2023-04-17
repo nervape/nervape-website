@@ -89,3 +89,12 @@ export class ChapterList {
   desc: string = "";
   stories: Story[] = [];
 }
+
+export class StoryCollectable {
+  _id: string = "";
+  urlMask: string = "";
+  collectable: boolean = false;
+  serial: string = "";
+  show?: boolean = false;
+  galxeCampaignId: string = "";
+}

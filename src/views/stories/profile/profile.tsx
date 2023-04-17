@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
 import { NavTool } from "../../../route/navi-tool";
@@ -54,8 +54,9 @@ function SideStoryDetail(props: any) {
 
 export default function StoryProfile(props: any) {
     const params = useParams();
+    const location = useLocation();
     const [story, setStory] = useState<Story | undefined>();
-    const [isInited, setIsInited] = useState(true);
+    const [isInited, setIsInited] = useState(false);
     const [hasTake, setHasTake] = useState(false);
     const [hasTakeOat, setHasTakeOat] = useState(false);
     const { state, dispatch } = useContext(DataContext);
@@ -132,6 +133,12 @@ export default function StoryProfile(props: any) {
                 await _queryOatPoaps(address, story.galxeCampaignId);
             }
             setIsInited(true);
+            if (location.hash == '#quiz') {
+                setTimeout(() => {
+                    const storyProfile = document.getElementById('story-profile-container');
+                    window.scrollTo({ top: storyProfile?.offsetHeight, behavior: 'smooth' })
+                }, 300);
+            }
         });
     }, [address, isConnected, story]);
 
@@ -240,7 +247,7 @@ export default function StoryProfile(props: any) {
 
         if (story?.collectable && questions?.length) {
             return (
-                <div className="quiz-btn-container">
+                <div className="quiz-btn-container" id="quiz">
                     <div className="quiz-btn-content flex-align">
                         <div className="quiz-left flex-align">
                             <div className="quiz">QUIZ</div>
@@ -293,7 +300,7 @@ export default function StoryProfile(props: any) {
     }
 
     return (
-        <div className="story-profile-container main-container" key={keyId}>
+        <div id="story-profile-container" className="story-profile-container main-container" key={keyId}>
             <div className="banner">
                 {fnGetBanner()}
             </div>

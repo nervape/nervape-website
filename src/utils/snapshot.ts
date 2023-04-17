@@ -17,6 +17,5 @@ export async function queryGetVotes(proposal: string) {
         }
       }
       `});
-
-    console.log('queryGetVotes', res);
+    return res.data.data.votes;
 }

@@ -33,3 +33,24 @@ export class PoapBadge {
   redirect_url: string = "";
   timeline: string = "";
 }
+
+export class Event {
+  _id: string = "";
+  title: string = "";
+  startTime: string = "";
+  endTime: string = "";
+  proposalId: string = "";
+  state: string = "";
+  openUrl: string = "";
+  sort: number = 0;
+  show?: boolean = false;
+}
+
+export class Vote {
+  choice: number = 0;
+  created: number = 0;
+  id: string = "";
+  proposal: { id: string } = { id: "" };
+  space: { id: string } = { id: "" };
+  voter: string = "";
+}

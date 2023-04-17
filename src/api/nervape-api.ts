@@ -192,7 +192,18 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-
+  
+  public async fnStoryQuestions() {
+    const url = `${this.baseUrl}/story/questions/all`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetActiveEvents() {
+    const url = `${this.baseUrl}/campaign/events/active/all`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();

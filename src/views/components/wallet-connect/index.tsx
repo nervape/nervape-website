@@ -20,10 +20,19 @@ import { Types } from "../../../utils/reducers";
 import { godWoken } from "../../../utils/Chain";
 import { SwitchChainSpan } from "../switchChain";
 import { queryGetVotes } from "../../../utils/snapshot";
+import { nervapeApi } from "../../../api/nervape-api";
+import { StoryCollectable } from "../../../nervape/story";
+import { queryOatPoaps } from "../../../utils/api";
+import { Event, Vote } from "../../../nervape/campaign";
+import AlailableQuest from "./alailable-quest";
 
 export default function WallectConnect(props: any) {
     const { setDisableList } = props;
     const { state, dispatch } = useContext(DataContext);
+
+    const [storyQuizes, setStoryQuizes] = useState<StoryCollectable[]>([]);
+    const [campaignEvents, setCampaignEvents] = useState<Event[]>([]);
+    const [showQuest, setShowQuest] = useState(false);
 
     const setLayerOneWrapper = (wrapper: UnipassV3Wrapper) => {
         dispatch({
@@ -109,9 +118,29 @@ export default function WallectConnect(props: any) {
         setIsInit(true);
     }
 
+    async function initQuizAndEvent(_address: string) {
+        const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
+        await Promise.all(
+            stories.map(async story => {
+                const _oatPoaps = await queryOatPoaps(_address, story.galxeCampaignId);
+                story.show = _oatPoaps.length <= 0;
+                return story;
+            })
+        );
+        setStoryQuizes(stories.filter(item => item.show));
+        console.log(storyQuizes);
+        const events: Event[] = await nervapeApi.fnGetActiveEvents();
+        await Promise.all(
+            events.map(async event => {
+                const votes: Vote[] = await queryGetVotes(event.proposalId);
+                const count = votes.filter(vote => vote.voter == _address).length;
+                event.show = count > 0;
+            })
+        )
+        setCampaignEvents(events.filter(item => item.show));
+    }
     useEffect(() => {
         initLogin();
-        queryGetVotes("0x9e09396e7d9d47e47cf29e2d74cd9cb041e70d54bc43c1152abb137bf179ccce");
     }, []);
 
     useEffect(() => {
@@ -126,6 +155,11 @@ export default function WallectConnect(props: any) {
         document.body.style.overflow = 'auto';
     }, [address, state.loginWalletType, chain]);
 
+    useEffect(() => {
+        if (!address) return;
+        // init Story Quiz and Events data
+        initQuizAndEvent(address);
+    }, [address]);
     const NervapeAssets = () => {
         return (
             <button
@@ -160,9 +194,12 @@ export default function WallectConnect(props: any) {
             <button
                 className="nervape-asset cursor"
                 onClick={() => {
-                    console.log('Available Quest');
+                    if (storyQuizes.length + campaignEvents.length > 0) {
+                        setShowQuest(true);
+                        document.body.style.overflow = 'hidden';
+                    }
                 }}>
-                {`Available Quest (1)`}
+                {`Available Quest (${storyQuizes.length + campaignEvents.length})`}
             </button>
         );
     }
@@ -282,7 +319,7 @@ export default function WallectConnect(props: any) {
         } else {
             setItems(_items);
         }
-    }, [chain, state.loginWalletType]);
+    }, [chain, state.loginWalletType, campaignEvents, storyQuizes]);
 
     useEffect(() => {
         const subLength = 5;
@@ -369,6 +406,14 @@ export default function WallectConnect(props: any) {
                     setShowLogout(false);
                 }}
                 logout={disconnectReload}></Logout>
+            <AlailableQuest 
+                show={showQuest}
+                events={campaignEvents}
+                quizes={storyQuizes}
+                close={() => {
+                    setShowQuest(false);
+                    document.body.style.overflow = 'auto';
+                }}></AlailableQuest>
         </div>
     );
 }
