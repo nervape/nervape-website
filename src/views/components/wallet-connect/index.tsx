@@ -134,7 +134,7 @@ export default function WallectConnect(props: any) {
             events.map(async event => {
                 const votes: Vote[] = await queryGetVotes(event.proposalId);
                 const count = votes.filter(vote => vote.voter == _address).length;
-                event.show = count > 0;
+                event.show = count == 0;
             })
         )
         setCampaignEvents(events.filter(item => item.show));
