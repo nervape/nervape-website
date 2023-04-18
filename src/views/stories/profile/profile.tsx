@@ -135,8 +135,8 @@ export default function StoryProfile(props: any) {
             setIsInited(true);
             if (location.hash == '#quiz') {
                 setTimeout(() => {
-                    const storyProfile = document.getElementById('story-profile-container');
-                    window.scrollTo({ top: storyProfile?.offsetHeight, behavior: 'smooth' })
+                    const storyProfile = document.getElementById('quiz');
+                    storyProfile?.scrollIntoView({ behavior: 'smooth'})
                 }, 300);
             }
         });
@@ -247,7 +247,7 @@ export default function StoryProfile(props: any) {
 
         if (story?.collectable && questions?.length) {
             return (
-                <div className="quiz-btn-container" id="quiz">
+                <div className="quiz-btn-container">
                     <div className="quiz-btn-content flex-align">
                         <div className="quiz-left flex-align">
                             <div className="quiz">QUIZ</div>
@@ -324,7 +324,7 @@ export default function StoryProfile(props: any) {
                             {isInited && fnQuiz()}
                         </div>
                     </Parallax>
-                    <div className="footer-sketch">
+                    <div className="footer-sketch" id="quiz">
                         <img loading="lazy" src={story?.footerSketch} alt="footerSketch" />
                         <div className="sr-nav-footer">
                             {fnPrev()}
