@@ -24,7 +24,7 @@ import { nervapeApi } from "../../../api/nervape-api";
 import { StoryCollectable } from "../../../nervape/story";
 import { queryOatPoaps } from "../../../utils/api";
 import { Event, Vote } from "../../../nervape/campaign";
-import AlailableQuest from "./alailable-quest";
+import AvailableQuest from "./available-quest";
 
 export default function WallectConnect(props: any) {
     const { setDisableList } = props;
@@ -189,7 +189,7 @@ export default function WallectConnect(props: any) {
         );
     }
 
-    const AvailableQuest = () => {
+    const Available = () => {
         return (
             <button
                 className="nervape-asset cursor"
@@ -248,7 +248,7 @@ export default function WallectConnect(props: any) {
             key: '1'
         },
         {
-            label: AvailableQuest(),
+            label: Available(),
             key: '3'
         },
         {
@@ -271,7 +271,7 @@ export default function WallectConnect(props: any) {
             key: '1'
         },
         {
-            label: AvailableQuest(),
+            label: Available(),
             key: '3'
         },
         {
@@ -394,7 +394,7 @@ export default function WallectConnect(props: any) {
                             {NervapeAssets()}
                         </div>
                         <div className="address-item cursor">
-                            {AvailableQuest()}
+                            {Available()}
                         </div>
                     </div>
                 )
@@ -406,14 +406,14 @@ export default function WallectConnect(props: any) {
                     setShowLogout(false);
                 }}
                 logout={disconnectReload}></Logout>
-            <AlailableQuest 
+            <AvailableQuest 
                 show={showQuest}
                 events={campaignEvents}
                 quizes={storyQuizes}
                 close={() => {
                     setShowQuest(false);
                     document.body.style.overflow = 'auto';
-                }}></AlailableQuest>
+                }}></AvailableQuest>
         </div>
     );
 }

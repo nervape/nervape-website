@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import './alailable-quest.less';
+import './available-quest.less';
 import { Event } from "../../../nervape/campaign";
 import { StoryCollectable } from "../../../nervape/story";
 
@@ -10,7 +10,7 @@ import moment from "moment";
 import { DataContext } from "../../../utils/utils";
 import { NavTool } from "../../../route/navi-tool";
 
-export default function AlailableQuest(props: { show: boolean; close: any; events: Event[]; quizes: StoryCollectable[]; }) {
+export default function AvailableQuest(props: { show: boolean; close: any; events: Event[]; quizes: StoryCollectable[]; }) {
     const { show, close, events, quizes } = props;
 
     const { state, dispatch } = useContext(DataContext);
@@ -21,7 +21,7 @@ export default function AlailableQuest(props: { show: boolean; close: any; event
         const isEvent = type == 'event';
         
         return (
-            <div className="quest-item flex-align" onClick={() => {
+            <div className="quest-item cursor flex-align" onClick={() => {
                 if (isEvent) {
                     window.open(item.openUrl);
                 } else {
@@ -46,7 +46,7 @@ export default function AlailableQuest(props: { show: boolean; close: any; event
     return (
         <div className={`alailable-quest-container ${show && 'show'}`} onClick={close}>
             <div className="quest-content" onClick={e => e.stopPropagation()}>
-                <div className="title">Alailable Quest(s)</div>
+                <div className="title">Available Quest(s)</div>
                 <div className="quest-list">
                     {events.map((event, index) => {
                         return <QuestItem key={index} item={event} type="event"></QuestItem>
