@@ -45,6 +45,7 @@
             }
 
             .available-quest-count {
+                transition: all 0.3s;
                 width: 24px;
                 height: 24px;
                 margin-right: 4px;
@@ -61,6 +62,11 @@
 
         .address.open {
             background: rgba(244, 77, 55, 0.9);
+            
+            .available-quest-count {
+                background-color: #FFFFFF;
+                color: #F13636;
+            }
         }
     }
 }
