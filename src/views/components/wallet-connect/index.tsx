@@ -134,7 +134,7 @@ export default function WallectConnect(props: any) {
             events.map(async event => {
                 const votes: Vote[] = await queryGetVotes(event.proposalId);
                 const count = votes.filter(vote => vote.voter == _address).length;
-                event.show = count == 0;
+                event.show = count > 0;
             })
         )
         setCampaignEvents(events.filter(item => item.show));
@@ -194,6 +194,7 @@ export default function WallectConnect(props: any) {
             <button
                 className="nervape-asset cursor"
                 onClick={() => {
+                    setOpen(false);
                     if (storyQuizes.length + campaignEvents.length > 0) {
                         setShowQuest(true);
                         document.body.style.overflow = 'hidden';
@@ -357,6 +358,11 @@ export default function WallectConnect(props: any) {
                             <div className={`address cursor ${open && 'open'}`}>
                                 <img src={walletIcon()} alt="UnipassIcon" />
                                 <div className="span">{formatAddress}</div>
+                                {(storyQuizes.length + campaignEvents.length > 0) && (
+                                    <div className="available-quest-count">
+                                        {storyQuizes.length + campaignEvents.length > 99 ? '1+' : storyQuizes.length + campaignEvents.length}
+                                    </div>
+                                )}
                             </div>
                         </Dropdown>
                     </div>
