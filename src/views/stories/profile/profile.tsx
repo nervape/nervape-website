@@ -117,6 +117,18 @@ export default function StoryProfile(props: any) {
     }
 
     useEffect(() => {
+        window.onload = () => {
+            console.log('onload', location);
+            if (location.hash == '#quiz') {
+                setTimeout(() => {
+                    const storyProfile = document.getElementById('quiz');
+                    storyProfile?.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
         if (!params.id) return;
         nervapeApi.fnGetStoryDetail(params.id).then(res => {
             res.questions = shuffle(res.questions || []);
@@ -133,12 +145,6 @@ export default function StoryProfile(props: any) {
                 await _queryOatPoaps(address, story.galxeCampaignId);
             }
             setIsInited(true);
-            if (location.hash == '#quiz') {
-                setTimeout(() => {
-                    const storyProfile = document.getElementById('quiz');
-                    storyProfile?.scrollIntoView({ behavior: 'smooth'})
-                }, 300);
-            }
         });
     }, [address, isConnected, story]);
 
