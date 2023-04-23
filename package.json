@@ -17,6 +17,7 @@
     "@lay2/pw-core": "~0.4.0-alpha.13",
     "@metamask/detect-provider": "^1.2.0",
     "@metamask/onboarding": "^1.0.1",
+    "@types/three": "^0.150.2",
     "@wagmi/core": "^0.9.7",
     "antd": "^4.23.1",
     "axios": "^0.26.1",
@@ -35,6 +36,9 @@
     "swiper": "^8.4.4",
     "swr": "^1.2.0",
     "terser": "^5.16.3",
+    "three": "^0.151.3",
+    "three-addons": "^1.2.0",
+    "three-orbitcontrols": "^2.110.3",
     "up-ckb-alpha-test": "^0.1.5",
     "up-core-test": "0.1.12",
     "wagmi": "^0.11.7"

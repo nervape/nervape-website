@@ -28,6 +28,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { godWoken } from "../utils/Chain";
 import WallectPage from "./wallet";
 import Composite from "./nervape-composite";
+import ThreeScene from "./three";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -133,6 +134,14 @@ export default function App() {
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Composite></Composite>
+              </PageView>
+            }>
+          </Route>
+          <Route
+            path="/three"
+            element={
+              <PageView activeIndex={7}>
+                <ThreeScene></ThreeScene>
               </PageView>
             }>
           </Route>
