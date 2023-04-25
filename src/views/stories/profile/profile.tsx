@@ -17,6 +17,7 @@ import StoryQuestionPop from "../question/question";
 import { SiweMessage } from "siwe";
 import { godWokenTestnet } from "../../../utils/Chain";
 import { queryOatPoaps } from "../../../utils/api";
+import { Tooltip } from "antd";
 
 function SideStoryDetail(props: any) {
     const { close, story } = props;
@@ -56,7 +57,6 @@ export default function StoryProfile(props: any) {
     const params = useParams();
     const location = useLocation();
     const [story, setStory] = useState<Story | undefined>();
-    const [isInited, setIsInited] = useState(false);
     const [hasTake, setHasTake] = useState(false);
     const [hasTakeOat, setHasTakeOat] = useState(false);
     const { state, dispatch } = useContext(DataContext);
@@ -144,12 +144,26 @@ export default function StoryProfile(props: any) {
             if (res > 0) {
                 await _queryOatPoaps(address, story.galxeCampaignId);
             }
-            setIsInited(true);
         });
     }, [address, isConnected, story]);
 
     if (!story) return <></>;
 
+    const challengeTitle = () => {
+        return (
+            <div className="challenge-title">
+                Take the Nervape Saga Challenge to test your knowledge of Nervape’s story 
+                and for a chance to win a Nervape Saga Scholar OAT!
+                <ul>
+                    <li>Follow Nervape Twitter (@Nervapes)</li>
+                    <li>Join Nervape Discord</li>
+                    <li>
+                        <span>Read the Nervape Saga and complete the challenge! You can do it!</span>
+                    </li>
+                </ul>
+            </div>
+        );
+    }
     const { previousStory, nextStory } = story;
 
     const fnPrev = () => {
@@ -254,45 +268,54 @@ export default function StoryProfile(props: any) {
         if (story?.collectable && questions?.length) {
             return (
                 <div className="quiz-btn-container">
-                    <div className="quiz-btn-content flex-align">
+                    <div className="quiz-btn-content" style={{background: story?.collectQuizBackground}}>
                         <div className="quiz-left flex-align">
-                            <div className="quiz">QUIZ</div>
+                            <img className="quiz-icon" alt="" />
+                            <div className="quiz">CHALLENGE</div>
                             <div className="info-icon">
-                                <img src={InfoIcon} alt="infoIcon" />
+                                <Tooltip
+                                    showArrow={state.windowWidth > 750}
+                                    overlayClassName="challenge-tooltip"
+                                    color="#506077"
+                                    title={challengeTitle()}
+                                >
+                                    <img src={InfoIcon} alt="infoIcon" />
+                                </Tooltip>
                             </div>
                         </div>
 
-                        <div className="quiz-right flex-align">
+                        <div className={`quiz-right`}>
                             {!isConnected ? (
                                 <div className="connect-tip">
+                                    Take the challenge to win an award!
                                     <button className="connect-btn quiz-btn cursor"
                                         onClick={() => {
                                             dispatch({
                                                 type: Types.ShowLoginModal,
                                             })
-                                        }}>Connect Wallet</button>
-                                    to take the quiz and win reward.
+                                        }}>CONNECT WALLET</button>
                                 </div>
                             ) :
                                 !hasTake ? (
                                     <div className="take-quiz">
+                                        Test your Nervape Saga knowledge.
                                         <button className="take-quiz-btn quiz-btn cursor"
                                             onClick={() => {
                                                 document.body.style.overflow = 'hidden';
                                                 setShowQuiz(true);
-                                            }}>Take Quiz</button>
+                                            }}>START</button>
                                     </div>
                                 ) : !hasTakeOat ? (
                                     <div className="claim-reward">
-                                        Quiz completed.
+                                        Challenge completed!
                                         <button className="connect-btn quiz-btn cursor"
                                             onClick={() => {
                                                 openGalxeUrl();
-                                            }}>Claim Reward</button>
+                                            }}>CLAIM REWARD</button>
                                     </div>
                                 ) : (
                                     <div className="claim-reward">
-                                        Quiz completed. Reward Claimed.
+                                        Reward Claimed. You’re a true follower of Nervape!
                                     </div>
                                 )
                             }
@@ -327,7 +350,7 @@ export default function StoryProfile(props: any) {
                             <div className="story-name">{story?.title}</div>
                             <div className="sr-content" dangerouslySetInnerHTML={{ __html: story?.content || "" }}></div>
                             {story.sideStoryOpen && fnSideStory()}
-                            {isInited && fnQuiz()}
+                            {fnQuiz()}
                         </div>
                     </Parallax>
                     <div className="footer-sketch" id="quiz">
@@ -350,17 +373,15 @@ export default function StoryProfile(props: any) {
                         setShowSide(false);
                     }}></SideStoryDetail>
             )}
-            {showQuiz && (
-                <StoryQuestionPop
-                    show={showQuiz}
-                    questions={story?.questions || []}
-                    signInWithEthereum={signInWithEthereum}
-                    openGalxeUrl={openGalxeUrl}
-                    close={() => {
-                        document.body.style.overflow = 'auto';
-                        setShowQuiz(false);
-                    }}></StoryQuestionPop>
-            )}
+            <StoryQuestionPop
+                show={showQuiz}
+                questions={story?.questions || []}
+                signInWithEthereum={signInWithEthereum}
+                openGalxeUrl={openGalxeUrl}
+                close={() => {
+                    document.body.style.overflow = 'auto';
+                    setShowQuiz(false);
+                }}></StoryQuestionPop>
         </div>
     );
 }

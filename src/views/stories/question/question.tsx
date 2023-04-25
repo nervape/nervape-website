@@ -35,14 +35,14 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     const checkAnswer = async () => {
         if (questions[currIndex].type == StoryQuestionType.Radio) {
             if (answers[currIndex].value !== questions[currIndex].optionId) {
-                setErrprMessage('Wrong answer. Please try again.');
+                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Please try again.');
                 return false;
             }
         }
 
         if (questions[currIndex].type == StoryQuestionType.Checkbox) {
             if (!answers[currIndex].value || questions[currIndex].optionId != answers[currIndex].value.join(',')) {
-                setErrprMessage('Wrong answer. Please try again.');
+                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Please try again.');
                 return false;
             }
         }
@@ -124,9 +124,11 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                             <div className="completed-content">
                                 <img className="completed-img" alt="" />
                                 <div className="completed-tip">
-                                    Congratulations! You have completed this quiz.
-                                    <br />
-                                    You can now claim your reward.
+                                    Congratulations! You have completed the Nervape Saga Challenge. 
+                                    You’re a true scholar of the Nervape Saga. 
+                                    Yinhe is very pleased 🐉 . 
+                                    We shall now bestow upon you your reward. 
+                                    Click below to claim it!
                                 </div>
                             </div>
                         )}
@@ -139,7 +141,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                         </div>
                     ) : (
                         <div className="claim-reward">
-                            <button className="btn cursor" 
+                            <button className="btn cursor"
                                 onClick={() => {
                                     openGalxeUrl();
                                 }}>CLAIM REWARD</button>

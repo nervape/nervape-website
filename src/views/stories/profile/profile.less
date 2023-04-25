@@ -220,9 +220,8 @@
           border-top: 1px solid #FFFFFF;
 
           .quiz-btn-content {
-            height: 55px;
-            padding: 0 12px;
-            background: #4B4B4B;
+            padding: 16px;
+            background: #404053;
             border-radius: 16px;
             color: #FFFFFF;
             width: fit-content;
@@ -230,8 +229,15 @@
             .quiz-left {
               height: 31px;
               padding-right: 8px;
-              border-right: 1px solid #FFFFFF;
               margin-right: 16px;
+
+              .quiz-icon {
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background-color: #D9D9D9;
+                margin-right: 8px;
+              }
 
               .quiz {
                 font-weight: 800;
@@ -253,41 +259,28 @@
             }
 
             .quiz-right {
+              border-top: 1px solid rgba(255, 255, 255, 0.15);
+              margin-top: 16px;
+              padding-top: 16px;
+
               .quiz-btn {
-                font-weight: 800;
-                font-size: 16px;
-                line-height: 19px;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 14px;
                 letter-spacing: -0.05em;
-                background: #767676;
-                border-radius: 4px;
-                height: 31px;
+                padding: 9px 16px;
+                background: #F44D37;
+                border-radius: 6px;
                 border: unset;
+                margin-left: 12px;
               }
 
               .connect-tip,
               .claim-reward {
-                font-weight: 700;
+                font-weight: 400;
                 font-size: 16px;
                 line-height: 19px;
                 letter-spacing: -0.05em;
-
-                .connect-btn {
-                  padding: 0 10px;
-                  margin-right: 12px;
-                }
-              }
-
-              .claim-reward {
-                .connect-btn {
-                  margin-right: 0;
-                  margin-left: 12px;
-                }
-              }
-
-              .take-quiz {
-                .take-quiz-btn {
-                  width: 112px;
-                }
               }
             }
           }
@@ -412,12 +405,60 @@
   }
 }
 
+.challenge-tooltip {
+  width: 600px;
+  max-width: unset;
+
+  .ant-tooltip-content {
+    .ant-tooltip-inner {
+      padding: 16px;
+      border-radius: 8px;
+
+      .challenge-title {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: -0.05em;
+
+        ul {
+          padding-top: 12px;
+          margin-bottom: 0;
+
+          li {
+            list-style: inside;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 14px;
+            margin-bottom: 8px;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 750px) {
   .story-profile-container {
     .profile-content {
       .story-content {
         .profile-info {
           width: 347px;
+
+          .quiz-btn-container {
+            .quiz-btn-content {
+              .quiz-right {
+                .quiz-btn {
+                  width: 100%;
+                  margin-left: 0;
+                  margin-top: 16px;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -474,6 +515,32 @@
         .desc {
           padding-top: 8px;
           font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .challenge-tooltip {
+    width: 347px;
+    left: calc((100vw - 347px) / 2) !important;
+
+    .ant-tooltip-content {
+      .ant-tooltip-inner {
+        .challenge-title {
+          ul {
+            li {
+              position: relative;
+              &:last-child {
+                padding-bottom: 16px;
+                
+                span {
+                  position: absolute;
+                  top: 0;
+                  left: 14.5px;
+                }
+              }
+            }
+          }
         }
       }
     }

@@ -52,6 +52,7 @@ export class Story {
   sideStoryBackground: string = "";
 
   collectable: boolean = false;
+  collectQuizBackground?: string = "";
   galxeCampaignId: string = "";
   questions?: StoryQuestion[] = [];
 }
@@ -65,6 +66,7 @@ export class StoryQuestion {
   storyId: string = "";
   title: string = "";
   type?: StoryQuestionType;
+  errorMessage?: string = "";
 }
 
 export class StoryQuestionOption {
