@@ -35,14 +35,14 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     const checkAnswer = async () => {
         if (questions[currIndex].type == StoryQuestionType.Radio) {
             if (answers[currIndex].value !== questions[currIndex].optionId) {
-                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Please try again.');
+                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Don’t give up! Try again.');
                 return false;
             }
         }
 
         if (questions[currIndex].type == StoryQuestionType.Checkbox) {
             if (!answers[currIndex].value || questions[currIndex].optionId != answers[currIndex].value.join(',')) {
-                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Please try again.');
+                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Don’t give up! Try again.');
                 return false;
             }
         }
