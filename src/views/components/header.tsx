@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useContext, useEffect, useState } from "react";
 import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
@@ -6,19 +6,23 @@ import twitter from "../../assets/icons/twitter.svg";
 import discord from "../../assets/icons/discord.svg";
 import NacpLogo from '../../assets/logo/logo_nacp.svg';
 import MNacpLogo from '../../assets/logo/m_nacp_logo.svg';
+import HeaderOpenIcon from '../../assets/icons/header-open.svg';
 
 import { NavTool } from "../../route/navi-tool";
-import { DataContext, getWindowScrollTop, scrollToTop } from "../../utils/utils";
+import { DataContext, getWindowScrollTop, scrollToTop, updateBodyOverflow } from "../../utils/utils";
 import WalletConnect from "./wallet-connect";
 import { Types } from "../../utils/reducers";
-import { Tooltip } from 'antd';
+import { Dropdown, Menu, MenuProps, Tooltip } from 'antd';
+
+type MenuItem = Required<MenuProps>['items'][number];
 
 export interface NavPageInfo {
   title: string;
-  url: string;
+  key: string;
   type: string;
   image: string;
   mImage?: string;
+  eleItem?: Function;
 }
 
 export interface INavProps {
@@ -30,44 +34,301 @@ interface INavState extends INavProps {
   disableList: boolean;
 }
 
-const pages = [
+const getItem = (
+  label: React.ReactNode,
+  key?: React.Key | null,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group',
+) => {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
+}
+
+const NacpTooltip = (id: string, key: string, placement?: 'bottom' | 'right') => {
+  return (
+    <div onClick={() => {
+      handleHeaderClick(key);
+      updateBodyOverflow(true);
+      document.getElementById(id)?.setAttribute('class', 'header-open');
+    }}>
+      <Tooltip
+        overlayClassName="tooltip gallery-tooltip"
+        color="#506077"
+        // @ts-ignore
+        getPopupContainer={() => document.getElementById('header-container')}
+        placement={placement || 'bottom'}
+        title="Coming Soon!">
+        <div>NACP</div>
+      </Tooltip>
+    </div>
+  );
+}
+
+const MNacpTooltip = (key: string, placement?: 'bottom' | 'right') => {
+  return (
+    <div onClick={e => {
+      handleHeaderClick(key);
+      e.stopPropagation();
+    }}>
+      <Tooltip
+        overlayClassName="tooltip gallery-tooltip"
+        color="#506077"
+        placement={placement || 'right'}
+        title="Coming Soon!">
+        NACP
+      </Tooltip>
+    </div>
+  );
+}
+
+const handleHeaderClick = (key: string) => {
+  const item = headers[key];
+  if (item) {
+    switch (item.type) {
+      case HeaderType.Logo:
+        window.scrollTo(0, 0);
+        NavTool.fnJumpToPage(item.url);
+        break;
+      case HeaderType.Navbar:
+        window.scrollTo(0, 0);
+        NavTool.fnJumpToPage(item.url);
+        break;
+      case HeaderType.Coming:
+        return;
+      case HeaderType.Open:
+        window.open(item.url);
+        break;
+    }
+  }
+}
+
+const GalleryItems: MenuProps = {
+  items: [
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('galleryCollection');
+          updateBodyOverflow(true);
+          document.getElementById('gallery-open-icon')?.setAttribute('class', 'header-open');
+          NavTool.fnJumpToPage('/nft');
+        }}>3D COLLECTION</div>
+      ),
+      key: '-1'
+    },
+    {
+      label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
+      key: '0'
+    }
+  ]
+};
+
+const BuyChildrenItems: MenuItem[] = [
+  getItem('3D COLLECTION', 'buyCollection', null, [
+    getItem('CHARACTER', 'buyCollectionCharacter'),
+    getItem('ITEM', 'buyCollectionItem'),
+    getItem('SCENE', 'buyCollectionScene'),
+    getItem('SPECIAL', 'buyCollectionSpecial'),
+  ])
+];
+
+const BuyItems: MenuProps = {
+  items: [
+    {
+      label: (
+        <div onClick={() => {
+          updateBodyOverflow(true);
+          document.getElementById('buy-open-icon')?.setAttribute('class', 'header-open');
+        }}>
+          <Menu
+            expandIcon={() => {
+              return (
+                <img id="buy-item-open-icon" className="header-open" src={HeaderOpenIcon} />
+              );
+            }}
+            onOpenChange={open => {
+              updateBodyOverflow(!(open.length > 0));
+              document.getElementById('buy-item-open-icon')?.setAttribute('class', open.length > 0 ? 'header-open open' : 'header-open')
+            }}
+            mode="vertical"
+            onClick={(e) => {
+              handleHeaderClick(e.key);
+            }}
+            items={BuyChildrenItems}></Menu>
+        </div>
+      ),
+      key: '-1'
+    },
+    {
+      label: NacpTooltip('buy-open-icon', 'buyNacp'),
+      key: '0'
+    }
+  ]
+};
+
+const pages: NavPageInfo[] = [
   {
     title: "",
-    url: "/nacp",
+    key: "nacp",
     type: "logo",
     image: NacpLogo,
     mImage: MNacpLogo
   },
   {
     title: "ABOUT",
-    url: "/about",
+    key: "about",
     type: "navbar",
     image: "",
   },
   {
     title: "STORY",
-    url: "/story",
+    key: "story",
     type: "navbar",
     image: "",
   },
   {
-    title: "NFT",
-    url: "/nft",
-    type: "navbar",
+    title: "GALLERY",
+    key: "",
+    type: "hover",
     image: "",
+    eleItem: () => {
+      return (
+        <Dropdown
+          menu={GalleryItems}
+          // @ts-ignore
+          getPopupContainer={() => document.getElementById('header-container')}
+          overlayClassName="gallery-items"
+          onOpenChange={open => {
+            updateBodyOverflow(!open);
+            document.getElementById('gallery-open-icon')?.setAttribute('class', open ? 'header-open open' : 'header-open')
+          }}>
+          <div className="gallery-item title-text">
+            GALLERY
+            <img id="gallery-open-icon" src={HeaderOpenIcon} className="header-open" alt="" />
+          </div>
+        </Dropdown>
+      );
+    }
+  },
+  {
+    title: "BUY",
+    key: "",
+    type: "hover",
+    image: "",
+    eleItem: () => {
+      return (
+        <Dropdown
+          menu={BuyItems}
+          // @ts-ignore
+          getPopupContainer={() => document.getElementById('header-container')}
+          overlayClassName="gallery-items"
+          onOpenChange={open => {
+            updateBodyOverflow(!open);
+            document.getElementById('buy-open-icon')?.setAttribute('class', open ? 'header-open open' : 'header-open')
+          }}>
+          <div className="gallery-item title-text">
+            BUY
+            <img id="buy-open-icon" src={HeaderOpenIcon} className="header-open" alt="" />
+          </div>
+        </Dropdown>
+      );
+    }
   },
   {
     title: "CAMPAIGN",
-    url: "/campaign",
+    key: "campaign",
     type: "navbar",
     image: "",
   },
   {
     title: "BRIDGE",
-    url: "https://www.nervape.com/bridge/",
+    key: "bridge",
     type: "navbar",
     image: "",
   },
+];
+
+enum HeaderType {
+  Logo = 'logo',
+  Navbar = 'navbar',
+  Open = 'open',
+  Coming = 'coming'
+}
+
+const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
+  nacp: {
+    url: '/nacp',
+    type: HeaderType.Logo
+  },
+  about: {
+    url: '/about',
+    type: HeaderType.Navbar
+  },
+  story: {
+    url: '/story',
+    type: HeaderType.Navbar
+  },
+  galleryCollection: {
+    url: '/nft',
+    type: HeaderType.Navbar
+  },
+  galleryNacp: {
+    url: '',
+    type: HeaderType.Coming
+  },
+  buyCollectionCharacter: {
+    url: 'https://nft.yokaiswap.com/nfts/collections/0xabD318eEc719a1b38d4eAfDa0b7465AB16EB1641',
+    type: HeaderType.Open
+  },
+  buyCollectionItem: {
+    url: 'https://nft.yokaiswap.com/nfts/collections/0xf780a8e4E9a5eaeC25bd7baBa88b9071C949e259',
+    type: HeaderType.Open
+  },
+  buyCollectionScene: {
+    url: 'https://nft.yokaiswap.com/nfts/collections/0x6eeBA0a2c22310F225524D89B3fcEaEeF6aC75CF',
+    type: HeaderType.Open
+  },
+  buyCollectionSpecial: {
+    url: 'https://nft.yokaiswap.com/nfts/collections/0xEbf51a5B54B8fE069Bc5858be864AeD179EA0795',
+    type: HeaderType.Open
+  },
+  buyNacp: {
+    url: '',
+    type: HeaderType.Coming
+  },
+  campaign: {
+    url: '/campaign',
+    type: HeaderType.Navbar
+  },
+  bridge: {
+    url: 'https://www.nervape.com/bridge/',
+    type: HeaderType.Open
+  }
+};
+
+const mPages: MenuItem[] = [
+  getItem('ABOUT', 'about'),
+  getItem('STORY', 'story'),
+  getItem('GALLERY', 'gallery', null, [
+    getItem('3D COLLECTION', 'galleryCollection'),
+    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp')
+  ]),
+  getItem('BUY', 'buy', null, [
+    getItem('3D COLLECTION', 'buyCollection', null, [
+      getItem('CHARACTER', 'buyCollectionCharacter'),
+      getItem('ITEM', 'buyCollectionItem'),
+      getItem('SCENE', 'buyCollectionScene'),
+      getItem('SPECIAL', 'buyCollectionSpecial'),
+    ]),
+    getItem(MNacpTooltip('buyNacp', 'right'), 'buyNacp')
+  ]),
+  getItem('CAMPAIGN', 'campaign'),
+  getItem('BRIDGE', 'bridge')
 ];
 
 export default function NavHeader(props: any) {
@@ -110,6 +371,7 @@ export default function NavHeader(props: any) {
       document.body.style.overflow = "auto";
     }
   }, [disableList, state.showLoginModal]);
+
   useEffect(() => {
     scrollToTop();
     window.addEventListener('scroll', fnScrollPage, true)
@@ -120,6 +382,7 @@ export default function NavHeader(props: any) {
 
   return (
     <div
+      id="header-container"
       className={`header-container ${hideHeader && 'hide'}`}
     >
       <div
@@ -158,35 +421,58 @@ export default function NavHeader(props: any) {
                 <WalletConnect setDisableList={setDisableList}></WalletConnect>
               </div>
             )}
-            {pages?.map((v: NavPageInfo, i: number) => {
-              return (
+            {state.windowWidth > 750 ? (
+              pages?.map((v: NavPageInfo, i: number) => {
+                return (
+                  <div
+                    className={`nav-area cursor ${v.type} ${activeIndex == i ? 'active' : ''}`}
+                    key={i}
+                    onClick={() => {
+                      dispatch({
+                        type: Types.HideLoginModal
+                      })
+                      handleHeaderClick(v.key);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    {v.type === 'logo'
+                      ? (
+                        <div className="nacp-logo">
+                          <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
+                        </div>
+                      )
+                      : v.type === 'hover' ? (v.eleItem && v.eleItem()) : (<div className="title-text">{v.title}</div>)}
+                  </div>
+                );
+              })
+            ) : (
+              <>
                 <div
-                  className={`nav-area cursor ${v.type} ${activeIndex == i ? 'active' : ''}`}
-                  key={i}
+                  className="nav-area logo"
                   onClick={() => {
                     setDisableList(true);
-                    dispatch({
-                      type: Types.HideLoginModal
-                    })
-                    if (v.title === 'BRIDGE') {
-                      window.open(v.url);
-                    } else {
-                      // if (v.type === 'logo') return;
-                      NavTool.fnJumpToPage(v.url);
-                    }
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  {v.type === 'logo'
-                    ? (
-                      <div className="nacp-logo">
-                        <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
-                      </div>
-                    )
-                    : (<div className="title-text">{v.title}</div>)}
+                    handleHeaderClick('nacp');
+                  }}>
+                  <div className="nacp-logo">
+                    <img className="icon-image" src={state.windowWidth <= 750 ? MNacpLogo : NacpLogo} alt="" />
+                  </div>
                 </div>
-              );
-            })}
+                <Menu
+                  className="mobile-menu-items"
+                  expandIcon={() => {
+                    return (
+                      <img id="buy-item-open-icon" className="header-open" src={HeaderOpenIcon} />
+                    );
+                  }}
+                  mode="inline"
+                  inlineIndent={16}
+                  onClick={e => {
+                    if (e.key !== HeaderType.Coming) setDisableList(true);
+                    handleHeaderClick(e.key);
+                  }}
+                  items={mPages}></Menu>
+              </>
+            )}
             <div className={`icon-nav-c ${state.windowWidth <= 750 && 'mobile'}`}>
               <div
                 className={`nav-area cursor icon`}
@@ -215,7 +501,6 @@ export default function NavHeader(props: any) {
             )}
           </ul>
         </div>
-
       </div>
     </div>
   );

@@ -58,6 +58,20 @@
           background: #86c0f7;
         }
 
+        .gallery-item {
+          .header-open {
+            width: 6px;
+            height: 6px;
+            margin-left: 4px;
+            transition: all 0.3s;
+            transform: rotate(90deg);
+
+            &.open {
+              transform: rotate(0);
+            }
+          }
+        }
+
         .title-text {
           padding: 0 12px;
           font-weight: 500;
@@ -87,6 +101,7 @@
 
       .nav-area.wallet-login {
         background: unset;
+
         &:hover {
           background: unset;
         }
@@ -134,13 +149,99 @@
   opacity: 0;
 }
 
+.gallery-items {
+  .ant-dropdown-menu {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 8px;
+
+    .ant-dropdown-menu-item {
+      font-weight: 500;
+      font-size: 12px;
+      padding: 9px 16px;
+      line-height: 14px;
+      letter-spacing: -0.05em;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      transition: all 0.3s;
+
+      &.ant-dropdown-menu-item-active {
+        background-color: unset;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        background: rgba(136, 136, 136, 0.2);
+        border-radius: 6px;
+      }
+
+      .ant-menu {
+        background: unset;
+        color: #FFFFFF;
+        font-size: 12px;
+        border-right: none;
+
+        .ant-menu-submenu {
+
+          &.ant-menu-submenu-active,
+          &.ant-menu-submenu-selected {
+            color: #FFFFFF;
+            background-color: unset;
+          }
+
+          .ant-menu-submenu-title {
+            height: unset;
+            line-height: 14px;
+            margin: 0;
+            padding: 0;
+            box-shadow: unset;
+            background-color: unset !important;
+
+            &:hover {
+              color: #FFFFFF;
+            }
+
+            .header-open {
+              width: 6px;
+              height: 6px;
+              margin-left: 4px;
+              transition: all 0.3s;
+              transform: rotate(0);
+
+              &.open {
+                transform: rotate(-90deg);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .tooltip {
   width: 150px;
   border-radius: 8px;
   max-width: unset;
-  &.ant-tooltip-placement-right {
-    padding-left: 0 !important;
+
+  &.gallery-tooltip {
+    .ant-tooltip-content {
+      .ant-tooltip-inner {
+        text-align: center;
+        padding: 16px;
+        line-height: 14px;
+      }
+    }
   }
+
+  // &.ant-tooltip-placement-right {
+  //   padding-left: 0 !important;
+  // }
 
   .ant-tooltip-content {
     font-size: 12px;
@@ -148,13 +249,50 @@
 
     .ant-tooltip-inner {
       text-align: center;
-      height: 46px;
-      line-height: 46px;
-      padding: 0 !important;
       border-radius: 8px !important;
 
       p {
         margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.ant-menu-submenu-popup {
+  .ant-menu {
+    margin-left: 30px;
+    margin-top: -19px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 10px;
+
+    .ant-menu-item {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: -0.05em;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 9px 16px;
+      height: unset;
+      margin-bottom: 10px;
+      margin-top: 0;
+      transition: all 0.3s;
+      box-shadow: unset;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.ant-menu-item-active,
+      &.ant-menu-item-selected {
+        color: #FFFFFF;
+        background-color: unset;
+      }
+
+      &:hover {
+        background: rgba(136, 136, 136, 0.2);
+        border-radius: 6px;
       }
     }
   }
@@ -213,7 +351,7 @@
           margin-right: 0;
           width: 100%;
           background: unset;
-          
+
           .title-text {
             font-size: 16px;
             padding: 0 16px;
@@ -235,12 +373,15 @@
           padding-bottom: 16px;
           border-radius: 0;
           border-bottom: 1px solid #595D64;
+
           .wallect-connect-modal {
             width: 100%;
+
             .m-connect-group {
               height: 40px;
               line-height: 40px;
               display: flex;
+
               .login-image {
                 background: none;
                 border: none;
@@ -268,14 +409,17 @@
         .nav-area.logo {
           margin-top: 16px;
           width: 100%;
+
           .nacp-logo {
             padding: 4px 16px;
+
             .icon-image {
               width: 72px;
               height: 32px;
             }
           }
         }
+
         .icon-nav-c {
           display: flex;
           height: 40px;
@@ -326,6 +470,106 @@
   .header-container {
     .header {
       padding: 0px 40px;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .header-container {
+    .header {
+      .header-menu {
+        .btn-group {
+          .mobile-menu-items {
+            background: unset;
+            border: unset;
+            color: #FFFFFF;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: -0.05em;
+
+            .ant-menu-item,
+            .ant-menu-submenu {
+              margin: 0 0 32px 0;
+              padding-bottom: 0;
+              background: unset !important;
+              
+              &.ant-menu-item-selected {
+                color: #FFFFFF;
+              }
+
+              &::after {
+                border-right: none;
+              }
+              // &.ant-menu-submenu-open {
+              //   margin-bottom: 0;
+              // }
+
+              &.ant-menu-submenu-active {
+                color: #FFFFFF;
+              }
+
+              .ant-menu-submenu-title {
+                display: inline-block;
+                margin: 0;
+                background-color: unset !important;
+                box-shadow: unset;
+                color: #FFFFFF;
+
+                &:hover {
+                  color: #FFFFFF;
+                }
+
+                .header-open {
+                  width: 6px;
+                  height: 6px;
+                  margin-left: 8px;
+                  transition: all 0.3s;
+                  transform: rotate(90deg);
+
+                  &.open {
+                    transform: rotate(0);
+                  }
+                }
+              }
+
+              .ant-menu {
+                background: unset;
+                color: rgba(255, 255, 255, 0.5);
+
+                .ant-menu-item {
+                  color: rgba(255, 255, 255, 0.5);
+                  margin-bottom: 4px;
+                  background: unset;
+                  box-shadow: none;
+
+                  &:last-child {
+                    margin-bottom: 0;
+                  }
+
+                  &::after {
+                    border-right: none;
+                  }
+                }
+
+                .ant-menu-submenu {
+                  margin-bottom: 4px;
+
+                  &.ant-menu-submenu-open {
+                    .ant-menu-submenu-title {
+                      color: #FFFFFF;
+                    }
+                  }
+
+                  .ant-menu-submenu-title {
+                    color: rgba(255, 255, 255, 0.5);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -115,7 +115,7 @@ export default function App() {
           <Route
             path="/campaign"
             element={
-              <PageView activeIndex={4}>
+              <PageView activeIndex={5}>
                 <CampaignPage />
               </PageView>
             }
@@ -123,7 +123,7 @@ export default function App() {
           <Route
             path="/wallet"
             element={
-              <PageView activeIndex={6} disableFooter={true}>
+              <PageView activeIndex={7} disableFooter={true}>
                 <WallectPage></WallectPage>
               </PageView>
             }>
