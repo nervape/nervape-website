@@ -53,6 +53,7 @@ export class Story {
 
   collectable: boolean = false;
   collectQuizBackground?: string = "";
+  signMessage?: string = "";
   galxeCampaignId: string = "";
   questions?: StoryQuestion[] = [];
 }

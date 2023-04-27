@@ -93,7 +93,7 @@ export default function StoryProfile(props: any) {
     const signInWithEthereum = async () => {
         if (!address || !story) return false;
 
-        const message = await createSiweMessage(address, 'Sign in with Ethereum to the app.');
+        const message = await createSiweMessage(address, story.signMessage || 'Sign in to complete Story Challenge.');
 
         const signature = await signMessageAsync({ message });
 
