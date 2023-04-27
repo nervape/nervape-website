@@ -18,6 +18,7 @@ import { SiweMessage } from "siwe";
 import { godWokenTestnet } from "../../../utils/Chain";
 import { queryOatPoaps } from "../../../utils/api";
 import { Tooltip } from "antd";
+import LeaveConfirm from "../question/leave-confirm";
 
 function SideStoryDetail(props: any) {
     const { close, story } = props;
@@ -63,6 +64,7 @@ export default function StoryProfile(props: any) {
     const [keyId, setKeyId] = useState(0);
     const [showSide, setShowSide] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
+    const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
 
     // 钱包相关
     const { address, isConnected } = useAccount();
@@ -152,7 +154,7 @@ export default function StoryProfile(props: any) {
     const challengeTitle = () => {
         return (
             <div className="challenge-title">
-                Take the Nervape Saga Challenge to test your knowledge of Nervape’s story 
+                Take the Nervape Saga Challenge to test your knowledge of Nervape’s story
                 and for a chance to win a Nervape Saga Scholar OAT!
                 <ul>
                     <li>Follow Nervape Twitter (@Nervapes)</li>
@@ -268,7 +270,7 @@ export default function StoryProfile(props: any) {
         if (story?.collectable && questions?.length) {
             return (
                 <div className="quiz-btn-container">
-                    <div className="quiz-btn-content" style={{background: story?.collectQuizBackground}}>
+                    <div className="quiz-btn-content" style={{ background: story?.collectQuizBackground }}>
                         <div className="quiz-left flex-align">
                             <img className="quiz-icon" alt="" />
                             <div className="quiz">CHALLENGE</div>
@@ -288,7 +290,7 @@ export default function StoryProfile(props: any) {
                             {!isConnected ? (
                                 <div className="connect-tip">
                                     Take the challenge to win an award!
-                                    <button className="connect-btn quiz-btn cursor"
+                                    <button className="connect-btn quiz-btn button-hover-action-red cursor"
                                         onClick={() => {
                                             dispatch({
                                                 type: Types.ShowLoginModal,
@@ -299,7 +301,7 @@ export default function StoryProfile(props: any) {
                                 !hasTake ? (
                                     <div className="take-quiz">
                                         Test your Nervape Saga knowledge.
-                                        <button className="take-quiz-btn quiz-btn cursor"
+                                        <button className="take-quiz-btn quiz-btn button-hover-action-red cursor"
                                             onClick={() => {
                                                 document.body.style.overflow = 'hidden';
                                                 setShowQuiz(true);
@@ -308,7 +310,7 @@ export default function StoryProfile(props: any) {
                                 ) : !hasTakeOat ? (
                                     <div className="claim-reward">
                                         Challenge completed!
-                                        <button className="connect-btn quiz-btn cursor"
+                                        <button className="connect-btn quiz-btn button-hover-action-red cursor"
                                             onClick={() => {
                                                 openGalxeUrl();
                                             }}>CLAIM REWARD</button>
@@ -379,9 +381,18 @@ export default function StoryProfile(props: any) {
                 signInWithEthereum={signInWithEthereum}
                 openGalxeUrl={openGalxeUrl}
                 close={() => {
-                    document.body.style.overflow = 'auto';
-                    setShowQuiz(false);
+                    setShowLeaveConfirm(true);
                 }}></StoryQuestionPop>
+            <LeaveConfirm
+                show={showLeaveConfirm}
+                close={() => {
+                    setShowLeaveConfirm(false);
+                }}
+                confirm={() => {
+                    document.body.style.overflow = 'auto';
+                    setShowLeaveConfirm(false);
+                    setShowQuiz(false);
+                }}></LeaveConfirm>
         </div>
     );
 }

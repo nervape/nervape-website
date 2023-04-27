@@ -17,11 +17,12 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
             value: ''
         }))
         setAnswers(_answers);
-    }, [questions]);
+        setCurrIndex(0);
+    }, [questions, show]);
     const BackButton = () => {
         return (
             <button
-                className="btn back-btn cursor"
+                className="btn back-btn button-hover-action-red cursor"
                 onClick={() => {
                     setErrprMessage('');
                     answers[currIndex - 1].value = "";
@@ -53,7 +54,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     const NextButton = () => {
         return (
             <button
-                className="btn next-btn cursor"
+                className="btn next-btn button-hover-action-red cursor"
                 onClick={async () => {
                     const pass = await checkAnswer();
                     if (!pass) return;
@@ -141,7 +142,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                         </div>
                     ) : (
                         <div className="claim-reward">
-                            <button className="btn cursor"
+                            <button className="btn button-hover-action-red cursor"
                                 onClick={() => {
                                     openGalxeUrl();
                                 }}>CLAIM REWARD</button>

@@ -195,10 +195,8 @@ export default function WallectConnect(props: any) {
                 className="nervape-asset cursor"
                 onClick={() => {
                     setOpen(false);
-                    if (storyQuizes.length + campaignEvents.length > 0) {
-                        setShowQuest(true);
-                        document.body.style.overflow = 'hidden';
-                    }
+                    setShowQuest(true);
+                    document.body.style.overflow = 'hidden';
                 }}>
                 {`Available Quest (${storyQuizes.length + campaignEvents.length})`}
             </button>
@@ -412,7 +410,7 @@ export default function WallectConnect(props: any) {
                     setShowLogout(false);
                 }}
                 logout={disconnectReload}></Logout>
-            <AvailableQuest 
+            <AvailableQuest
                 show={showQuest}
                 events={campaignEvents}
                 quizes={storyQuizes}

@@ -19,7 +19,7 @@ export default function AvailableQuest(props: { show: boolean; close: any; event
         const { item, type } = props;
 
         const isEvent = type == 'event';
-        
+
         return (
             <div className="quest-item cursor flex-align" onClick={() => {
                 if (isEvent) {
@@ -47,14 +47,22 @@ export default function AvailableQuest(props: { show: boolean; close: any; event
         <div className={`alailable-quest-container ${show && 'show'}`} onClick={close}>
             <div className="quest-content" onClick={e => e.stopPropagation()}>
                 <div className="title">Available Quest(s)</div>
-                <div className="quest-list">
-                    {events.map((event, index) => {
-                        return <QuestItem key={index} item={event} type="event"></QuestItem>
-                    })}
-                    {quizes.map((quiz, index) => {
-                        return <QuestItem key={index} item={quiz} type="quiz"></QuestItem>
-                    })}
-                </div>
+                {quizes.length + events.length > 0 ? (
+                    <div className="quest-list">
+                        {events.map((event, index) => {
+                            return <QuestItem key={index} item={event} type="event"></QuestItem>
+                        })}
+                        {quizes.map((quiz, index) => {
+                            return <QuestItem key={index} item={quiz} type="quiz"></QuestItem>
+                        })}
+                    </div>
+                ) : (
+                    <div className="empty-content">
+                        There's no available quests at this time.
+                        <br />
+                        <a href="">Check additional ways to earn Bonepoints</a>
+                    </div>
+                )}
             </div>
         </div>
     );
