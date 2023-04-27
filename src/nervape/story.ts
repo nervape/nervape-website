@@ -97,7 +97,7 @@ export class StoryCollectable {
   _id: string = "";
   urlMask: string = "";
   collectable: boolean = false;
-  serial: string = "";
+  quizName: string = "";
   show?: boolean = false;
   galxeCampaignId: string = "";
 }

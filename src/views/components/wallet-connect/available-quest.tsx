@@ -34,7 +34,7 @@ export default function AvailableQuest(props: { show: boolean; close: any; event
                     <div className="text">{isEvent ? 'Badge' : 'Quiz'}</div>
                 </div>
                 <div className={`quest-right ${state.windowWidth > 375 && 'flex-align'}`}>
-                    <div className="quest-title">{isEvent ? item.title : item.serial + ' Quiz'}</div>
+                    <div className="quest-title">{isEvent ? item.title : item.quizName}</div>
                     {isEvent && (
                         <div className="quest-date">{`ends ${moment(item.endTime).format("M/D/Y")}`}</div>
                     )}
