@@ -7,7 +7,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     const { show, questions, signInWithEthereum, close, openGalxeUrl } = props;
     const [currIndex, setCurrIndex] = useState(0);
     const [answers, setAnswers] = useState<any[]>([]);
-    const [errorMessage, setErrprMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const [completed, setCompleted] = useState(false);
 
     useEffect(() => {
@@ -18,13 +18,14 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
         }))
         setAnswers(_answers);
         setCurrIndex(0);
+        setErrorMessage('');
     }, [questions, show]);
     const BackButton = () => {
         return (
             <button
                 className="btn back-btn button-hover-action-red cursor"
                 onClick={() => {
-                    setErrprMessage('');
+                    setErrorMessage('');
                     answers[currIndex - 1].value = "";
                     setCurrIndex(currIndex - 1);
                 }}>
@@ -36,19 +37,19 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     const checkAnswer = async () => {
         if (questions[currIndex].type == StoryQuestionType.Radio) {
             if (answers[currIndex].value !== questions[currIndex].optionId) {
-                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Don’t give up! Try again.');
+                setErrorMessage(questions[currIndex].errorMessage || 'Wrong answer. Don’t give up! Try again.');
                 return false;
             }
         }
 
         if (questions[currIndex].type == StoryQuestionType.Checkbox) {
             if (!answers[currIndex].value || questions[currIndex].optionId != answers[currIndex].value.join(',')) {
-                setErrprMessage(questions[currIndex].errorMessage || 'Wrong answer. Don’t give up! Try again.');
+                setErrorMessage(questions[currIndex].errorMessage || 'Wrong answer. Don’t give up! Try again.');
                 return false;
             }
         }
 
-        setErrprMessage('');
+        setErrorMessage('');
         return true;
     }
     const NextButton = () => {
@@ -96,6 +97,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                                     {questions[currIndex].type == StoryQuestionType.Radio && (
                                         <Radio.Group
                                             options={questions[currIndex].options}
+                                            value={answers[currIndex]?.value}
                                             optionType="button"
                                             onChange={(e) => {
                                                 let _answers = JSON.parse(JSON.stringify(answers));

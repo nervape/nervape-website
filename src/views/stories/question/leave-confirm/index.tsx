@@ -4,7 +4,7 @@ import './index.less';
 export default function LeaveConfirm(props: any) {
     const { close, show, confirm } = props;
     return (
-        <div className={`confirm-container ${show && 'show'}`}>
+        <div className={`leave-confirm-container ${show && 'show'}`}>
             <div className="confirm-content">
                 <div className="desc">
                     Are you sure that you want to leave the challenge?
