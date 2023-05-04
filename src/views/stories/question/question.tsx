@@ -126,10 +126,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                                 <img className="completed-img" alt="" />
                                 <div className="completed-tip">
                                     Congratulations! You have completed the Nervape Saga Challenge. 
-                                    You’re a true scholar of the Nervape Saga. 
-                                    Yinhe is very pleased 🐉 . 
-                                    We shall now bestow upon you your reward. 
-                                    Click below to claim it!
+                                    You can now claim your reward!
                                 </div>
                             </div>
                         )}

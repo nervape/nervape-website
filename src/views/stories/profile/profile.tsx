@@ -15,7 +15,7 @@ import { useAccount, useSignMessage } from "wagmi";
 import { Types } from "../../../utils/reducers";
 import StoryQuestionPop from "../question/question";
 import { SiweMessage } from "siwe";
-import { godWokenTestnet } from "../../../utils/Chain";
+import { godWoken, godWokenTestnet } from "../../../utils/Chain";
 import { queryOatPoaps } from "../../../utils/api";
 import { Tooltip } from "antd";
 import LeaveConfirm from "../question/leave-confirm";
@@ -83,7 +83,7 @@ export default function StoryProfile(props: any) {
             statement,
             uri: origin,
             version: '1',
-            chainId: godWokenTestnet.id,
+            chainId: godWoken.id,
             nonce: res
         });
 
