@@ -140,7 +140,7 @@ export default function HistoryDetail(props: {
 
     return (
         <div
-            className={`history-detail ${show && 'show'}`}
+            className={`history-detail popup-container ${show && 'show'}`}
             onClick={() => {
                 close();
             }}

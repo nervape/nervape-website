@@ -61,7 +61,7 @@ export default function SwitchChain(props: {
     
     return (
         <div
-            className={`switch-chain ${show && 'show'}`}
+            className={`switch-chain popup-container ${show && 'show'}`}
             onClick={() => {
                 setSwitchChain(false);
             }}

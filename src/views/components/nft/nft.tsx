@@ -25,7 +25,7 @@ export function TransferSuccess(props: { show: boolean; close: Function; viewHis
     const { show, close, viewHistory } = props;
     return (
         <div
-            className={`bridge-success-content ${show && 'show'}`}
+            className={`bridge-success-content popup-container ${show && 'show'}`}
             onClick={() => {
                 close();
             }}
@@ -291,7 +291,10 @@ export default function NFT_CONTENT(props: any) {
             {showFullscreen && (
                 <FullscreenPreview
                     nft={nftDetail}
-                    close={() => setShowFullscreen(false)}
+                    close={() => {
+                        setShowFullscreen(false);
+                        disableOverflowBody(false);
+                    }}
                 ></FullscreenPreview>
             )}
         </div>

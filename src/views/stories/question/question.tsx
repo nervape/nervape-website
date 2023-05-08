@@ -2,13 +2,23 @@ import React, { useEffect, useState } from "react";
 import "./question.less";
 import { StoryQuestion, StoryQuestionType } from "../../../nervape/story";
 import { Checkbox, Radio } from "antd";
+import { queryOatPoapInfo } from "../../../utils/api";
 
-export default function StoryQuestionPop(props: { show: boolean; questions: StoryQuestion[]; signInWithEthereum: Function; close: Function; openGalxeUrl: Function; }) {
-    const { show, questions, signInWithEthereum, close, openGalxeUrl } = props;
+export default function StoryQuestionPop(
+    props: { 
+        show: boolean; 
+        questions: StoryQuestion[]; 
+        signInWithEthereum: Function; 
+        close: Function; 
+        openGalxeUrl: Function; 
+        galxeCampaignId: string; 
+    }) {
+    const { show, questions, signInWithEthereum, close, openGalxeUrl, galxeCampaignId } = props;
     const [currIndex, setCurrIndex] = useState(0);
     const [answers, setAnswers] = useState<any[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [completed, setCompleted] = useState(false);
+    const [thumbnail, setThumbnail] = useState();
 
     useEffect(() => {
         if (!questions.length) return;
@@ -20,6 +30,14 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
         setCurrIndex(0);
         setErrorMessage('');
     }, [questions, show]);
+
+    useEffect(() => {
+        if (!galxeCampaignId) return;
+        queryOatPoapInfo(galxeCampaignId).then(res => {
+            setThumbnail(res.thumbnail);
+        });
+    }, [galxeCampaignId]);
+
     const BackButton = () => {
         return (
             <button
@@ -74,7 +92,7 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
     }
 
     return (
-        <div className={`story-quiz-container ${show && 'show'}`} onClick={() => { close() }}>
+        <div className={`story-quiz-container popup-container ${show && 'show'}`} onClick={() => { close() }}>
             <div className="story-quiz-content" onClick={e => { e.stopPropagation(); }}>
                 <div className="question-content">
                     <div className="question-top">
@@ -125,9 +143,9 @@ export default function StoryQuestionPop(props: { show: boolean; questions: Stor
                             </>
                         ) : (
                             <div className="completed-content">
-                                <img className="completed-img" alt="" />
+                                <img className="completed-img" src={thumbnail} alt="" />
                                 <div className="completed-tip">
-                                    Congratulations! You have completed the Nervape Saga Challenge. 
+                                    Congratulations! You have completed the Nervape Saga Challenge.
                                     You can now claim your reward!
                                 </div>
                             </div>

@@ -4,7 +4,7 @@ import './index.less';
 export default function Logout(props: any) {
     const { close, show, logout } = props;
     return (
-        <div className={`confirm-container ${show && 'show'}`}>
+        <div className={`confirm-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
                 <div className="desc">
                     Would you like to sign out?

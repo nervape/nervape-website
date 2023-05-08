@@ -4,7 +4,7 @@ import './confirm.less';
 export default function TransferConfirm(props: { useMaxAmount: any; close: any; show: boolean; }) {
     const { useMaxAmount, close, show } = props;
     return (
-        <div className={`confirm-container ${show && 'show'}`}>
+        <div className={`confirm-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
                 <div className="desc">
                     Your remaining balance after the transaction will be smaller than 63 CKB, which

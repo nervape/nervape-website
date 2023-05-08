@@ -44,7 +44,7 @@ export default function AvailableQuest(props: { show: boolean; close: any; event
     }
 
     return (
-        <div className={`alailable-quest-container ${show && 'show'}`} onClick={close}>
+        <div className={`alailable-quest-container popup-container ${show && 'show'}`} onClick={close}>
             <div className="quest-content" onClick={e => e.stopPropagation()}>
                 <div className="title">Available Quest(s)</div>
                 {quizes.length + events.length > 0 ? (

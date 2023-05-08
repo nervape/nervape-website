@@ -380,6 +380,7 @@ export default function StoryProfile(props: any) {
                 questions={story?.questions || []}
                 signInWithEthereum={signInWithEthereum}
                 openGalxeUrl={openGalxeUrl}
+                galxeCampaignId={story.galxeCampaignId}
                 close={() => {
                     setShowLeaveConfirm(true);
                 }}></StoryQuestionPop>
