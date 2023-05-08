@@ -99,12 +99,12 @@ export default function StoryQuestionPop(
                         <div className="quiz-index">{completed ? 'Quiz Completed' : `Question ${currIndex + 1} of ${questions.length}`}</div>
                         {!completed && (
                             <>
-                                {questions[currIndex].coverImage && (
+                                {questions[currIndex]?.coverImage && (
                                     <div className="cover-image">
-                                        <img src={questions[currIndex].coverImage} alt="CoverImage" />
+                                        <img src={questions[currIndex]?.coverImage} alt="CoverImage" />
                                     </div>
                                 )}
-                                <div className="question-title">{questions[currIndex].title}</div>
+                                <div className="question-title">{questions[currIndex]?.title}</div>
                             </>
                         )}
                     </div>
@@ -112,7 +112,7 @@ export default function StoryQuestionPop(
                         {!completed ? (
                             <>
                                 <div className="question-options">
-                                    {questions[currIndex].type == StoryQuestionType.Radio && (
+                                    {questions[currIndex]?.type == StoryQuestionType.Radio && (
                                         <Radio.Group
                                             options={questions[currIndex].options}
                                             value={answers[currIndex]?.value}
@@ -125,7 +125,7 @@ export default function StoryQuestionPop(
                                         </Radio.Group>
                                     )}
                                     {
-                                        questions[currIndex].type == StoryQuestionType.Checkbox && (
+                                        questions[currIndex]?.type == StoryQuestionType.Checkbox && (
                                             <Checkbox.Group
                                                 options={questions[currIndex].options}
                                                 onChange={(e) => {
