@@ -11,7 +11,8 @@ export const initialState = {
     showLoginModal: false,
     currentAddress: '',
     layerOneWrapper: undefined,
-    loginWalletType: undefined
+    loginWalletType: undefined,
+    isInit: false,
 }
 
 export const DataContext = createContext<{
@@ -60,4 +61,16 @@ export function isMetaMaskMobile() {
 
 export function updateBodyOverflow(open: boolean) {
     document.body.style.overflow = open ? 'auto' : 'hidden';
+}
+
+export function shuffle(arr: []) {
+    let stack = [];
+
+    while(arr.length) {
+        let index = Math.floor(Math.random() * arr.length);
+        stack.push(arr[index]);
+        arr.splice(index, 1);
+    }
+
+    return stack;
 }

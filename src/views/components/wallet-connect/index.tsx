@@ -19,10 +19,20 @@ import Logout from "../logout";
 import { Types } from "../../../utils/reducers";
 import { godWoken } from "../../../utils/Chain";
 import { SwitchChainSpan } from "../switchChain";
+import { queryGetVotes } from "../../../utils/snapshot";
+import { nervapeApi } from "../../../api/nervape-api";
+import { StoryCollectable } from "../../../nervape/story";
+import { queryOatPoaps } from "../../../utils/api";
+import { Event, Vote } from "../../../nervape/campaign";
+import AvailableQuest from "./available-quest";
 
 export default function WallectConnect(props: any) {
     const { setDisableList } = props;
     const { state, dispatch } = useContext(DataContext);
+
+    const [storyQuizes, setStoryQuizes] = useState<StoryCollectable[]>([]);
+    const [campaignEvents, setCampaignEvents] = useState<Event[]>([]);
+    const [showQuest, setShowQuest] = useState(false);
 
     const setLayerOneWrapper = (wrapper: UnipassV3Wrapper) => {
         dispatch({
@@ -36,6 +46,13 @@ export default function WallectConnect(props: any) {
         dispatch({
             type: Types.CurrentAddress,
             value: _address
+        })
+    }
+
+    const setIsInit = (isInit: boolean) => {
+        dispatch({
+            type: Types.IsInit,
+            value: isInit
         })
     }
 
@@ -77,10 +94,11 @@ export default function WallectConnect(props: any) {
 
     async function initLogin() {
         const _storage = getStorage();
-        if (!_storage) {
+        if (!_storage || state.currentAddress) {
+            setIsInit(true);
             return;
         }
-        if (state.currentAddress) return;
+
         const _storageJson: WALLET_CONNECT = JSON.parse(_storage);
         if (_storageJson?.expiredAt && new Date().getTime() <= _storageJson?.expiredAt) {
             setLoginWalletType(_storageJson.type);
@@ -96,8 +114,31 @@ export default function WallectConnect(props: any) {
         } else {
             clearStorage();
         }
+
+        setIsInit(true);
     }
 
+    async function initQuizAndEvent(_address: string) {
+        const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
+        await Promise.all(
+            stories.map(async story => {
+                const _oatPoaps = await queryOatPoaps(_address, story.galxeCampaignId);
+                story.show = _oatPoaps.length <= 0;
+                return story;
+            })
+        );
+        setStoryQuizes(stories.filter(item => item.show));
+        console.log(storyQuizes);
+        const events: Event[] = await nervapeApi.fnGetActiveEvents();
+        await Promise.all(
+            events.map(async event => {
+                const votes: Vote[] = await queryGetVotes(event.proposalId);
+                const count = votes.filter(vote => vote.voter == _address).length;
+                event.show = count == 0;
+            })
+        )
+        setCampaignEvents(events.filter(item => item.show));
+    }
     useEffect(() => {
         initLogin();
     }, []);
@@ -114,6 +155,11 @@ export default function WallectConnect(props: any) {
         document.body.style.overflow = 'auto';
     }, [address, state.loginWalletType, chain]);
 
+    useEffect(() => {
+        if (!address) return;
+        // init Story Quiz and Events data
+        initQuizAndEvent(address);
+    }, [address]);
     const NervapeAssets = () => {
         return (
             <button
@@ -143,6 +189,19 @@ export default function WallectConnect(props: any) {
         );
     }
 
+    const Available = () => {
+        return (
+            <button
+                className="nervape-asset cursor"
+                onClick={() => {
+                    setOpen(false);
+                    setShowQuest(true);
+                    document.body.style.overflow = 'hidden';
+                }}>
+                {`Available Quest (${storyQuizes.length + campaignEvents.length})`}
+            </button>
+        );
+    }
     const SignOut = () => {
         return (
             <button
@@ -188,6 +247,10 @@ export default function WallectConnect(props: any) {
             key: '1'
         },
         {
+            label: Available(),
+            key: '3'
+        },
+        {
             label: SignOut(),
             key: '2'
         }
@@ -205,6 +268,10 @@ export default function WallectConnect(props: any) {
         {
             label: CopyAddress(),
             key: '1'
+        },
+        {
+            label: Available(),
+            key: '3'
         },
         {
             label: SignOut(),
@@ -251,7 +318,7 @@ export default function WallectConnect(props: any) {
         } else {
             setItems(_items);
         }
-    }, [chain, state.loginWalletType]);
+    }, [chain, state.loginWalletType, campaignEvents, storyQuizes]);
 
     useEffect(() => {
         const subLength = 5;
@@ -289,6 +356,11 @@ export default function WallectConnect(props: any) {
                             <div className={`address cursor ${open && 'open'}`}>
                                 <img src={walletIcon()} alt="UnipassIcon" />
                                 <div className="span">{formatAddress}</div>
+                                {(storyQuizes.length + campaignEvents.length > 0) && (
+                                    <div className="available-quest-count">
+                                        {storyQuizes.length + campaignEvents.length > 99 ? '1+' : storyQuizes.length + campaignEvents.length}
+                                    </div>
+                                )}
                             </div>
                         </Dropdown>
                     </div>
@@ -325,6 +397,9 @@ export default function WallectConnect(props: any) {
                         <div className="address-item cursor">
                             {NervapeAssets()}
                         </div>
+                        <div className="address-item cursor">
+                            {Available()}
+                        </div>
                     </div>
                 )
             )}
@@ -335,6 +410,14 @@ export default function WallectConnect(props: any) {
                     setShowLogout(false);
                 }}
                 logout={disconnectReload}></Logout>
+            <AvailableQuest
+                show={showQuest}
+                events={campaignEvents}
+                quizes={storyQuizes}
+                close={() => {
+                    setShowQuest(false);
+                    document.body.style.overflow = 'auto';
+                }}></AvailableQuest>
         </div>
     );
 }

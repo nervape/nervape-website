@@ -1,6 +1,10 @@
 import { NFT } from "./nft";
 
 export type CHAPTER_TYPE = "" | "Chapter I" | "Chapter II" | "Chapter III";
+export enum StoryQuestionType {
+  Radio = 'Radio',
+  Checkbox = 'Checkbox'
+}
 
 export class Chapter {
   _id: string = "";
@@ -48,6 +52,29 @@ export class Story {
   sideStoryCover: string = "";
   sideStoryDesc: string = "";
   sideStoryBackground: string = "";
+
+  collectable: boolean = false;
+  collectQuizBackground?: string = "";
+  signMessage?: string = "";
+  galxeCampaignId: string = "";
+  questions?: StoryQuestion[] = [];
+}
+
+export class StoryQuestion {
+  _id: string = "";
+  coverImage: string = "";
+  optionId: string = "";
+  options: StoryQuestionOption[] = [];
+  sort: number = 0;
+  storyId: string = "";
+  title: string = "";
+  type?: StoryQuestionType;
+  errorMessage?: string = "";
+}
+
+export class StoryQuestionOption {
+  label: string = "";
+  value: string = "";
 }
 
 export class Story_NFT_List {
@@ -66,4 +93,13 @@ export class ChapterList {
   background: string = "";
   desc: string = "";
   stories: Story[] = [];
+}
+
+export class StoryCollectable {
+  _id: string = "";
+  urlMask: string = "";
+  collectable: boolean = false;
+  quizName: string = "";
+  show?: boolean = false;
+  galxeCampaignId: string = "";
 }

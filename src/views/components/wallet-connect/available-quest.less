@@ -1,0 +1,168 @@
+.alailable-quest-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(232, 232, 232, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 99;
+
+    .quest-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transform-origin: center;
+        transition: all 0.5s;
+        width: 600px;
+        background: rgba(27, 33, 47, 0.95);
+        border-radius: 16px;
+        padding: 24px;
+        color: #FFFFFF;
+
+        .title {
+            font-weight: 800;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: -0.05em;
+            padding-bottom: 32px;
+            text-align: left;
+        }
+
+        .quest-list {
+            .quest-item {
+                margin-bottom: 16px;
+                transition: all 0.3s;
+                border-radius: 16px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                }
+
+                .quest-icon-cover {
+                    width: 59px;
+                    height: 70px;
+                    margin-right: 12px;
+                    text-align: center;
+                    padding: 8px;
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+                    .text {
+                        font-weight: 700;
+                        font-size: 12px;
+                        line-height: 14px;
+                        letter-spacing: -0.05em;
+                    }
+                }
+
+                .quest-right {
+                    width: 100%;
+
+                    .quest-title {
+                        flex: 1;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 19px;
+                        letter-spacing: -0.05em;
+                    }
+
+                    .quest-date {
+                        margin-right: 12px;
+                        font-size: 12px;
+                        line-height: 14px;
+                        letter-spacing: -0.05em;
+                    }
+                }
+            }
+        }
+
+        .empty-content {
+            font-size: 12px;
+            line-height: 24px;
+            text-align: center;
+            padding: 30.5px 0 62.5px;
+
+            a {
+                color: #FFFFFF;
+                font-weight: 500;
+                letter-spacing: -0.05em;
+                text-decoration-line: underline;
+            }
+        }
+
+        .desc {
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: -0.05em;
+            line-height: 24px;
+            color: #FFFFFF;
+            padding: 24px 24px 20px;
+        }
+
+        .btn-groups {
+            display: flex;
+            justify-content: center;
+            padding-bottom: 24px;
+
+            .btn {
+                width: unset;
+                height: 32px;
+                line-height: 32px;
+                border-radius: 6px;
+                padding: 0 16px;
+                color: #FFFFFF;
+                font-size: 12px;
+                font-weight: 500;
+                letter-spacing: -0.05em;
+                cursor: pointer;
+                transition: all 0.3s;
+                border: unset;
+            }
+
+            .cancel {
+                background: #506077;
+                margin-right: 16px;
+            }
+
+            .cancel:hover {
+                background: #6D7C93;
+            }
+
+            .confirm {
+                background: #F44D37;
+            }
+
+            .confirm:hover {
+                background: #E45C4A;
+            }
+        }
+    }
+}
+
+.alailable-quest-container.show {
+    visibility: visible;
+    opacity: 1;
+
+    .quest-content {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .alailable-quest-container {
+        .quest-content {
+            width: 347px;
+        }
+    }
+}

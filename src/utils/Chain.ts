@@ -27,3 +27,25 @@ export const godWoken: Chain = {
         }
     }
 };
+
+export const godWokenTestnet: Chain = {
+    id: 71401,
+    name: 'GodwokenTestnet',
+    network: 'GodwokenTestnet',
+    nativeCurrency: {
+        decimals: 18,
+        name: 'Godwoken Testnet',
+        symbol: 'pCKB'
+    },
+    rpcUrls: {
+        public: {
+            http: [''],
+            webSocket: ['']
+        },
+        default: { http: ['https://godwoken-testnet-v1.ckbapp.dev'] }
+    },
+    blockExplorers: {
+        etherscan: { name: 'GwScan', url: 'https://v1.testnet.gwscan.com' },
+        default: { name: 'GwScan', url: 'https://v1.testnet.gwscan.com' }
+    }
+};

@@ -70,7 +70,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
     const { state } = useContext(DataContext);
 
     return (
-        <div className="nft-card-detail-container mask-cover" onClick={close}>
+        <div className="nft-card-detail-container popup-container mask-cover" onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
                     <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>

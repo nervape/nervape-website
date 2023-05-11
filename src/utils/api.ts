@@ -172,3 +172,16 @@ export async function queryOatPoaps(address: string, campaignId: string) {
     const result = await response.json();
     return result.data;
 }
+
+export async function queryOatPoapInfo(campaignId: string) {
+    const response = await fetch(
+        `${CONFIG.BRIDGE_API_HOST}/campaign/poap_badges/oat_info/${campaignId}`,
+        {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        }
+    );
+
+    const result = await response.json();
+    return result.data;
+}

@@ -5,7 +5,7 @@ export default function ChainInfo(props: any) {
     const { show, close } = props;
 
     return (
-        <div className={`chain-info ${show && 'show'}`} onClick={close}>
+        <div className={`chain-info popup-container ${show && 'show'}`} onClick={close}>
             <div
                 className="info-bg"
                 onClick={e => {

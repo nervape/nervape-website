@@ -81,7 +81,7 @@ export default function TransferCkb(props: { show: boolean; close: any; balance:
 
     return (
         <>
-            <div className={`transfer-ckb ${show && 'show'}`} onClick={close}>
+            <div className={`transfer-ckb popup-container ${show && 'show'}`} onClick={close}>
                 <div
                     className="t-bg"
                     onClick={e => {

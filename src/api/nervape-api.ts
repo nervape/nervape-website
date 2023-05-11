@@ -20,8 +20,17 @@ class NervapeApi {
     }
     return data.data;
   }
+  
+  private _fnDealSessionResponse(res: AxiosResponse, url: string) {
+    if (res.status !== 200) {
+      console.warn(res);
+      throw `request failed:${url} `;
+    }
 
-  public async fnGetChapters() : Promise<ChapterList[]> {
+    return res.data;
+  }
+
+  public async fnGetChapters(): Promise<ChapterList[]> {
     const url = `${this.baseUrl}/chapter/all`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
@@ -36,6 +45,17 @@ class NervapeApi {
   public async fnGetStoryDetail(id: string) {
     const url = `${this.baseUrl}/story/profile/${id}`;
     const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnQueryHasTakeQuiz(address: string, storyId: string) {
+    const url = `${this.baseUrl}/story/website/hasTakeQuiz`;
+    const res = await axios.get(url, {
+      params: {
+        address,
+        storyId
+      }
+    });
     return this._fnDealResponse(res, url);
   }
 
@@ -91,6 +111,97 @@ class NervapeApi {
   public async fnSearchBonelist(address: string) {
     const url = `${this.baseUrl}/bonelist/search`;
     const res = await axios.post(url, { address });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetNonce() {
+    const url = `${this.baseUrl}/nacp/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnVerifyLogin() {
+    const url = `${this.baseUrl}/nacp/verify/login`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealSessionResponse(res, url);
+  }
+
+  public async fnSendForVerify(message: string, signature: string) {
+    const url = `${this.baseUrl}/nacp/verify`;
+    const res = await axios.post(url, JSON.stringify({ message, signature }), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnCreateNacp(address: string, payload: any) {
+    const url = `${this.baseUrl}/nacp/create`;
+    const res = await axios.post(url, JSON.stringify({ address, payload }), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetSignature(ids: string[]) {
+    const url = `${this.baseUrl}/nacp/sign`;
+    const res = await axios.post(url, JSON.stringify({ ids }), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetNacps(address: string) {
+    const url = `${this.baseUrl}/nacp/list?address=${address}`;
+    const res = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetStoryQuizNonce() {
+    const url = `${this.baseUrl}/story/questions/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnStoryQuizVerify(message: string, signature: string, storyId: string) {
+    const url = `${this.baseUrl}/story/questions/verify`;
+    const res = await axios.post(url, JSON.stringify({ message, signature, storyId }), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnStoryQuestions() {
+    const url = `${this.baseUrl}/story/questions/all`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetActiveEvents() {
+    const url = `${this.baseUrl}/campaign/events/active/all`;
+    const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
 }

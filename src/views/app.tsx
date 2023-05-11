@@ -25,9 +25,10 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import { godWoken } from "../utils/Chain";
+import { godWoken, godWokenTestnet } from "../utils/Chain";
 import WallectPage from "./wallet";
 import Composite from "./nervape-composite";
+import Nacp from "./nervape-composite/create";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -40,7 +41,7 @@ export default function App() {
     return <MaintenancePage></MaintenancePage>;
   }
 
-  const chains = [godWoken, mainnet];
+  const chains = [godWoken, godWokenTestnet, mainnet];
 
   const { provider, webSocketProvider } = configureChains(chains, [
     alchemyProvider({ apiKey: 'BbyuzUYnWmVjjGxGfgHnkUluVj2fiHBo' }),
@@ -133,6 +134,14 @@ export default function App() {
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Composite></Composite>
+              </PageView>
+            }>
+          </Route>
+          <Route
+            path="/nacp/create"
+            element={
+              <PageView activeIndex={7} disableFooter={true}>
+                <Nacp></Nacp>
               </PageView>
             }>
           </Route>
