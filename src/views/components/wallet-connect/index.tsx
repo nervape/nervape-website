@@ -76,7 +76,12 @@ export default function WallectConnect(props: any) {
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState<MenuProps['items']>([]);
     // 格式化的地址
-    const [formatAddress, setFormatAddress] = useState('');
+    const setFormatAddress = (type: string) => {
+        dispatch({
+            type: Types.FormatAddress,
+            value: type
+        })
+    }
 
     const [showLogout, setShowLogout] = useState(false);
     const { disconnect } = useDisconnect();
@@ -322,7 +327,7 @@ export default function WallectConnect(props: any) {
 
     useEffect(() => {
         const subLength = 5;
-        const dotStr = '......';
+        const dotStr = '...';
         setFormatAddress(
             `${state.currentAddress.substr(0, subLength)}${dotStr}${state.currentAddress.substr(
                 state.currentAddress.length - subLength,
@@ -355,7 +360,7 @@ export default function WallectConnect(props: any) {
                         >
                             <div className={`address cursor ${open && 'open'}`}>
                                 <img src={walletIcon()} alt="UnipassIcon" />
-                                <div className="span">{formatAddress}</div>
+                                <div className="span">{state.formatAddress}</div>
                                 {(storyQuizes.length + campaignEvents.length > 0) && (
                                     <div className="available-quest-count">
                                         {storyQuizes.length + campaignEvents.length > 99 ? '1+' : storyQuizes.length + campaignEvents.length}
@@ -377,7 +382,7 @@ export default function WallectConnect(props: any) {
                     <div className={`m-wallet-address ${state.loginWalletType}`}>
                         <div className={`address address-item cursor`} onClick={loginOrLogout}>
                             <img src={walletIcon()} alt="UnipassIcon" />
-                            <div className="span">{formatAddress}</div>
+                            <div className="span">{state.formatAddress}</div>
                             {connectOrDisIcon()}
                         </div>
                         {

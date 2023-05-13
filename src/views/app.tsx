@@ -26,7 +26,8 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { godWoken, godWokenTestnet } from "../utils/Chain";
-import WallectPage from "./wallet";
+import WalletPage from "./wallet";
+import WalletNewPage from "./wallet/new";
 import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
 
@@ -125,7 +126,15 @@ export default function App() {
             path="/wallet"
             element={
               <PageView activeIndex={7} disableFooter={true}>
-                <WallectPage></WallectPage>
+                <WalletPage></WalletPage>
+              </PageView>
+            }>
+          </Route>
+          <Route
+            path="/wallet/new"
+            element={
+              <PageView activeIndex={7} disableFooter={true}>
+                <WalletNewPage></WalletNewPage>
               </PageView>
             }>
           </Route>

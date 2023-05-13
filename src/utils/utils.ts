@@ -10,6 +10,7 @@ export const initialState = {
     loadingNumber: 0,
     showLoginModal: false,
     currentAddress: '',
+    formatAddress: '',
     layerOneWrapper: undefined,
     loginWalletType: undefined,
     isInit: false,

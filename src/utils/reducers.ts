@@ -9,6 +9,7 @@ export enum Types {
     ShowLoginModal = 'ShowLoginModal',
     HideLoginModal = 'HideLoginModal',
     CurrentAddress = 'CurrentAddress',
+    FormatAddress = 'FormatAddress',
     LayerOneWrapper = 'LayerOneWrapper',
     LoginWalletType = 'LoginWalletType',
     IsInit = 'IsInit',
@@ -20,12 +21,13 @@ export type InitialStateType = {
     loadingNumber: number;
     showLoginModal: boolean;
     currentAddress: string;
+    formatAddress: string;
     layerOneWrapper: UnipassV3Wrapper | undefined;
     loginWalletType: LoginWalletType | undefined;
     isInit: boolean;
 }
 
-export const globalReducer = (state: InitialStateType, action) => {
+export const globalReducer = (state: InitialStateType, action: any) => {
     switch (action.type) {
         case Types.UpdateWindowWith:
             return {
@@ -70,6 +72,11 @@ export const globalReducer = (state: InitialStateType, action) => {
             return {
                 ...state,
                 currentAddress: action.value
+            }
+        case Types.FormatAddress:
+            return {
+                ...state,
+                formatAddress: action.value
             }
         case Types.LayerOneWrapper:
             return {
