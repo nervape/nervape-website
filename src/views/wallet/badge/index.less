@@ -1,0 +1,105 @@
+.wallet-badge-container {
+  letter-spacing: -0.05em;
+
+  .wallet-badge-header {
+    .badge-title {
+      font-style: italic;
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 29px;
+      color: #3e3e3e;
+
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+    }
+  }
+
+  .wallet-badge-content {
+    margin-top: 16px;
+    margin-bottom: 48px;
+
+    .badge-content {
+      flex-wrap: wrap;
+
+      .badge-cover {
+        width: 139.5px;
+        height: 139.5px;
+        border: 1px solid rgba(62, 62, 62, 0.1);
+        border-radius: 6px;
+        margin-right: 16px;
+        margin-bottom: 16px;
+        overflow: hidden;
+
+        &:nth-child(8n) {
+          margin-right: 0;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 6px;
+        }
+
+        &:hover {
+          img {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+  }
+
+  .wallet-story-reward-content {
+    .review-card {
+      align-self: flex-start;
+      background: #111921;
+      border: 1px solid #51e97c;
+      border-radius: 16px;
+      width: 319.56px;
+      height: 466px;
+    }
+
+    .wallet-story-rewards {
+      margin-left: 48px;
+      align-self: flex-start;
+      flex: 1;
+
+      .chapter-item {
+        .title {
+          color: #3e3e3e;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 24px;
+          padding: 6px 8px;
+          background: #d8d8d8;
+          width: fit-content;
+        }
+
+        .chapter-stories {
+          flex-wrap: wrap;
+          margin: 16px 0;
+
+          .story-item {
+            width: 81.33px;
+            height: 81.33px;
+            border-radius: 40px;
+            margin-right: 16px;
+            margin-bottom: 16px;
+
+            &:nth-child(9n) {
+              margin-right: 0;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+              background: #ababab;
+              border: 1px solid rgba(62, 62, 62, 0.1);
+              border-radius: 40px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

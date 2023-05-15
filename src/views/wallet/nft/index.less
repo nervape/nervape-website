@@ -1,0 +1,187 @@
+.wallet-nft-3d-container {
+  letter-spacing: -0.05em;
+
+  .wallet-nft-3d-header {
+    border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+    padding-bottom: 16px;
+
+    .nft-3d-title {
+      color: #3e3e3e;
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 29px;
+      margin-right: 24px;
+      font-style: italic;
+    }
+
+    .nft-3d-tabs {
+      flex: 1;
+      background: rgba(62, 62, 62, 0.5);
+      border-radius: 16px;
+      padding: 4px;
+
+      .nft-3d-tab {
+        flex: 1;
+        font-weight: 500;
+        font-size: 10px;
+        height: 30px;
+        line-height: 30px;
+        color: #ffffff;
+        text-align: center;
+        margin-right: 4px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &.active {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+        }
+      }
+    }
+  }
+
+  .wallet-nft-3d-content {
+    .wallet-nft-3ds {
+      margin-top: 16px;
+      flex-wrap: wrap;
+
+      .nft-item {
+        width: 201.33px;
+        margin-right: 4px;
+        margin-bottom: 16px;
+
+        &:nth-child(6n) {
+          margin-right: 0;
+        }
+
+        .cover-image {
+          margin: 6px auto 2px;
+          width: 189.33px;
+          height: 189.33px;
+          overflow: hidden;
+          border-radius: 16px;
+
+          img {
+            transition: all 0.3s;
+            border-radius: 16px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .cover-image:hover {
+          img {
+            transform: scale(1.1);
+          }
+        }
+
+        .name {
+          color: #3e3e3e;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 14px;
+          padding: 2px 6px;
+        }
+
+        .id {
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 12px;
+          letter-spacing: -0.05em;
+          color: rgba(62, 62, 62, 0.5);
+          padding: 0 6px;
+        }
+      }
+    }
+
+    .no-result {
+      margin-top: 16px;
+      width: 100%;
+      height: 254px;
+
+      .no-result-content {
+        text-align: center;
+
+        .tip {
+          width: 342px;
+          font-size: 12px;
+          line-height: 14px;
+          text-align: center;
+          color: #3e3e3e;
+          padding-bottom: 16px;
+
+          p {
+            padding: 0;
+            margin: 0;
+          }
+        }
+
+        .yokai-nft-btn {
+          width: 140px;
+          height: 32px;
+          line-height: 32px;
+          background: #f44d37;
+          border-radius: 6px;
+          color: #ffffff;
+          font-weight: 500;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(232, 232, 232, 0.9);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+
+    &.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .close-c {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      right: 40px;
+      top: 40px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 6px;
+    }
+    .close-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 25px;
+      height: 25px;
+    }
+
+    .model-viewer-class {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      .model-loading {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        .model-loading-gif {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+}

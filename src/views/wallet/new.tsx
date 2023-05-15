@@ -5,7 +5,7 @@ import { mainnet, useNetwork } from 'wagmi';
 import Account from '../components/account/account';
 import History from '../components/history/history';
 import Footer from '../components/footer';
-import { DataContext } from '../../utils/utils';
+import { DataContext, updateBodyOverflow } from '../../utils/utils';
 import PoapBadge from '../components/poap-badge/poap-badge';
 import NFT_CONTENT, { TransferSuccess } from '../components/nft/nft';
 import { LoginWalletType } from '../../utils/Wallet';
@@ -27,6 +27,9 @@ import EthLogo from '../../assets/logo/etherum.svg';
 import InfoIcon from '../../assets/icons/info_icon.svg';
 import WalletNacp from "./nacp";
 import { nervapeApi } from "../../api/nervape-api";
+import WalletNFT3D from "./nft";
+import WalletTx from "./tx";
+import WalletBadge from "./badge";
 
 export class WalletNavBar {
     name: string = "";
@@ -123,6 +126,16 @@ export default function WalletNewPage() {
         if (!state.loginWalletType || !state.currentAddress) return;
         if (state.loginWalletType === LoginWalletType.UNIPASS_V3) {
             // 设置 navbars
+            setNavbars([
+                {
+                    name: '3DNFT',
+                    icon: ''
+                },
+                {
+                    name: 'TX',
+                    icon: ''
+                }
+            ]);
             return
         } else {
             // 设置 navbars
@@ -185,7 +198,7 @@ export default function WalletNewPage() {
             <div className="navbar-items">
                 {navbars.map((navbar, index) => {
                     return (
-                        <div className={`navbar-item flex-center cursor ${currNavbar == index && 'active'}`}>
+                        <div key={index} className={`navbar-item flex-center cursor ${currNavbar == index && 'active'}`}>
                             <div className="navbar-icon" onClick={() => {
                                 setCurrNavbar(index);
                             }}>{navbar.name}</div>
@@ -197,13 +210,34 @@ export default function WalletNewPage() {
     }
 
     const NavbarContent = () => {
+        console.log('NavbarContent')
         if (!navbars.length) return <></>;
-        switch(navbars[currNavbar].name) {
+        switch (navbars[currNavbar].name) {
             case WalletNavbarTypes.NACP:
                 return <WalletNacp isBonelist={isBonelist}></WalletNacp>;
+            case WalletNavbarTypes.NFT:
+                return <WalletNFT3D
+                    nftCoverImages={nftCoverImages}
+                    setShowTransferSuccess={setShowTransferSuccess}></WalletNFT3D>;
+            case WalletNavbarTypes.TX:
+                return <WalletTx
+                    nftCoverImages={nftCoverImages}
+                    updateBalance={updateUnipassCkbBalance}></WalletTx>
+            case WalletNavbarTypes.BADGE:
+                return <WalletBadge badges={badges}></WalletBadge>;
             default: return <></>;
         }
     }
+
+    const myBalance = () => {
+        const balanceArr = balance.split('.');
+        return (
+            <>
+                {balanceArr[0]}
+                <span>{balanceArr[1] ? `.${balanceArr[1]}` : ''}</span>
+            </>
+        );
+    };
 
     return (
         <div className="wallet-new-page">
@@ -215,18 +249,6 @@ export default function WalletNewPage() {
                         setShowChainInfo={setShowChainInfo}
                     ></SwitchChain>
                     <div className="container">
-                        {state.loginWalletType === LoginWalletType.UNIPASS_V3 && (
-                            <Account
-                                loginWalletType={state.loginWalletType || ''}
-                                address={state.currentAddress}
-                                balance={balance}
-                                showTransfer={() => {
-                                    setShowTransfer(true);
-                                    document.body.style.overflow = 'hidden';
-                                }}
-                            ></Account>
-                        )}
-
                         <section className="user-center-content flex-align">
                             <div className="user-avatar">
                                 <img src={DefaultAvatar} alt="UserAvatar" />
@@ -239,22 +261,40 @@ export default function WalletNewPage() {
                                     </div>
                                 </div>
 
-                                <div className="bone-list-points flex-align">
-                                    <div className="bone-item bone-list">
-                                        <div className="title">BONE LIST</div>
-                                        <div className={`nacp ${isBonelist && 'holder'}`}>NACP</div>
-                                        <div className="nft-3d">3D NFT</div>
-                                    </div>
-                                    <div className="bone-item bone-points">
+                                {state.loginWalletType == LoginWalletType.UNIPASS_V3 ? (
+                                    <div className="ckb-balance">
                                         <div className="title flex-align">
-                                            BONE POINTS
-                                            {/* <div className="record cursor">Record</div> */}
+                                            CKB BALANCE
+                                            <div className="transfer">
+                                                <button
+                                                    className="transfer-btn cursor"
+                                                    onClick={() => {
+                                                        setShowTransfer(true);
+                                                        updateBodyOverflow(false);
+                                                    }}>Transfer</button>
+                                            </div>
                                         </div>
-                                        {/* <div className="points">1,000,000</div>
-                                        <div className="daily-add">+1,000,000 daily</div> */}
-                                        <div className="coming-soon">COMING SOON</div>
+
+                                        <div className="balance-value">{myBalance()}</div>
                                     </div>
-                                </div>
+                                ) : (
+                                    <div className="bone-list-points flex-align">
+                                        <div className="bone-item bone-list">
+                                            <div className="title">BONE LIST</div>
+                                            <div className={`nacp ${isBonelist && 'holder'}`}>NACP</div>
+                                            <div className="nft-3d">3D NFT</div>
+                                        </div>
+                                        <div className="bone-item bone-points">
+                                            <div className="title flex-align">
+                                                BONE POINTS
+                                                {/* <div className="record cursor">Record</div> */}
+                                            </div>
+                                            {/* <div className="points">1,000,000</div>
+                                        <div className="daily-add">+1,000,000 daily</div> */}
+                                            <div className="coming-soon">COMING SOON</div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </section>
 
@@ -267,10 +307,10 @@ export default function WalletNewPage() {
                             </div>
                         </section>
 
-                        {showPoapBadge && state.loginWalletType === LoginWalletType.WALLET_CONNECT && (
+                        {/* {showPoapBadge && state.loginWalletType === LoginWalletType.WALLET_CONNECT && (
                             <PoapBadge badges={badges}></PoapBadge>
-                        )}
-                        <div className="tabs-container">
+                        )} */}
+                        {/* <div className="tabs-container">
                             <div className="content">
                                 <NFT_CONTENT
                                     setLoading={setLoading}
@@ -290,7 +330,7 @@ export default function WalletNewPage() {
                                     updateBalance={updateUnipassCkbBalance}
                                 ></History>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <Footer></Footer>
                 </div>

@@ -93,8 +93,8 @@ export default function WalletNacp(props: { isBonelist: boolean; }) {
             <div className="wallet-nacp-content">
                 {currNacpTab == 'ape' ? (
                     <div className="nacp-content-apes flex-align">
-                        {nacpApes.map(ape => {
-                            return <ApeItem ape={ape}></ApeItem>
+                        {nacpApes.map((ape, index) => {
+                            return <ApeItem ape={ape} key={index}></ApeItem>;
                         })}
                     </div>
                 ) : (

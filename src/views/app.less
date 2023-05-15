@@ -39,15 +39,48 @@
   user-select: none;
 }
 
+button {
+  padding: 0;
+  margin: 0;
+  border: unset;
+}
+
 .button-hover-action-red {
-  background: #F44D37;
+  background: #f44d37;
   transition: all 0.3s;
 
   &:hover {
-    background: #E45C4A !important;
+    background: #e45c4a !important;
   }
 }
 
 .popup-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 99;
   background: rgba(14, 17, 23, 0.95) !important;
+
+  .popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transform-origin: center;
+    transition: all 0.5s;
+  }
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+
+    .popup-content {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
 }

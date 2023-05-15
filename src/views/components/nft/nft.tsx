@@ -270,6 +270,7 @@ export default function NFT_CONTENT(props: any) {
             </div>
             {showNftCard && nftDetail && (
                 <NftCardDetail
+                    show={showNftCard}
                     setLoading={setLoading}
                     loginWalletType={loginWalletType}
                     address={address}

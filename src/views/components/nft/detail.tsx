@@ -49,6 +49,7 @@ export function PreviewModel(props: any) {
 }
 
 export default function NftCardDetail(props: {
+    show: boolean;
     nft: NFT;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     close: any;
@@ -60,6 +61,7 @@ export default function NftCardDetail(props: {
     showTransferSuccess: Function;
 }) {
     const {
+        show,
         nft,
         close,
         fullscreen,
@@ -103,10 +105,12 @@ export default function NftCardDetail(props: {
         setReceiverAddress(e.target.value);
     }
 
+    if (!nft) return <></>;
+
     return (
         <>
-            <div className="nft-card-detail-container popup-container mask-cover" onClick={close}>
-                <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
+            <div className={`nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
+                <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                     <div className="preview-model">
                         <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
                         {state.windowWidth !== 1200 && (
