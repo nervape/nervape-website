@@ -42,18 +42,22 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
         console.log('chapters', res);
 
         setChapters(res);
-        if (res.length && res[0].stories.length) {
-            setSelectedStoryOat({
-                walletStoryOatTheme: res[0].walletStoryOatTheme,
-                chapterName: res[0].name,
-                story: res[0].stories[0],
-            });
-        }
         setLoading(false);
     }
+
     useEffect(() => {
         fnGetChapters();
     }, []);
+
+    useEffect(() => {
+        if (chapters.length && chapters[0].stories.length) {
+            setSelectedStoryOat({
+                walletStoryOatTheme: chapters[0].walletStoryOatTheme,
+                chapterName: chapters[0].name,
+                story: chapters[0].stories[0],
+            });
+        }
+    }, [chapters]);
 
     return (
         <div className="wallet-badge-container">
