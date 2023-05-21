@@ -33,9 +33,12 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                         story.isHolderOat = _oatPoaps.length > 0;
                         return story;
                     });
+                    console.log('chapter', chapter);
                     return chapter;
                 })
             );
+            
+            console.log('chapters', res);
 
             setChapters(res);
             if (res.length && res[0].stories.length) {

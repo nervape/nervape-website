@@ -134,7 +134,7 @@ export default function WallectConnect(props: any) {
         );
         setStoryQuizes(stories.filter(item => item.show));
         console.log(storyQuizes);
-        const events: Event[] = await nervapeApi.fnGetActiveEvents();
+        const events: Event[] = await nervapeApi.fnGetActiveEvents('');
         await Promise.all(
             events.map(async event => {
                 const votes: Vote[] = await queryGetVotes(event.proposalId);
