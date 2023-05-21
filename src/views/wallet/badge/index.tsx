@@ -24,18 +24,19 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
 
     useEffect(() => {
         setLoading(true);
-        nervapeApi.fnGetChapters().then(res => {
-            res.map(async chapter => {
-                chapter.stories = chapter.stories.filter(story => story.collectable);
-                await Promise.all(
+        nervapeApi.fnGetChapters().then(async res => {
+            await Promise.all(
+                res.map(async chapter => {
+                    chapter.stories = chapter.stories.filter(story => story.collectable);
                     chapter.stories.map(async story => {
                         const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
                         story.isHolderOat = _oatPoaps.length > 0;
                         return story;
-                    })
-                );
-                return chapter;
-            })
+                    });
+                    return chapter;
+                })
+            );
+
             setChapters(res);
             if (res.length && res[0].stories.length) {
                 setSelectedStoryOat({
