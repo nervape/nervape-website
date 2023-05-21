@@ -32,7 +32,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                 await Promise.all(
                     chapter.stories.map(async story => {
                         const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
-                        story.isHolderOat = _oatPoaps.length > 0;
+                        story.isHolderOat = _oatPoaps && _oatPoaps.length > 0;
                         return story;
                     })
                 );
