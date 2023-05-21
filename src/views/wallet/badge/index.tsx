@@ -22,39 +22,37 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
         window.open(`https://galxe.com/nervape/campaign/${galxeCampaignId}`);
     }
 
-    useEffect(() => {
+    async function fnGetChapters() {
         setLoading(true);
-        nervapeApi.fnGetChapters().then(async res => {
-            await Promise.all(
-                res.map(async chapter => {
-                    chapter.stories = chapter.stories.filter(story => story.collectable);
-                    chapter.stories.map(async story => {
-                        const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
-                        story.isHolderOat = _oatPoaps.length > 0;
-                        return story;
-                    });
-                    console.log('chapter', chapter);
-                    return chapter;
-                })
-            );
-            
-            console.log('chapters', res);
+        const res = await nervapeApi.fnGetChapters();
 
-            setChapters(res);
-            if (res.length && res[0].stories.length) {
-                console.log({
-                    walletStoryOatTheme: res[0].walletStoryOatTheme,
-                    chapterName: res[0].name,
-                    story: res[0].stories[0],
+        await Promise.all(
+            res.map(async chapter => {
+                chapter.stories = chapter.stories.filter(story => story.collectable);
+                chapter.stories.map(async story => {
+                    const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
+                    story.isHolderOat = _oatPoaps.length > 0;
+                    return story;
                 });
-                setSelectedStoryOat({
-                    walletStoryOatTheme: res[0].walletStoryOatTheme,
-                    chapterName: res[0].name,
-                    story: res[0].stories[0],
-                });
-            }
-            setLoading(false);
-        });
+                console.log('chapter', chapter);
+                return chapter;
+            })
+        );
+
+        console.log('chapters', res);
+
+        setChapters(res);
+        if (res.length && res[0].stories.length) {
+            setSelectedStoryOat({
+                walletStoryOatTheme: res[0].walletStoryOatTheme,
+                chapterName: res[0].name,
+                story: res[0].stories[0],
+            });
+        }
+        setLoading(false);
+    }
+    useEffect(() => {
+        fnGetChapters();
     }, []);
 
     return (
