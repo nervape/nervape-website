@@ -213,16 +213,16 @@ function HistoryItem(props: {
 
 const WalletTx = (
     props: {
+        setLoading: Function;
         updateBalance: Function;
         nftCoverImages: NFT[];
     },
     ref: React.Ref<unknown>
 ) => {
-    const { updateBalance, nftCoverImages } = props;
+    const { setLoading, updateBalance, nftCoverImages } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
-    const [loading, setLoading] = useState(false);
     const [histories, setHistories] = useState([]);
     const [currHistory, setCurrHistory] = useState<HISTORY>(new HISTORY());
     const [showDetail, setShowDetail] = useState(false);
@@ -404,7 +404,6 @@ const WalletTx = (
                     dom.style.zIndex = 99;
                 }}
             ></HistoryDetail>
-            <LoadingModal show={loading}></LoadingModal>
         </div>
     );
 }

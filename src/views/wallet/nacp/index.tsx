@@ -9,8 +9,8 @@ import { DataContext } from "../../../utils/utils";
 import { NACP_APE, NACP_SPECIAL_ASSET } from "../../../nervape/nacp";
 import AssetItem from "./asset-item";
 
-export default function WalletNacp(props: { isBonelist: boolean; }) {
-    const { isBonelist } = props;
+export default function WalletNacp(props: { isBonelist: boolean; setLoading: Function; }) {
+    const { isBonelist, setLoading } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -44,8 +44,10 @@ export default function WalletNacp(props: { isBonelist: boolean; }) {
     }, [currNacpTab]);
 
     async function fnGetStorySpecialAsset(address: string) {
+        setLoading(true);
         const assets = await nervapeApi.fnGetStorySpecialAsset(address);
         setNacpAssets(assets);
+        setLoading(false);
     }
 
     const ApeItem = (props: { ape: NACP_APE }) => {

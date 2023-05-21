@@ -47,11 +47,10 @@ export function FullscreenPreview(props: { nft?: NFT; close: any; show: boolean;
 export default function WalletNFT3D(props: any) {
     const {
         nftCoverImages,
+        setLoading,
         setShowTransferSuccess } = props;
 
     const { state, dispatch } = useContext(DataContext);
-
-    const [loading, setLoading] = useState(false);
 
     const [types, setTypes] = useState(['All', 'Character', 'Item', 'Scene', 'Special']);
     const [selectedType, setSelectedType] = useState('All');
@@ -293,7 +292,6 @@ export default function WalletNFT3D(props: any) {
                     updateBodyOverflow(true);
                 }}
             ></FullscreenPreview>
-            <LoadingModal show={loading}></LoadingModal>
         </div>
     );
 }

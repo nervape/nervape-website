@@ -415,23 +415,25 @@ export default function WalletNewPage() {
                             <div className="wallet-content">
                                 {/* <NavbarContent></NavbarContent> */}
                                 {navbars[currNavbar]?.name == WalletNavbarTypes.NACP ? (
-                                    <WalletNacp isBonelist={isBonelist}></WalletNacp>
+                                    <WalletNacp isBonelist={isBonelist} setLoading={setLoading}></WalletNacp>
                                 ) : (
                                     navbars[currNavbar]?.name == WalletNavbarTypes.NFT ? (
                                         <WalletNFT3D
                                             nftCoverImages={nftCoverImages}
+                                            setLoading={setLoading}
                                             setShowTransferSuccess={setShowTransferSuccess}></WalletNFT3D>
                                     ) : (
                                         navbars[currNavbar]?.name == WalletNavbarTypes.TX ? (
                                             <WalletTx
                                                 nftCoverImages={nftCoverImages}
+                                                setLoading={setLoading}
                                                 updateBalance={updateUnipassCkbBalance}></WalletTx>
                                         ) : (
                                             navbars[currNavbar]?.name == WalletNavbarTypes.BADGE ? (
-                                                <WalletBadge badges={badges}></WalletBadge>
+                                                <WalletBadge badges={badges} setLoading={setLoading}></WalletBadge>
                                             ) : (
                                                 navbars[currNavbar]?.name == WalletNavbarTypes.EVENT ? (
-                                                    <WalletEvent></WalletEvent>
+                                                    <WalletEvent setLoading={setLoading}></WalletEvent>
                                                 ) : (
                                                     <></>
                                                 )

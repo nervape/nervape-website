@@ -7,6 +7,7 @@ import { DataContext } from "../../../utils/utils";
 import dayjs from "dayjs";
 
 export default function WalletEvent(props: any) {
+    const { setLoading } = props;
 
     const { state, dispatch } = useContext(DataContext);
     const [events, setEvents] = useState<Event[]>([]);
@@ -28,6 +29,7 @@ export default function WalletEvent(props: any) {
     }
 
     async function fnGetCampaignEvents() {
+        setLoading(true);
         const events: Event[] = await nervapeApi.fnGetActiveEvents('all');
         await Promise.all(
             events.map(async event => {
@@ -37,11 +39,13 @@ export default function WalletEvent(props: any) {
             })
         )
         setEvents(events);
+        setLoading(false);
     }
 
     useEffect(() => {
         fnGetCampaignEvents();
     }, [state.currentAddress]);
+
     return (
         <div className="wallet-event-container">
             <div className="wallet-event-header flex-align">

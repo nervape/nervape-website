@@ -50,13 +50,119 @@
   }
 
   .wallet-story-reward-content {
-    .review-card {
+    .review-card-content {
       align-self: flex-start;
-      background: #111921;
-      border: 1px solid #51e97c;
-      border-radius: 16px;
-      width: 319.56px;
-      height: 466px;
+
+      .review-card {
+        background: #111921;
+        border-radius: 16px;
+        width: 319.56px;
+        height: 466px;
+        position: relative;
+
+        &.unholder {
+          background: #4d5765;
+          border: 1px solid #4d5765 !important;
+          color: #9097a9 !important;
+
+          .cover-image-c {
+            .cover-image {
+              border: 3px solid #9097a9 !important;
+            }
+          }
+        }
+
+        .bp {
+          position: absolute;
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 24px;
+          top: 16px;
+          right: 16px;
+          text-align: right;
+
+          .unit {
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 14px;
+            letter-spacing: -0.1em;
+          }
+        }
+
+        .cover-image-c {
+          width: 239.56px;
+          height: 239.56px;
+          border-radius: 200px;
+          position: relative;
+          margin: 32px auto;
+
+          .cover-image {
+            width: 239.56px;
+            height: 239.56px;
+            border-radius: 200px;
+            overflow: hidden;
+
+            .cover {
+              width: 100%;
+              height: 100%;
+
+              &:hover {
+                transform: scale(1.1);
+              }
+            }
+          }
+
+          .oat {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            bottom: 0;
+            right: 0;
+          }
+        }
+
+        .story-info {
+          .chapter-story {
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 14px;
+            text-align: center;
+            letter-spacing: -0.1em;
+          }
+
+          .story-title {
+            font-weight: 700;
+            margin: 0 16px;
+            font-size: 20px;
+            line-height: 24px;
+            text-align: center;
+            letter-spacing: -0.1em;
+            text-decoration-line: underline;
+          }
+
+          .story-desc {
+            font-size: 12px;
+            line-height: 140%;
+            display: flex;
+            align-items: center;
+            height: 80px;
+            text-align: center;
+            letter-spacing: -0.05em;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 8px 16px;
+
+            .tip {
+              color: #9097A9;
+              
+              .challenge {
+                text-decoration: underline;
+                color: #FFFFFF;
+              }
+            }
+          }
+        }
+      }
     }
 
     .wallet-story-rewards {
@@ -85,17 +191,22 @@
             border-radius: 40px;
             margin-right: 16px;
             margin-bottom: 16px;
+            overflow: hidden;
 
             &:nth-child(9n) {
               margin-right: 0;
             }
 
-            img {
+            .cover-image {
               width: 100%;
               height: 100%;
               background: #ababab;
               border: 1px solid rgba(62, 62, 62, 0.1);
               border-radius: 40px;
+
+              &:hover {
+                transform: scale(1.1);
+              }
             }
           }
         }

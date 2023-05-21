@@ -57,6 +57,9 @@ export class Story {
   collectQuizBackground?: string = "";
   signMessage?: string = "";
   galxeCampaignId: string = "";
+  notCollectCover?: string = "";
+  collectedCover?: string;
+  isHolderOat?: boolean = false;
   questions?: StoryQuestion[] = [];
 }
 
@@ -93,6 +96,7 @@ export class ChapterList {
   background: string = "";
   desc: string = "";
   stories: Story[] = [];
+  walletStoryOatTheme: string = "";
 }
 
 export class StoryCollectable {
@@ -102,4 +106,10 @@ export class StoryCollectable {
   quizName: string = "";
   show?: boolean = false;
   galxeCampaignId: string = "";
+}
+
+export class WalletStoryOat {
+  walletStoryOatTheme: string = '';
+  chapterName: string = "";
+  story?: Story;
 }
