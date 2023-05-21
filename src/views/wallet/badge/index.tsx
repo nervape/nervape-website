@@ -42,6 +42,11 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
 
             setChapters(res);
             if (res.length && res[0].stories.length) {
+                console.log({
+                    walletStoryOatTheme: res[0].walletStoryOatTheme,
+                    chapterName: res[0].name,
+                    story: res[0].stories[0],
+                });
                 setSelectedStoryOat({
                     walletStoryOatTheme: res[0].walletStoryOatTheme,
                     chapterName: res[0].name,
