@@ -29,17 +29,16 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
         await Promise.all(
             res.map(async chapter => {
                 chapter.stories = chapter.stories.filter(story => story.collectable);
-                chapter.stories.map(async story => {
-                    const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
-                    story.isHolderOat = _oatPoaps.length > 0;
-                    return story;
-                });
-                console.log('chapter', chapter);
+                await Promise.all(
+                    chapter.stories.map(async story => {
+                        const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
+                        story.isHolderOat = _oatPoaps.length > 0;
+                        return story;
+                    })
+                );
                 return chapter;
             })
         );
-
-        console.log('chapters', res);
 
         setChapters(res);
         setLoading(false);
