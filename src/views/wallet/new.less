@@ -62,8 +62,18 @@ body {
               border-radius: 16px;
               height: 32px;
               line-height: 32px;
-              width: fit-content;
+              width: 200px;
 
+              &.open {
+                background: #F44D37;
+                border: 1px solid #F44D37;
+                color: #FFFFFF;
+
+                .available-quest-count {
+                  background-color: #ffffff;
+                  color: #f13636;
+                }
+              }
               img {
                 width: 24px;
                 height: 24px;
@@ -97,25 +107,25 @@ body {
                 color: rgba(62, 62, 62, 0.5);
 
                 .transfer-btn {
-                    background: unset;
-                    text-decoration-line: underline;
+                  background: unset;
+                  text-decoration-line: underline;
                 }
               }
             }
 
             .balance-value {
-                font-weight: 500;
-                font-size: 24px;
-                line-height: 29px;
-                padding-top: 19.5px;
-                text-align: right;
+              font-weight: 500;
+              font-size: 24px;
+              line-height: 29px;
+              padding-top: 19.5px;
+              text-align: right;
 
-                span {
-                    color: rgba(62, 62, 62, 0.5);
-                    font-size: 16px;
-                    line-height: 19px;
-                }
-            } 
+              span {
+                color: rgba(62, 62, 62, 0.5);
+                font-size: 16px;
+                line-height: 19px;
+              }
+            }
           }
 
           .bone-list-points {

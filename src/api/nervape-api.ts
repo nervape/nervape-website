@@ -199,8 +199,14 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
   
-  public async fnGetActiveEvents() {
-    const url = `${this.baseUrl}/campaign/events/active/all`;
+  public async fnGetActiveEvents(type?: string) {
+    const url = `${this.baseUrl}/campaign/events/active/all?type=${type}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetStorySpecialAsset(address: string) {
+    const url = `${this.baseUrl}/story/website/story/special?address=${address}`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }

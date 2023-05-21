@@ -1,0 +1,86 @@
+.wallet-event-container {
+  letter-spacing: -0.05em;
+
+  .wallet-event-header {
+    .event-title {
+      font-style: italic;
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 29px;
+      color: #3e3e3e;
+    }
+  }
+
+  .wallet-event-content {
+    margin-top: 16px;
+
+    .event-tabs,
+    .event-histories {
+      .event-tab,
+      .event-item {
+        font-size: 12px;
+        line-height: 14px;
+
+        &.title {
+          width: 60%;
+          text-align: left;
+          padding-left: 8px;
+        }
+
+        &.timeframe,
+        &.status {
+          width: 20%;
+          text-align: center;
+        }
+      }
+    }
+
+    .event-tabs {
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+
+      .event-tab {
+        color: rgba(62, 62, 62, 0.5);
+        font-weight: 700;
+      }
+    }
+
+    .event-histories {
+      .event-item-c {
+        border-bottom: 1px dashed rgba(62, 62, 62, 0.2);
+        padding: 8px 0;
+
+        &:last-child {
+            border: unset;
+        }
+
+        .event-item {
+          color: #3e3e3e;
+          height: 30px;
+
+          &:hover {
+            background: #d9d9d9;
+            border-radius: 4px;
+          }
+
+          .status {
+            .icon {
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                background: #A0A0A0;
+                display: block;
+                margin: 0 auto;
+            }
+
+            &.active {
+                .icon {
+                    background: #6FFF7D;
+                }
+            }
+          }
+        }
+      }
+    }
+  }
+}

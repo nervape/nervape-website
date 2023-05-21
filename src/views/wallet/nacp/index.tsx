@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './index.less';
 
 import NacpLogo from '../../../assets/wallet/NACP_logo.svg';
 import DefaultNacpApe from '../../../assets/wallet/nacp/default_nacp_ape.svg';
 import { Popover } from "antd";
-
-export class NACP_APE {
-    coverImage: string = "";
-    name: string = "";
-    isRight: boolean = false;
-}
+import { nervapeApi } from "../../../api/nervape-api";
+import { DataContext } from "../../../utils/utils";
+import { NACP_APE, NACP_SPECIAL_ASSET } from "../../../nervape/nacp";
+import AssetItem from "./asset-item";
 
 export default function WalletNacp(props: { isBonelist: boolean; }) {
     const { isBonelist } = props;
 
+    const { state, dispatch } = useContext(DataContext);
+
     const [currNacpTab, setCurrNacpTab] = useState('ape');
     const [nacpApes, setNacpApes] = useState<NACP_APE[]>([]);
+    const [nacpAssets, setNacpAssets] = useState<NACP_SPECIAL_ASSET[]>([]);
 
     useEffect(() => {
         let _apes: NACP_APE[] = [];
@@ -35,6 +36,17 @@ export default function WalletNacp(props: { isBonelist: boolean; }) {
         }
         setNacpApes(_apes);
     }, [isBonelist]);
+
+    useEffect(() => {
+        if (currNacpTab == 'asset') {
+            fnGetStorySpecialAsset(state.currentAddress);
+        }
+    }, [currNacpTab]);
+
+    async function fnGetStorySpecialAsset(address: string) {
+        const assets = await nervapeApi.fnGetStorySpecialAsset(address);
+        setNacpAssets(assets);
+    }
 
     const ApeItem = (props: { ape: NACP_APE }) => {
         const { ape } = props;
@@ -77,6 +89,7 @@ export default function WalletNacp(props: { isBonelist: boolean; }) {
         }
         return _html();
     }
+    
     return (
         <div className="wallet-nacp-container">
             <div className="wallet-nacp-header flex-align">
@@ -98,7 +111,11 @@ export default function WalletNacp(props: { isBonelist: boolean; }) {
                         })}
                     </div>
                 ) : (
-                    <div className="nacp-content-asset"></div>
+                    <div className="nacp-content-assets flex-align">
+                        {nacpAssets.map((asset, index) => {
+                            return <AssetItem asset={asset} key={index} ></AssetItem>
+                        })}
+                    </div>
                 )}
             </div>
         </div>

@@ -193,6 +193,22 @@ export default function WalletNFT3D(props: any) {
         );
     }
 
+    const YokaiNftButton = (props: { selectedType: string; }) => {
+        const { selectedType } = props;
+        return (
+            <button
+                className="yokai-nft-btn cursor button-hover-action-red"
+                onClick={() => {
+                    window.open(
+                        `${(CONFIG.YOKAI_URL) +
+                        ContractMap[selectedType]}`
+                    );
+                }}>
+                {`${selectedType.toUpperCase()} NFT`}
+            </button>
+        );
+    }
+
     return (
         <div className="wallet-nft-3d-container">
             <div className="wallet-nft-3d-header flex-align">
@@ -232,19 +248,19 @@ export default function WalletNFT3D(props: any) {
                     <div className="no-result flex-center">
                         <div className="no-result-content">
                             <div className="tip">
-                                <p>You currently don’t have any character NFT</p>
-                                <p>Buy character NFT on Yokai Dojo from the link below</p>
+                                <p>You currently don’t have any {selectedType == 'All' ? 'Nervape' : selectedType} NFT</p>
+                                <p>Buy {selectedType == 'All' ? 'Nervape' : selectedType} NFT on Yokai Dojo from the link below</p>
                             </div>
-                            <button 
-                                className="yokai-nft-btn cursor button-hover-action-red"
-                                onClick={() => {
-                                    window.open(
-                                        `${(CONFIG.YOKAI_URL) +
-                                            ContractMap[selectedType]}`
-                                    );
-                                }}>
-                                    {`${selectedType} NFT`}
-                            </button>
+                            {
+                                selectedType == 'All' ? (
+                                    <div className="yokai-nft-btns flex-center">
+                                        {types.map(type => {
+                                            if (type == 'All') return <></>;
+                                            return <YokaiNftButton key={type} selectedType={type}></YokaiNftButton>;
+                                        })}
+                                    </div>
+                                ) : <YokaiNftButton selectedType={selectedType}></YokaiNftButton>
+                            }
                         </div>
                     </div>
                 )}
