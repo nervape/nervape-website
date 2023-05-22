@@ -17,26 +17,14 @@ import ChainInfo from '../components/switchChain/chain-info';
 import { Types } from '../../utils/reducers';
 import { godWoken } from '../../utils/Chain';
 
-import DefaultAvatar from '../../assets/wallet/default_avatar.svg';
-import NervosLogo from '../../assets/logo/nervos_logo.svg';
-import GodwokenLogo from '../../assets/logo/godwoken_logo.svg';
-import EthLogo from '../../assets/logo/etherum.svg';
-import InfoIcon from '../../assets/icons/info_icon.svg';
 import WalletNacp from "./nacp";
 import { nervapeApi } from "../../api/nervape-api";
 import WalletNFT3D from "./nft";
 import WalletTx from "./tx";
 import WalletBadge from "./badge";
-import CopyToClipboard from "react-copy-to-clipboard";
-import { Dropdown, MenuProps, message } from "antd";
-import { StoryCollectable } from "../../nervape/story";
-import AvailableQuest from "../components/wallet-connect/available-quest";
-import { queryGetVotes } from "../../utils/snapshot";
-import { Event, Vote } from "../../nervape/campaign";
-import Logout from "../components/logout";
-import { disconnect } from "@wagmi/core";
 import WalletEvent from "./event";
 import { scrollToTop } from "../../utils/utils";
+import WalletHeader from "./header";
 
 export class WalletNavBar {
     name: string = "";
@@ -174,7 +162,6 @@ export default function WalletNewPage() {
 
         document.body.style.overflow = 'auto';
         getPoaps(state.currentAddress);
-        initQuizAndEvent(state.currentAddress);
     }, [state.loginWalletType, state.currentAddress]);
 
     const doTransferCKB = async (toAddress: string, amount: string) => {
@@ -189,120 +176,6 @@ export default function WalletNewPage() {
         }
         setLoading(false);
     };
-
-    const walletIcon = () => {
-        if (state.loginWalletType === LoginWalletType.UNIPASS_V3) return NervosLogo;
-        // 检查是否支持当前网络
-        if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
-            return InfoIcon;
-        }
-        return chain.id === godWoken.id ? GodwokenLogo : EthLogo;
-    };
-
-    /**
-     * 地址 hover 
-     */
-    const [open, setOpen] = useState(false);
-    const [showQuest, setShowQuest] = useState(false);
-    const [storyQuizes, setStoryQuizes] = useState<StoryCollectable[]>([]);
-    const [campaignEvents, setCampaignEvents] = useState<Event[]>([]);
-
-    const [showLogout, setShowLogout] = useState(false);
-
-    async function initQuizAndEvent(_address: string) {
-        const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
-        await Promise.all(
-            stories.map(async story => {
-                const _oatPoaps = await queryOatPoaps(_address, story.galxeCampaignId);
-                story.show = _oatPoaps.length <= 0;
-                return story;
-            })
-        );
-        setStoryQuizes(stories.filter(item => item.show));
-        console.log(storyQuizes);
-        const events: Event[] = await nervapeApi.fnGetActiveEvents('');
-        await Promise.all(
-            events.map(async event => {
-                const votes: Vote[] = await queryGetVotes(event.proposalId);
-                const count = votes.filter(vote => vote.voter == _address).length;
-                event.show = count == 0;
-            })
-        )
-        setCampaignEvents(events.filter(item => item.show));
-    }
-
-    const disconnectReload = () => {
-        localStorage.clear();
-        disconnect();
-        window.location.reload();
-    };
-
-    useAccount({
-        onDisconnect() {
-            disconnectReload();
-        }
-    });
-
-    const CopyAddress = () => {
-        return (
-            <CopyToClipboard
-                text={state.currentAddress}
-                onCopy={() => {
-                    message.success(`Copy Success!`);
-                    setOpen(false);
-                }}
-            >
-                <button className="copy-address cursor">Copy Address</button>
-            </CopyToClipboard>
-        );
-    }
-
-    const Available = () => {
-        return (
-            <button
-                className="nervape-asset cursor"
-                onClick={() => {
-                    setOpen(false);
-                    setShowQuest(true);
-                    document.body.style.overflow = 'hidden';
-                }}>
-                {`Available Quest (${storyQuizes.length + campaignEvents.length})`}
-            </button>
-        );
-    }
-    const SignOut = () => {
-        return (
-            <button
-                className="logout-out cursor"
-                onClick={() => {
-                    // sessionStorage.removeItem('UP-A');
-                    setOpen(false);
-                    setShowLogout(true);
-                }}
-            >
-                Sign Out
-            </button>
-        );
-    }
-
-    const items: MenuProps['items'] = [
-        {
-            label: CopyAddress(),
-            key: '1'
-        },
-        {
-            label: Available(),
-            key: '3'
-        },
-        {
-            label: SignOut(),
-            key: '2'
-        }
-    ];
-
-    /**
-     * 地址 hover 
-     */
 
     const NavbarItems = () => {
         return (
@@ -341,69 +214,10 @@ export default function WalletNewPage() {
                         setShowChainInfo={setShowChainInfo}
                     ></SwitchChain>
                     <div className="container">
-                        <section className="user-center-content flex-align">
-                            <div className="user-avatar">
-                                <img src={DefaultAvatar} alt="UserAvatar" />
-                            </div>
-                            <div className="user-info">
-                                <div className="user-address flex-align">
-                                    <Dropdown
-                                        menu={{ items }}
-                                        trigger={['hover']}
-                                        overlayClassName="wallet-connect-dropmenu"
-                                        onOpenChange={_open => {
-                                            setOpen(_open);
-                                        }}
-                                    >
-                                        <div className={`address transition flex-align cursor ${open && 'open'}`}>
-                                            <img src={walletIcon()} alt="UnipassIcon" />
-                                            <div className="span">{state.formatAddress}</div>
-                                            {(storyQuizes.length + campaignEvents.length > 0) && (
-                                                <div className="available-quest-count">
-                                                    {storyQuizes.length + campaignEvents.length > 99 ? '1+' : storyQuizes.length + campaignEvents.length}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </Dropdown>
-
-                                </div>
-
-                                {state.loginWalletType == LoginWalletType.UNIPASS_V3 ? (
-                                    <div className="ckb-balance">
-                                        <div className="title flex-align">
-                                            CKB BALANCE
-                                            <div className="transfer">
-                                                <button
-                                                    className="transfer-btn cursor"
-                                                    onClick={() => {
-                                                        setShowTransfer(true);
-                                                        updateBodyOverflow(false);
-                                                    }}>Transfer</button>
-                                            </div>
-                                        </div>
-
-                                        <div className="balance-value">{myBalance()}</div>
-                                    </div>
-                                ) : (
-                                    <div className="bone-list-points flex-align">
-                                        <div className="bone-item bone-list">
-                                            <div className="title">BONE LIST</div>
-                                            <div className={`nacp ${isBonelist && 'holder'}`}>NACP</div>
-                                            <div className="nft-3d">3D NFT</div>
-                                        </div>
-                                        <div className="bone-item bone-points">
-                                            <div className="title flex-align">
-                                                BONE POINTS
-                                                {/* <div className="record cursor">Record</div> */}
-                                            </div>
-                                            {/* <div className="points">1,000,000</div>
-                                        <div className="daily-add">+1,000,000 daily</div> */}
-                                            <div className="coming-soon">COMING SOON</div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </section>
+                        <WalletHeader
+                            isBonelist={isBonelist}
+                            setShowTransfer={setShowTransfer}
+                            balance={balance}></WalletHeader>
 
                         <section className="wallet-section flex-align">
                             <div className="wallet-navbar-content">
@@ -440,33 +254,8 @@ export default function WalletNewPage() {
                                 )}
                             </div>
                         </section>
-
-                        {/* {showPoapBadge && state.loginWalletType === LoginWalletType.WALLET_CONNECT && (
-                            <PoapBadge badges={badges}></PoapBadge>
-                        )} */}
-                        {/* <div className="tabs-container">
-                            <div className="content">
-                                <NFT_CONTENT
-                                    setLoading={setLoading}
-                                    nftCoverImages={nftCoverImages}
-                                    loginWalletType={state.loginWalletType}
-                                    address={state.currentAddress}
-                                    setShowTransferSuccess={setShowTransferSuccess}
-                                    balance={balance}
-                                ></NFT_CONTENT>
-
-                                <History
-                                    ref={historyRef}
-                                    setLoading={setLoading}
-                                    loginWalletType={state.loginWalletType as LoginWalletType}
-                                    nftCoverImages={nftCoverImages}
-                                    address={state.currentAddress}
-                                    updateBalance={updateUnipassCkbBalance}
-                                ></History>
-                            </div>
-                        </div> */}
                     </div>
-                    <Footer></Footer>
+                    {state.windowWidth > 375 && <Footer></Footer>}
                 </div>
             )}
             <ChainInfo
@@ -497,20 +286,6 @@ export default function WalletNewPage() {
                     }
                 }}
             ></TransferSuccess>
-            <AvailableQuest
-                show={showQuest}
-                events={campaignEvents}
-                quizes={storyQuizes}
-                close={() => {
-                    setShowQuest(false);
-                    document.body.style.overflow = 'auto';
-                }}></AvailableQuest>
-            <Logout
-                show={showLogout}
-                close={() => {
-                    setShowLogout(false);
-                }}
-                logout={disconnectReload}></Logout>
         </div>
     );
 }

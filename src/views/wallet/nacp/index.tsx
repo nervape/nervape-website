@@ -94,7 +94,7 @@ export default function WalletNacp(props: { isBonelist: boolean; setLoading: Fun
     
     return (
         <div className="wallet-nacp-container">
-            <div className="wallet-nacp-header flex-align">
+            <div className="wallet-nacp-header position-sticky flex-align">
                 <div className="nacp-logo">
                     <img src={NacpLogo} alt="NacpLogo" />
                 </div>

@@ -1,0 +1,273 @@
+.user-center-content {
+  border: 1px solid rgba(62, 62, 62, 0.5);
+  border-radius: 20px;
+  letter-spacing: -0.05em;
+  margin-bottom: 24px;
+
+  .user-avatar {
+    padding: 8px;
+
+    img {
+      width: 166px;
+      height: 166px;
+      border-radius: 16px;
+    }
+  }
+
+  .user-info {
+    margin: 8px;
+    flex: 1;
+
+    .user-address {
+      border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+      padding-bottom: 16px;
+      margin: 0 16px;
+
+      .address {
+        border: 1px solid rgba(62, 62, 62, 0.5);
+        border-radius: 16px;
+        height: 32px;
+        line-height: 32px;
+        width: 200px;
+
+        &.open {
+          background: #f44d37;
+          border: 1px solid #f44d37;
+          color: #ffffff;
+
+          .available-quest-count {
+            background-color: #ffffff;
+            color: #f13636;
+          }
+        }
+        img {
+          width: 24px;
+          height: 24px;
+          margin-left: 4px;
+        }
+
+        .span {
+          min-width: 140px;
+          font-size: 12px;
+          font-weight: 700;
+          line-height: 14px;
+          padding: 4px;
+        }
+      }
+    }
+  }
+
+  .ckb-balance {
+    color: #3e3e3e;
+    margin: 16px;
+
+    .title {
+      font-style: italic;
+      font-weight: 800;
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: -0.05em;
+
+      .transfer {
+        flex: 1;
+        text-align: right;
+        color: rgba(62, 62, 62, 0.5);
+
+        .transfer-btn {
+          background: unset;
+          text-decoration-line: underline;
+        }
+      }
+    }
+
+    .balance-value {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 29px;
+      padding-top: 19.5px;
+      text-align: right;
+
+      span {
+        color: rgba(62, 62, 62, 0.5);
+        font-size: 16px;
+        line-height: 19px;
+      }
+    }
+  }
+
+  .bone-list-points {
+    margin: 16px;
+
+    .bone-item {
+      flex: 1;
+
+      .title {
+        font-style: italic;
+        font-weight: 800;
+        font-size: 12px;
+        line-height: 14px;
+        color: #3e3e3e;
+        padding-bottom: 12px;
+      }
+    }
+
+    .bone-list {
+      border-right: 1px solid rgba(62, 62, 62, 0.5);
+      padding-right: 24px;
+
+      .nacp,
+      .nft-3d {
+        color: #3e3e3e;
+        font-size: 12px;
+        line-height: 14px;
+
+        .name {
+          flex: 1;
+        }
+
+        .icon {
+          width: 12px;
+          height: 12px;
+          background: #a0a0a0;
+          border-radius: 50%;
+        }
+
+        &.holder {
+          .icon {
+            background: greenyellow;
+          }
+        }
+      }
+
+      .nacp {
+        padding-bottom: 8px;
+        border-bottom: 1px dashed rgba(62, 62, 62, 0.5);
+      }
+
+      .nft-3d {
+        padding-top: 8px;
+      }
+    }
+
+    .bone-points {
+      margin-left: 24px;
+      height: 100%;
+
+      .title {
+        .title-left {
+          align-self: flex-start;
+        }
+
+        .record {
+          flex: 1;
+          text-align: right;
+          font-weight: 400;
+          text-decoration-line: underline;
+          color: rgba(62, 62, 62, 0.5);
+        }
+      }
+
+      .points {
+        color: #3e3e3e;
+        text-align: right;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 29px;
+      }
+
+      .daily-add {
+        padding-top: 4px;
+        text-align: right;
+        color: rgba(62, 62, 62, 0.5);
+        font-size: 12px;
+        line-height: 14px;
+      }
+
+      .coming-soon {
+        color: rgba(62, 62, 62, 0.5);
+        font-size: 16px;
+        line-height: 44px;
+        height: 44px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .user-center-content {
+    &.m {
+      border: unset;
+      margin-bottom: 0;
+
+      .user-avatar {
+        padding: 0;
+
+        img {
+          width: 64px;
+          height: 64px;
+        }
+      }
+
+      .user-info {
+        margin: 0;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+        padding-top: 16px;
+        position: sticky;
+        top: 0;
+        background: #e3e3e3;
+
+        .user-address {
+          border-bottom: unset;
+          padding-bottom: 0;
+          align-self: flex-start;
+
+          .address {
+            width: 180px;
+          }
+        }
+      }
+
+      .ckb-balance {
+        margin: 16px 0 0;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+
+        .balance-value {
+          height: 44px;
+          line-height: 44px;
+          margin-top: 12px;
+          padding-top: 0;
+        }
+      }
+
+      .bone-list-points {
+        margin: 16px 0 0;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+
+        .bone-item {
+          display: flex;
+          flex-direction: column;
+          align-self: flex-start;
+
+          .nft-3d {
+            padding-bottom: 8px;
+          }
+        }
+
+        .bone-list {
+            padding-right: 16px;
+        }
+
+        .bone-points {
+            margin-left: 16px;
+        }
+      }
+    }
+  }
+
+  .wallet-connect-dropmenu {
+    width: 180px;
+  }
+}

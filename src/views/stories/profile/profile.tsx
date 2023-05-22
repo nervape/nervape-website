@@ -362,7 +362,7 @@ export default function StoryProfile(props: any) {
                             {fnNext()}
                         </div>
                     </div>
-                    <div className="page-footer">
+                    <div className="page-footer" id="quiz">
                         <Footer></Footer>
                     </div>
                 </div>

@@ -364,7 +364,7 @@ const WalletTx = (
 
     return (
         <div className="wallet-tx-container">
-            <div className="wallet-tx-header flex-align">
+            <div className="wallet-tx-header position-sticky flex-align">
                 <div className="tx-title">TRANSACTION RECORD</div>
             </div>
 

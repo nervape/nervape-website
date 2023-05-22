@@ -19,7 +19,7 @@ export default function WalletEvent(props: any) {
             <div className="event-item-c">
                 <div className="event-item transition flex-align">
                     <div className="event-tab title">{event.title}</div>
-                    <div className="event-tab timeframe">{dayjs(event.startTime).format('MM/DD/YYYY') + '-' + dayjs(event.endTime).format('MM/DD/YYYY')}</div>
+                    <div className="event-tab timeframe">{dayjs(event.startTime).format('MM/DD/YYYY') + ' - ' + dayjs(event.endTime).format('MM/DD/YYYY')}</div>
                     <div className={`event-tab status ${!event.show && 'active'}`}>
                         <img src="" className="icon" alt="StatusIcon" />
                     </div>
@@ -48,7 +48,7 @@ export default function WalletEvent(props: any) {
 
     return (
         <div className="wallet-event-container">
-            <div className="wallet-event-header flex-align">
+            <div className="wallet-event-header position-sticky flex-align">
                 <div className="event-title">EVENT</div>
             </div>
 

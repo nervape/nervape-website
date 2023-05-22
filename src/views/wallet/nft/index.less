@@ -199,3 +199,27 @@
     }
   }
 }
+
+@media screen and (max-width: 750px) {
+  .wallet-nft-3d-container {
+    .wallet-nft-3d-header {
+      padding-top: 16px;
+
+      .nft-3d-title {
+        margin-right: 0;
+        margin-bottom: 8px;
+      }
+    }
+    .wallet-nft-3d-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc(50% - 4px);
+
+          &:nth-child(2n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
