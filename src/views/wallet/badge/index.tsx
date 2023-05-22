@@ -60,110 +60,116 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
 
     return (
         <div className="wallet-badge-container">
-            <div className="wallet-badge-header">
-                <div className="badge-title">EVENT BADGE</div>
-            </div>
-
-            <div className="wallet-badge-content">
-                {badges.length > 0 && (
-                    <div className="badge-content flex-align">
-                        {badges.map((badge, index) => {
-                            return (
-                                <div className="badge-cover" key={index}>
-                                    <img
-                                        src={
-                                            badge.isHold
-                                                ? badge.cover_image_url
-                                                : badge.inactivated_cover_url
-                                        }
-                                        className="cover-image transition"
-                                        alt=""
-                                    />
-                                </div>
-                            );
-                        })}
+            {badges.length && (
+                <>
+                    <div className="wallet-badge-header">
+                        <div className="badge-title">EVENT BADGE</div>
                     </div>
-                )}
-            </div>
 
-            <div className="wallet-badge-header story-reward">
-                <div className="badge-title">STORY REWARD</div>
-            </div>
-
-            <div className="wallet-badge-content wallet-story-reward-content flex-align">
-                <div className="review-card-content">
-                    <div
-                        className={`review-card ${!selectedStoryOat?.story?.isHolderOat && 'unholder'}`}
-                        style={{
-                            border: `1px solid ${selectedStoryOat?.walletStoryOatTheme}`,
-                            color: `${selectedStoryOat?.walletStoryOatTheme}`
-                        }}>
-                        <div className="bp">
-                            100
-                            <div className="unit">BP</div>
-                        </div>
-                        <div className="cover-image-c">
-                            <div className="cover-image" style={{ border: `3px solid ${selectedStoryOat?.walletStoryOatTheme}` }}>
-                                <img className="cover transition" src={selectedStoryOat?.story?.collectedCover} alt="StoryOatCover" />
-                            </div>
-                            <img
-                                className="oat cursor"
-                                src={OatIcon}
-                                onClick={() => {
-                                    openGalxeUrl(selectedStoryOat?.story?.galxeCampaignId);
-                                }}
-                                alt="OatIcon" />
-                        </div>
-
-                        <div className="story-info">
-                            <div className="chapter-story">
-                                {selectedStoryOat?.chapterName + ' | ' + selectedStoryOat?.story?.serial}
-                            </div>
-                            <div className="story-title cursor" onClick={() => {
-                                NavTool.fnJumpToPage(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
-                            }}>{selectedStoryOat?.story?.title}</div>
-                            <div className="story-desc">
-                                {selectedStoryOat?.story?.isHolderOat ? selectedStoryOat?.story?.overview : (
-                                    <div className="tip">
-                                        You have not yet acquired this badge. To earn it, you must complete the
-                                        <div className="challenge cursor"
-                                            onClick={() => {
-                                                NavTool.fnJumpToPage(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
-                                            }}>Story Challenge.</div>
+                    <div className="wallet-badge-content">
+                        <div className="badge-content flex-align">
+                            {badges.map((badge, index) => {
+                                return (
+                                    <div className="badge-cover" key={index}>
+                                        <img
+                                            src={
+                                                badge.isHold
+                                                    ? badge.cover_image_url
+                                                    : badge.inactivated_cover_url
+                                            }
+                                            className="cover-image transition"
+                                            alt=""
+                                        />
                                     </div>
-                                )}
-                            </div>
+                                );
+                            })}
                         </div>
                     </div>
-                </div>
-                <div className="wallet-story-rewards">
-                    {chapters?.map((chapter, index) => {
-                        return (
-                            <div className="chapter-item" key={`chapter-${index}`}>
-                                <div className="title">{chapter.name + ': ' + chapter.desc}</div>
-                                <div className="chapter-stories flex-align">
-                                    {chapter.stories.map((story, _index) => {
-                                        return (
-                                            <div
-                                                className="story-item cursor"
-                                                onClick={() => {
-                                                    setSelectedStoryOat({
-                                                        walletStoryOatTheme: chapter.walletStoryOatTheme,
-                                                        chapterName: chapter.name,
-                                                        story: story,
-                                                    })
-                                                }}
-                                                key={`story-${_index}`}>
-                                                <img className="transition cover-image" src={story.isHolderOat ? story.collectedCover : story.notCollectCover} alt="StoryOatCover" />
+                </>
+            )}
+
+            {chapters.length && (
+                <>
+                    <div className="wallet-badge-header story-reward">
+                        <div className="badge-title">STORY REWARD</div>
+                    </div>
+
+                    <div className="wallet-badge-content wallet-story-reward-content flex-align">
+                        <div className="review-card-content">
+                            <div
+                                className={`review-card ${!selectedStoryOat?.story?.isHolderOat && 'unholder'}`}
+                                style={{
+                                    border: `1px solid ${selectedStoryOat?.walletStoryOatTheme}`,
+                                    color: `${selectedStoryOat?.walletStoryOatTheme}`
+                                }}>
+                                <div className="bp">
+                                    100
+                                    <div className="unit">BP</div>
+                                </div>
+                                <div className="cover-image-c">
+                                    <div className="cover-image" style={{ border: `3px solid ${selectedStoryOat?.walletStoryOatTheme}` }}>
+                                        <img className="cover transition" src={selectedStoryOat?.story?.collectedCover} alt="StoryOatCover" />
+                                    </div>
+                                    <img
+                                        className="oat cursor"
+                                        src={OatIcon}
+                                        onClick={() => {
+                                            openGalxeUrl(selectedStoryOat?.story?.galxeCampaignId);
+                                        }}
+                                        alt="OatIcon" />
+                                </div>
+
+                                <div className="story-info">
+                                    <div className="chapter-story">
+                                        {selectedStoryOat?.chapterName + ' | ' + selectedStoryOat?.story?.serial}
+                                    </div>
+                                    <div className="story-title cursor" onClick={() => {
+                                        NavTool.fnJumpToPage(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
+                                    }}>{selectedStoryOat?.story?.title}</div>
+                                    <div className="story-desc">
+                                        {selectedStoryOat?.story?.isHolderOat ? selectedStoryOat?.story?.overview : (
+                                            <div className="tip">
+                                                You have not yet acquired this badge. To earn it, you must complete the
+                                                <div className="challenge cursor"
+                                                    onClick={() => {
+                                                        NavTool.fnJumpToPage(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
+                                                    }}>Story Challenge.</div>
                                             </div>
-                                        );
-                                    })}
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        );
-                    })}
-                </div>
-            </div>
+                        </div>
+                        <div className="wallet-story-rewards">
+                            {chapters?.map((chapter, index) => {
+                                return (
+                                    <div className="chapter-item" key={`chapter-${index}`}>
+                                        <div className="title">{chapter.name + ': ' + chapter.desc}</div>
+                                        <div className="chapter-stories flex-align">
+                                            {chapter.stories.map((story, _index) => {
+                                                return (
+                                                    <div
+                                                        className="story-item cursor"
+                                                        onClick={() => {
+                                                            setSelectedStoryOat({
+                                                                walletStoryOatTheme: chapter.walletStoryOatTheme,
+                                                                chapterName: chapter.name,
+                                                                story: story,
+                                                            })
+                                                        }}
+                                                        key={`story-${_index}`}>
+                                                        <img className="transition cover-image" src={story.isHolderOat ? story.collectedCover : story.notCollectCover} alt="StoryOatCover" />
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

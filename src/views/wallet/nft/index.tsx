@@ -254,8 +254,8 @@ export default function WalletNFT3D(props: any) {
                                 selectedType == 'All' ? (
                                     <div className="yokai-nft-btns flex-center">
                                         {types.map(type => {
-                                            if (type == 'All') return <></>;
-                                            return <YokaiNftButton key={type} selectedType={type}></YokaiNftButton>;
+                                            if (type !== 'All')
+                                                return <YokaiNftButton key={type} selectedType={type}></YokaiNftButton>;
                                         })}
                                     </div>
                                 ) : <YokaiNftButton selectedType={selectedType}></YokaiNftButton>
