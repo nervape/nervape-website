@@ -211,11 +211,107 @@
       }
     }
     .wallet-nft-3d-content {
+      padding-bottom: 68px;
+
       .wallet-nft-3ds {
         .nft-item {
           width: calc(50% - 4px);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
+            height: fit-content;
+          }
 
           &:nth-child(2n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1000px) {
+  .wallet-nft-3d-container {
+    .wallet-nft-3d-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 8px) / 3);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
+            height: fit-content;
+          }
+
+          &:nth-child(3n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
+  .wallet-nft-3d-container {
+    .wallet-nft-3d-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 12px) / 4);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
+            height: fit-content;
+          }
+
+          &:nth-child(4n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1440px) {
+  .wallet-nft-3d-container {
+    .wallet-nft-3d-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 16px) / 5);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
+            height: fit-content;
+          }
+
+          &:nth-child(5n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .wallet-nft-3d-container {
+    .wallet-nft-3d-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 20px) / 6);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
+            height: fit-content;
+          }
+
+          &:nth-child(6n) {
             margin-right: 0;
           }
         }

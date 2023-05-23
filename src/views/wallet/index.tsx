@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 import { Amount } from '@lay2/pw-core';
 import { mainnet, useAccount, useNetwork } from 'wagmi';
-import Footer from '../components/footer';
-import { DataContext, updateBodyOverflow } from '../../utils/utils';
+import { DataContext, getWindowScrollTop, updateBodyOverflow } from '../../utils/utils';
 import { TransferSuccess } from '../components/nft/nft';
 import { LoginWalletType } from '../../utils/Wallet';
 
@@ -44,6 +43,7 @@ export default function WalletNewPage() {
 
     const [switchChain, setSwitchChain] = useState(false);
     const [showChainInfo, setShowChainInfo] = useState(false);
+    const [isFold, setIsFold] = useState(false);
 
     const { chain } = useNetwork();
 
@@ -194,15 +194,56 @@ export default function WalletNewPage() {
         );
     }
 
-    const myBalance = () => {
-        const balanceArr = balance.split('.');
-        return (
-            <>
-                {balanceArr[0]}
-                <span>{balanceArr[1] ? `.${balanceArr[1]}` : ''}</span>
-            </>
-        );
-    };
+    function handleScrollCallback() {
+        console.log(window.scrollY);
+
+        if (state.windowWidth > 375) {
+            if (window.scrollY > 118) {
+                setIsFold(true);
+            }
+
+            if (window.scrollY < 60) {
+                setIsFold(false);
+            }
+        }
+    }
+
+    const fnFilter = useCallback(filterNfts(), []);
+
+    function filterNfts() {
+        let timer: any;
+        let lastTop = 0;
+        return function () {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                const currTop = getWindowScrollTop();
+                console.log(currTop - lastTop);
+
+                if (currTop - lastTop > 0 && currTop - lastTop < 100) {
+                    if (currTop > 118) {
+                        setIsFold(true);
+                    }
+                } else if (currTop - lastTop < 0 && currTop - lastTop > -100) {
+                    if (currTop <= 118) {
+                        setIsFold(false);
+                    }
+                }
+                lastTop = currTop;
+            }, 0);
+        }
+    }
+
+    function fnScrollPage() {
+        fnFilter();
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', fnScrollPage, true);
+
+        return () => window.removeEventListener('scroll', fnScrollPage, true);
+    });
 
     return (
         <div className="wallet-new-page">
@@ -215,11 +256,12 @@ export default function WalletNewPage() {
                     ></SwitchChain>
                     <div className="container">
                         <WalletHeader
+                            isFold={isFold}
                             isBonelist={isBonelist}
                             setShowTransfer={setShowTransfer}
                             balance={balance}></WalletHeader>
 
-                        <section className="wallet-section flex-align">
+                        <section className={`wallet-section flex-align ${isFold && 'fold'}`}>
                             <div className="wallet-navbar-content">
                                 <NavbarItems></NavbarItems>
                             </div>
@@ -236,6 +278,7 @@ export default function WalletNewPage() {
                                     ) : (
                                         navbars[currNavbar]?.name == WalletNavbarTypes.TX ? (
                                             <WalletTx
+                                                isFold={isFold}
                                                 nftCoverImages={nftCoverImages}
                                                 setLoading={setLoading}
                                                 updateBalance={updateUnipassCkbBalance}></WalletTx>
@@ -255,7 +298,6 @@ export default function WalletNewPage() {
                             </div>
                         </section>
                     </div>
-                    {state.windowWidth > 375 && <Footer></Footer>}
                 </div>
             )}
             <ChainInfo

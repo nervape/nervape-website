@@ -169,7 +169,7 @@ function HistoryItem(props: {
 
     return (
         <div
-            className="history transition flex-align"
+            className={`history transition flex-align`}
             onClick={() => {
                 showHistoryDetail(history);
             }}
@@ -213,13 +213,14 @@ function HistoryItem(props: {
 
 const WalletTx = (
     props: {
+        isFold: boolean;
         setLoading: Function;
         updateBalance: Function;
         nftCoverImages: NFT[];
     },
     ref: React.Ref<unknown>
 ) => {
-    const { setLoading, updateBalance, nftCoverImages } = props;
+    const { isFold, setLoading, updateBalance, nftCoverImages } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -363,22 +364,22 @@ const WalletTx = (
     }
 
     return (
-        <div className="wallet-tx-container">
+        <div className={`wallet-tx-container ${isFold && 'fold'}`}>
             <div className="wallet-tx-header position-sticky flex-align">
                 <div className="tx-title">TRANSACTION RECORD</div>
             </div>
 
             <div className="wallet-tx-content">
-                <div className="tx-tabs flex-align">
+                <div className={`tx-tabs flex-align ${state.loginWalletType == LoginWalletType.UNIPASS_V3 && 'l1'}`}>
                     {state.loginWalletType !== LoginWalletType.UNIPASS_V3 && (
                         <div className="tx-tab index">NFT ID</div>
                     )}
                     <div className="tx-tab type">Type</div>
-                    <div className="tx-tab date">Timestamp</div>
+                    <div className="tx-tab date">Time</div>
                     <div className="tx-tab status">Status</div>
                     {state.windowWidth !== 375 && <div className="tx-tab number">TX</div>}
                 </div>
-                <div className="tx-histories">
+                <div className={`tx-histories ${state.loginWalletType == LoginWalletType.UNIPASS_V3 && 'l1'}`}>
                     {histories.map((history, index) => (
                         <HistoryItem
                             key={histories.length - 1 - index}

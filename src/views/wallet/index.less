@@ -133,6 +133,27 @@ body {
   }
 }
 
+@media screen and (min-width: 750px) {
+  .wallet-new-page {
+    .wallet-home-container {
+      .container {
+        .wallet-section {
+          .wallet-navbar-content {
+            position: sticky;
+            top: 208px;
+          }
+
+          &.fold {
+            .wallet-navbar-content {
+              top: 102px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 750px) {
   .wallet-new-page {
     .wallet-home-container {
@@ -148,7 +169,7 @@ body {
             position: fixed;
             bottom: 0;
             left: 0;
-            z-index: 1;
+            z-index: 2;
             border-radius: 20px 20px 0 0;
             height: 68px;
 

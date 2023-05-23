@@ -128,7 +128,7 @@ export default function WallectConnect(props: any) {
         await Promise.all(
             stories.map(async story => {
                 const _oatPoaps = await queryOatPoaps(_address, story.galxeCampaignId);
-                story.show = _oatPoaps.length <= 0;
+                story.show = _oatPoaps && _oatPoaps.length <= 0;
                 return story;
             })
         );

@@ -62,7 +62,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
         <div className="wallet-badge-container">
             {badges.length && (
                 <>
-                    <div className="wallet-badge-header">
+                    <div className="wallet-badge-header position-sticky">
                         <div className="badge-title">EVENT BADGE</div>
                     </div>
 
@@ -90,12 +90,12 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
 
             {chapters.length && (
                 <>
-                    <div className="wallet-badge-header story-reward">
+                    <div className="wallet-badge-header position-sticky story-reward">
                         <div className="badge-title">STORY REWARD</div>
                     </div>
 
-                    <div className="wallet-badge-content wallet-story-reward-content flex-align">
-                        <div className="review-card-content">
+                    <div className={`wallet-badge-content wallet-story-reward-content ${state.windowWidth > 375 && 'flex-align'}`}>
+                        <div className="review-card-content position-sticky">
                             <div
                                 className={`review-card ${!selectedStoryOat?.story?.isHolderOat && 'unholder'}`}
                                 style={{
@@ -144,7 +144,10 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                             {chapters?.map((chapter, index) => {
                                 return (
                                     <div className="chapter-item" key={`chapter-${index}`}>
-                                        <div className="title">{chapter.name + ': ' + chapter.desc}</div>
+                                        <div className="title">
+                                            {chapter.name + ': '}
+                                            <span>{chapter.desc.toLocaleLowerCase()}</span>
+                                        </div>
                                         <div className="chapter-stories flex-align">
                                             {chapter.stories.map((story, _index) => {
                                                 return (

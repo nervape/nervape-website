@@ -1,3 +1,30 @@
+.wallet-header-container {
+  height: 208px;
+  position: sticky;
+  top: 0;
+  background: #E3E3E3;
+
+  &.fold {
+    height: 102px;
+
+    .user-center-content {  
+      .user-avatar {
+        img {
+          width: 60px;
+          height: 60px;
+        }
+      }
+
+      .user-info {
+        .user-address {
+          border-bottom: unset;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
 .user-center-content {
   border: 1px solid rgba(62, 62, 62, 0.5);
   border-radius: 20px;
@@ -195,6 +222,8 @@
 
 @media screen and (max-width: 750px) {
   .user-center-content {
+    height: auto;
+
     &.m {
       border: unset;
       margin-bottom: 0;
@@ -257,11 +286,11 @@
         }
 
         .bone-list {
-            padding-right: 16px;
+          padding-right: 16px;
         }
 
         .bone-points {
-            margin-left: 16px;
+          margin-left: 16px;
         }
       }
     }

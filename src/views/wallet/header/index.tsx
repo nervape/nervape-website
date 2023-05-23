@@ -24,7 +24,7 @@ import AvailableQuest from "../../components/wallet-connect/available-quest";
 
 export default function WalletHeader(props: any) {
     const { state, dispatch } = useContext(DataContext);
-    const { setShowTransfer, balance, isBonelist } = props;
+    const { setShowTransfer, balance, isBonelist, isFold } = props;
 
     const { chain } = useNetwork();
 
@@ -43,7 +43,7 @@ export default function WalletHeader(props: any) {
         await Promise.all(
             stories.map(async story => {
                 const _oatPoaps = await queryOatPoaps(_address, story.galxeCampaignId);
-                story.show = _oatPoaps.length <= 0;
+                story.show = _oatPoaps && _oatPoaps.length <= 0;
                 return story;
             })
         );
@@ -232,16 +232,16 @@ export default function WalletHeader(props: any) {
     }
 
     return (
-        <div className="wallet-header-container">
+        <div className={`wallet-header-container position-sticky ${isFold && 'fold'}`}>
             {state.windowWidth > 375 ? (
-                <div className="user-center-content flex-align">
+                <div className={`user-center-content transition flex-align`}>
                     <div className="user-avatar">
-                        <img src={DefaultAvatar} alt="UserAvatar" />
+                        <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
                     </div>
                     <div className="user-info">
                         {AddressDropdown()}
 
-                        {UserInfo()}
+                        {!isFold && UserInfo()}
                     </div>
                 </div>
             ) : (
