@@ -240,9 +240,11 @@ export default function WalletNewPage() {
     }
 
     useEffect(() => {
-        window.addEventListener('scroll', fnScrollPage, true);
+        if (state.windowWidth > 375) {
+            window.addEventListener('scroll', fnScrollPage, true);
 
-        return () => window.removeEventListener('scroll', fnScrollPage, true);
+            return () => window.removeEventListener('scroll', fnScrollPage, true);
+        }
     });
 
     return (

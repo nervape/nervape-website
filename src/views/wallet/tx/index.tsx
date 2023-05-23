@@ -370,7 +370,7 @@ const WalletTx = (
             </div>
 
             <div className="wallet-tx-content">
-                <div className={`tx-tabs flex-align ${state.loginWalletType == LoginWalletType.UNIPASS_V3 && 'l1'}`}>
+                <div className={`tx-tabs position-sticky flex-align ${state.loginWalletType == LoginWalletType.UNIPASS_V3 && 'l1'}`}>
                     {state.loginWalletType !== LoginWalletType.UNIPASS_V3 && (
                         <div className="tx-tab index">NFT ID</div>
                     )}
