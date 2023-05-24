@@ -365,12 +365,12 @@ const WalletTx = (
 
     return (
         <div className={`wallet-tx-container ${isFold && 'fold'}`}>
-            <div className="wallet-tx-header position-sticky flex-align">
+            <div className="wallet-tx-header transition position-sticky flex-align">
                 <div className="tx-title">TRANSACTION RECORD</div>
             </div>
 
             <div className="wallet-tx-content">
-                <div className={`tx-tabs position-sticky flex-align ${state.loginWalletType == LoginWalletType.UNIPASS_V3 && 'l1'}`}>
+                <div className={`tx-tabs transition position-sticky flex-align ${state.loginWalletType == LoginWalletType.UNIPASS_V3 && 'l1'}`}>
                     {state.loginWalletType !== LoginWalletType.UNIPASS_V3 && (
                         <div className="tx-tab index">NFT ID</div>
                     )}
