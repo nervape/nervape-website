@@ -14,6 +14,7 @@ export const initialState = {
     layerOneWrapper: undefined,
     loginWalletType: undefined,
     isInit: false,
+    isWalletFold: false
 }
 
 export const DataContext = createContext<{

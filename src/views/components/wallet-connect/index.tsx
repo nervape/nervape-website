@@ -171,7 +171,7 @@ export default function WallectConnect(props: any) {
                 className="nervape-asset cursor"
                 onClick={() => {
                     setOpen(false);
-                    setDisableList(true);
+                    setDisableList && setDisableList(true);
                     NavTool.fnJumpToPage('/wallet');
                     window.scrollTo(0, 0);
                 }}
@@ -188,7 +188,7 @@ export default function WallectConnect(props: any) {
                 onCopy={() => {
                     message.success(`Copy Success!`);
                     setOpen(false);
-                    setDisableList(true);
+                    setDisableList && setDisableList(true);
                 }}
             >
                 <button className="copy-address cursor">Copy Address</button>
@@ -202,7 +202,7 @@ export default function WallectConnect(props: any) {
                 className="nervape-asset cursor"
                 onClick={() => {
                     setOpen(false);
-                    setDisableList(true);
+                    setDisableList && setDisableList(true);
                     setShowQuest(true);
                     document.body.style.overflow = 'hidden';
                 }}>

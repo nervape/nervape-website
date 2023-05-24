@@ -13,6 +13,7 @@ export enum Types {
     LayerOneWrapper = 'LayerOneWrapper',
     LoginWalletType = 'LoginWalletType',
     IsInit = 'IsInit',
+    IsWalletFold = 'IsWalletFold',
 }
 
 export type InitialStateType = {
@@ -25,6 +26,7 @@ export type InitialStateType = {
     layerOneWrapper: UnipassV3Wrapper | undefined;
     loginWalletType: LoginWalletType | undefined;
     isInit: boolean;
+    isWalletFold: boolean;
 }
 
 export const globalReducer = (state: InitialStateType, action: any) => {
@@ -38,6 +40,11 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             return {
                 ...state,
                 isInit: action.value
+            };
+        case Types.IsWalletFold:
+            return {
+                ...state,
+                isWalletFold: action.value
             };
         case Types.ShowLoading:
             return {

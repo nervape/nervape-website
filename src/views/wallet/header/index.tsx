@@ -232,9 +232,9 @@ export default function WalletHeader(props: any) {
     }
 
     return (
-        <div className={`wallet-header-container position-sticky ${isFold && 'fold'}`}>
+        <div className={`wallet-header-container transition position-sticky ${isFold && 'fold'}`}>
             {state.windowWidth > 375 ? (
-                <div className={`user-center-content transition flex-align`}>
+                <div className={`user-center-content flex-align`}>
                     <div className="user-avatar">
                         <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
                     </div>

@@ -194,42 +194,48 @@ export default function WalletNewPage() {
         );
     }
 
-    function handleScrollCallback() {
-        console.log(window.scrollY);
-
-        if (state.windowWidth > 375) {
-            if (window.scrollY > 118) {
-                setIsFold(true);
-            }
-
-            if (window.scrollY < 60) {
-                setIsFold(false);
-            }
-        }
-    }
-
     const fnFilter = useCallback(filterNfts(), []);
 
     function filterNfts() {
         let timer: any;
         let lastTop = 0;
+        let canUpdate = true;
         return function () {
             if (timer) {
                 clearTimeout(timer);
             }
             timer = setTimeout(() => {
                 const currTop = getWindowScrollTop();
-                console.log(currTop - lastTop);
+                console.log(currTop - lastTop, canUpdate);
 
-                if (currTop - lastTop > 0 && currTop - lastTop < 100) {
-                    if (currTop > 118) {
-                        setIsFold(true);
-                    }
-                } else if (currTop - lastTop < 0 && currTop - lastTop > -100) {
-                    if (currTop <= 118) {
-                        setIsFold(false);
+                if (canUpdate) {
+                    if (currTop - lastTop > 0 && currTop - lastTop < 100) {
+                        if (currTop > 118) {
+                            setIsFold(true);
+                            canUpdate = false;
+                            window.scrollTo({
+                                top: lastTop
+                            });
+
+                            setTimeout(() => {
+                                canUpdate = true;
+                            }, 500);
+                        }
+                    } else if (currTop - lastTop < 0 && currTop - lastTop > -100) {
+                        if (currTop <= 118) {
+                            setIsFold(false);
+                            canUpdate = false;
+                            window.scrollTo({
+                                top: lastTop
+                            });
+
+                            setTimeout(() => {
+                                canUpdate = true;
+                            }, 500);
+                        }
                     }
                 }
+
                 lastTop = currTop;
             }, 0);
         }

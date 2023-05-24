@@ -343,12 +343,14 @@ export default function NavHeader(props: any) {
   function filterNfts() {
     let timer: any;
     let lastTop = 0;
+
     return function () {
       if (timer) {
         clearTimeout(timer);
       }
       timer = setTimeout(() => {
         const currTop = getWindowScrollTop();
+        
         if (currTop - lastTop > 10) {
           setHideHeader(true);
           setDisableList(true);
