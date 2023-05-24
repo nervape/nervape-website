@@ -206,7 +206,6 @@ export default function WalletNewPage() {
             }
             timer = setTimeout(() => {
                 const currTop = getWindowScrollTop();
-                console.log(currTop - lastTop, canUpdate);
 
                 if (canUpdate) {
                     if (currTop - lastTop > 0 && currTop - lastTop < 100) {
