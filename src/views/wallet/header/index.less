@@ -276,13 +276,17 @@
 
 @media screen and (min-width: 750px) {
   .wallet-header-container {
-    height: 208px;
+    height: calc(208px + var(--wallet-padding));
     position: sticky;
     top: 0;
     background: #e3e3e3;
 
+    .visible-header-line {
+        padding-top: var(--wallet-padding);
+    }
+
     &.fold {
-      height: 102px;
+      height: calc(102px + var(--wallet-padding));
 
       .user-center-content {
         .user-avatar {

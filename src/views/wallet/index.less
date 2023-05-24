@@ -30,7 +30,6 @@ body {
       margin: 0 auto;
       padding-bottom: 168px;
       min-height: 100vh;
-      padding-top: 54px;
 
       .wallet-section {
         .wallet-navbar-content {
@@ -140,12 +139,12 @@ body {
         .wallet-section {
           .wallet-navbar-content {
             position: sticky;
-            top: 208px;
+            top: calc(208px + var(--wallet-padding));
           }
 
           &.fold {
             .wallet-navbar-content {
-              top: 102px;
+              top: calc(102px + var(--wallet-padding));
             }
           }
         }

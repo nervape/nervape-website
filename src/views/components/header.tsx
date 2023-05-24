@@ -334,9 +334,17 @@ const mPages: MenuItem[] = [
 export default function NavHeader(props: any) {
   const { activeIndex } = props;
   const [disableList, setDisableList] = useState(true);
-  const [hideHeader, setHideHeader] = useState(false);
 
   const { state, dispatch } = useContext(DataContext);
+
+  const setHideHeader = (value: boolean) => {
+    document.body.style.setProperty('--wallet-padding', value ? '64px' : '0px');
+
+    dispatch({
+      type: Types.IsVisibleHeader,
+      value: value
+    })
+  }
 
   const fnFilter = useCallback(filterNfts(), []);
 
@@ -355,10 +363,10 @@ export default function NavHeader(props: any) {
         if (activeIndex == 7 && currTop < 400) {}
         else {
           if (currTop - lastTop > 10) {
-            setHideHeader(true);
+            setHideHeader(false);
             setDisableList(true);
           } else if (currTop - lastTop < -10) {
-            setHideHeader(false);
+            setHideHeader(true);
           }
         }
         
@@ -390,7 +398,7 @@ export default function NavHeader(props: any) {
   return (
     <div
       id="header-container"
-      className={`header-container ${hideHeader && 'hide'}`}
+      className={`header-container ${!state.isVisibleHeader && 'hide'}`}
     >
       <div
         className={`header ${!disableList && 'disable'}`}

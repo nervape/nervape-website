@@ -14,6 +14,7 @@ export enum Types {
     LoginWalletType = 'LoginWalletType',
     IsInit = 'IsInit',
     IsWalletFold = 'IsWalletFold',
+    IsVisibleHeader = 'IsVisibleHeader',
 }
 
 export type InitialStateType = {
@@ -27,6 +28,7 @@ export type InitialStateType = {
     loginWalletType: LoginWalletType | undefined;
     isInit: boolean;
     isWalletFold: boolean;
+    isVisibleHeader: boolean;
 }
 
 export const globalReducer = (state: InitialStateType, action: any) => {
@@ -45,6 +47,11 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             return {
                 ...state,
                 isWalletFold: action.value
+            };
+        case Types.IsVisibleHeader:
+            return {
+                ...state,
+                isVisibleHeader: action.value
             };
         case Types.ShowLoading:
             return {

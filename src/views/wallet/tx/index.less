@@ -156,24 +156,24 @@
   .wallet-tx-container {
     &.fold {
       .wallet-tx-header {
-        top: 102px;
+        top: calc(102px + var(--wallet-padding));
       }
 
       .wallet-tx-content {
         .tx-tabs {
-          top: 147px;
+          top: calc(147px + var(--wallet-padding));
         }
       }
     }
     .wallet-tx-header {
       position: sticky;
-      top: 208px;
+      top: calc(208px + var(--wallet-padding));
     }
 
     .wallet-tx-content {
       .tx-tabs {
         position: sticky;
-        top: 253px;
+        top: calc(253px + var(--wallet-padding));
       }
     }
   }
