@@ -207,9 +207,10 @@ export default function WalletNewPage() {
             timer = setTimeout(() => {
                 const currTop = getWindowScrollTop();
 
+                console.log(currTop);
                 if (canUpdate) {
                     if (currTop - lastTop > 0 && currTop - lastTop < 100) {
-                        if (currTop > 118) {
+                        if (currTop > 50) {
                             setIsFold(true);
                             canUpdate = false;
                             window.scrollTo({
@@ -218,10 +219,10 @@ export default function WalletNewPage() {
 
                             setTimeout(() => {
                                 canUpdate = true;
-                            }, 500);
+                            }, 300);
                         }
                     } else if (currTop - lastTop < 0 && currTop - lastTop > -100) {
-                        if (currTop <= 118) {
+                        if (currTop <= 50) {
                             setIsFold(false);
                             canUpdate = false;
                             window.scrollTo({
@@ -230,7 +231,7 @@ export default function WalletNewPage() {
 
                             setTimeout(() => {
                                 canUpdate = true;
-                            }, 500);
+                            }, 300);
                         }
                     }
                 }
@@ -269,7 +270,7 @@ export default function WalletNewPage() {
                             balance={balance}></WalletHeader>
 
                         <section className={`wallet-section flex-align ${isFold && 'fold'}`}>
-                            <div className="wallet-navbar-content">
+                            <div className="wallet-navbar-content transition">
                                 <NavbarItems></NavbarItems>
                             </div>
                             <div className="wallet-content">

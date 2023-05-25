@@ -360,7 +360,9 @@ export default function NavHeader(props: any) {
         const currTop = getWindowScrollTop();
         console.log(currTop);
 
-        if (activeIndex == 7 && currTop < 400) {}
+        if (activeIndex == 7 && currTop < 400) {
+          setHideHeader(true);
+        }
         else {
           if (currTop - lastTop > 10) {
             setHideHeader(false);
