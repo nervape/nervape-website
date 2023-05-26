@@ -358,7 +358,6 @@ export default function NavHeader(props: any) {
       }
       timer = setTimeout(() => {
         const currTop = getWindowScrollTop();
-        console.log(currTop);
 
         if (activeIndex == 7 && currTop < 400) {
           setHideHeader(true);

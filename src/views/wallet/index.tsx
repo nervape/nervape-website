@@ -24,6 +24,7 @@ import WalletBadge from "./badge";
 import WalletEvent from "./event";
 import { scrollToTop } from "../../utils/utils";
 import WalletHeader from "./header";
+import { useLocation } from "react-router";
 
 export class WalletNavBar {
     name: string = "";
@@ -40,6 +41,7 @@ export enum WalletNavbarTypes {
 
 export default function WalletNewPage() {
     const { state, dispatch } = useContext(DataContext);
+    const history = useLocation();
 
     const [switchChain, setSwitchChain] = useState(false);
     const [showChainInfo, setShowChainInfo] = useState(false);
@@ -100,6 +102,13 @@ export default function WalletNewPage() {
     useEffect(() => {
         updateUnipassCkbBalance();
     }, [state.layerOneWrapper]);
+
+    useEffect(() => {
+        if (!navbars.length) return;
+        console.log('history', history);
+        const { hash } = history;
+        setCurrNavbar(navbars.findIndex(n => '#' + n.name.toLocaleLowerCase() == hash));
+    }, [history, navbars]);
 
     useEffect(() => {
         console.log('chain', chain);
@@ -185,6 +194,7 @@ export default function WalletNewPage() {
                         <div key={index} className={`navbar-item flex-center cursor ${currNavbar == index && 'active'}`}>
                             <div className="navbar-icon" onClick={() => {
                                 setCurrNavbar(index);
+                                window.location.hash = navbars[index].name.toLocaleLowerCase();
                                 scrollToTop();
                             }}>{navbar.name}</div>
                         </div>
@@ -207,7 +217,6 @@ export default function WalletNewPage() {
             timer = setTimeout(() => {
                 const currTop = getWindowScrollTop();
 
-                console.log(currTop);
                 if (canUpdate) {
                     if (currTop - lastTop > 0 && currTop - lastTop < 100) {
                         if (currTop > 50) {
