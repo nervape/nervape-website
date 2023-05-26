@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import './index.less';
 
-import DefaultAvatar from '../../../assets/wallet/default_avatar.svg';
+import DefaultAvatar from '../../../assets/wallet/default_avatar.png';
 import NervosLogo from '../../../assets/logo/nervos_logo.svg';
 import GodwokenLogo from '../../../assets/logo/godwoken_logo.svg';
 import EthLogo from '../../../assets/logo/etherum.svg';
 import InfoIcon from '../../../assets/icons/info_icon.svg';
+import SuccessIcon from '../../../assets/wallet/header/success.svg';
+import FailedIcon from '../../../assets/wallet/header/fail.svg';
 
 import { Dropdown, MenuProps, message } from "antd";
 import { StoryCollectable } from "../../../nervape/story";
@@ -22,6 +24,24 @@ import { godWoken } from "../../../utils/Chain";
 import Logout from "../../components/logout";
 import AvailableQuest from "../../components/wallet-connect/available-quest";
 
+const AvatarBackgroundColors = [
+    "#FFE3EB",
+    "#FFC2FE",
+    "#CEBAF7",
+    "#B7E6F9",
+    "#ABF4D0",
+    "#E0DFBD",
+    "#F9F7A7",
+    "#E2BE91",
+    "#F9C662",
+    "#F7D6B2",
+    "#FCA863",
+    "#F9ACAC",
+    "#E0E1E2",
+    "#A3A7AA",
+];
+
+
 export default function WalletHeader(props: any) {
     const { state, dispatch } = useContext(DataContext);
     const { setShowTransfer, balance, isBonelist, isFold } = props;
@@ -35,6 +55,7 @@ export default function WalletHeader(props: any) {
     const [showQuest, setShowQuest] = useState(false);
     const [storyQuizes, setStoryQuizes] = useState<StoryCollectable[]>([]);
     const [campaignEvents, setCampaignEvents] = useState<Event[]>([]);
+    const [avatarBackgroundColor, setAvatarBackgroundColor] = useState('');
 
     const [showLogout, setShowLogout] = useState(false);
 
@@ -62,7 +83,7 @@ export default function WalletHeader(props: any) {
 
     useEffect(() => {
         if (!state.currentAddress) return;
-
+        setAvatarBackgroundColor(AvatarBackgroundColors[Math.floor(Math.random() * AvatarBackgroundColors.length)])
         initQuizAndEvent(state.currentAddress);
     }, [state.currentAddress]);
 
@@ -211,11 +232,15 @@ export default function WalletHeader(props: any) {
                     <div className="title">BONE LIST</div>
                     <div className={`nacp flex-align ${isBonelist && 'holder'}`}>
                         <div className="name">NACP</div>
-                        <div className="icon"></div>
+                        <div className="icon">
+                            <img src={isBonelist ? SuccessIcon : FailedIcon} alt="FailedIcon" />
+                        </div>
                     </div>
                     <div className="nft-3d flex-align">
                         <div className="name">3D NFT</div>
-                        <div className="icon"></div>
+                        <div className="icon">
+                            <img src={FailedIcon} alt="FailedIcon" />
+                        </div>
                     </div>
                 </div>
                 <div className="bone-item bone-points">
@@ -237,7 +262,7 @@ export default function WalletHeader(props: any) {
                 <>
                     <div className="visible-header-line transition"></div>
                     <div className={`user-center-content transition flex-align`}>
-                        <div className="user-avatar">
+                        <div className="user-avatar" style={{background: avatarBackgroundColor}}>
                             <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
                         </div>
                         <div className="user-info">

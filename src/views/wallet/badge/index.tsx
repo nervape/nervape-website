@@ -31,8 +31,12 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                 chapter.stories = chapter.stories.filter(story => story.collectable);
                 await Promise.all(
                     chapter.stories.map(async story => {
-                        const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
-                        story.isHolderOat = _oatPoaps && _oatPoaps.length > 0;
+                        if (story.galxeCampaignId) {
+                            const _oatPoaps = await queryOatPoaps(state.currentAddress, story.galxeCampaignId);
+                            story.isHolderOat = _oatPoaps && _oatPoaps.length > 0;
+                        } else {
+                            story.isHolderOat = false;
+                        }
                         return story;
                     })
                 );
@@ -102,10 +106,10 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                     border: `1px solid ${selectedStoryOat?.walletStoryOatTheme}`,
                                     color: `${selectedStoryOat?.walletStoryOatTheme}`
                                 }}>
-                                <div className="bp">
+                                {/* <div className="bp">
                                     100
                                     <div className="unit">BP</div>
-                                </div>
+                                </div> */}
                                 <div className="cover-image-c">
                                     <div className="cover-image" style={{ border: `3px solid ${selectedStoryOat?.walletStoryOatTheme}` }}>
                                         <img
@@ -155,22 +159,32 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                             <span>{chapter.desc.toLocaleLowerCase()}</span>
                                         </div>
                                         <div className="chapter-stories flex-align">
-                                            {chapter.stories.map((story, _index) => {
-                                                return (
-                                                    <div
-                                                        className="story-item cursor"
-                                                        onClick={() => {
-                                                            setSelectedStoryOat({
-                                                                walletStoryOatTheme: chapter.walletStoryOatTheme,
-                                                                chapterName: chapter.name,
-                                                                story: story,
-                                                            })
-                                                        }}
-                                                        key={`story-${_index}`}>
-                                                        <img className="transition cover-image" src={story.isHolderOat ? story.collectedCover : story.notCollectCover} alt="StoryOatCover" />
-                                                    </div>
-                                                );
-                                            })}
+                                            {chapter.stories.length ? (
+                                                chapter.stories.map((story, _index) => {
+                                                    return (
+                                                        <div
+                                                            className={`story-item cursor`}
+                                                            style={{
+                                                                border: (story._id == selectedStoryOat?.story?._id && selectedStoryOat?.walletStoryOatTheme) 
+                                                                    ? `3px solid ${selectedStoryOat?.walletStoryOatTheme}` : 'unset'
+                                                            }}
+                                                            onClick={() => {
+                                                                setSelectedStoryOat({
+                                                                    walletStoryOatTheme: chapter.walletStoryOatTheme,
+                                                                    chapterName: chapter.name,
+                                                                    story: story,
+                                                                })
+                                                            }}
+                                                            key={`story-${_index}`}>
+                                                            <img 
+                                                                className="transition cover-image"
+                                                                src={story.isHolderOat ? story.collectedCover : story.notCollectCover} alt="StoryOatCover" />
+                                                        </div>
+                                                    );
+                                                })
+                                            ) : (
+                                                <div className="locked">- LOCKED -</div>
+                                            )}
                                         </div>
                                     </div>
                                 );

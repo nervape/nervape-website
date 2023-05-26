@@ -61,6 +61,8 @@ export class Story {
   collectedCover?: string;
   isHolderOat?: boolean = false;
   questions?: StoryQuestion[] = [];
+  collectStartTime?: number;
+  canColllect: boolean = false;
 }
 
 export class StoryQuestion {

@@ -69,7 +69,7 @@ export class HISTORY {
     amount?: string;
 }
 
-function SuccessIcon() {
+export const SuccessIcon = () => {
     return (
         <svg
             width="14"
@@ -82,7 +82,7 @@ function SuccessIcon() {
         </svg>
     );
 }
-function FailedIcon() {
+export const FailedIcon = () => {
     return (
         <svg
             width="14"
@@ -100,7 +100,7 @@ function FailedIcon() {
     );
 }
 
-function PendingIcon() {
+export const PendingIcon = () => {
     return (
         <svg
             width="13"

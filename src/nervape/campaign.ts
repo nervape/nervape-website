@@ -37,8 +37,8 @@ export class PoapBadge {
 export class Event {
   _id: string = "";
   title: string = "";
-  startTime: string = "";
-  endTime: string = "";
+  startTime: number = 0;
+  endTime: number = 0;
   proposalId: string = "";
   state: string = "";
   openUrl: string = "";

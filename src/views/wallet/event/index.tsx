@@ -4,6 +4,13 @@ import { nervapeApi } from "../../../api/nervape-api";
 import { Event, Vote } from "../../../nervape/campaign";
 import { queryGetVotes } from "../../../utils/snapshot";
 import { DataContext } from "../../../utils/utils";
+
+import NotStartIcon from "../../../assets/wallet/tx/not_start.svg";
+import InProgressIcon from "../../../assets/wallet/tx/in_progress.svg";
+import EndIcon from "../../../assets/wallet/tx/end.svg";
+import SuccessIcon from "../../../assets/wallet/tx/success.svg";
+import FailIcon from "../../../assets/wallet/tx/fail.svg";
+import NotComplete from "../../../assets/wallet/tx/not_complete.svg";
 import dayjs from "dayjs";
 
 export default function WalletEvent(props: any) {
@@ -14,14 +21,35 @@ export default function WalletEvent(props: any) {
 
     const EventItem = (props: { event: Event; }) => {
         const { event } = props;
+        const now = new Date().getTime();
+        const icons = [NotStartIcon, InProgressIcon, EndIcon];
+
+        const eventStatus = () => {
+            if (now < event.startTime) {
+                return 0;
+            } else if (now >= event.startTime && now <= event.endTime) {
+                return 1;
+            } else {
+                return 2;
+            }
+        }
+
+        const userStatus = () => {
+            if (event.show) {
+                return eventStatus() == 2 ? FailIcon : NotComplete; 
+            } else {
+                return SuccessIcon;
+            }
+        }
 
         return (
             <div className="event-item-c">
                 <div className="event-item transition flex-align">
                     <div className="event-tab title">{event.title}</div>
                     <div className="event-tab timeframe">{dayjs(event.startTime).format('MM/DD/YYYY') + ' - ' + dayjs(event.endTime).format('MM/DD/YYYY')}</div>
-                    <div className={`event-tab status ${!event.show && 'active'}`}>
-                        <img src="" className="icon" alt="StatusIcon" />
+                    <div className={`event-tab status flex-center ${!event.show && 'active'}`}>
+                        <img src={icons[eventStatus()]} className="icon" alt="StatusIcon" />
+                        <img src={userStatus()} className="icon" alt="StatusIcon" />
                     </div>
                 </div>
             </div>

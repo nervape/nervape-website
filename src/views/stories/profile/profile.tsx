@@ -267,7 +267,7 @@ export default function StoryProfile(props: any) {
     const fnQuiz = () => {
         const questions = story?.questions;
 
-        if (story?.collectable && questions?.length) {
+        if (story?.collectable && story.canColllect && questions?.length) {
             return (
                 <div className="quiz-btn-container">
                     <div className="quiz-btn-content" style={{ background: story?.collectQuizBackground }}>
