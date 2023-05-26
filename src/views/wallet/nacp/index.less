@@ -40,6 +40,8 @@
 
     .nacp-content-apes,
     .nacp-content-assets {
+      flex-wrap: wrap;
+
       .nacp-ape-item,
       .nacp-asset-item {
         margin-right: 4px;
@@ -391,6 +393,22 @@
           }
         }
       }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .wallet-nacp-container {
+    &.fold {
+      .wallet-nacp-header {
+        top: calc(102px + var(--wallet-padding));
+      }
+    }
+    .wallet-nacp-header {
+      position: sticky;
+      z-index: 1;
+      background-color: #E3E3E3;
+      top: calc(208px + var(--wallet-padding));
     }
   }
 }

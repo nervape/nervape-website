@@ -276,10 +276,11 @@ export default function WalletNewPage() {
                             <div className="wallet-content">
                                 {/* <NavbarContent></NavbarContent> */}
                                 {navbars[currNavbar]?.name == WalletNavbarTypes.NACP ? (
-                                    <WalletNacp isBonelist={isBonelist} setLoading={setLoading}></WalletNacp>
+                                    <WalletNacp isFold={isFold} isBonelist={isBonelist} setLoading={setLoading}></WalletNacp>
                                 ) : (
                                     navbars[currNavbar]?.name == WalletNavbarTypes.NFT ? (
                                         <WalletNFT3D
+                                            isFold={isFold}
                                             nftCoverImages={nftCoverImages}
                                             setLoading={setLoading}
                                             setShowTransferSuccess={setShowTransferSuccess}></WalletNFT3D>
@@ -292,10 +293,10 @@ export default function WalletNewPage() {
                                                 updateBalance={updateUnipassCkbBalance}></WalletTx>
                                         ) : (
                                             navbars[currNavbar]?.name == WalletNavbarTypes.BADGE ? (
-                                                <WalletBadge badges={badges} setLoading={setLoading}></WalletBadge>
+                                                <WalletBadge isFold={isFold} badges={badges} setLoading={setLoading}></WalletBadge>
                                             ) : (
                                                 navbars[currNavbar]?.name == WalletNavbarTypes.EVENT ? (
-                                                    <WalletEvent setLoading={setLoading}></WalletEvent>
+                                                    <WalletEvent isFold={isFold} setLoading={setLoading}></WalletEvent>
                                                 ) : (
                                                     <></>
                                                 )

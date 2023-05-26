@@ -9,8 +9,8 @@ import { DataContext } from "../../../utils/utils";
 import { NACP_APE, NACP_SPECIAL_ASSET } from "../../../nervape/nacp";
 import AssetItem from "./asset-item";
 
-export default function WalletNacp(props: { isBonelist: boolean; setLoading: Function; }) {
-    const { isBonelist, setLoading } = props;
+export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; }) {
+    const { isFold, isBonelist, setLoading } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -93,8 +93,8 @@ export default function WalletNacp(props: { isBonelist: boolean; setLoading: Fun
     }
     
     return (
-        <div className="wallet-nacp-container">
-            <div className="wallet-nacp-header position-sticky flex-align">
+        <div className={`wallet-nacp-container ${isFold && 'fold'}`}>
+            <div className="wallet-nacp-header transition position-sticky flex-align">
                 <div className="nacp-logo">
                     <img src={NacpLogo} alt="NacpLogo" />
                 </div>
@@ -109,7 +109,7 @@ export default function WalletNacp(props: { isBonelist: boolean; setLoading: Fun
                 {currNacpTab == 'ape' ? (
                     <div className="nacp-content-apes flex-align">
                         {nacpApes.map((ape, index) => {
-                            return <ApeItem ape={ape} key={index}></ApeItem>;
+                            return <ApeItem ape={ape} key={index}></ApeItem>
                         })}
                     </div>
                 ) : (

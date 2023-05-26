@@ -278,11 +278,25 @@
   .wallet-header-container {
     height: calc(208px + var(--wallet-padding));
     position: sticky;
+    z-index: 1;
     top: 0;
     background: #e3e3e3;
 
     .visible-header-line {
         padding-top: var(--wallet-padding);
+    }
+
+    .user-info {
+      .bone-list-points, .ckb-balance {
+        opacity: 1;
+        height: 71px;
+      }
+      
+      .wallet-header-hide {
+        opacity: 0;
+        height: 0;
+        display: none;
+      }
     }
 
     &.fold {

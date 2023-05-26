@@ -338,7 +338,7 @@ export default function NavHeader(props: any) {
   const { state, dispatch } = useContext(DataContext);
 
   const setHideHeader = (value: boolean) => {
-    document.body.style.setProperty('--wallet-padding', value ? '64px' : '0px');
+    document.body.style.setProperty('--wallet-padding', value ? '64px' : '16px');
 
     dispatch({
       type: Types.IsVisibleHeader,

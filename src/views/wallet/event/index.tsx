@@ -7,7 +7,7 @@ import { DataContext } from "../../../utils/utils";
 import dayjs from "dayjs";
 
 export default function WalletEvent(props: any) {
-    const { setLoading } = props;
+    const { isFold, setLoading } = props;
 
     const { state, dispatch } = useContext(DataContext);
     const [events, setEvents] = useState<Event[]>([]);
@@ -47,8 +47,8 @@ export default function WalletEvent(props: any) {
     }, [state.currentAddress]);
 
     return (
-        <div className="wallet-event-container">
-            <div className="wallet-event-header position-sticky flex-align">
+        <div className={`wallet-event-container ${isFold && 'fold'}`}>
+            <div className="wallet-event-header transition position-sticky flex-align">
                 <div className="event-title">EVENT</div>
             </div>
 

@@ -186,7 +186,7 @@ export default function WalletHeader(props: any) {
     const UserInfo = () => {
         if (state.loginWalletType == LoginWalletType.UNIPASS_V3) {
             return (
-                <div className="ckb-balance">
+                <div className={`ckb-balance transition ${!isFold && 'wallet-header-hide'}`}>
                     <div className="title flex-align">
                         CKB BALANCE
                         <div className="transfer">
@@ -206,7 +206,7 @@ export default function WalletHeader(props: any) {
 
 
         return (
-            <div className="bone-list-points flex-align">
+            <div className={`bone-list-points transition flex-align ${isFold && 'wallet-header-hide'}`}>
                 <div className="bone-item bone-list">
                     <div className="title">BONE LIST</div>
                     <div className={`nacp flex-align ${isBonelist && 'holder'}`}>
@@ -243,7 +243,7 @@ export default function WalletHeader(props: any) {
                         <div className="user-info">
                             {AddressDropdown()}
 
-                            {!isFold && UserInfo()}
+                            {UserInfo()}
                         </div>
                     </div>
                 </>

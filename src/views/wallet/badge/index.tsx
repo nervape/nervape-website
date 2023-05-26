@@ -9,8 +9,8 @@ import { DataContext } from "../../../utils/utils";
 import OatIcon from '../../../assets/wallet/badge/oat.svg';
 import { NavTool } from "../../../route/navi-tool";
 
-export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Function; }) {
-    const { badges, setLoading } = props;
+export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Function; isFold: boolean; }) {
+    const { badges, setLoading, isFold } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -59,10 +59,10 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
     }, [chapters]);
 
     return (
-        <div className="wallet-badge-container">
+        <div className={`wallet-badge-container ${isFold && 'fold'}`}>
             {badges.length && (
                 <>
-                    <div className="wallet-badge-header position-sticky">
+                    <div className="wallet-badge-header transition position-sticky">
                         <div className="badge-title">EVENT BADGE</div>
                     </div>
 
@@ -90,12 +90,12 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
 
             {chapters.length && (
                 <>
-                    <div className="wallet-badge-header position-sticky story-reward">
+                    <div className="wallet-badge-header transition position-sticky story-reward">
                         <div className="badge-title">STORY REWARD</div>
                     </div>
 
-                    <div className={`wallet-badge-content wallet-story-reward-content ${state.windowWidth > 375 && 'flex-align'}`}>
-                        <div className="review-card-content position-sticky">
+                    <div className={`wallet-badge-content transition wallet-story-reward-content ${state.windowWidth > 375 && 'flex-align'}`}>
+                        <div className="review-card-content transition position-sticky">
                             <div
                                 className={`review-card ${!selectedStoryOat?.story?.isHolderOat && 'unholder'}`}
                                 style={{
@@ -108,7 +108,13 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                 </div>
                                 <div className="cover-image-c">
                                     <div className="cover-image" style={{ border: `3px solid ${selectedStoryOat?.walletStoryOatTheme}` }}>
-                                        <img className="cover transition" src={selectedStoryOat?.story?.collectedCover} alt="StoryOatCover" />
+                                        <img
+                                            className="cover transition"
+                                            src={
+                                                selectedStoryOat?.story?.isHolderOat
+                                                    ? selectedStoryOat?.story?.collectedCover
+                                                    : selectedStoryOat?.story?.notCollectCover}
+                                            alt="StoryOatCover" />
                                     </div>
                                     <img
                                         className="oat cursor"
