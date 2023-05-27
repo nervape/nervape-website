@@ -47,6 +47,9 @@ export default defineConfig(() => {
         transformMixedEsModules: true
       }
     },
+    esbuild: {
+      drop: ["console", "debugger"]
+    },
     optimizeDeps: {
       disabled: false
     }
