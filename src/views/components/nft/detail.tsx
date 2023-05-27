@@ -26,24 +26,27 @@ function Message(props: { message: string }) {
 // 预览 3D 模型
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function PreviewModel(props: any) {
-    const { enableModuleUrl } = props;
+    const { enableModuleUrl, id } = props;
 
-    document.querySelector('#reveal')?.addEventListener('progress', (e: any) => {
+    const revealId = '#reveal' + id;
+
+    document.querySelector(revealId)?.addEventListener('progress', (e: any) => {
         if (e.detail.totalProgress == 1) {
-            (document.querySelector('#reveal') as any).dismissPoster();
+            (document.querySelector(revealId) as any).dismissPoster();
         }
     });
 
     useEffect(() => {
+        console.log(enableModuleUrl)
         if (!enableModuleUrl) return;
-        (document.querySelector('#reveal') as any)?.showPoster();
+        (document.querySelector(revealId) as any)?.showPoster();
     
     }, [enableModuleUrl]);
 
     return (
         <model-viewer
             class="model-viewer-class"
-            id="reveal"
+            id={`reveal` + id}
             // reveal="interaction"
             loading="eager"
             reveal="manual"
@@ -126,7 +129,7 @@ export default function NftCardDetail(props: {
             <div className={`wallet-nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
                 <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                     <div className="preview-model">
-                        <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
+                        <PreviewModel enableModuleUrl={nft.renderer} id="card"></PreviewModel>
                         {state.windowWidth !== 1200 && (
                             <div className="close-detail-c">
                                 <img

@@ -31,7 +31,7 @@ export function FullscreenPreview(props: { nft?: NFT; close: any; show: boolean;
 
     return (
         <div className={`fullscreen-container transition mask-cover ${show && 'show'}`}>
-            <PreviewModel enableModuleUrl={nft?.renderer}></PreviewModel>
+            <PreviewModel enableModuleUrl={nft?.renderer} id="fullscreen"></PreviewModel>
             <div className="close-c cursor" onClick={close}>
                 <img
                     loading="lazy"

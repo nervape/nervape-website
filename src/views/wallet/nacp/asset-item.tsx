@@ -7,6 +7,7 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
 
     const [status, setStatus] = useState<STORY_QUIZ_STATUS>();
     const [formatTimeStr, setFormatTimeStr] = useState('');
+    const [showStatus, setShowStatus] = useState(false);
 
     useIntervalAsync(formatTime, 1000);
 
@@ -53,8 +54,8 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
     return (
         <div className="nacp-asset-item">
             <div className="cover-image">
-                <img className="cover" src={asset.url} alt="AssetCoverImage" />
-                {!asset.isObtain && (
+                <img className="cover" onLoad={() => setShowStatus(true)} src={asset.url} alt="AssetCoverImage" />
+                {showStatus && !asset.isObtain && (
                     <div className={`cover-no-right transition flex-center ${status}`}>
                         <div className="story-name">
                             Story001
