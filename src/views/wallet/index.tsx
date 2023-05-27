@@ -202,7 +202,6 @@ export default function WalletNewPage() {
                             <div className="navbar-icon" onClick={() => {
                                 setCurrNavbar(index);
                                 window.location.hash = navbars[index].name.toLocaleLowerCase();
-                                scrollToTop();
                             }}>
                                 <img className="icon" src={navbar.icon} alt="" />
                             </div>
@@ -291,7 +290,7 @@ export default function WalletNewPage() {
                             <div className="wallet-navbar-content transition">
                                 <NavbarItems></NavbarItems>
                             </div>
-                            <div className="wallet-content">
+                            <div className="wallet-content transition">
                                 {/* <NavbarContent></NavbarContent> */}
                                 {navbars[currNavbar]?.name == WalletNavbarTypes.NACP ? (
                                     <WalletNacp isFold={isFold} isBonelist={isBonelist} setLoading={setLoading}></WalletNacp>

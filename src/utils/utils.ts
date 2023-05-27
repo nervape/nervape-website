@@ -5,7 +5,7 @@ import React, { createContext } from "react";
 import { InitialStateType } from './reducers';
 
 export const initialState = {
-    windowWidth: window.innerWidth,
+    windowWidth: getWindowWidthRange(),
     loading: false,
     loadingNumber: 0,
     showLoginModal: false,

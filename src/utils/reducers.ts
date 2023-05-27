@@ -1,5 +1,5 @@
 import { UnipassV3Wrapper } from "./UnipassV3Wrapper";
-import { getWindowWidthRange } from "./utils";
+import { getWindowWidthRange, updateBodyOverflow } from "./utils";
 import { LoginWalletType } from "./Wallet";
 
 export enum Types {
@@ -34,9 +34,11 @@ export type InitialStateType = {
 export const globalReducer = (state: InitialStateType, action: any) => {
     switch (action.type) {
         case Types.UpdateWindowWith:
+            const width = getWindowWidthRange();
+            
             return {
                 ...state,
-                windowWidth: getWindowWidthRange()
+                windowWidth: width
             };
         case Types.IsInit:
             return {
@@ -54,12 +56,14 @@ export const globalReducer = (state: InitialStateType, action: any) => {
                 isVisibleHeader: action.value
             };
         case Types.ShowLoading:
+            updateBodyOverflow(false);
             return {
                 ...state,
                 loadingNumber: state.loadingNumber++,
                 loading: true
             };
         case Types.HideLoading:
+            updateBodyOverflow(true);
             if (state.loadingNumber - 1 <= 0) {
                 return {
                     ...state,
