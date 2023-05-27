@@ -1,5 +1,5 @@
 import { BigNumberish } from 'ethers';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { writeContract } from '@wagmi/core';
 import { ContractMap, NFT } from '../../../utils/nft-utils';
 import { DataContext } from '../../../utils/utils';
@@ -27,12 +27,26 @@ function Message(props: { message: string }) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function PreviewModel(props: any) {
     const { enableModuleUrl } = props;
+
+    document.querySelector('#reveal')?.addEventListener('progress', (e: any) => {
+        if (e.detail.totalProgress == 1) {
+            (document.querySelector('#reveal') as any).dismissPoster();
+        }
+    });
+
+    useEffect(() => {
+        if (!enableModuleUrl) return;
+        (document.querySelector('#reveal') as any)?.showPoster();
+    
+    }, [enableModuleUrl]);
+
     return (
         <model-viewer
             class="model-viewer-class"
             id="reveal"
             // reveal="interaction"
             loading="eager"
+            reveal="manual"
             camera-controls
             auto-rotate
             src={enableModuleUrl}
@@ -50,7 +64,7 @@ export function PreviewModel(props: any) {
 
 export default function NftCardDetail(props: {
     show: boolean;
-    nft: NFT;
+    nft: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     close: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,7 +123,7 @@ export default function NftCardDetail(props: {
 
     return (
         <>
-            <div className={`nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
+            <div className={`wallet-nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
                 <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                     <div className="preview-model">
                         <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>

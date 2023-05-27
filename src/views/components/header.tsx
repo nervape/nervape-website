@@ -359,16 +359,18 @@ export default function NavHeader(props: any) {
       timer = setTimeout(() => {
         const currTop = getWindowScrollTop();
 
-        if (activeIndex == 7 && currTop < 400) {
-          setHideHeader(true);
-        }
-        else {
-          if (currTop - lastTop > 10) {
-            setHideHeader(false);
-            setDisableList(true);
-          } else if (currTop - lastTop < -10) {
+        if (state.windowWidth > 375) {
+          if (activeIndex == 7 && currTop < 400) {
             setHideHeader(true);
+            return;
           }
+        }
+        
+        if (currTop - lastTop > 10) {
+          setHideHeader(false);
+          setDisableList(true);
+        } else if (currTop - lastTop < -10) {
+          setHideHeader(true);
         }
         
         lastTop = currTop;

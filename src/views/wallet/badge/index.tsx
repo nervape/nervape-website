@@ -94,7 +94,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
 
             {chapters.length && (
                 <>
-                    <div className="wallet-badge-header transition position-sticky story-reward">
+                    <div className="wallet-badge-header wallet-story-reward-header transition position-sticky story-reward">
                         <div className="badge-title">STORY REWARD</div>
                     </div>
 

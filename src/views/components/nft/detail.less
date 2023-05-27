@@ -1,4 +1,4 @@
-.nft-card-detail-container,
+.wallet-nft-card-detail-container,
 .fullscreen-container {
   z-index: 999;
   .model-viewer-class {
@@ -19,14 +19,14 @@
   }
 }
 
-.nft-card-detail-container {
+.wallet-nft-card-detail-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(232, 232, 232, 0.5);
-  z-index: 99;
+  z-index: 999;
 
   .nft-card-detail {
     width: 1000px;
@@ -374,12 +374,87 @@
   transform: translateX(-50%) scale(1);
 }
 
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+  .wallet-nft-card-detail-container {
+    .nft-card-detail {
+      width: 600px;
+      max-height: 100vh;
+      display: unset;
+      .preview-model {
+        width: 600px;
+        height: 600px;
+        border-radius: 16px 16px 0 0;
+      }
+      .detail-info {
+        width: 600px;
+        max-height: calc(100vh - 600px);
+        overflow-y: scroll;
+        .info-content {
+          padding: 16px 32px;
+          .description {
+            height: 60px;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 750px) {
   .messages {
     width: 347px;
     .message {
       width: 90%;
       word-break: break-word;
+    }
+  }
+
+  .wallet-nft-card-detail-container {
+    .nft-card-detail {
+      width: 100vw;
+      height: 100vh;
+      display: unset;
+      .preview-model {
+        width: 100vw;
+        height: 100vw;
+      }
+      .detail-info {
+        width: 100vw;
+        height: calc(100vh - 100vw);
+        overflow-y: scroll;
+      }
+      .detail-info.m {
+        .info-content {
+          padding: 16px;
+          .attributes-1 {
+            display: block;
+            .range {
+              margin-right: 0;
+              margin-bottom: 6px;
+            }
+          }
+          .name {
+            font-size: 20px;
+            line-height: 24px;
+          }
+          .chain {
+            margin-top: 6px;
+          }
+          .description {
+            // height: 72px;
+            flex: none;
+            height: auto;
+          }
+          .contract.flex-1 {
+            .value {
+              font-size: 12px;
+            }
+          }
+          .btn-groups {
+            padding-bottom: 120px;
+          }
+        }
+      }
     }
   }
 }

@@ -238,6 +238,12 @@ export default function WalletNFT3D(props: any) {
                                 showDetail={() => {
                                     setShowNftCard(true);
                                     updateBodyOverflow(false);
+                                    if (state.windowWidth <= 375) {
+                                        dispatch({
+                                            type: Types.IsVisibleHeader,
+                                            value: false
+                                        })
+                                    }
                                     setNftDetail(filter);
                                 }}
                                 key={`${selectedType}-${index}`}
@@ -271,7 +277,7 @@ export default function WalletNFT3D(props: any) {
                 setLoading={setLoading}
                 loginWalletType={state.loginWalletType as LoginWalletType}
                 address={state.currentAddress}
-                nft={nftDetail as NFT}
+                nft={nftDetail}
                 close={() => {
                     setShowNftCard(false);
                     updateBodyOverflow(true);

@@ -60,6 +60,8 @@ export default function WalletHeader(props: any) {
     const [showLogout, setShowLogout] = useState(false);
 
     async function initQuizAndEvent(_address: string) {
+        if (state.loginWalletType !== LoginWalletType.WALLET_CONNECT) return;
+        
         const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
         await Promise.all(
             stories.map(async story => {
@@ -141,20 +143,30 @@ export default function WalletHeader(props: any) {
         );
     }
 
-    const items: MenuProps['items'] = [
-        {
-            label: CopyAddress(),
-            key: '1'
-        },
-        {
-            label: Available(),
-            key: '3'
-        },
-        {
-            label: SignOut(),
-            key: '2'
-        }
-    ];
+    const items: MenuProps['items'] = state.loginWalletType == LoginWalletType.WALLET_CONNECT ?
+        [
+            {
+                label: CopyAddress(),
+                key: '1'
+            },
+            {
+                label: Available(),
+                key: '3'
+            },
+            {
+                label: SignOut(),
+                key: '2'
+            }
+        ] : [
+            {
+                label: CopyAddress(),
+                key: '1'
+            },
+            {
+                label: SignOut(),
+                key: '2'
+            }
+        ];
 
     /**
      * 地址 hover 
@@ -207,7 +219,7 @@ export default function WalletHeader(props: any) {
     const UserInfo = () => {
         if (state.loginWalletType == LoginWalletType.UNIPASS_V3) {
             return (
-                <div className={`ckb-balance transition ${!isFold && 'wallet-header-hide'}`}>
+                <div className={`ckb-balance transition ${isFold && 'wallet-header-hide'}`}>
                     <div className="title flex-align">
                         CKB BALANCE
                         <div className="transfer">
@@ -229,7 +241,7 @@ export default function WalletHeader(props: any) {
         return (
             <div className={`bone-list-points transition flex-align ${isFold && 'wallet-header-hide'}`}>
                 <div className="bone-item bone-list">
-                    <div className="title">BONE LIST</div>
+                    <div className="title">BONELIST</div>
                     <div className={`nacp flex-align ${isBonelist && 'holder'}`}>
                         <div className="name">NACP</div>
                         <div className="icon">
@@ -262,7 +274,7 @@ export default function WalletHeader(props: any) {
                 <>
                     <div className="visible-header-line transition"></div>
                     <div className={`user-center-content transition flex-align`}>
-                        <div className="user-avatar" style={{background: avatarBackgroundColor}}>
+                        <div className="user-avatar" style={{ background: avatarBackgroundColor }}>
                             <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
                         </div>
                         <div className="user-info">
@@ -275,7 +287,7 @@ export default function WalletHeader(props: any) {
             ) : (
                 <div className="user-center-content m">
                     <div className="user-info flex-align">
-                        <div className="user-avatar">
+                        <div className="user-avatar" style={{ background: avatarBackgroundColor }}>
                             <img src={DefaultAvatar} alt="UserAvatar" />
                         </div>
 

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import './index.less';
 
 import NacpLogo from '../../../assets/wallet/NACP_logo.svg';
-import DefaultNacpApe from '../../../assets/wallet/nacp/default_nacp_ape.svg';
+import DefaultNacpApe from '../../../assets/wallet/nacp/default_nacp_ape.png';
 import { Popover } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
 import { DataContext } from "../../../utils/utils";
@@ -62,7 +62,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                             <div className="cover-no-right transition flex-center">
                                 <img className="no-right-image" alt="" />
                                 <div className="bonelist-required">Bonelist Required</div>
-                                <a href="##" className="how-get transition">How to get bonelisted?</a>
+                                <a
+                                    target="_block"
+                                    href="https://tourmaline-elderberry-f93.notion.site/NACP-Bonelist-Aka-Whitelist-f021cb54342549ae95f752d393ab3211"
+                                    className="how-get transition">How to get bonelisted?</a>
                             </div>
                         )}
                     </div>
@@ -91,7 +94,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         }
         return _html();
     }
-    
+
     return (
         <div className={`wallet-nacp-container ${isFold && 'fold'}`}>
             <div className="wallet-nacp-header transition position-sticky flex-align">

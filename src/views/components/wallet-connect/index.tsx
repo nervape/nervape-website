@@ -124,6 +124,8 @@ export default function WallectConnect(props: any) {
     }
 
     async function initQuizAndEvent(_address: string) {
+        if (state.loginWalletType !== LoginWalletType.WALLET_CONNECT) return;
+        
         const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
         await Promise.all(
             stories.map(async story => {
@@ -264,6 +266,21 @@ export default function WallectConnect(props: any) {
         }
     ];
 
+    const _items2: MenuProps['items'] = [
+        {
+            label: NervapeAssets(),
+            key: '0'
+        },
+        {
+            label: CopyAddress(),
+            key: '1'
+        },
+        {
+            label: SignOut(),
+            key: '2'
+        }
+    ];
+
     const _items1: MenuProps['items'] = [
         {
             label: SwitchChainTip(),
@@ -324,7 +341,7 @@ export default function WallectConnect(props: any) {
                 setItems(_items);
             }
         } else {
-            setItems(_items);
+            setItems(_items2);
         }
     }, [chain, state.loginWalletType, campaignEvents, storyQuizes]);
 
@@ -405,9 +422,11 @@ export default function WallectConnect(props: any) {
                         <div className="address-item cursor">
                             {NervapeAssets()}
                         </div>
-                        <div className="address-item cursor">
-                            {Available()}
-                        </div>
+                        {state.loginWalletType == LoginWalletType.WALLET_CONNECT && (
+                            <div className="address-item cursor">
+                                {Available()}
+                            </div>
+                        )}
                     </div>
                 )
             )}
