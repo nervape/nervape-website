@@ -64,13 +64,13 @@ function PreviewModel(props: any) {
     );
 }
 
-function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; }) {
-    const { nft, close, fullscreen } = props;
+function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boolean; }) {
+    const { nft, close, fullscreen, show } = props;
 
     const { state } = useContext(DataContext);
 
     return (
-        <div className="nft-card-detail-container popup-container mask-cover" onClick={close}>
+        <div className={`nft-card-detail-container popup-container mask-cover ${show && 'show'}`} onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
                     <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
@@ -440,21 +440,20 @@ export default function NFTPage() {
                     setPromoVideoUrl("");
                 }}></NftBannerVideo>
             )}
-            {showNftCard && nftDetail && (
-                <NftCardDetail
-                    nft={nftDetail}
-                    close={() => {
-                        document.body.style.overflow = 'auto';
-                        setShowNftCard(false)
-                    }}
-                    fullscreen={() => {
-                        setShowNftCard(false);
-                        setShowFullscreen(true);
-                    }}></NftCardDetail>
-            )}
+            <NftCardDetail
+                show={showNftCard}
+                nft={nftDetail as NFT}
+                close={() => {
+                    document.body.style.overflow = 'auto';
+                    setShowNftCard(false)
+                }}
+                fullscreen={() => {
+                    setShowNftCard(false);
+                    setShowFullscreen(true);
+                }}></NftCardDetail>
             {showFullscreen && (
-                <FullscreenPreview 
-                    nft={nftDetail} 
+                <FullscreenPreview
+                    nft={nftDetail}
                     close={() => {
                         document.body.style.overflow = 'auto';
                         setShowFullscreen(false)
