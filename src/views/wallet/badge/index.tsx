@@ -154,7 +154,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                             {chapters?.map((chapter, index) => {
                                 return (
                                     <div className="chapter-item" key={`chapter-${index}`}>
-                                        <div className="title">
+                                        <div className="title" style={{color: `${chapter.walletStoryOatTheme}`}}>
                                             {chapter.name + ': '}
                                             <span>{chapter.desc.toLocaleLowerCase()}</span>
                                         </div>

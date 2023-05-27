@@ -26,6 +26,12 @@ import { scrollToTop } from "../../utils/utils";
 import WalletHeader from "./header";
 import { useLocation } from "react-router";
 
+import NacpIcon from "../../assets/wallet/navbar/nacp.svg";
+import NftIcon from "../../assets/wallet/navbar/nft.svg";
+import EventIcon from "../../assets/wallet/navbar/event.svg";
+import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
+import TxIcon from "../../assets/wallet/navbar/tx.svg";
+
 export class WalletNavBar {
     name: string = "";
     icon: string = "";
@@ -132,11 +138,11 @@ export default function WalletNewPage() {
             setNavbars([
                 {
                     name: '3DNFT',
-                    icon: ''
+                    icon: NftIcon
                 },
                 {
                     name: 'TX',
-                    icon: ''
+                    icon: TxIcon
                 }
             ]);
             return
@@ -145,23 +151,23 @@ export default function WalletNewPage() {
             setNavbars([
                 {
                     name: 'NACP',
-                    icon: ''
+                    icon: NacpIcon
                 },
                 {
                     name: '3DNFT',
-                    icon: ''
+                    icon: NftIcon
                 },
                 {
                     name: 'EVENT',
-                    icon: ''
+                    icon: EventIcon
                 },
                 {
                     name: 'BADGE',
-                    icon: ''
+                    icon: BadgeIcon
                 },
                 {
                     name: 'TX',
-                    icon: ''
+                    icon: TxIcon
                 }
             ]);
             // 查询是否持有 Nacp bonelist
@@ -197,7 +203,9 @@ export default function WalletNewPage() {
                                 setCurrNavbar(index);
                                 window.location.hash = navbars[index].name.toLocaleLowerCase();
                                 scrollToTop();
-                            }}>{navbar.name}</div>
+                            }}>
+                                <img className="icon" src={navbar.icon} alt="" />
+                            </div>
                         </div>
                     );
                 })}

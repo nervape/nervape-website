@@ -1,6 +1,6 @@
 .wallet-nacp-container {
   .wallet-nacp-header {
-    border-bottom: 1px solid rgba(62, 62, 62, 0.5);
+    border-bottom: 1px solid rgba(180, 188, 208, 0.5);
     padding-bottom: 16px;
 
     .nacp-logo {
@@ -13,7 +13,7 @@
     .nacp-tabs {
       width: 160px;
       height: 38px;
-      background: rgba(62, 62, 62, 0.5);
+      background: rgba(46, 48, 63, 0.5);
       border-radius: 16px;
       padding: 0 2px;
 
@@ -29,7 +29,7 @@
         text-align: center;
 
         &.active {
-          background: rgba(255, 255, 255, 0.2);
+          background: rgba(180, 188, 208, 0.75);
         }
       }
     }
@@ -48,7 +48,6 @@
 
         .cover-image {
           width: calc(100% - 12px);
-          border: 1px solid rgba(62, 62, 62, 0.1);
           border-radius: 16px;
           margin: 6px auto 0;
           position: relative;
@@ -56,7 +55,7 @@
           .cover {
             width: 100%;
             height: 100%;
-            border-radius: 16px;
+            border-radius: 18px;
           }
 
           .cover-no-right {
@@ -64,7 +63,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(14, 17, 23, 0.95);
+            background: linear-gradient(180deg, #2E303F 0%, #2E303F 100%);
             border-radius: 16px;
             flex-direction: column;
           }
@@ -76,7 +75,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: -0.05em;
-          color: #3e3e3e;
+          color: #FFFFFF;
         }
       }
     }
@@ -95,7 +94,7 @@
 
           .cover-no-right {
             &:hover {
-              background: rgba(14, 17, 23, 0.85);
+              background: linear-gradient(180deg, #6F788B 0%, #2E303F 100%);
             }
 
             .no-right-image {
@@ -135,7 +134,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: -0.05em;
-          color: #3e3e3e;
+          color: #FFFFFF;
         }
       }
     }
@@ -155,13 +154,16 @@
 
           .cover-no-right {
             &.in_progress:hover {
-              background: rgba(14, 17, 23, 0.85);
+              background: linear-gradient(180deg, #6F788B 0%, #2E303F 100%);
             }
 
             &.not_start {
+              background: linear-gradient(180deg, #6F788B 0%, #2E303F 100%);
+
               .story-name {
                 color: rgba(255, 255, 255, 0.5);
               }
+
               .time-left {
                 color: rgba(255, 255, 255, 0.5);
               }
@@ -190,7 +192,7 @@
           font-weight: 700;
           font-size: 12px;
           line-height: 14px;
-          color: #3e3e3e;
+          color: #FFFFFF;
         }
 
         .category {
@@ -204,7 +206,7 @@
             font-weight: 500;
             font-size: 10px;
             line-height: 12px;
-            color: rgba(62, 62, 62, 0.5);
+            color: rgba(180, 188, 208, 0.5);
           }
         }
       }
@@ -408,7 +410,7 @@
     .wallet-nacp-header {
       position: sticky;
       z-index: 1;
-      background-color: #E3E3E3;
+      background-color: #17171e;
       top: calc(208px + var(--wallet-padding));
     }
   }
