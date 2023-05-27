@@ -28,9 +28,14 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
 
         const timestamp = status == STORY_QUIZ_STATUS.IN_PROGRESS ? asset.task_end_time : asset.task_start_time;
 
-        if (now > timestamp) return setFormatTimeStr('');
-
         const diff = (timestamp - now) / 1000;
+
+        if (diff <= 0) {
+            setStatus(status == STORY_QUIZ_STATUS.NOT_START ? STORY_QUIZ_STATUS.IN_PROGRESS : STORY_QUIZ_STATUS.OVER);
+            setFormatTimeStr('');
+            return;
+        }
+        
         const day = parseInt(diff / 86400 + "");
 
         // 
@@ -58,7 +63,7 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
                 {showStatus && !asset.isObtain && (
                     <div className={`cover-no-right transition flex-center ${status}`}>
                         <div className="story-name">
-                            Story001
+                            {asset.story_quiz?.serial}
                             <br />
                             Challenge Reward
                         </div>

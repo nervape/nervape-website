@@ -1,3 +1,5 @@
+import { Story } from "./story";
+
 export class NACP_APE {
     coverImage: string = "";
     name: string = "";
@@ -21,6 +23,7 @@ export class NACP_SPECIAL_ASSET {
     task_type: string = '';
     url?: string = '';
     thumb_url?: string = '';
+    story_quiz?: Story;
 }
 
 export enum STORY_QUIZ_STATUS {
