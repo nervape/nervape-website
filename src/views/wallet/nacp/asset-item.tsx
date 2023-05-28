@@ -66,7 +66,7 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
                         className={`cover-no-right transition flex-center ${status}`}
                         onClick={() => {
                             if (status == STORY_QUIZ_STATUS.IN_PROGRESS) {
-                                NavTool.fnJumpToPage(`/story/${asset?.story_quiz?.urlMask}#quiz`);
+                                window.open(`/story/${asset?.story_quiz?.urlMask}#quiz`);
                             }
                         }}>
                         <div className="story-name">

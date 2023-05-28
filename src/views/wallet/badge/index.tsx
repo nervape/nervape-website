@@ -137,7 +137,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                         {selectedStoryOat?.chapterName + ' | ' + selectedStoryOat?.story?.serial}
                                     </div>
                                     <div className="story-title cursor" onClick={() => {
-                                        NavTool.fnJumpToPage(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
+                                        window.open(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
                                     }}>{selectedStoryOat?.story?.title}</div>
                                     <div className="story-desc">
                                         {selectedStoryOat?.story?.isHolderOat ? selectedStoryOat?.story?.overview : (
@@ -145,7 +145,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                                 You have not yet acquired this badge. To earn it, you must complete the
                                                 <div className="challenge cursor"
                                                     onClick={() => {
-                                                        NavTool.fnJumpToPage(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
+                                                        window.open(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
                                                     }}>Story Challenge.</div>
                                             </div>
                                         )}
