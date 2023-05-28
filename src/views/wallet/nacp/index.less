@@ -63,7 +63,6 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, #6F788B 0%, #2E303F 100%);
             border-radius: 16px;
             flex-direction: column;
           }
@@ -75,7 +74,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: -0.05em;
-          color: #FFFFFF;
+          color: #ffffff;
         }
       }
     }
@@ -93,8 +92,16 @@
           // height: fit-content;
 
           .cover-no-right {
+            background-image: linear-gradient(
+              to bottom,
+              #6f788b 0,
+              #2e303f 50%,
+              #2e303f 50%
+            );
+            background-size: auto 200%;
+
             &:hover {
-              background: linear-gradient(180deg, #2E303F 0%, #2E303F 100%);
+              background-position: center bottom;
             }
 
             .no-right-image {
@@ -134,7 +141,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: -0.05em;
-          color: #FFFFFF;
+          color: #ffffff;
         }
       }
     }
@@ -153,14 +160,28 @@
           height: fit-content;
 
           .cover-no-right {
-            background: linear-gradient(180deg, #6F788B 0%, #2E303F 100%);
-
+            background-image: linear-gradient(
+              to bottom,
+              #6f788b 0,
+              #2e303f 50%,
+              #2e303f 50%
+            );
+            background-size: auto 200%;
+            
             &.in_progress {
+              background-image: linear-gradient(
+                to bottom,
+                #6f788b 0,
+                #2e303f 50%,
+                #2e303f 50%
+              );
+              background-size: auto 200%;
+
               cursor: pointer;
             }
 
             &.in_progress:hover {
-              background: linear-gradient(180deg, #2E303F 0%, #2E303F 100%);
+              background-position: center bottom;
             }
 
             &.not_start {
@@ -196,7 +217,7 @@
           font-weight: 700;
           font-size: 12px;
           line-height: 14px;
-          color: #FFFFFF;
+          color: #ffffff;
         }
 
         .category {
