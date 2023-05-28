@@ -3,6 +3,7 @@ import './index.less';
 
 import NacpLogo from '../../../assets/wallet/NACP_logo.svg';
 import DefaultNacpApe from '../../../assets/wallet/nacp/default_nacp_ape.png';
+import BonelistRequired from '../../../assets/wallet/nacp/Bonelist_Required.png';
 import { Popover } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
 import { DataContext } from "../../../utils/utils";
@@ -60,7 +61,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                         <img className="cover" src={ape.coverImage} alt="DefaultNacpApe" />
                         {!ape.isRight && (
                             <div className="cover-no-right transition flex-center">
-                                <img className="no-right-image" alt="" />
+                                <img src={BonelistRequired} className="no-right-image" alt="" />
                                 <div className="bonelist-required">Bonelist Required</div>
                                 <a
                                     target="_block"
