@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NACP_SPECIAL_ASSET, STORY_QUIZ_STATUS } from "../../../nervape/nacp";
 import useIntervalAsync from "../../../hooks/useIntervalAsync";
+import { NavTool } from "../../../route/navi-tool";
 
 export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
     const { asset } = props;
@@ -61,7 +62,13 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
             <div className="cover-image">
                 <img className="cover" onLoad={() => setShowStatus(true)} src={asset.url} alt="AssetCoverImage" />
                 {showStatus && !asset.isObtain && (
-                    <div className={`cover-no-right transition flex-center ${status}`}>
+                    <div 
+                        className={`cover-no-right transition flex-center ${status}`}
+                        onClick={() => {
+                            if (status == STORY_QUIZ_STATUS.IN_PROGRESS) {
+                                NavTool.fnJumpToPage(`/story/${asset?.story_quiz?.urlMask}#quiz`);
+                            }
+                        }}>
                         <div className="story-name">
                             {asset.story_quiz?.serial}
                             <br />

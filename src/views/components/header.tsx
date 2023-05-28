@@ -486,6 +486,7 @@ export default function NavHeader(props: any) {
                     if (e.key !== HeaderType.Coming) setDisableList(true);
                     handleHeaderClick(e.key);
                   }}
+                  openKeys={['gallery']}
                   items={mPages}></Menu>
               </>
             )}

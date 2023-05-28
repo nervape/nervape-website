@@ -120,13 +120,16 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                                     : selectedStoryOat?.story?.notCollectCover}
                                             alt="StoryOatCover" />
                                     </div>
-                                    <img
-                                        className="oat cursor"
-                                        src={OatIcon}
-                                        onClick={() => {
-                                            openGalxeUrl(selectedStoryOat?.story?.galxeCampaignId);
-                                        }}
-                                        alt="OatIcon" />
+                                    {selectedStoryOat?.story?.galxeCampaignId && (
+                                        <img
+                                            className="oat cursor"
+                                            src={OatIcon}
+                                            onClick={() => {
+                                                openGalxeUrl(selectedStoryOat?.story?.galxeCampaignId);
+                                            }}
+                                            alt="OatIcon" />
+                                    )}
+
                                 </div>
 
                                 <div className="story-info">
@@ -154,7 +157,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                             {chapters?.map((chapter, index) => {
                                 return (
                                     <div className="chapter-item" key={`chapter-${index}`}>
-                                        <div className="title" style={{color: `${chapter.walletStoryOatTheme}`}}>
+                                        <div className="title" style={{ color: `${chapter.walletStoryOatTheme}` }}>
                                             {chapter.name + ': '}
                                             <span>{chapter.desc.toLocaleLowerCase()}</span>
                                         </div>
@@ -165,7 +168,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                                         <div
                                                             className={`story-item cursor`}
                                                             style={{
-                                                                border: (story._id == selectedStoryOat?.story?._id && selectedStoryOat?.walletStoryOatTheme) 
+                                                                border: (story._id == selectedStoryOat?.story?._id && selectedStoryOat?.walletStoryOatTheme)
                                                                     ? `3px solid ${selectedStoryOat?.walletStoryOatTheme}` : 'unset'
                                                             }}
                                                             onClick={() => {
@@ -176,7 +179,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                                                 })
                                                             }}
                                                             key={`story-${_index}`}>
-                                                            <img 
+                                                            <img
                                                                 className="transition cover-image"
                                                                 src={story.isHolderOat ? story.collectedCover : story.notCollectCover} alt="StoryOatCover" />
                                                         </div>
