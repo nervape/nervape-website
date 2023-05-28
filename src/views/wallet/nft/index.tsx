@@ -254,8 +254,8 @@ export default function WalletNFT3D(props: any) {
                     <div className="no-result flex-center">
                         <div className="no-result-content">
                             <div className="tip">
-                                <p>You currently don’t have any {selectedType == 'All' ? 'Nervape' : selectedType} NFT</p>
-                                <p>Buy {selectedType == 'All' ? 'Nervape' : selectedType} NFT on Yokai Dojo from the link below</p>
+                                <p>Currently don’t have any {selectedType == 'All' ? 'Nervape' : 'Nervape ' + selectedType} NFTs</p>
+                                <p>Buy Nervape NFTs on Yokai Dojo, the link below ⬇️</p>
                             </div>
                             {
                                 selectedType == 'All' ? (

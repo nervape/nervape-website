@@ -142,11 +142,16 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                                     <div className="story-desc">
                                         {selectedStoryOat?.story?.isHolderOat ? selectedStoryOat?.story?.overview : (
                                             <div className="tip">
-                                                You have not yet acquired this badge. To earn it, you must complete the
-                                                <div className="challenge cursor"
-                                                    onClick={() => {
-                                                        window.open(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
-                                                    }}>Story Challenge.</div>
+                                                {selectedStoryOat?.story?.canColllect ?
+                                                    'You have not yet acquired this badge. To earn it, you must complete the'
+                                                    : 'This Story Challenge has not started yet, please stay tuned.'}
+
+                                                {selectedStoryOat?.story?.canColllect && (
+                                                    <div className="challenge cursor"
+                                                        onClick={() => {
+                                                            window.open(`/story/${selectedStoryOat?.story?.urlMask}#quiz`);
+                                                        }}>Story Challenge.</div>
+                                                )}
                                             </div>
                                         )}
                                     </div>
@@ -195,7 +200,8 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                         </div>
                     </div>
                 </>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }

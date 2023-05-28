@@ -116,7 +116,17 @@
               text-align: center;
               letter-spacing: -0.05em;
               color: #ffffff;
-              padding: 16px 0;
+              padding: 16px 0 8px;
+            }
+
+            .tip {
+              width: 240px;
+              font-size: 12px;
+              line-height: 14px;
+              text-align: center;
+              letter-spacing: -0.05em;
+              color: #ffffff;
+              padding-bottom: 16px;
             }
 
             .how-get {
@@ -150,6 +160,7 @@
         width: calc((100% - 20px) / 6);
         height: fit-content;
         margin-right: 4px;
+        align-self: flex-start;
 
         &:nth-child(6n) {
           margin-right: 0;
@@ -166,7 +177,7 @@
               #2e303f 50%
             );
             background-size: 200% 200%;
-            
+
             &.in_progress:hover {
               background-position: 110% 99%;
             }
@@ -205,6 +216,7 @@
           font-size: 12px;
           line-height: 14px;
           color: #ffffff;
+          word-break: break-all;
         }
 
         .category {

@@ -63,6 +63,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                             <div className="cover-no-right transition flex-center">
                                 <img src={BonelistRequired} className="no-right-image" alt="" />
                                 <div className="bonelist-required">Bonelist Required</div>
+                                <div className="tip">
+                                    You need to get Bonelisted (Aka Whitelisted) to unlock this spot.
+                                </div>
                                 <a
                                     target="_block"
                                     href="https://tourmaline-elderberry-f93.notion.site/NACP-Bonelist-Aka-Whitelist-f021cb54342549ae95f752d393ab3211"
@@ -84,8 +87,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     content={() => {
                         return (
                             <div className="nacp-ape-hover-popover">
-                                <p>Each open spot allows you to mint one NACP NFT when it’s launched</p>
-                                <a target="_block" href="/nacp">Learn more</a>
+                                <p>Each open spot allows you to mint one NACP NFT when it’s launched.</p>
+                                <a target="_block" href="/nacp">Learn More</a>
                             </div>
                         );
                     }}>
