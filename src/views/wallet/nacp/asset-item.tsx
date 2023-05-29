@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { NACP_SPECIAL_ASSET, STORY_QUIZ_STATUS } from "../../../nervape/nacp";
 import useIntervalAsync from "../../../hooks/useIntervalAsync";
+import HourGlass1 from '../../../assets/wallet/nacp/hourglass-1.svg';
+import HourGlass2 from '../../../assets/wallet/nacp/hourglass-2.svg';
 import { NavTool } from "../../../route/navi-tool";
 
 export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
@@ -36,7 +38,7 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
             setFormatTimeStr('');
             return;
         }
-        
+
         const day = parseInt(diff / 86400 + "");
 
         // 
@@ -62,13 +64,16 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
             <div className="cover-image">
                 <img className="cover" onLoad={() => setShowStatus(true)} src={asset.url} alt="AssetCoverImage" />
                 {showStatus && !asset.isObtain && (
-                    <div 
+                    <div
                         className={`cover-no-right transition flex-center ${status}`}
                         onClick={() => {
                             if (status == STORY_QUIZ_STATUS.IN_PROGRESS) {
                                 window.open(`/story/${asset?.story_quiz?.urlMask}#quiz`);
                             }
                         }}>
+                        <div className="status-icon">
+                            <img className="icon" src={status == STORY_QUIZ_STATUS.IN_PROGRESS ? HourGlass1 : HourGlass2} alt="" />
+                        </div>
                         <div className="story-name">
                             {asset.story_quiz?.serial}
                             <br />
