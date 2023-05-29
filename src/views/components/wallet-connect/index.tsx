@@ -178,10 +178,10 @@ export default function WallectConnect(props: any) {
     }, [address, state.loginWalletType, chain]);
 
     useEffect(() => {
-        if (!address) return;
+        if (!state.currentAddress) return;
         // init Story Quiz and Events data
-        initQuizAndEvent(address);
-    }, [address]);
+        initQuizAndEvent(state.currentAddress);
+    }, [state.currentAddress]);
     const NervapeAssets = () => {
         return (
             <button
