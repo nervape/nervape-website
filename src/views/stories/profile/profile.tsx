@@ -7,6 +7,7 @@ import { DataContext, scrollToTop, shuffle } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 import CharacterDefaultIcon from "../../../assets/story/character_default.svg";
+import ChallengeIcon from "../../../assets/story/challenge_icon.svg";
 import SideCloseIcon from "../../../assets/story/close.svg";
 import InfoIcon from '../../../assets/story/info.svg';
 
@@ -272,7 +273,7 @@ export default function StoryProfile(props: any) {
                 <div className="quiz-btn-container">
                     <div className="quiz-btn-content" style={{ background: story?.collectQuizBackground }}>
                         <div className="quiz-left flex-align">
-                            <img className="quiz-icon" alt="" />
+                            <img src={ChallengeIcon} className="quiz-icon" alt="" />
                             <div className="quiz">CHALLENGE</div>
                             <div className="info-icon">
                                 <Tooltip
