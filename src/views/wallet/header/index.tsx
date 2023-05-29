@@ -11,10 +11,7 @@ import FailedIcon from '../../../assets/wallet/header/fail.svg';
 
 import { Dropdown, MenuProps, message } from "antd";
 import { StoryCollectable } from "../../../nervape/story";
-import { nervapeApi } from "../../../api/nervape-api";
-import { queryOatPoaps } from "../../../utils/api";
-import { Vote, Event, EventType } from "../../../nervape/campaign";
-import { queryGetVotes } from "../../../utils/snapshot";
+import { Event } from "../../../nervape/campaign";
 import { mainnet } from "@wagmi/core";
 import { useNetwork } from "wagmi";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -51,8 +48,6 @@ export default function WalletHeader(props: any) {
      * 地址 hover 
      */
     const [open, setOpen] = useState(false);
-    const [storyQuizes, setStoryQuizes] = useState<StoryCollectable[]>([]);
-    const [campaignEvents, setCampaignEvents] = useState<Event[]>([]);
     const [avatarBackgroundColor, setAvatarBackgroundColor] = useState('');
 
     const setShowLogout = (value: boolean) => {
@@ -69,38 +64,9 @@ export default function WalletHeader(props: any) {
         })
     }
 
-    async function initQuizAndEvent(_address: string) {
-        if (state.loginWalletType !== LoginWalletType.WALLET_CONNECT) return;
-
-        const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
-        await Promise.all(
-            stories.map(async story => {
-                const _oatPoaps = await queryOatPoaps(_address, story.galxeCampaignId);
-                story.show = _oatPoaps && _oatPoaps.length <= 0;
-                return story;
-            })
-        );
-        setStoryQuizes(stories.filter(item => item.show));
-        console.log(storyQuizes);
-        const events: Event[] = await nervapeApi.fnGetActiveEvents('');
-        await Promise.all(
-            events.map(async event => {
-                if (event.type == EventType.Vote) {
-                    const votes: Vote[] = await queryGetVotes(event.proposalId);
-                    const count = votes.filter(vote => vote.voter == _address).length;
-                    event.show = count == 0;
-                }
-
-                return event;
-            })
-        )
-        setCampaignEvents(events.filter(item => item.show));
-    }
-
     useEffect(() => {
         if (!state.currentAddress) return;
         setAvatarBackgroundColor(AvatarBackgroundColors[Math.floor(Math.random() * AvatarBackgroundColors.length)])
-        initQuizAndEvent(state.currentAddress);
     }, [state.currentAddress]);
 
     const CopyAddress = () => {
@@ -126,7 +92,7 @@ export default function WalletHeader(props: any) {
                     setShowQuest(true);
                     document.body.style.overflow = 'hidden';
                 }}>
-                {`Available Quest (${storyQuizes.length + campaignEvents.length})`}
+                {`Available Quest (${state.storyQuizes.length + state.campaignEvents.length})`}
             </button>
         );
     }
@@ -207,9 +173,11 @@ export default function WalletHeader(props: any) {
                     <div className={`address transition flex-align cursor ${open && 'open'}`}>
                         <img src={walletIcon()} alt="UnipassIcon" />
                         <div className="span">{state.formatAddress}</div>
-                        {(storyQuizes.length + campaignEvents.length > 0) && (
+                        {(state.storyQuizes.length + state.campaignEvents.length > 0) && (
                             <div className="available-quest-count">
-                                {storyQuizes.length + campaignEvents.length > 99 ? '1+' : storyQuizes.length + campaignEvents.length}
+                                {state.storyQuizes.length + state.campaignEvents.length > 99
+                                    ? '1+'
+                                    : state.storyQuizes.length + state.campaignEvents.length}
                             </div>
                         )}
                     </div>
@@ -295,7 +263,6 @@ export default function WalletHeader(props: any) {
 
                         {AddressDropdown()}
                     </div>
-
                     {UserInfo()}
                 </div>
             )}

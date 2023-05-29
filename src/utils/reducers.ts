@@ -1,6 +1,8 @@
+import { StoryCollectable } from "../nervape/story";
 import { UnipassV3Wrapper } from "./UnipassV3Wrapper";
 import { getWindowWidthRange, updateBodyOverflow } from "./utils";
 import { LoginWalletType } from "./Wallet";
+import { Event } from '../nervape/campaign';
 
 export enum Types {
     UpdateWindowWith = 'UpdateWindowWith',
@@ -17,6 +19,8 @@ export enum Types {
     IsVisibleHeader = 'IsVisibleHeader',
     ShowAvailableQuest = 'ShowAvailableQuest',
     ShowLogout = 'ShowLogout',
+    StoryQuizes = 'StoryQuizes',
+    CampaignEvents = 'CampaignEvents',
 }
 
 export type InitialStateType = {
@@ -33,6 +37,8 @@ export type InitialStateType = {
     isVisibleHeader: boolean;
     showAvailableQuest: boolean;
     showLogout: boolean;
+    storyQuizes: StoryCollectable[];
+    campaignEvents: Event[];
 }
 
 export const globalReducer = (state: InitialStateType, action: any) => {
@@ -53,6 +59,16 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             return {
                 ...state,
                 isWalletFold: action.value
+            };
+        case Types.StoryQuizes:
+            return {
+                ...state,
+                storyQuizes: action.value
+            };
+        case Types.CampaignEvents:
+            return {
+                ...state,
+                campaignEvents: action.value
             };
         case Types.ShowAvailableQuest:
             return {

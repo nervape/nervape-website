@@ -3,6 +3,8 @@ import { formatUnits } from '@ethersproject/units';
 
 import React, { createContext } from "react";
 import { InitialStateType } from './reducers';
+import { Event } from '../nervape/campaign';
+import { StoryCollectable } from '../nervape/story';
 
 export const initialState = {
     windowWidth: getWindowWidthRange(),
@@ -18,6 +20,8 @@ export const initialState = {
     isVisibleHeader: true,
     showAvailableQuest: false,
     showLogout: false,
+    storyQuizes: [],
+    campaignEvents: [],
 }
 
 export const DataContext = createContext<{
