@@ -7,14 +7,22 @@ import EventIcon from '../../../assets/campaign/event.svg';
 import QuizIcon from '../../../assets/campaign/quiz.svg';
 
 import moment from "moment";
-import { DataContext } from "../../../utils/utils";
+import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { NavTool } from "../../../route/navi-tool";
+import { Types } from "../../../utils/reducers";
 
-export default function AvailableQuest(props: { show: boolean; close: any; events: Event[]; quizes: StoryCollectable[]; }) {
-    const { show, close, events, quizes } = props;
+export default function AvailableQuest(props: { events: Event[]; quizes: StoryCollectable[]; }) {
+    const { events, quizes } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
+    const close = (value: boolean) => {
+        updateBodyOverflow(!value);
+        dispatch({
+            type: Types.ShowAvailableQuest,
+            value: value
+        })
+    }
     const QuestItem = (props: { item: any; type: string; }) => {
         const { item, type } = props;
 
@@ -26,7 +34,7 @@ export default function AvailableQuest(props: { show: boolean; close: any; event
                     window.open(item.openUrl);
                 } else {
                     NavTool.fnJumpToPage(`/story/${item.urlMask}#quiz`);
-                    close();
+                    close(false);
                 }
             }}>
                 <div className="quest-icon-cover">
@@ -44,7 +52,9 @@ export default function AvailableQuest(props: { show: boolean; close: any; event
     }
 
     return (
-        <div className={`alailable-quest-container popup-container ${show && 'show'}`} onClick={close}>
+        <div className={`alailable-quest-container popup-container ${state.showAvailableQuest && 'show'}`} onClick={() => {
+            close(false)
+        }}>
             <div className="quest-content" onClick={e => e.stopPropagation()}>
                 <div className="title">Available Quest(s)</div>
                 {quizes.length + events.length > 0 ? (

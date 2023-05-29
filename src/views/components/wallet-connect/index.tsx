@@ -32,12 +32,18 @@ export default function WallectConnect(props: any) {
 
     const [storyQuizes, setStoryQuizes] = useState<StoryCollectable[]>([]);
     const [campaignEvents, setCampaignEvents] = useState<Event[]>([]);
-    const [showQuest, setShowQuest] = useState(false);
 
     const setLayerOneWrapper = (wrapper: UnipassV3Wrapper) => {
         dispatch({
             type: Types.LayerOneWrapper,
             value: wrapper
+        })
+    }
+    
+    const setShowQuest = (value: boolean) => {
+        dispatch({
+            type: Types.ShowAvailableQuest,
+            value: value
         })
     }
 
@@ -83,7 +89,12 @@ export default function WallectConnect(props: any) {
         })
     }
 
-    const [showLogout, setShowLogout] = useState(false);
+    const setShowLogout = (value: boolean) => {
+        dispatch({
+            type: Types.ShowLogout,
+            value: value
+        })
+    }
     const { disconnect } = useDisconnect();
     const disconnectReload = () => {
         localStorage.clear();
@@ -125,7 +136,7 @@ export default function WallectConnect(props: any) {
 
     async function initQuizAndEvent(_address: string) {
         if (state.loginWalletType !== LoginWalletType.WALLET_CONNECT) return;
-        
+
         const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
         await Promise.all(
             stories.map(async story => {
@@ -432,19 +443,14 @@ export default function WallectConnect(props: any) {
             )}
 
             <Logout
-                show={showLogout}
+                show={state.showLogout}
                 close={() => {
                     setShowLogout(false);
                 }}
                 logout={disconnectReload}></Logout>
             <AvailableQuest
-                show={showQuest}
                 events={campaignEvents}
-                quizes={storyQuizes}
-                close={() => {
-                    setShowQuest(false);
-                    document.body.style.overflow = 'auto';
-                }}></AvailableQuest>
+                quizes={storyQuizes}></AvailableQuest>
         </div>
     );
 }

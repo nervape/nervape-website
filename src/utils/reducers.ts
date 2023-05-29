@@ -15,6 +15,8 @@ export enum Types {
     IsInit = 'IsInit',
     IsWalletFold = 'IsWalletFold',
     IsVisibleHeader = 'IsVisibleHeader',
+    ShowAvailableQuest = 'ShowAvailableQuest',
+    ShowLogout = 'ShowLogout',
 }
 
 export type InitialStateType = {
@@ -29,13 +31,15 @@ export type InitialStateType = {
     isInit: boolean;
     isWalletFold: boolean;
     isVisibleHeader: boolean;
+    showAvailableQuest: boolean;
+    showLogout: boolean;
 }
 
 export const globalReducer = (state: InitialStateType, action: any) => {
     switch (action.type) {
         case Types.UpdateWindowWith:
             const width = getWindowWidthRange();
-            
+
             return {
                 ...state,
                 windowWidth: width
@@ -49,6 +53,16 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             return {
                 ...state,
                 isWalletFold: action.value
+            };
+        case Types.ShowAvailableQuest:
+            return {
+                ...state,
+                showAvailableQuest: action.value
+            };
+        case Types.ShowLogout:
+            return {
+                ...state,
+                showLogout: action.value
             };
         case Types.IsVisibleHeader:
             return {

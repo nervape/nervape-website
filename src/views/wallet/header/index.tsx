@@ -15,14 +15,13 @@ import { nervapeApi } from "../../../api/nervape-api";
 import { queryOatPoaps } from "../../../utils/api";
 import { Vote, Event } from "../../../nervape/campaign";
 import { queryGetVotes } from "../../../utils/snapshot";
-import { disconnect, mainnet } from "@wagmi/core";
-import { useAccount, useNetwork } from "wagmi";
+import { mainnet } from "@wagmi/core";
+import { useNetwork } from "wagmi";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { LoginWalletType } from "../../../utils/Wallet";
 import { godWoken } from "../../../utils/Chain";
-import Logout from "../../components/logout";
-import AvailableQuest from "../../components/wallet-connect/available-quest";
+import { Types } from "../../../utils/reducers";
 
 const AvatarBackgroundColors = [
     "#FFE3EB",
@@ -52,16 +51,27 @@ export default function WalletHeader(props: any) {
      * 地址 hover 
      */
     const [open, setOpen] = useState(false);
-    const [showQuest, setShowQuest] = useState(false);
     const [storyQuizes, setStoryQuizes] = useState<StoryCollectable[]>([]);
     const [campaignEvents, setCampaignEvents] = useState<Event[]>([]);
     const [avatarBackgroundColor, setAvatarBackgroundColor] = useState('');
 
-    const [showLogout, setShowLogout] = useState(false);
+    const setShowLogout = (value: boolean) => {
+        dispatch({
+            type: Types.ShowLogout,
+            value: value
+        })
+    }
+
+    const setShowQuest = (value: boolean) => {
+        dispatch({
+            type: Types.ShowAvailableQuest,
+            value: value
+        })
+    }
 
     async function initQuizAndEvent(_address: string) {
         if (state.loginWalletType !== LoginWalletType.WALLET_CONNECT) return;
-        
+
         const stories: StoryCollectable[] = await nervapeApi.fnStoryQuestions();
         await Promise.all(
             stories.map(async story => {
@@ -88,18 +98,6 @@ export default function WalletHeader(props: any) {
         setAvatarBackgroundColor(AvatarBackgroundColors[Math.floor(Math.random() * AvatarBackgroundColors.length)])
         initQuizAndEvent(state.currentAddress);
     }, [state.currentAddress]);
-
-    const disconnectReload = () => {
-        localStorage.clear();
-        disconnect();
-        window.location.reload();
-    };
-
-    useAccount({
-        onDisconnect() {
-            disconnectReload();
-        }
-    });
 
     const CopyAddress = () => {
         return (
@@ -297,21 +295,6 @@ export default function WalletHeader(props: any) {
                     {UserInfo()}
                 </div>
             )}
-
-            <AvailableQuest
-                show={showQuest}
-                events={campaignEvents}
-                quizes={storyQuizes}
-                close={() => {
-                    setShowQuest(false);
-                    document.body.style.overflow = 'auto';
-                }}></AvailableQuest>
-            <Logout
-                show={showLogout}
-                close={() => {
-                    setShowLogout(false);
-                }}
-                logout={disconnectReload}></Logout>
         </div>
     );
 }

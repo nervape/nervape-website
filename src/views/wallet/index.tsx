@@ -114,7 +114,11 @@ export default function WalletNewPage() {
         console.log('history', history);
         const { hash } = history;
         if (!hash) setCurrNavbar(0)
-        else setCurrNavbar(navbars.findIndex(n => '#' + n.name.toLocaleLowerCase() == hash));
+        else {
+            const index = navbars.findIndex(n => '#' + n.name.toLocaleLowerCase() == hash); 
+            setCurrNavbar(index != -1 ? index : 0);
+        }
+
     }, [history, navbars]);
 
     useEffect(() => {

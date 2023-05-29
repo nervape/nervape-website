@@ -16,6 +16,8 @@ export const initialState = {
     isInit: false,
     isWalletFold: false,
     isVisibleHeader: true,
+    showAvailableQuest: false,
+    showLogout: false,
 }
 
 export const DataContext = createContext<{
