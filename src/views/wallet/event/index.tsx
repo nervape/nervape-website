@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import './index.less';
 import { nervapeApi } from "../../../api/nervape-api";
-import { Event, Vote } from "../../../nervape/campaign";
+import { Event, EventType, Vote } from "../../../nervape/campaign";
 import { queryGetVotes } from "../../../utils/snapshot";
 import { DataContext } from "../../../utils/utils";
 
@@ -36,7 +36,7 @@ export default function WalletEvent(props: any) {
 
         const userStatus = () => {
             if (event.show) {
-                return eventStatus() == 2 ? FailIcon : NotComplete; 
+                return eventStatus() == 2 ? FailIcon : NotComplete;
             } else {
                 return SuccessIcon;
             }
@@ -63,9 +63,13 @@ export default function WalletEvent(props: any) {
         const events: Event[] = await nervapeApi.fnGetActiveEvents('all');
         await Promise.all(
             events.map(async event => {
-                const votes: Vote[] = await queryGetVotes(event.proposalId);
-                const count = votes.filter(vote => vote.voter == state.currentAddress).length;
-                event.show = count == 0;
+                if (event.type == EventType.Vote) {
+                    const votes: Vote[] = await queryGetVotes(event.proposalId);
+                    const count = votes.filter(vote => vote.voter == state.currentAddress).length;
+                    event.show = count == 0;
+                }
+
+                return event;
             })
         )
         setEvents(events);

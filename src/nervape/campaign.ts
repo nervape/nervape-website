@@ -34,6 +34,10 @@ export class PoapBadge {
   timeline: string = "";
 }
 
+export enum EventType {
+  Vote = 'vote',
+  Challenge = 'challenge', 
+}
 export class Event {
   _id: string = "";
   title: string = "";
@@ -44,6 +48,7 @@ export class Event {
   openUrl: string = "";
   sort: number = 0;
   show?: boolean = false;
+  type?: EventType;
 }
 
 export class Vote {

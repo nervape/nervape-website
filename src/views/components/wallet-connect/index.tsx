@@ -23,7 +23,7 @@ import { queryGetVotes } from "../../../utils/snapshot";
 import { nervapeApi } from "../../../api/nervape-api";
 import { StoryCollectable } from "../../../nervape/story";
 import { queryOatPoaps } from "../../../utils/api";
-import { Event, Vote } from "../../../nervape/campaign";
+import { Event, EventType, Vote } from "../../../nervape/campaign";
 import AvailableQuest from "./available-quest";
 
 export default function WallectConnect(props: any) {
@@ -150,9 +150,13 @@ export default function WallectConnect(props: any) {
         const events: Event[] = await nervapeApi.fnGetActiveEvents('');
         await Promise.all(
             events.map(async event => {
-                const votes: Vote[] = await queryGetVotes(event.proposalId);
-                const count = votes.filter(vote => vote.voter == _address).length;
-                event.show = count == 0;
+                if (event.type == EventType.Vote) {
+                    const votes: Vote[] = await queryGetVotes(event.proposalId);
+                    const count = votes.filter(vote => vote.voter == _address).length;
+                    event.show = count == 0;
+                }
+
+                return event;
             })
         )
         setCampaignEvents(events.filter(item => item.show));

@@ -13,7 +13,7 @@ import { Dropdown, MenuProps, message } from "antd";
 import { StoryCollectable } from "../../../nervape/story";
 import { nervapeApi } from "../../../api/nervape-api";
 import { queryOatPoaps } from "../../../utils/api";
-import { Vote, Event } from "../../../nervape/campaign";
+import { Vote, Event, EventType } from "../../../nervape/campaign";
 import { queryGetVotes } from "../../../utils/snapshot";
 import { mainnet } from "@wagmi/core";
 import { useNetwork } from "wagmi";
@@ -85,9 +85,13 @@ export default function WalletHeader(props: any) {
         const events: Event[] = await nervapeApi.fnGetActiveEvents('');
         await Promise.all(
             events.map(async event => {
-                const votes: Vote[] = await queryGetVotes(event.proposalId);
-                const count = votes.filter(vote => vote.voter == _address).length;
-                event.show = count == 0;
+                if (event.type == EventType.Vote) {
+                    const votes: Vote[] = await queryGetVotes(event.proposalId);
+                    const count = votes.filter(vote => vote.voter == _address).length;
+                    event.show = count == 0;
+                }
+
+                return event;
             })
         )
         setCampaignEvents(events.filter(item => item.show));
