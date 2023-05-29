@@ -1,4 +1,4 @@
-.confirm-container {
+.logout-container {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -9,7 +9,7 @@
     opacity: 0;
     transition: all 0.3s;
     z-index: 999;
-    
+
     .confirm-content {
         position: absolute;
         top: 50%;
@@ -64,7 +64,7 @@
     }
 }
 
-.confirm-container.show {
+.logout-container.show {
     visibility: visible;
     opacity: 1;
     .confirm-content {
@@ -73,7 +73,7 @@
 }
 
 @media screen and (max-width: 750px) {
-    .confirm-container {
+    .logout-container {
         .confirm-content {
             width: 347px;
         }
