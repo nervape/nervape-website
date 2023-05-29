@@ -10,8 +10,8 @@ import { updateBodyOverflow } from "../../../utils/utils";
 import NftCardDetail, { PreviewModel } from "../../components/nft/detail";
 
 import DetailCloseIcon from '../../../assets/images/nft/close_detail.svg';
+import NftEmptyIcon from '../../../assets/wallet/nft/nft_empty.png';
 import { Types } from "../../../utils/reducers";
-import LoadingModal from "../../components/loading/loading";
 import { CONFIG } from "../../../utils/config";
 
 declare global {
@@ -253,6 +253,9 @@ export default function WalletNFT3D(props: any) {
                 ) : (
                     <div className="no-result flex-center">
                         <div className="no-result-content">
+                            <div className="cover-image">
+                                <img src={NftEmptyIcon} alt="NftEmptyIcon" />
+                            </div>
                             <div className="tip">
                                 <p>Currently don’t have any {selectedType == 'All' ? 'Nervape' : 'Nervape ' + selectedType} NFTs</p>
                                 <p>Buy Nervape NFTs on Yokai Dojo, the link below</p>
