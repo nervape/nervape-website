@@ -75,7 +75,7 @@ export default function PageView(props: any) {
       })
     );
     setStoryQuizes(stories.filter(item => item.show));
-    const events: Event[] = await nervapeApi.fnGetActiveEvents('');
+    const events: Event[] = await nervapeApi.fnGetActiveEvents(state.currentAddress, '');
     await Promise.all(
       events.map(async event => {
         if (event.type == EventType.Vote) {

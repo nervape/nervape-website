@@ -199,8 +199,8 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
   
-  public async fnGetActiveEvents(type?: string) {
-    const url = `${this.baseUrl}/campaign/events/active/all?type=${type}`;
+  public async fnGetActiveEvents(address: string, type?: string) {
+    const url = `${this.baseUrl}/campaign/events/active/all?type=${type}&address=${address}`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }

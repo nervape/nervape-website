@@ -60,7 +60,7 @@ export default function WalletEvent(props: any) {
 
     async function fnGetCampaignEvents() {
         setLoading(true);
-        const events: Event[] = await nervapeApi.fnGetActiveEvents('all');
+        const events: Event[] = await nervapeApi.fnGetActiveEvents(state.currentAddress, 'all');
         await Promise.all(
             events.map(async event => {
                 if (event.type == EventType.Vote) {
