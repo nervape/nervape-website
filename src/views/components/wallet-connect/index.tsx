@@ -304,7 +304,7 @@ export default function WallectConnect(props: any) {
         } else {
             setItems(_items2);
         }
-    }, [chain, state.loginWalletType]);
+    }, [chain, state.loginWalletType, state.storyQuizes, state.campaignEvents]);
 
     useEffect(() => {
         const subLength = 5;
