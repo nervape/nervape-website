@@ -70,7 +70,11 @@ export default function AvailableQuest(props: { events: Event[]; quizes: StoryCo
                     <div className="empty-content">
                         There's no available quests at this time.
                         <br />
-                        <a target="_block" href="https://tourmaline-elderberry-f93.notion.site/NACP-Bonelist-aka-Whitelist-f021cb54342549ae95f752d393ab3211">Check additional ways to earn Bonepoints</a>
+                        <a
+                            target="_block"
+                            href="https://tourmaline-elderberry-f93.notion.site/NACP-Bonelist-aka-Whitelist-f021cb54342549ae95f752d393ab3211">
+                            Check additional ways to get bonelisted
+                        </a>
                     </div>
                 )}
             </div>
