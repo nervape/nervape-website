@@ -5,8 +5,8 @@ import { Event, EventType, Vote } from "../../../nervape/campaign";
 import { queryGetVotes } from "../../../utils/snapshot";
 import { DataContext } from "../../../utils/utils";
 
-import NotStartIcon from "../../../assets/wallet/tx/not_start.svg";
-import InProgressIcon from "../../../assets/wallet/tx/in_progress.svg";
+import InProgressIcon from "../../../assets/wallet/tx/not_start.svg";
+import NotStartIcon from "../../../assets/wallet/tx/in_progress.svg";
 import EndIcon from "../../../assets/wallet/tx/end.svg";
 import SuccessIcon from "../../../assets/wallet/tx/success.svg";
 import FailIcon from "../../../assets/wallet/tx/fail.svg";
