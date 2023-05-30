@@ -90,7 +90,7 @@ export default function App() {
             }
           />
           <Route
-            path="/nft"
+            path="/3dnft"
             element={
               <PageView activeIndex={3}>
                 <NFTPage />

@@ -116,7 +116,7 @@ const GalleryItems: MenuProps = {
           handleHeaderClick('galleryCollection');
           updateBodyOverflow(true);
           document.getElementById('gallery-open-icon')?.setAttribute('class', 'header-open');
-          NavTool.fnJumpToPage('/nft');
+          NavTool.fnJumpToPage('/3dnft');
         }}>3D COLLECTION</div>
       ),
       key: '-1'
@@ -274,7 +274,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     type: HeaderType.Navbar
   },
   galleryCollection: {
-    url: '/nft',
+    url: '/3dnft',
     type: HeaderType.Navbar
   },
   galleryNacp: {
