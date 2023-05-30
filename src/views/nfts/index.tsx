@@ -73,7 +73,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
         <div className={`nft-card-detail-container popup-container mask-cover ${show && 'show'}`} onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
-                    <PreviewModel enableModuleUrl={nft.renderer}></PreviewModel>
+                    <PreviewModel enableModuleUrl={nft?.renderer}></PreviewModel>
                     {state.windowWidth !== 1200 && (
                         <div className="close-detail-c">
                             <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
@@ -83,54 +83,54 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
                         <img loading="lazy" onClick={fullscreen} className="full-screen cursor" src={FullscrenIcon} alt="FullscrenIcon" />
                     </div>
                 </div>
-                <div className="detail-info" style={{ background: nft.card_background }}>
+                <div className="detail-info" style={{ background: nft?.card_background }}>
                     <div className="info-content">
-                        <div className="name">{nft.name}</div>
+                        <div className="name">{nft?.name}</div>
                         <div className="distribution">
                             <div className="title">Distribution</div>
                             <div className="flex">
                                 <div className="godwoken flex-1">
                                     <span className="text">GODWOKEN</span>
-                                    <span className="value">{`${nft.issued}/${nft.total}`}</span>
+                                    <span className="value">{`${nft?.issued}/${nft?.total}`}</span>
                                 </div>
                             </div>
                         </div>
                         <div className="attributes attributes-1 flex">
                             <div className="range flex-1">
                                 <div className="text">ID Range</div>
-                                <div className="value">{nft.id_range}</div>
+                                <div className="value">{nft?.id_range}</div>
                             </div>
                             <div className="origin flex-1">
                                 <div className="text">Origin</div>
-                                <div className="value">{nft.origin}</div>
+                                <div className="value">{nft?.origin}</div>
                             </div>
                         </div>
                         <div className="attributes flex">
-                            {nft.type === 'Character' && (
+                            {nft?.type === 'Character' && (
                                 <>
                                     <div className="name flex-1">
                                         <div className="text">Name</div>
-                                        <div className="value">{nft.short_name}</div>
+                                        <div className="value">{nft?.short_name}</div>
                                     </div>
                                     <div className="birthday flex-1">
                                         <div className="text">Birthday</div>
-                                        <div className="value">{nft.birthday && nft.birthday.replace(/-/g, '/')}</div>
+                                        <div className="value">{nft?.birthday && nft.birthday.replace(/-/g, '/')}</div>
                                     </div>
                                 </>
                             )}
                             <div className="type flex-1">
                                 <div className="text">Type</div>
-                                <div className="value">{nft.type}</div>
+                                <div className="value">{nft?.type}</div>
                             </div>
                         </div>
                         <div className="description">
-                            <div className="desc-c">{nft.description}</div>
+                            <div className="desc-c">{nft?.description}</div>
                         </div>
                         <div className="btn-groups">
                             <button
                                 className="btn cursor"
                                 onClick={() => {
-                                    window.open(nft.yokaiUrl);
+                                    window.open(nft?.yokaiUrl);
                                 }}
                             >
                                 BUY ON YOKAI
