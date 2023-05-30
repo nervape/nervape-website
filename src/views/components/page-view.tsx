@@ -75,19 +75,19 @@ export default function PageView(props: any) {
       })
     );
     setStoryQuizes(stories.filter(item => item.show));
-    const events: Event[] = await nervapeApi.fnGetActiveEvents(state.currentAddress, '');
-    await Promise.all(
-      events.map(async event => {
-        if (event.type == EventType.Vote) {
-          const votes: Vote[] = await queryGetVotes(event.proposalId);
-          const count = votes.filter(vote => vote.voter == _address).length;
-          event.show = count == 0;
-        }
+    // const events: Event[] = await nervapeApi.fnGetActiveEvents(state.currentAddress, '');
+    // await Promise.all(
+    //   events.map(async event => {
+    //     if (event.type == EventType.Vote) {
+    //       const votes: Vote[] = await queryGetVotes(event.proposalId);
+    //       const count = votes.filter(vote => vote.voter == _address).length;
+    //       event.show = count == 0;
+    //     }
 
-        return event;
-      })
-    )
-    setCampaignEvents(events.filter(item => item.show));
+    //     return event;
+    //   })
+    // )
+    // setCampaignEvents(events.filter(item => item.show));
   }
 
   function fnResizeWindow() {
