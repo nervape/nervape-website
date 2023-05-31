@@ -61,37 +61,44 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
 
     return (
         <div className="nacp-asset-item">
-            <div className="cover-image">
-                <img className="cover" onLoad={() => setShowStatus(true)} src={asset.url} alt="AssetCoverImage" />
-                {showStatus && !asset.isObtain && (
-                    <div
-                        className={`cover-no-right transition flex-center ${status}`}
-                        onClick={() => {
-                            if (status == STORY_QUIZ_STATUS.IN_PROGRESS) {
-                                window.open(`/story/${asset?.story_quiz?.urlMask}#quiz`);
-                            }
-                        }}>
-                        <div className="status-icon">
-                            <img className="icon" src={status == STORY_QUIZ_STATUS.IN_PROGRESS ? HourGlass1 : HourGlass2} alt="" />
+            <>
+                <img style={{display: 'none'}} onLoad={() => setShowStatus(true)} src={asset.url} alt="AssetCoverImage" />
+                {showStatus && (
+                    <>
+                        <div className="cover-image">
+                            <img className="cover" src={asset.url} alt="AssetCoverImage" />
+                            {!asset.isObtain && (
+                                <div
+                                    className={`cover-no-right transition flex-center ${status}`}
+                                    onClick={() => {
+                                        if (status == STORY_QUIZ_STATUS.IN_PROGRESS) {
+                                            window.open(`/story/${asset?.story_quiz?.urlMask}#quiz`);
+                                        }
+                                    }}>
+                                    <div className="status-icon">
+                                        <img className="icon" src={status == STORY_QUIZ_STATUS.IN_PROGRESS ? HourGlass1 : HourGlass2} alt="" />
+                                    </div>
+                                    <div className="story-name">
+                                        {asset.story_quiz?.serial}
+                                        <br />
+                                        Challenge Reward
+                                    </div>
+                                    <div className="time-left">
+                                        {status == STORY_QUIZ_STATUS.IN_PROGRESS ? 'Time left:' : 'Available in:'}
+                                        <br />
+                                        {formatTimeStr}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        <div className="story-name">
-                            {asset.story_quiz?.serial}
-                            <br />
-                            Challenge Reward
+                        <div className="asset-name">{asset.name}</div>
+                        <div className="category flex-align">
+                            <img src={asset.category?.icon} alt="CategoryIcon" className="category-icon" />
+                            <div className="category-name">{asset.category?.name}</div>
                         </div>
-                        <div className="time-left">
-                            {status == STORY_QUIZ_STATUS.IN_PROGRESS ? 'Time left:' : 'Available in:'}
-                            <br />
-                            {formatTimeStr}
-                        </div>
-                    </div>
+                    </>
                 )}
-            </div>
-            <div className="asset-name">{asset.name}</div>
-            <div className="category flex-align">
-                <img src={asset.category?.icon} alt="CategoryIcon" className="category-icon" />
-                <div className="category-name">{asset.category?.name}</div>
-            </div>
+            </>
         </div>
     );
 }

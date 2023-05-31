@@ -120,11 +120,13 @@ export default function StoryProfile(props: any) {
     }
 
     useEffect(() => {
+        history.scrollRestoration = 'manual';
+
         window.onload = () => {
             console.log('onload', location);
             if (location.hash == '#quiz') {
                 setTimeout(() => {
-                    const storyProfile = document.getElementById('quiz');
+                    const storyProfile = document.getElementById('footer');
                     storyProfile?.scrollIntoView({ behavior: 'smooth' });
                 }, 300);
             }
@@ -262,7 +264,7 @@ export default function StoryProfile(props: any) {
                 muted
                 src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall}></video>
         }
-        return <img loading="lazy" src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
+        return <img src={state.windowWidth !== 375 ? story?.bannerUrl : story?.bannerUrlSmall} alt="bannerUrl" />
     }
 
     const fnQuiz = () => {
@@ -338,7 +340,7 @@ export default function StoryProfile(props: any) {
             </div>
             <div className="profile-content">
                 <div className="header-sketch">
-                    <img loading="lazy" src={state.windowWidth !== 375 ? story?.headerSketch : (story?.headerSketchSmall || story?.headerSketch)} alt="headerSketch" />
+                    <img src={state.windowWidth !== 375 ? story?.headerSketch : (story?.headerSketchSmall || story?.headerSketch)} alt="headerSketch" />
                 </div>
                 <div className="story-content" style={{ background: story?.background }}>
                     <Parallax
@@ -357,13 +359,13 @@ export default function StoryProfile(props: any) {
                         </div>
                     </Parallax>
                     <div className="footer-sketch">
-                        <img loading="lazy" src={state.windowWidth !== 375 ? story?.footerSketch : (story?.footerSketchSmall || story?.footerSketch)} alt="footerSketch" />
+                        <img src={state.windowWidth !== 375 ? story?.footerSketch : (story?.footerSketchSmall || story?.footerSketch)} alt="footerSketch" />
                         <div className="sr-nav-footer">
                             {fnPrev()}
                             {fnNext()}
                         </div>
                     </div>
-                    <div className="page-footer" id="quiz">
+                    <div className="page-footer" id="footer">
                         <Footer></Footer>
                     </div>
                 </div>
