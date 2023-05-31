@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Story } from "../../../nervape/story";
@@ -119,10 +119,10 @@ export default function StoryProfile(props: any) {
         window.open(`https://galxe.com/nervape/campaign/${story?.galxeCampaignId}`)
     }
 
-    useEffect(() => {
-        history.scrollRestoration = 'manual';
+    const fnFilter = useCallback(filterNfts(), []);
 
-        window.onload = () => {
+    function filterNfts() {
+        return function () {
             console.log('onload', location);
             if (location.hash == '#quiz') {
                 setTimeout(() => {
@@ -131,6 +131,19 @@ export default function StoryProfile(props: any) {
                 }, 300);
             }
         }
+    }
+
+    function fnScrollToBottom() {
+        fnFilter();
+    }
+
+    useEffect(() => {
+        console.log('manual');
+        history.scrollRestoration = 'manual';
+
+        window.addEventListener('load', fnScrollToBottom, true);
+
+        return () => window.removeEventListener('load', fnScrollToBottom, true);
     }, []);
 
     useEffect(() => {

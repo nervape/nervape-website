@@ -33,7 +33,7 @@ export default function AvailableQuest(props: { events: Event[]; quizes: StoryCo
                 if (isEvent) {
                     window.open(item.openUrl);
                 } else {
-                    NavTool.fnJumpToPage(`/story/${item.urlMask}#quiz`);
+                    window.open(`/story/${item.urlMask}#quiz`);
                     close(false);
                 }
             }}>
