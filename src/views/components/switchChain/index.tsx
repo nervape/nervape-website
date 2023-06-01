@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { mainnet, useSwitchNetwork } from 'wagmi';
 import { godWoken } from '../../../utils/Chain';
 import { getWallectConnect } from '../../../utils/Wallet';
 import './index.less';
+import { DataContext } from '../../../utils/utils';
 
 export function SwitchChainSpan(props: any) {
     const { title, setShowChainInfo, chainId, setOpenClose } = props;
@@ -57,11 +58,12 @@ export default function SwitchChain(props: {
     setSwitchChain: Function;
     setShowChainInfo: Function;
 }) {
+    const { state } = useContext(DataContext);
     const { show, setSwitchChain, setShowChainInfo } = props;
-    
+
     return (
         <div
-            className={`switch-chain popup-container ${show && 'show'}`}
+            className={`switch-chain popup-container ${state.isVisibleHeader ? 'visible-header' : 'hide-header'} ${show && 'show'}`}
             onClick={() => {
                 setSwitchChain(false);
             }}
