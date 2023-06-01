@@ -338,7 +338,8 @@ export default function NavHeader(props: any) {
   const { state, dispatch } = useContext(DataContext);
 
   const setHideHeader = (value: boolean) => {
-    document.body.style.setProperty('--wallet-padding', value ? '64px' : '16px');
+    const _padding = value ? '64px' : '16px';
+    document.body.style.setProperty('--wallet-padding', _padding);
 
     dispatch({
       type: Types.IsVisibleHeader,
@@ -358,7 +359,7 @@ export default function NavHeader(props: any) {
       }
       timer = setTimeout(() => {
         const currTop = getWindowScrollTop();
-
+        console.log('_chain_padding', state.switchChain)
         if (state.windowWidth > 375 && activeIndex == 7 && currTop < 400) {
           setHideHeader(true);
           return;

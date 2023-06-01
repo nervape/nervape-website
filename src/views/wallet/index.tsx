@@ -49,7 +49,6 @@ export default function WalletNewPage() {
     const { state, dispatch } = useContext(DataContext);
     const history = useLocation();
 
-    const [switchChain, setSwitchChain] = useState(false);
     const [showChainInfo, setShowChainInfo] = useState(false);
     const [isFold, setIsFold] = useState(false);
 
@@ -70,6 +69,17 @@ export default function WalletNewPage() {
             type: flag ? Types.ShowLoading : Types.HideLoading
         })
     }
+    
+    const setSwitchChain = (flag: boolean) => {
+        const _extra_padding = flag ? (state.windowWidth > 375 ? '60px' : '64px') : '0px'
+        document.body.style.setProperty('--extra-padding', _extra_padding);
+        
+        dispatch({
+            type: Types.SwitchChain,
+            value: flag
+        })
+    }
+
     const [showTransfer, setShowTransfer] = useState(false);
     const [showTransferSuccess, setShowTransferSuccess] = useState(false);
 
@@ -277,9 +287,9 @@ export default function WalletNewPage() {
     return (
         <div className="wallet-new-page">
             {state.currentAddress && (
-                <div className={`wallet-home-container show`}>
+                <div className={`wallet-home-container transition show`} style={{paddingTop: state.switchChain ? '0' : '64px'}}>
                     <SwitchChain
-                        show={switchChain}
+                        show={state.switchChain}
                         setSwitchChain={setSwitchChain}
                         setShowChainInfo={setShowChainInfo}
                     ></SwitchChain>

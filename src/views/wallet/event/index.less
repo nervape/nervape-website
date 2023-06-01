@@ -8,7 +8,7 @@
       font-weight: 800;
       font-size: 24px;
       line-height: 29px;
-      color: #FFFFFF;
+      color: #ffffff;
     }
   }
 
@@ -39,7 +39,7 @@
       border-bottom: 1px solid rgba(180, 188, 208, 0.5);
 
       .event-tab {
-        color: #B4BCD0;
+        color: #b4bcd0;
         font-weight: 700;
       }
     }
@@ -54,7 +54,7 @@
         }
 
         .event-item {
-          color: #FFFFFF;
+          color: #ffffff;
           padding: 8px 0;
 
           &:hover {
@@ -82,10 +82,21 @@
 @media screen and (max-width: 750px) {
   .wallet-event-container {
     .wallet-event-header {
+      position: sticky;
+      background: #17171e;
+      z-index: 1;
       padding-top: 16px;
+      top: var(--extra-padding);
     }
 
     .wallet-event-content {
+      .event-tabs {
+        position: sticky;
+        top: calc(var(--extra-padding) + 61px);
+        background: #17171e;
+        z-index: 1;
+      }
+
       .event-tabs,
       .event-histories {
         .event-tab,
@@ -135,28 +146,28 @@
   .wallet-event-container {
     &.fold {
       .wallet-event-header {
-        top: calc(102px + var(--wallet-padding));
+        top: calc(102px + var(--wallet-padding) + var(--extra-padding));
       }
 
       .wallet-event-content {
         .event-tabs {
-          top: calc(147px + var(--wallet-padding));
+          top: calc(147px + var(--wallet-padding) + var(--extra-padding));
         }
       }
     }
     .wallet-event-header {
       position: sticky;
-      background: #17171E;
+      background: #17171e;
       z-index: 1;
-      top: calc(208px + var(--wallet-padding));
+      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
     }
 
     .wallet-event-content {
       .event-tabs {
         position: sticky;
         z-index: 1;
-        background: #17171E;
-        top: calc(253px + var(--wallet-padding));
+        background: #17171e;
+        top: calc(253px + var(--wallet-padding) + var(--extra-padding));
       }
     }
   }

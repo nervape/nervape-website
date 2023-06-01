@@ -22,6 +22,7 @@ export const initialState = {
     showLogout: false,
     storyQuizes: [],
     campaignEvents: [],
+    switchChain: false,
 }
 
 export const DataContext = createContext<{

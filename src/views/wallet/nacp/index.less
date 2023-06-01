@@ -396,6 +396,7 @@
   .wallet-nacp-container {
     .wallet-nacp-header {
       padding-top: 16px;
+      top: var(--extra-padding);
     }
 
     .wallet-nacp-content {
@@ -469,14 +470,14 @@
   .wallet-nacp-container {
     &.fold {
       .wallet-nacp-header {
-        top: calc(102px + var(--wallet-padding));
+        top: calc(102px + var(--wallet-padding) + var(--extra-padding));
       }
     }
     .wallet-nacp-header {
       position: sticky;
       z-index: 1;
       background-color: #17171e;
-      top: calc(208px + var(--wallet-padding));
+      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
     }
   }
 }

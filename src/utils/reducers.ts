@@ -21,6 +21,7 @@ export enum Types {
     ShowLogout = 'ShowLogout',
     StoryQuizes = 'StoryQuizes',
     CampaignEvents = 'CampaignEvents',
+    SwitchChain = 'SwitchChain',
 }
 
 export type InitialStateType = {
@@ -39,6 +40,7 @@ export type InitialStateType = {
     showLogout: boolean;
     storyQuizes: StoryCollectable[];
     campaignEvents: Event[];
+    switchChain: boolean;
 }
 
 export const globalReducer = (state: InitialStateType, action: any) => {
@@ -54,6 +56,11 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             return {
                 ...state,
                 isInit: action.value
+            };
+        case Types.SwitchChain:
+            return {
+                ...state,
+                switchChain: action.value
             };
         case Types.IsWalletFold:
             return {

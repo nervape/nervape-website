@@ -66,6 +66,7 @@ export default function SwitchChain(props: {
                 setSwitchChain(false);
             }}
         >
+            <div className="visible-header-line transition"></div>
             <div
                 className="bg"
                 onClick={e => {

@@ -87,7 +87,7 @@ export default function WalletEvent(props: any) {
             </div>
 
             <div className="wallet-event-content">
-                <div className="event-tabs flex-align">
+                <div className="event-tabs transition flex-align">
                     <div className="event-tab title">Title</div>
                     <div className="event-tab timeframe">Timeframe</div>
                     <div className="event-tab status">Status</div>

@@ -224,6 +224,7 @@
   .wallet-badge-container {
     .wallet-badge-header {
       padding-top: 16px;
+      top: var(--extra-padding);
     }
 
     .wallet-badge-content {
@@ -249,7 +250,7 @@
       margin-bottom: 48px;
 
       .review-card-content {
-        top: 78px;
+        top: calc(78px + var(--extra-padding));
         background: transparent;
 
         .review-card {
@@ -525,12 +526,12 @@
   .wallet-badge-container {
     &.fold {
       .wallet-badge-header {
-        top: calc(102px + var(--wallet-padding));
+        top: calc(102px + var(--wallet-padding) + var(--extra-padding));
       }
 
       .wallet-story-reward-content {
         .review-card-content {
-          top: calc(164px + var(--wallet-padding));
+          top: calc(164px + var(--wallet-padding) + var(--extra-padding));
         }
       }
     }
@@ -538,14 +539,14 @@
       position: sticky;
       background: #17171E;
       z-index: 1;
-      top: calc(208px + var(--wallet-padding));
+      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
     }
 
     .wallet-story-reward-content {
       .review-card-content {
         position: sticky;
         z-index: 1;
-        top: calc(270px + var(--wallet-padding));
+        top: calc(270px + var(--wallet-padding) + var(--extra-padding));
       }
     }
   }

@@ -212,6 +212,7 @@
   .wallet-nft-3d-container {
     .wallet-nft-3d-header {
       padding-top: 16px;
+      top: var(--extra-padding);
 
       .nft-3d-title {
         margin-right: 0;
@@ -332,14 +333,14 @@
   .wallet-nft-3d-container {
     &.fold {
       .wallet-nft-3d-header {
-        top: calc(102px + var(--wallet-padding));
+        top: calc(102px + var(--wallet-padding) + var(--extra-padding));
       }
     }
     .wallet-nft-3d-header {
       position: sticky;
       z-index: 1;
       background-color: #17171E;
-      top: calc(208px + var(--wallet-padding));
+      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
     }
   }
 }

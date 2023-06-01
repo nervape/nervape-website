@@ -119,13 +119,14 @@
       padding-top: 16px;
       padding-bottom: 16px;
       border-bottom: 1px solid rgba(180, 188, 208, 0.5);
+      top: var(--extra-padding);
     }
 
     .wallet-tx-content {
       padding-bottom: 68px;
 
       .tx-tabs {
-        top: 62px;
+        top: calc(var(--extra-padding) + 62px);
         padding-top: 16px;
       }
 
@@ -155,24 +156,24 @@
   .wallet-tx-container {
     &.fold {
       .wallet-tx-header {
-        top: calc(102px + var(--wallet-padding));
+        top: calc(102px + var(--wallet-padding) + var(--extra-padding));
       }
 
       .wallet-tx-content {
         .tx-tabs {
-          top: calc(147px + var(--wallet-padding));
+          top: calc(147px + var(--wallet-padding) + var(--extra-padding));
         }
       }
     }
     .wallet-tx-header {
       position: sticky;
-      top: calc(208px + var(--wallet-padding));
+      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
     }
 
     .wallet-tx-content {
       .tx-tabs {
         position: sticky;
-        top: calc(253px + var(--wallet-padding));
+        top: calc(253px + var(--wallet-padding) + var(--extra-padding));
       }
     }
   }
