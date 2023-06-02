@@ -1,0 +1,91 @@
+.wallet-invitation-claim {
+  z-index: 999;
+
+  .invitation-claim-content {
+    background: rgba(27, 33, 47, 0.95);
+    letter-spacing: -0.05em;
+    border-radius: 16px;
+    height: fit-content;
+    padding: 24px;
+    width: 347px;
+    color: #ffffff;
+
+    .title {
+      padding-bottom: 16px;
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .tip,
+    .input-tip,
+    .address-tip {
+      font-size: 12px;
+      line-height: 24px;
+    }
+
+    .address-tip {
+      line-height: 16px;
+    }
+
+    .address {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 16px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      word-break: break-all;
+      margin: 12px 0;
+    }
+
+    .claim-step-content {
+      .input-tip {
+        padding-bottom: 4px;
+      }
+
+      input {
+        width: 100%;
+        height: 34px;
+        background-color: #ffffff;
+        border-radius: 6px;
+        border: unset;
+        padding: 10px;
+        color: #777777;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+          -webkit-appearance: none !important;
+          margin: 0;
+        }
+      }
+
+      .message {
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 14px;
+        color: #ff5555;
+        margin-top: 4px;
+      }
+
+      .btn-groups {
+        margin-top: 16px;
+        flex-direction: row-reverse;
+
+        .btn {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 14px;
+          padding: 9px 16px;
+          background: #f44d37;
+          box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+          border-radius: 6px;
+        }
+      }
+    }
+  }
+}
