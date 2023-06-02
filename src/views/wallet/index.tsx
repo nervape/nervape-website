@@ -187,14 +187,18 @@ export default function WalletNewPage() {
                 }
             ]);
             // 查询是否持有 Nacp bonelist
-            nervapeApi.fnSearchBonelist(state.currentAddress).then(res => {
-                setIsBonelist(res > 0);
-            });
+            searchBonelist();
         };
 
         document.body.style.overflow = 'auto';
         getPoaps(state.currentAddress);
     }, [state.loginWalletType, state.currentAddress]);
+
+    const searchBonelist = () => {
+        nervapeApi.fnSearchBonelist(state.currentAddress).then(res => {
+            setIsBonelist(res > 0);
+        });
+    }
 
     const doTransferCKB = async (toAddress: string, amount: string) => {
         setLoading(true);
@@ -376,6 +380,7 @@ export default function WalletNewPage() {
                 setLoading={setLoading}
                 isBonelist={isBonelist}
                 setInviteClaim={setInviteClaim}
+                searchBonelist={searchBonelist}
             ></InvitationClaim>
         </div>
     );

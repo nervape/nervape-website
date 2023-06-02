@@ -7,7 +7,7 @@ import { DataContext } from "../../../utils/utils";
 import { useSignMessage } from "wagmi";
 
 export default function InvitationClaim(props: any) {
-    const { show, isBonelist, setInviteClaim, setLoading } = props;
+    const { show, isBonelist, setInviteClaim, setLoading, searchBonelist } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -58,6 +58,7 @@ export default function InvitationClaim(props: any) {
             setMessage(res.message);
             setCurrentStep(1);
         } else {
+            searchBonelist();
             setCurrentStep(3);
         }
 
