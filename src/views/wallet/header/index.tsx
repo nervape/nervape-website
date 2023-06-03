@@ -40,7 +40,7 @@ const AvatarBackgroundColors = [
 
 export default function WalletHeader(props: any) {
     const { state, dispatch } = useContext(DataContext);
-    const { setShowTransfer, balance, isBonelist, isFold } = props;
+    const { setShowTransfer, balance, isBonelist, isFold, setInviteClaim } = props;
 
     const { chain } = useNetwork();
 
@@ -211,7 +211,12 @@ export default function WalletHeader(props: any) {
         return (
             <div className={`bone-list-points transition flex-align ${isFold && 'wallet-header-hide'}`}>
                 <div className="bone-item bone-list">
-                    <div className="title">BONELIST</div>
+                    <div className="title flex-align">
+                        <div className="title-left">BONELIST</div>
+                        <div className="record cursor" onClick={() => {
+                            setInviteClaim(true);
+                        }}>Claim</div>
+                    </div>
                     <div className={`nacp flex-align ${isBonelist && 'holder'}`}>
                         <div className="name">NACP</div>
                         <div className="icon">

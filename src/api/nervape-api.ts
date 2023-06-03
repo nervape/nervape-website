@@ -2,8 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import { NFT, NFT_QUERY } from "../nervape/nft";
 import { ChapterList, Story } from "../nervape/story";
 
-console.log();
-
 class NervapeApi {
   //@ts-ignore
   public baseUrl = import.meta.env.VITE_API_HOST;
@@ -20,7 +18,7 @@ class NervapeApi {
     }
     return data.data;
   }
-  
+
   private _fnDealSessionResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
       console.warn(res);
@@ -121,7 +119,7 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnVerifyLogin() {
     const url = `${this.baseUrl}/nacp/verify/login`;
     const res = await axios.get(url, {
@@ -173,7 +171,7 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetStoryQuizNonce() {
     const url = `${this.baseUrl}/story/questions/nonce`;
     const res = await axios.get(url, {
@@ -192,13 +190,13 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnStoryQuestions() {
     const url = `${this.baseUrl}/story/questions/all`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetActiveEvents(address: string, type?: string) {
     const url = `${this.baseUrl}/campaign/events/active/all?type=${type}&address=${address}`;
     const res = await axios.get(url);
@@ -209,6 +207,35 @@ class NervapeApi {
     const url = `${this.baseUrl}/story/website/story/special?address=${address}`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
+  }
+
+  public async fnVerifyCode(code: string) {
+    const url = `${this.baseUrl}/invitation/website/verify/code?code=${code}`;
+    const res = await axios.get(url);
+
+    return this._fnDealSessionResponse(res, url);
+  }
+
+  public async fnClaimBonelistNonce() {
+    const url = `${this.baseUrl}/invitation/website/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnSubmitVerify(
+    code: string,
+    message: string,
+    signature: string,
+    inviteeAddress: string) {
+    const url = `${this.baseUrl}/invitation/website/submit/verify`;
+    const res = await axios.post(url, JSON.stringify({ code, message, signature, inviteeAddress }), {
+      headers: { 'content-type': 'application/json' },
+      withCredentials: true
+    });
+
+    return this._fnDealSessionResponse(res, url);
   }
 }
 

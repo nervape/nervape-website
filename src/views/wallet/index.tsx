@@ -31,6 +31,7 @@ import NftIcon from "../../assets/wallet/navbar/nft.svg";
 import EventIcon from "../../assets/wallet/navbar/event.svg";
 import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
+import InvitationClaim from "./invitation";
 
 export class WalletNavBar {
     name: string = "";
@@ -51,6 +52,7 @@ export default function WalletNewPage() {
 
     const [showChainInfo, setShowChainInfo] = useState(false);
     const [isFold, setIsFold] = useState(false);
+    const [inviteClaim, setInviteClaim] = useState(false);
 
     const { chain } = useNetwork();
 
@@ -69,11 +71,11 @@ export default function WalletNewPage() {
             type: flag ? Types.ShowLoading : Types.HideLoading
         })
     }
-    
+
     const setSwitchChain = (flag: boolean) => {
         const _extra_padding = flag ? (state.windowWidth > 375 ? '60px' : '64px') : '0px'
         document.body.style.setProperty('--extra-padding', _extra_padding);
-        
+
         dispatch({
             type: Types.SwitchChain,
             value: flag
@@ -125,7 +127,7 @@ export default function WalletNewPage() {
         const { hash } = history;
         if (!hash) setCurrNavbar(0)
         else {
-            const index = navbars.findIndex(n => '#' + n.name.toLocaleLowerCase() == hash); 
+            const index = navbars.findIndex(n => '#' + n.name.toLocaleLowerCase() == hash);
             setCurrNavbar(index != -1 ? index : 0);
         }
 
@@ -185,14 +187,18 @@ export default function WalletNewPage() {
                 }
             ]);
             // 查询是否持有 Nacp bonelist
-            nervapeApi.fnSearchBonelist(state.currentAddress).then(res => {
-                setIsBonelist(res > 0);
-            });
+            searchBonelist();
         };
 
         document.body.style.overflow = 'auto';
         getPoaps(state.currentAddress);
     }, [state.loginWalletType, state.currentAddress]);
+
+    const searchBonelist = () => {
+        nervapeApi.fnSearchBonelist(state.currentAddress).then(res => {
+            setIsBonelist(res > 0);
+        });
+    }
 
     const doTransferCKB = async (toAddress: string, amount: string) => {
         setLoading(true);
@@ -287,7 +293,7 @@ export default function WalletNewPage() {
     return (
         <div className="wallet-new-page">
             {state.currentAddress && (
-                <div className={`wallet-home-container transition show`} style={{paddingTop: state.switchChain ? '0' : '64px'}}>
+                <div className={`wallet-home-container transition show`} style={{ paddingTop: state.switchChain ? '0' : '64px' }}>
                     <SwitchChain
                         show={state.switchChain}
                         setSwitchChain={setSwitchChain}
@@ -296,6 +302,7 @@ export default function WalletNewPage() {
                     <div className="container">
                         <WalletHeader
                             isFold={isFold}
+                            setInviteClaim={setInviteClaim}
                             isBonelist={isBonelist}
                             setShowTransfer={setShowTransfer}
                             balance={balance}></WalletHeader>
@@ -368,6 +375,13 @@ export default function WalletNewPage() {
                     }
                 }}
             ></TransferSuccess>
+            <InvitationClaim
+                show={inviteClaim}
+                setLoading={setLoading}
+                isBonelist={isBonelist}
+                setInviteClaim={setInviteClaim}
+                searchBonelist={searchBonelist}
+            ></InvitationClaim>
         </div>
     );
 }
