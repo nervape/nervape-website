@@ -307,6 +307,13 @@
                 line-height: 19px;
                 color: #ffffff;
               }
+              .coming-soon {
+                padding-top: 6px;
+                color: #baf45f;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 14px;
+              }
               .distributed {
                 padding-top: 6px;
                 font-weight: 500;
@@ -354,9 +361,8 @@
     z-index: 999;
 
     &.show {
-
     }
-    
+
     .model-viewer-class {
       width: 100%;
       height: 100%;
@@ -530,11 +536,11 @@
           }
           .btn-groups {
             margin-top: 20px;
-            height: 40px;
+            height: 32px;
             display: flex;
             flex-direction: row-reverse;
             .btn {
-              height: 40px;
+              height: 32px;
               border: unset;
               font-weight: 500;
               font-size: 14px;
@@ -542,8 +548,13 @@
               color: #ffffff;
               background: #f44d37;
               box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-              border-radius: 12px;
+              border-radius: 6px;
               padding: 0 16px;
+
+              &.coming-soon {
+                background: #BAF45F;
+                color: #141D26;
+              }
               img {
                 margin-right: 8px;
               }

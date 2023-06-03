@@ -47,6 +47,7 @@ export class NFT {
 
   yokaiUrl: string = "";
   character_icon: string = "";
+  coming_soon: boolean = false;
 }
 
 export class NFT_List {
