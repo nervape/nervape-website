@@ -86,7 +86,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
                 <div className="detail-info" style={{ background: nft?.card_background }}>
                     <div className="info-content">
                         <div className="name">{nft?.name}</div>
-                        {!nft.coming_soon && (
+                        {!nft?.coming_soon && (
                             <div className="distribution">
                                 <div className="title">Distribution</div>
                                 <div className="flex">
@@ -100,7 +100,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
                         <div className="attributes attributes-1 flex">
                             <div className="range flex-1">
                                 <div className="text">ID Range</div>
-                                <div className="value">{nft.coming_soon ? '-' : nft?.id_range}</div>
+                                <div className="value">{nft?.coming_soon ? '-' : nft?.id_range}</div>
                             </div>
                             <div className="origin flex-1">
                                 <div className="text">Origin</div>
@@ -130,13 +130,13 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
                         </div>
                         <div className="btn-groups">
                             <button
-                                className={`btn cursor ${nft.coming_soon && 'coming-soon'}`}
+                                className={`btn cursor ${nft?.coming_soon && 'coming-soon'}`}
                                 onClick={() => {
-                                    if (nft.coming_soon) return;
+                                    if (nft?.coming_soon) return;
                                     window.open(nft?.yokaiUrl);
                                 }}
                             >
-                                {nft.coming_soon ? 'COMING SOON' : 'BUY ON YOKAI'}
+                                {nft?.coming_soon ? 'COMING SOON' : 'BUY ON YOKAI'}
                             </button>
                         </div>
                     </div>
@@ -426,7 +426,7 @@ export default function NFTPage() {
                                         <div className="nft-info">
                                             <div className="nervape">NERVAPE</div>
                                             <div className="name">{nft.name}</div>
-                                            {nft.coming_soon ? (
+                                            {nft?.coming_soon ? (
                                                 <div className="coming-soon">Coming soon</div>
                                             ) : (
                                                 <div className="distributed">{`${nft.issued}/${nft.total} distributed`}</div>
