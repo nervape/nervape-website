@@ -42,13 +42,30 @@ function NftBannerVideo(props: BannerVideoProp) {
 }
 
 function PreviewModel(props: any) {
-    const { enableModuleUrl } = props;
+    const { enableModuleUrl, id } = props;
+
+    const revealId = '#reveal' + id;
+
+    document.querySelector(revealId)?.addEventListener('progress', (e: any) => {
+        if (e.detail.totalProgress == 1) {
+            (document.querySelector(revealId) as any).dismissPoster();
+        }
+    });
+
+    useEffect(() => {
+        console.log(enableModuleUrl)
+        if (!enableModuleUrl) return;
+        (document.querySelector(revealId) as any)?.showPoster();
+    
+    }, [enableModuleUrl]);
+
     return (
         <model-viewer
             class="model-viewer-class"
-            id="reveal"
+            id={`reveal` + id}
             // reveal="interaction"
             loading="eager"
+            reveal="manual"
             camera-controls
             auto-rotate
             src={enableModuleUrl}
@@ -73,7 +90,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
         <div className={`nft-card-detail-container popup-container mask-cover ${show && 'show'}`} onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
-                    <PreviewModel enableModuleUrl={nft?.renderer}></PreviewModel>
+                    <PreviewModel enableModuleUrl={nft?.renderer} id="card"></PreviewModel>
                     {state.windowWidth !== 1200 && (
                         <div className="close-detail-c">
                             <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
@@ -150,7 +167,7 @@ function FullscreenPreview(props: { nft?: NFT, close: any }) {
     const { nft, close } = props;
     return (
         <div className="fullscreen-container mask-cover">
-            <PreviewModel enableModuleUrl={nft?.renderer}></PreviewModel>
+            <PreviewModel enableModuleUrl={nft?.renderer} id="fullscreen"></PreviewModel>
             <div className="close-c cursor">
                 <img loading="lazy" className="close-icon transform-center" onClick={close} src={DetailCloseIcon} alt="IconPreviewClose" />
             </div>
