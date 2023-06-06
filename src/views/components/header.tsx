@@ -359,7 +359,7 @@ export default function NavHeader(props: any) {
       }
       timer = setTimeout(() => {
         const currTop = getWindowScrollTop();
-        console.log('_chain_padding', state.switchChain)
+
         if (state.windowWidth > 375 && activeIndex == 7 && currTop < 400) {
           setHideHeader(true);
           return;

@@ -102,10 +102,8 @@ export default function StoryProfile(props: any) {
     }
 
     const signInWithEthereum = async () => {
-        console.log(1, address, story)
         if (!address || !story) return new StoryQuestionVerifyResult();
 
-        console.log(2, address, story)
         const message = await createSiweMessage(address, story.signMessage || 'Sign in to complete Story Challenge.');
 
         const signature = await signMessageAsync({ message });
@@ -181,7 +179,6 @@ export default function StoryProfile(props: any) {
     }, [address, isConnected, story]);
 
     useEffect(() => {
-        console.log('error', error);
         if (error && error.name == 'UserRejectedRequestError') {
             setLoading(false);
             updateBodyOverflow(false);
