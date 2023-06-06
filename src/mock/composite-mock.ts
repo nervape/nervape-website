@@ -101,6 +101,13 @@ const parthershipData: Parthership[] = [
         title: 'What is an NACP Bonelist?',
         desc: "What is an NACP Bonelist? It's a better whitelist!",
         link: "https://tourmaline-elderberry-f93.notion.site/NACP-Bonelist-aka-Whitelist-f021cb54342549ae95f752d393ab3211",
+    },
+    {
+        tag: 'COMMUNITY ACTIVITY',
+        date: '05/24/2023',
+        title: "Let's Create Nervape Saga Together!",
+        desc: "We're calling on all storytellers to tell Nervape-inspired stories!",
+        link: "https://tourmaline-elderberry-f93.notion.site/Let-s-Create-Nervape-Saga-Together-eb8ead2256a9468ba10bd2c3722fd6af",
     }
 ];
 
