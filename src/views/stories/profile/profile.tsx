@@ -181,6 +181,7 @@ export default function StoryProfile(props: any) {
     }, [address, isConnected, story]);
 
     useEffect(() => {
+        console.log('error', error);
         if (error && error.name == 'UserRejectedRequestError') {
             setLoading(false);
             updateBodyOverflow(false);
