@@ -47,11 +47,11 @@ export default function InvitationClaim(props: any) {
     const signInWithEthereum = async () => {
         setLoading(true);
 
-        const message = await createSiweMessage(state.currentAddress.toLowerCase(), 'Sign in to claim your Bonelist.');
+        const message = await createSiweMessage(state.currentAddress, 'Sign in to claim your Bonelist.');
 
         const signature = await signMessageAsync({ message });
 
-        const res = await nervapeApi.fnSubmitVerify(code, message, signature, state.currentAddress.toLowerCase());
+        const res = await nervapeApi.fnSubmitVerify(code, message, signature, state.currentAddress);
 
         console.log(res);
         if (res.code !== 0) {
