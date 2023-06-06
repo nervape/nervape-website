@@ -105,7 +105,7 @@ export default function StoryQuestionPop(
                 ? 'Congratulations! You have completed this challenge and received the SagaOnly Asset. You can view the asset in your wallet -> NACP -> Asset tab' 
                 : 'You can now claim the Story Oat.';
         }
-        return 'Congratulations! You have completed this challenge and received the SagaOnly Asset. You can now claim the Story Oat.';
+        return 'Congratulations! You can now claim the Story Oat.';
     }
 
     return (
