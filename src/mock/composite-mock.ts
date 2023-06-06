@@ -82,22 +82,25 @@ const introData: Intro[] = [
 
 const parthershipData: Parthership[] = [
     {
-        tag: 'NEW PARTNERSHIP',
-        date: '02/27/2023',
-        title: 'Latest Update Title',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        tag: 'COMMUNITY ACTIVITY',
+        date: '06/05/2023',
+        title: 'Saga Challenge Week 2 - The Princess and the Outsiders',
+        desc: "For For this week's challenge we re-visit our ragtag team of outsiders, our favorite princess, the great dragon Yinhe, and much more! ",
+        link: "https://tourmaline-elderberry-f93.notion.site/Saga-Challenge-Week-2-The-Princess-and-the-Outsiders-8671b668afea4eb8a453944dbe4f8d11?pvs=4",
     },
     {
-        tag: 'NEW PARTNERSHIP',
-        date: '02/27/2023',
-        title: 'Latest Update Title',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        tag: 'COMMUNITY ACTIVITY',
+        date: '05/29/2023',
+        title: 'Saga Challenge Week 1 - We’re a Forever Family',
+        desc: "For this week's challenge, there are 5 story quizzes awaiting your completion.",
+        link: "https://tourmaline-elderberry-f93.notion.site/Saga-Challenge-Week-1-We-re-a-Forever-Family-b5e24e0260c741c49bf7e65acbbde720",
     },
     {
-        tag: 'NEW PARTNERSHIP',
-        date: '02/27/2023',
-        title: 'Latest Update Title',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        tag: 'ANNOUNCEMENT',
+        date: '05/28/2023',
+        title: 'What is an NACP Bonelist?',
+        desc: "What is an NACP Bonelist? It's a better whitelist!",
+        link: "https://tourmaline-elderberry-f93.notion.site/NACP-Bonelist-aka-Whitelist-f021cb54342549ae95f752d393ab3211",
     }
 ];
 

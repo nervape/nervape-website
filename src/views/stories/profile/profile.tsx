@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router";
 import { nervapeApi } from "../../../api/nervape-api";
-import { Story } from "../../../nervape/story";
+import { Story, StoryQuestionVerifyResult } from "../../../nervape/story";
 import { NavTool } from "../../../route/navi-tool";
-import { DataContext, scrollToTop, shuffle } from "../../../utils/utils";
+import { DataContext, scrollToTop, shuffle, updateBodyOverflow } from "../../../utils/utils";
 import Footer from "../../components/footer";
 import "./profile.less";
 import CharacterDefaultIcon from "../../../assets/story/character_default.svg";
@@ -20,6 +20,7 @@ import { godWoken, godWokenTestnet } from "../../../utils/Chain";
 import { queryOatPoaps } from "../../../utils/api";
 import { Tooltip } from "antd";
 import LeaveConfirm from "../question/leave-confirm";
+import CompleteChallenge from "../question/complete-challenge";
 
 function SideStoryDetail(props: any) {
     const { close, story } = props;
@@ -66,6 +67,15 @@ export default function StoryProfile(props: any) {
     const [showSide, setShowSide] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
+    const [showCompleteChallenge, setShowCompleteChallenge] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
+    const [verifyResult, setVerifyResult] = useState<StoryQuestionVerifyResult>();
+
+    const setLoading = (flag: boolean) => {
+        dispatch({
+            type: flag ? Types.ShowLoading : Types.HideLoading
+        })
+    }
 
     // 钱包相关
     const { address, isConnected } = useAccount();
@@ -73,7 +83,7 @@ export default function StoryProfile(props: any) {
     const domain = window.location.host;
     const origin = window.location.origin;
 
-    const { signMessageAsync } = useSignMessage();
+    const { signMessageAsync, error } = useSignMessage();
 
     const createSiweMessage = async (_address: string, statement: string) => {
         const res = await nervapeApi.fnGetStoryQuizNonce();
@@ -92,22 +102,25 @@ export default function StoryProfile(props: any) {
     }
 
     const signInWithEthereum = async () => {
-        if (!address || !story) return false;
+        if (!address || !story) return new StoryQuestionVerifyResult();
 
         const message = await createSiweMessage(address, story.signMessage || 'Sign in to complete Story Challenge.');
 
         const signature = await signMessageAsync({ message });
 
-        const res = await nervapeApi.fnStoryQuizVerify(message, signature, story?.id);
+        const res: StoryQuestionVerifyResult = await nervapeApi.fnStoryQuizVerify(message, signature, story?.id);
 
-        if (res) {
+        if (res.challenge) {
+            setIsComplete(true);
             nervapeApi.fnQueryHasTakeQuiz(address, story.id).then(async res => {
                 setHasTake(res > 0);
 
                 await _queryOatPoaps(address, story.galxeCampaignId);
             });
         }
-        return res;
+        setLoading(false);
+        setVerifyResult(res);
+        setShowCompleteChallenge(false);
     }
 
     const _queryOatPoaps = async (_address: string, _campaignId: string) => {
@@ -165,18 +178,27 @@ export default function StoryProfile(props: any) {
         });
     }, [address, isConnected, story]);
 
+    useEffect(() => {
+        if (error && error.name == 'UserRejectedRequestError') {
+            setLoading(false);
+            updateBodyOverflow(false);
+        }
+    }, [error]);
+
     if (!story) return <></>;
 
     const challengeTitle = () => {
         return (
             <div className="challenge-title">
                 Take the Nervape Saga Challenge to test your knowledge of Nervape’s story
-                and for a chance to win a Nervape Saga Scholar OAT!
+                and for a chance to receive the challenge rewards!
+                <div className="title">How to Participate?</div>
                 <ul>
-                    <li>Follow Nervape Twitter (@Nervapes)</li>
-                    <li>Join Nervape Discord</li>
                     <li>
-                        <span>Read the Nervape Saga and complete the challenge! You can do it!</span>
+                        <span>Pass the quiz to win a NACP SagaOnly Asset! LIMITED TIME only!</span>
+                    </li>
+                    <li>
+                        <span>Pass the quiz and complete all the tasks on Galxe to win a Nervape Saga Scholar OAT!</span>
                     </li>
                 </ul>
             </div>
@@ -319,7 +341,9 @@ export default function StoryProfile(props: any) {
                                         Test your Nervape Saga knowledge.
                                         <button className="take-quiz-btn quiz-btn button-hover-action-red cursor"
                                             onClick={() => {
-                                                document.body.style.overflow = 'hidden';
+                                                updateBodyOverflow(false);
+                                                setVerifyResult(undefined);
+                                                setIsComplete(false);
                                                 setShowQuiz(true);
                                             }}>START</button>
                                     </div>
@@ -387,16 +411,17 @@ export default function StoryProfile(props: any) {
                 <SideStoryDetail
                     story={story}
                     close={() => {
-                        document.body.style.overflow = 'auto';
+                        updateBodyOverflow(true);
                         setShowSide(false);
                     }}></SideStoryDetail>
             )}
             <StoryQuestionPop
                 show={showQuiz}
                 questions={story?.questions || []}
-                signInWithEthereum={signInWithEthereum}
                 openGalxeUrl={openGalxeUrl}
-                galxeCampaignId={story.galxeCampaignId}
+                isCompleteChallenge={isComplete}
+                showCompleteChallenge={setShowCompleteChallenge}
+                verifyResult={verifyResult}
                 close={() => {
                     setShowLeaveConfirm(true);
                 }}></StoryQuestionPop>
@@ -406,10 +431,21 @@ export default function StoryProfile(props: any) {
                     setShowLeaveConfirm(false);
                 }}
                 confirm={() => {
-                    document.body.style.overflow = 'auto';
+                    updateBodyOverflow(true);
                     setShowLeaveConfirm(false);
+                    setShowCompleteChallenge(false);
                     setShowQuiz(false);
-                }}></LeaveConfirm>
+                }}
+                verifyResult={verifyResult}></LeaveConfirm>
+            <CompleteChallenge
+                show={showCompleteChallenge}
+                close={() => {
+                    setShowLeaveConfirm(true);
+                }}
+                confirm={async () => {
+                    setLoading(true);
+                    await signInWithEthereum();
+                }}></CompleteChallenge>
         </div>
     );
 }

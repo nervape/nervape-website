@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./question.less";
-import { StoryQuestion, StoryQuestionType } from "../../../nervape/story";
+import { StoryQuestion, StoryQuestionType, StoryQuestionVerifyResult } from "../../../nervape/story";
 import { Checkbox, Radio } from "antd";
 import { queryOatPoapInfo } from "../../../utils/api";
 
@@ -8,17 +8,24 @@ export default function StoryQuestionPop(
     props: { 
         show: boolean; 
         questions: StoryQuestion[]; 
-        signInWithEthereum: Function; 
         close: Function; 
         openGalxeUrl: Function; 
-        galxeCampaignId: string; 
+        isCompleteChallenge: boolean;
+        showCompleteChallenge: Function;
+        verifyResult: StoryQuestionVerifyResult | undefined;
     }) {
-    const { show, questions, signInWithEthereum, close, openGalxeUrl, galxeCampaignId } = props;
+    const { 
+        show,
+        questions,
+        close,
+        openGalxeUrl,
+        showCompleteChallenge,
+        isCompleteChallenge,
+        verifyResult } = props;
     const [currIndex, setCurrIndex] = useState(0);
+    const [completeIndex, setCompleteIndex] = useState(1);
     const [answers, setAnswers] = useState<any[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const [completed, setCompleted] = useState(false);
-    const [thumbnail, setThumbnail] = useState();
 
     useEffect(() => {
         if (!questions.length) return;
@@ -28,15 +35,9 @@ export default function StoryQuestionPop(
         }))
         setAnswers(_answers);
         setCurrIndex(0);
+        setCompleteIndex(1);
         setErrorMessage('');
     }, [questions, show]);
-
-    useEffect(() => {
-        if (!galxeCampaignId) return;
-        queryOatPoapInfo(galxeCampaignId).then(res => {
-            setThumbnail(res.thumbnail);
-        });
-    }, [galxeCampaignId]);
 
     const BackButton = () => {
         return (
@@ -70,6 +71,7 @@ export default function StoryQuestionPop(
         setErrorMessage('');
         return true;
     }
+
     const NextButton = () => {
         return (
             <button
@@ -79,16 +81,31 @@ export default function StoryQuestionPop(
                     if (!pass) return;
                     if (currIndex == questions.length - 1) {
                         // Check and Submit
-                        const data = await signInWithEthereum();
                         // console.log('signInWithEthereum', data);
-                        setCompleted(true);
+                        showCompleteChallenge(true);
                     } else {
                         setCurrIndex(currIndex + 1);
                     }
                 }}>
-                {currIndex == questions.length - 1 ? 'SUBMIT' : 'NEXT'}
+                NEXT
             </button>
         );
+    }
+
+    const completeCover = () => {
+        if (verifyResult?.lockAsset && completeIndex == 1) {
+            return verifyResult?.asset?.url;
+        }
+        return verifyResult?.oat;
+    }
+
+    const completeDesc = () => {
+        if (verifyResult?.lockAsset) {
+            return completeIndex == 1 
+                ? 'Congratulations! You have completed this challenge and received the SagaOnly Asset. You can view the asset in your wallet -> NACP -> Asset tab' 
+                : 'You can now claim the Story Oat.';
+        }
+        return 'Congratulations! You have completed this challenge and received the SagaOnly Asset. You can now claim the Story Oat.';
     }
 
     return (
@@ -96,8 +113,10 @@ export default function StoryQuestionPop(
             <div className="story-quiz-content" onClick={e => { e.stopPropagation(); }}>
                 <div className="question-content">
                     <div className="question-top">
-                        <div className="quiz-index">{completed ? 'Quiz Completed' : `Question ${currIndex + 1} of ${questions.length}`}</div>
-                        {!completed && (
+                        <div className="quiz-index">{isCompleteChallenge 
+                            ? `Claim Reward ${verifyResult?.lockAsset ? completeIndex + ' of 2' : ''}` 
+                            : `Question ${currIndex + 1} of ${questions.length}`}</div>
+                        {!isCompleteChallenge && (
                             <>
                                 {questions[currIndex]?.coverImage && (
                                     <div className="cover-image">
@@ -109,7 +128,7 @@ export default function StoryQuestionPop(
                         )}
                     </div>
                     <div className="question-center">
-                        {!completed ? (
+                        {!isCompleteChallenge ? (
                             <>
                                 <div className="question-options">
                                     {questions[currIndex]?.type == StoryQuestionType.Radio && (
@@ -143,16 +162,13 @@ export default function StoryQuestionPop(
                             </>
                         ) : (
                             <div className="completed-content">
-                                <img className="completed-img" src={thumbnail} alt="" />
-                                <div className="completed-tip">
-                                    Congratulations! You have completed the Nervape Saga Challenge.
-                                    You can now claim your reward!
-                                </div>
+                                <img className="completed-img" src={completeCover()} alt="" />
+                                <div className="completed-tip">{completeDesc()}</div>
                             </div>
                         )}
                     </div>
 
-                    {!completed ? (
+                    {!isCompleteChallenge ? (
                         <div className="btn-groups">
                             {currIndex > 0 && BackButton()}
                             {NextButton()}
@@ -161,8 +177,12 @@ export default function StoryQuestionPop(
                         <div className="claim-reward">
                             <button className="btn button-hover-action-red cursor"
                                 onClick={() => {
-                                    openGalxeUrl();
-                                }}>CLAIM REWARD</button>
+                                    if (verifyResult?.lockAsset && completeIndex == 1) {
+                                        setCompleteIndex(2);
+                                    } else {
+                                        openGalxeUrl();
+                                    }
+                                }}>{verifyResult?.lockAsset && completeIndex == 1 ? 'NEXT' : 'CLAIM OAT'}</button>
                         </div>
                     )}
                 </div>

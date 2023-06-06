@@ -17,6 +17,7 @@ export class Parthership {
     date: string = '';
     title: string = '';
     desc: string = '';
+    link: string = '';
 }
 
 export class Phase {

@@ -186,7 +186,7 @@
 
               .side-info {
                 .title {
-                  color: #FFFFFF;
+                  color: #ffffff;
                 }
 
                 .nfts {
@@ -207,7 +207,7 @@
               .right-arrow {
                 svg {
                   path {
-                    stroke: #FFFFFF;
+                    stroke: #ffffff;
                   }
                 }
               }
@@ -217,13 +217,13 @@
 
         .quiz-btn-container {
           padding-top: 40px;
-          border-top: 1px solid #FFFFFF;
+          border-top: 1px solid #ffffff;
 
           .quiz-btn-content {
             padding: 16px;
             background: #404053;
             border-radius: 16px;
-            color: #FFFFFF;
+            color: #ffffff;
             width: fit-content;
 
             .quiz-left {
@@ -267,7 +267,7 @@
                 line-height: 14px;
                 letter-spacing: -0.05em;
                 padding: 9px 16px;
-                background: #F44D37;
+                background: #f44d37;
                 border-radius: 6px;
                 border: unset;
                 margin-left: 12px;
@@ -352,7 +352,7 @@
 
   .side-content {
     width: 720px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 0 auto;
     max-height: 100vh;
     overflow-y: scroll;
@@ -404,8 +404,8 @@
 }
 
 .challenge-tooltip {
-  width: 600px;
-  max-width: unset;
+  max-width: 650px;
+  // max-width: unset;
 
   .ant-tooltip-content {
     .ant-tooltip-inner {
@@ -417,6 +417,10 @@
         font-size: 12px;
         line-height: 14px;
         letter-spacing: -0.05em;
+
+        .title {
+          padding-top: 16px;
+        }
 
         ul {
           padding-top: 12px;
@@ -528,14 +532,12 @@
           ul {
             li {
               position: relative;
-              &:last-child {
-                padding-bottom: 16px;
-                
-                span {
-                  position: absolute;
-                  top: 0;
-                  left: 14.5px;
-                }
+              padding-bottom: 16px;
+
+              span {
+                position: absolute;
+                top: 0;
+                left: 14.5px;
               }
             }
           }
@@ -587,28 +589,28 @@
 
 @media screen and (max-width: 2560px) and (min-width: 1440px) {
   .story-profile-container {
-
     .banner,
     .header-sketch {
       height: calc(100vh + 180px);
     }
 
     .profile-content {
-      .story-content {}
+      .story-content {
+      }
     }
   }
 }
 
 @media screen and (max-width: 3840px) and (min-width: 2560px) {
   .story-profile-container {
-
     .banner,
     .header-sketch {
       height: calc(100vh + 180px);
     }
 
     .profile-content {
-      .story-content {}
+      .story-content {
+      }
 
       .footer-sketch {
         // height: 300px;

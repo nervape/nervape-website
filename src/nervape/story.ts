@@ -1,3 +1,4 @@
+import { NACP_SPECIAL_ASSET } from './nacp';
 import { NFT } from "./nft";
 
 export type CHAPTER_TYPE = "" | "Chapter I" | "Chapter II" | "Chapter III";
@@ -114,4 +115,11 @@ export class WalletStoryOat {
   walletStoryOatTheme: string = '';
   chapterName: string = "";
   story?: Story;
+}
+
+export class StoryQuestionVerifyResult {
+  challenge: boolean = false;
+  lockAsset: boolean = false;
+  asset?: NACP_SPECIAL_ASSET;
+  oat?: string;
 }

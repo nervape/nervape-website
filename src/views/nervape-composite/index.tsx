@@ -121,10 +121,12 @@ export default function Composite() {
         );
     }
 
-    const ParthershipItem = (props: { item: any; index: number; }) => {
+    const ParthershipItem = (props: { item: Parthership; index: number; }) => {
         const { item, index } = props;
         return (
-            <div className="parthership-item">
+            <div className="parthership-item cursor" onClick={() => {
+                window.open(item.link);
+            }}>
                 <div className="parthership-tag">
                     <div className="tag">{item.tag}</div>
                     <div className="date">{item.date}</div>
@@ -390,7 +392,7 @@ export default function Composite() {
                             </div>
                         </section>
 
-                        {/* <section className="what-new-section">
+                        <section className="what-new-section">
                             <div className="what-new-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="what-1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
@@ -399,9 +401,11 @@ export default function Composite() {
 
                                     <div className="new-parthership">
                                         {state.windowWidth > 750 && (
-                                            <div className="new-left">
+                                            <div className="new-left cursor" onClick={() => {
+                                                window.open(parthershipItems[0].link);
+                                            }}>
                                                 <TweenOne key="what-2" animation={{ opacity: 1, delay: 400, duration: 600 }} style={{ opacity: 0 }}>
-                                                    <div className="cover-image img-filter"></div>
+                                                <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/635274dd-3202-40de-990a-5eb2cbc8f1d1.png" alt="" />
                                                 </TweenOne>
 
                                                 <TweenOne key="what-3" animation={{ opacity: 1, delay: 600, duration: 600 }} style={{ opacity: 0 }}>
@@ -419,7 +423,13 @@ export default function Composite() {
                                                     { opacity: [1, 0], translateY: [0, 100] }
                                                 ]}
                                                 className="parthership-items">
-                                                {parthershipItems.map((item, index) => {
+                                                {parthershipItems.filter((p, index) => {
+                                                    if (state.windowWidth > 375) {
+                                                        return index > 0;
+                                                    } else {
+                                                        return true;
+                                                    }
+                                                }).map((item, index) => {
                                                     return (
                                                         <ParthershipItem key={index} item={item} index={index}></ParthershipItem>
                                                     );
@@ -428,14 +438,16 @@ export default function Composite() {
 
                                             <TweenOne key="what-4" animation={{ opacity: 1, delay: 800, duration: 600 }} style={{ opacity: 0 }}>
                                                 <div className="view-all">
-                                                    <div className="view-btn cursor">VIEW ALL</div>
+                                                    <div className="view-btn cursor" onClick={() => {
+                                                        window.open('https://tourmaline-elderberry-f93.notion.site/Community-Activities-NACP-36814e1fca4c4f119a07ec0a5cdd48f2?pvs=4')
+                                                    }}>VIEW ALL</div>
                                                 </div>
                                             </TweenOne>
                                         </div>
                                     </div>
                                 </OverPack>
                             </div>
-                        </section> */}
+                        </section>
                         <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.2}>
