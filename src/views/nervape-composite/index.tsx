@@ -318,7 +318,7 @@ export default function Composite() {
                                         </TweenOne>
 
                                         {state.windowWidth > 750 ? (
-                                            <QueueAnim className="phase-step"
+                                            <QueueAnim className="phase-step flex-align"
                                                 type="right"
                                                 delay={200}
                                                 duration={1000}
@@ -405,7 +405,7 @@ export default function Composite() {
                                                 window.open(parthershipItems[0].link);
                                             }}>
                                                 <TweenOne key="what-2" animation={{ opacity: 1, delay: 400, duration: 600 }} style={{ opacity: 0 }}>
-                                                <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/635274dd-3202-40de-990a-5eb2cbc8f1d1.png" alt="" />
+                                                <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/8c16604a-3a5e-4e5e-adf2-6236c76249c2.png" alt="" />
                                                 </TweenOne>
 
                                                 <TweenOne key="what-3" animation={{ opacity: 1, delay: 600, duration: 600 }} style={{ opacity: 0 }}>
