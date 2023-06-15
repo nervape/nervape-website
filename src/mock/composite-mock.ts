@@ -124,9 +124,18 @@ const phaseData: Phase[] = [
                 name: 'Skin'
             },
             {
-                cover: AssetIconTattoo,
-                name: 'Tattoo'
-            },
+                cover: AssetIconBg,
+                name: 'Background'
+            }
+        ]
+    },
+    {
+        title: 'PHASE 2',
+        cover: Phase2Cover,
+        startDate: '10/03/2023',
+        endDate: '20/03/2023',
+        background: '#FEA063',
+        assets: [
             {
                 cover: AssetIconSuit,
                 name: 'Suit'
@@ -142,7 +151,7 @@ const phaseData: Phase[] = [
         ]
     },
     {
-        title: 'PHASE 2',
+        title: 'PHASE 3',
         cover: Phase3Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
@@ -167,11 +176,15 @@ const phaseData: Phase[] = [
             {
                 cover: AssetIconEars,
                 name: 'Ears'
+            },
+            {
+                cover: AssetIconTattoo,
+                name: 'Tattoo'
             }
         ]
     },
     {
-        title: 'PHASE 3',
+        title: 'PHASE 4',
         cover: Phase4Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
@@ -188,10 +201,6 @@ const phaseData: Phase[] = [
             {
                 cover: AssetIconSpecial,
                 name: 'Special'
-            },
-            {
-                cover: AssetIconBg,
-                name: 'Background'
             }
         ]
     }

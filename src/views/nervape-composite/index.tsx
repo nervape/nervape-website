@@ -318,7 +318,7 @@ export default function Composite() {
                                         </TweenOne>
 
                                         {state.windowWidth > 750 ? (
-                                            <QueueAnim className="phase-step flex-align"
+                                            <QueueAnim className="phase-step"
                                                 type="right"
                                                 delay={200}
                                                 duration={1000}
