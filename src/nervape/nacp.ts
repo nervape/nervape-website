@@ -31,3 +31,11 @@ export enum STORY_QUIZ_STATUS {
     IN_PROGRESS = 'in_progress',
     OVER = 'over'
 }
+
+export class NacpPhase {
+    name: string = "";
+    _id: string = "";
+    start_date: number = 0;
+    end_date: number = 0;
+    sort: number = 0;
+}

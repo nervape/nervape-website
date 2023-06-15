@@ -32,6 +32,7 @@ import EventIcon from "../../assets/wallet/navbar/event.svg";
 import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
 import InvitationClaim from "./invitation";
+import NacpEdit from "./nacp/edit";
 
 export class WalletNavBar {
     name: string = "";
@@ -382,6 +383,7 @@ export default function WalletNewPage() {
                 setInviteClaim={setInviteClaim}
                 searchBonelist={searchBonelist}
             ></InvitationClaim>
+            <NacpEdit></NacpEdit>
         </div>
     );
 }
