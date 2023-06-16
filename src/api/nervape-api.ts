@@ -214,6 +214,12 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetAssets(category: string, address: string) {
+    const url = `${this.baseUrl}/pfp-asset/website/phase/${category}/assets/${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnVerifyCode(code: string) {
     const url = `${this.baseUrl}/invitation/website/verify/code?code=${code}`;
