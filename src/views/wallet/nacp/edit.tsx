@@ -49,6 +49,8 @@ export default function NacpEdit(props: any) {
                 || (asset.category?.name == 'Headwear' && _asset.is_mask_only)) {
                 return false;
             }
+
+            // 特殊约定 2. headwear -- front/back
             return true;
         });
 
