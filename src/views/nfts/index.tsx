@@ -41,12 +41,15 @@ function NftBannerVideo(props: BannerVideoProp) {
     );
 }
 
+// 预览 3D 模型
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function PreviewModel(props: any) {
     const { enableModuleUrl, id } = props;
 
     const revealId = '#reveal' + id;
 
     document.querySelector(revealId)?.addEventListener('progress', (e: any) => {
+        console.log('dismissPoster', e);
         if (e.detail.totalProgress == 1) {
             (document.querySelector(revealId) as any).dismissPoster();
         }
@@ -56,7 +59,7 @@ function PreviewModel(props: any) {
         console.log(enableModuleUrl)
         if (!enableModuleUrl) return;
         (document.querySelector(revealId) as any)?.showPoster();
-    
+
     }, [enableModuleUrl]);
 
     return (
@@ -163,10 +166,10 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
     );
 }
 
-function FullscreenPreview(props: { nft?: NFT, close: any }) {
-    const { nft, close } = props;
+function FullscreenPreview(props: { nft?: NFT; close: any; show: boolean; }) {
+    const { nft, close, show } = props;
     return (
-        <div className="fullscreen-container mask-cover">
+        <div className={`fullscreen-container mask-cover ${show && 'show'}`}>
             <PreviewModel enableModuleUrl={nft?.renderer} id="fullscreen"></PreviewModel>
             <div className="close-c cursor">
                 <img loading="lazy" className="close-icon transform-center" onClick={close} src={DetailCloseIcon} alt="IconPreviewClose" />
@@ -259,7 +262,11 @@ export default function NFTPage() {
         });
 
         setQuery(_query);
-    }, [filters])
+    }, [filters]);
+
+    useEffect(() => {
+        if (state.windowWidth == 1200) setShowMFilter(true);
+    }, [state.windowWidth]);
     return (
         <div className="nft-container main-container">
             <Parallax
@@ -372,8 +379,8 @@ export default function NFTPage() {
                                                 <div className="name">{filter.name}</div>
                                             </div>
                                             {
-                                                filter.open && (
-                                                    <div className={`childrens ${!filter.open && 'close'}`}>
+                                                ((state.windowWidth == 1200 && filter.open) || state.windowWidth != 1200) && (
+                                                    <div className={`childrens ${(state.windowWidth == 1200 && !filter.open) && 'close'}`}>
                                                         {filter.items.map((children, j) => {
                                                             return (
                                                                 <div className="children cursor" key={j} onClick={() => {
@@ -475,14 +482,13 @@ export default function NFTPage() {
                     setShowNftCard(false);
                     setShowFullscreen(true);
                 }}></NftCardDetail>
-            {showFullscreen && (
-                <FullscreenPreview
-                    nft={nftDetail}
-                    close={() => {
-                        document.body.style.overflow = 'auto';
-                        setShowFullscreen(false)
-                    }}></FullscreenPreview>
-            )}
+            <FullscreenPreview
+                show={showFullscreen}
+                nft={nftDetail}
+                close={() => {
+                    document.body.style.overflow = 'auto';
+                    setShowFullscreen(false)
+                }}></FullscreenPreview>
         </div>
     );
 }
