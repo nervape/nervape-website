@@ -13,7 +13,9 @@ export default function NacpEdit(props: any) {
     const [selectCategory, setSelectCategory] = useState('');
     const [currCategory, setCurrCategory] = useState<NacpCategory>();
     const [assets, setAssets] = useState<NacpAsset[]>([]);
-    const [assetsHistoryStack, setAssetsHistoryStack] = useState<NacpAsset[]>([]);
+    const [assetsHistoryStack, setAssetsHistoryStack] = useState<NacpAsset[][]>([]);
+    const [phaseHistoryStack, setPhaseHistoryStack] = useState<NacpPhase[][]>([]);
+    const [historyIndex, setHistoryIndex] = useState(0);
     const [selectedAssets, setSelectedAssets] = useState<NacpAsset[]>([]);
 
     async function fnGetPhases() {
@@ -73,7 +75,36 @@ export default function NacpEdit(props: any) {
             return phase;
         });
 
+        let __selectedAssets: NacpAsset[] = [];
+        _phases.map(phase => {
+            phase.categories.map(category => {
+                if (category.selected) {
+                    __selectedAssets.push(category.selected);
+                }
+            })
+        });
+        updateHistoryStack(__selectedAssets, _phases);
+
+        setSelectedAssets(__selectedAssets);
+
         setPhases(_phases);
+    }
+
+    async function fnUpdateCurrCategory(_phases: NacpPhase[]) {
+        if (!currCategory) return;
+
+        let _curr = JSON.parse(JSON.stringify(currCategory));
+
+        _phases.map((phase: NacpPhase) => {
+            phase.categories.map(_category => {
+                if (_category._id == currCategory._id) {
+                    _curr.selected = _category.selected;
+                    setCurrCategory(_curr);
+                }
+                return _category;
+            })
+            return phase;
+        });
     }
 
     async function openOrCloseCollection(asset: NacpAsset) {
@@ -91,6 +122,37 @@ export default function NacpEdit(props: any) {
         setAssets(_assets);
     }
 
+    async function updateHistoryStack(_assets: NacpAsset[], _phases: NacpPhase[]) {
+        if (!_assets.length) return;
+
+        let a = JSON.parse(JSON.stringify(assetsHistoryStack));
+        a.push(_assets);
+        setHistoryIndex(a.length - 1);
+        setAssetsHistoryStack(a);
+
+        let p = JSON.parse(JSON.stringify(phaseHistoryStack));
+        p.push(_phases);
+        setPhaseHistoryStack(p);
+    }
+
+    async function fnOperateBack() {
+        setSelectedAssets(assetsHistoryStack[historyIndex - 1]);
+        setHistoryIndex(historyIndex - 1);
+        setPhases(phaseHistoryStack[historyIndex - 1]);
+        fnUpdateCurrCategory(phaseHistoryStack[historyIndex - 1]);
+    }
+    
+    async function fnOperateNext() {
+        setSelectedAssets(assetsHistoryStack[historyIndex + 1]);
+        setHistoryIndex(historyIndex + 1);
+        setPhases(phaseHistoryStack[historyIndex + 1]);
+        fnUpdateCurrCategory(phaseHistoryStack[historyIndex + 1]);
+    }
+
+    async function fnRandomizeAssets() {
+        
+    }
+
     useEffect(() => {
         fnGetPhases();
     }, []);
@@ -99,20 +161,6 @@ export default function NacpEdit(props: any) {
         if (!currCategory?._id) return;
         fnGetAssets(currCategory._id);
     }, [currCategory?._id]);
-
-    useEffect(() => {
-        if (!phases) return;
-
-        let _selectedAssets: NacpAsset[] = [];
-        phases.map(phase => {
-            phase.categories.map(category => {
-                if (category.selected) {
-                    _selectedAssets.push(category.selected);
-                }
-            })
-        })
-        setSelectedAssets(_selectedAssets);
-    }, [phases]);
 
     return (
         <div className="wallet-nacp-edit-container popup-container show">
@@ -148,10 +196,10 @@ export default function NacpEdit(props: any) {
 
                             <div className="nacp-camera-content">
                                 {selectedAssets.length > 0 ? (
-                                    <div className="nacp-assets">
+                                    <div className={`nacp-assets transation ${selectPhase == 1 && 'scale'}`}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
-                                                <div key={index} className="nacp-asset" style={{ zIndex: asset.category?.level }}>
+                                                <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
                                                     <img src={asset.url} alt="" />
                                                 </div>
                                             );
@@ -166,8 +214,18 @@ export default function NacpEdit(props: any) {
                                 <div className="name">{phases[selectPhase]?.name}</div>
                                 <div className="btn-groups flex-align">
                                     <button className="cursor btn randomize-btn">Randomize</button>
-                                    <button className="cursor btn undo-btn">Undo</button>
-                                    <button className="cursor btn redo-btn">Redo</button>
+                                    <button 
+                                        disabled={assetsHistoryStack.length <= 1 || historyIndex == 0} 
+                                        className={`cursor btn undo-btn`}
+                                        onClick={() => {
+                                            fnOperateBack()
+                                        }}>Undo</button>
+                                    <button 
+                                        disabled={!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1} 
+                                        className={`cursor btn redo-btn`}
+                                        onClick={() => {
+                                            fnOperateNext()
+                                        }}>Redo</button>
                                 </div>
                             </div>
                             <div className="phase-categories flex-align">
