@@ -1,27 +1,36 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpPhase } from "../../../nervape/nacp";
 import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon } from "../../../nervape/svg";
-import { DataContext } from "../../../utils/utils";
+import { DataContext, updateBodyOverflow } from "../../../utils/utils";
+import { toPng } from 'html-to-image';
+import DiscardPopup from "./discard";
 
 export default function NacpEdit(props: any) {
+    const { show, setShowNacpEdit } = props;
+
     const { state, dispatch } = useContext(DataContext);
+
+    const elementRef = useRef(null);
 
     const [phases, setPhases] = useState<NacpPhase[]>([]);
     const [selectPhase, setSelectPhase] = useState(0);
     const [selectCategory, setSelectCategory] = useState('');
-    const [currCategory, setCurrCategory] = useState<NacpCategory>();
+    const [currCategory, setCurrCategory] = useState<NacpCategory>(new NacpCategory());
     const [assets, setAssets] = useState<NacpAsset[]>([]);
     const [assetsHistoryStack, setAssetsHistoryStack] = useState<NacpAsset[][]>([]);
     const [phaseHistoryStack, setPhaseHistoryStack] = useState<NacpPhase[][]>([]);
     const [historyIndex, setHistoryIndex] = useState(0);
     const [selectedAssets, setSelectedAssets] = useState<NacpAsset[]>([]);
+    const [showDiscardPopup, setShowDiscardPopup] = useState(false);
 
     async function fnGetPhases() {
         const res = await nervapeApi.fnGetPhases();
         // 处理 categories
         setPhases(res);
+        setCurrCategory(res[0].categories[0]);
+        setSelectCategory(res[0].categories[0]._id);
     }
 
     async function fnGetAssets(category: string) {
@@ -141,7 +150,7 @@ export default function NacpEdit(props: any) {
         setPhases(phaseHistoryStack[historyIndex - 1]);
         fnUpdateCurrCategory(phaseHistoryStack[historyIndex - 1]);
     }
-    
+
     async function fnOperateNext() {
         setSelectedAssets(assetsHistoryStack[historyIndex + 1]);
         setHistoryIndex(historyIndex + 1);
@@ -150,7 +159,20 @@ export default function NacpEdit(props: any) {
     }
 
     async function fnRandomizeAssets() {
-        
+
+    }
+
+    const htmlToImageConvert = () => {
+        toPng(elementRef.current as unknown as HTMLElement, { cacheBust: true, style: { top: '0px' } })
+            .then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = 'nacp.png';
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     useEffect(() => {
@@ -162,14 +184,18 @@ export default function NacpEdit(props: any) {
         fnGetAssets(currCategory._id);
     }, [currCategory?._id]);
 
+    if (!phases || !phases.length) return <></>;
+
     return (
-        <div className="wallet-nacp-edit-container popup-container show">
+        <div className={`wallet-nacp-edit-container popup-container ${show && 'show'}`}>
             <div className="wallet-nacp-edit-content">
                 <div className="edit-header flex-align">
                     <div className="title">NACP spot #01</div>
                     <div className="btn-groups flex-align">
-                        <button className="cursor btn save-btn">Save</button>
-                        <button className="cursor btn discard-btn">Discard</button>
+                        <button className="cursor btn save-btn" onClick={htmlToImageConvert}>Save</button>
+                        <button className="cursor btn discard-btn" onClick={() => {
+                            setShowDiscardPopup(true);
+                        }}>Discard</button>
                     </div>
                 </div>
                 <div className="edit-content flex-align">
@@ -184,8 +210,8 @@ export default function NacpEdit(props: any) {
                                             onClick={() => {
                                                 if (index == selectPhase) return;
                                                 setSelectPhase(index);
-                                                setSelectCategory('');
-                                                setCurrCategory(undefined);
+                                                setSelectCategory(phases[index].categories[0]._id);
+                                                setCurrCategory(phases[index].categories[0]);
                                             }}>
                                             {phase.status !== 1 ? <NacpPhaseLockedIcon></NacpPhaseLockedIcon> : <NacpPhaseOpenIcon></NacpPhaseOpenIcon>}
                                             <div className="transation name">{phase.name}</div>
@@ -208,20 +234,34 @@ export default function NacpEdit(props: any) {
                                 ) : (
                                     <></>
                                 )}
+
+                                {selectedAssets.length > 0 ? (
+                                    <div className={`nacp-assets-save transation`} ref={elementRef}>
+                                        {selectedAssets.map((asset, index) => {
+                                            return (
+                                                <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
+                                                    <img src={asset.url} alt="" />
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <></>
+                                )}
                             </div>
 
                             <div className="phase-name-operate flex-align">
                                 <div className="name">{phases[selectPhase]?.name}</div>
                                 <div className="btn-groups flex-align">
                                     <button className="cursor btn randomize-btn">Randomize</button>
-                                    <button 
-                                        disabled={assetsHistoryStack.length <= 1 || historyIndex == 0} 
+                                    <button
+                                        disabled={assetsHistoryStack.length <= 1 || historyIndex == 0}
                                         className={`cursor btn undo-btn`}
                                         onClick={() => {
                                             fnOperateBack()
                                         }}>Undo</button>
-                                    <button 
-                                        disabled={!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1} 
+                                    <button
+                                        disabled={!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1}
                                         className={`cursor btn redo-btn`}
                                         onClick={() => {
                                             fnOperateNext()
@@ -251,7 +291,13 @@ export default function NacpEdit(props: any) {
                         </div>
                     </div>
                     <div className="right-content">
-                        {currCategory && (
+                        {phases[selectPhase].status !== 1 ? (
+                            <div className="locked-content">
+                                <NacpPhaseLockedIcon></NacpPhaseLockedIcon>
+                                <div className="locked">Locked</div>
+                                <div className="locked-tip">The phase for this asset type is expired.</div>
+                            </div>
+                        ) : (
                             <>
                                 <div className="curr-category flex-align">
                                     {NacpCategoryIcons.get(currCategory?.name)}
@@ -320,6 +366,15 @@ export default function NacpEdit(props: any) {
                     </div>
                 </div>
             </div>
+
+            <DiscardPopup
+                close={() => {
+                    setShowDiscardPopup(false);
+                }}
+                show={showDiscardPopup}
+                confirm={() => {
+                    setShowNacpEdit(false);
+                }}></DiscardPopup>
         </div>
     );
 }

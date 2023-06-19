@@ -67,6 +67,8 @@ export default function WalletNewPage() {
     const [currNavbar, setCurrNavbar] = useState(0);
     const [isBonelist, setIsBonelist] = useState(false);
 
+    const [showNacpEdit, setShowNacpEdit] = useState(true);
+
     const setLoading = (flag: boolean) => {
         dispatch({
             type: flag ? Types.ShowLoading : Types.HideLoading
@@ -383,7 +385,7 @@ export default function WalletNewPage() {
                 setInviteClaim={setInviteClaim}
                 searchBonelist={searchBonelist}
             ></InvitationClaim>
-            <NacpEdit></NacpEdit>
+            <NacpEdit show={showNacpEdit} setShowNacpEdit={setShowNacpEdit}></NacpEdit>
         </div>
     );
 }
