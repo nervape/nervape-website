@@ -22,7 +22,6 @@ import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.svg';
 import Phase1Cover from '../assets/nacp/phases/minting_1.gif';
 import Phase2Cover from '../assets/nacp/phases/minting_2.gif';
 import Phase3Cover from '../assets/nacp/phases/minting_3.gif';
-import Phase4Cover from '../assets/nacp/phases/minting_4.gif';
 
 import Banner1Ape from '../assets/nacp/banner_1_ape.png';
 import Banner1Bg from '../assets/nacp/banner_1_bg.png';
@@ -124,18 +123,9 @@ const phaseData: Phase[] = [
                 name: 'Skin'
             },
             {
-                cover: AssetIconBg,
-                name: 'Background'
-            }
-        ]
-    },
-    {
-        title: 'PHASE 2',
-        cover: Phase2Cover,
-        startDate: '10/03/2023',
-        endDate: '20/03/2023',
-        background: '#FEA063',
-        assets: [
+                cover: AssetIconTattoo,
+                name: 'Tattoo'
+            },
             {
                 cover: AssetIconSuit,
                 name: 'Suit'
@@ -151,8 +141,8 @@ const phaseData: Phase[] = [
         ]
     },
     {
-        title: 'PHASE 3',
-        cover: Phase3Cover,
+        title: 'PHASE 2',
+        cover: Phase2Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#A8E9C2',
@@ -176,16 +166,12 @@ const phaseData: Phase[] = [
             {
                 cover: AssetIconEars,
                 name: 'Ears'
-            },
-            {
-                cover: AssetIconTattoo,
-                name: 'Tattoo'
             }
         ]
     },
     {
-        title: 'PHASE 4',
-        cover: Phase4Cover,
+        title: 'PHASE 3',
+        cover: Phase3Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#C5BAF7',
@@ -201,6 +187,10 @@ const phaseData: Phase[] = [
             {
                 cover: AssetIconSpecial,
                 name: 'Special'
+            },
+            {
+                cover: AssetIconBg,
+                name: 'Background'
             }
         ]
     }

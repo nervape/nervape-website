@@ -312,8 +312,8 @@ export default function Composite() {
                                     <div className="phase-content flex-center">
                                         <TweenOne key="2" animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}>
-                                            <div className="phase-img-cover">
-                                                <img src={phaseCover} className="phase-img img-filter" alt="" />
+                                            <div className="phase-img-cover img-filter">
+                                                <img src={phaseCover} className="phase-img" alt="" />
                                             </div>
                                         </TweenOne>
 
