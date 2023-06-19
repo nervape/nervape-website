@@ -21,9 +21,10 @@ export default function NacpEdit(props: any) {
     const [assets, setAssets] = useState<NacpAsset[]>([]);
     const [assetsHistoryStack, setAssetsHistoryStack] = useState<NacpAsset[][]>([]);
     const [phaseHistoryStack, setPhaseHistoryStack] = useState<NacpPhase[][]>([]);
-    const [historyIndex, setHistoryIndex] = useState(0);
+    const [historyIndex, setHistoryIndex] = useState(-1);
     const [selectedAssets, setSelectedAssets] = useState<NacpAsset[]>([]);
     const [showDiscardPopup, setShowDiscardPopup] = useState(false);
+    const [isCollectionOpen, setIsCollectionOpen] = useState(false);
 
     async function fnGetPhases() {
         const res = await nervapeApi.fnGetPhases();
@@ -34,6 +35,9 @@ export default function NacpEdit(props: any) {
     }
 
     async function fnGetAssets(category: string) {
+        if (phases[selectPhase].status !== 1) return;
+        setIsCollectionOpen(false);
+
         const res = await nervapeApi.fnGetAssets(category, state.currentAddress);
         setAssets(res);
     }
@@ -62,6 +66,16 @@ export default function NacpEdit(props: any) {
             }
 
             // 特殊约定 2. headwear -- front/back
+            // 特殊约定 3. eyewear as mask
+            if (asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
+                const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == _asset.category?._id);
+                if (filters.length > 0) return false;
+            }
+
+            if (asset.category?.excludes_eyewear_as_mask) {
+                if (_asset.eyewear_as_mask) return false;
+            }
+
             return true;
         });
 
@@ -92,6 +106,7 @@ export default function NacpEdit(props: any) {
                 }
             })
         });
+
         updateHistoryStack(__selectedAssets, _phases);
 
         setSelectedAssets(__selectedAssets);
@@ -118,6 +133,7 @@ export default function NacpEdit(props: any) {
 
     async function openOrCloseCollection(asset: NacpAsset) {
         const _assets: NacpAsset[] = JSON.parse(JSON.stringify(assets));
+        let is_open = false;
         _assets.map(s => {
             if (asset.is_collection && s._id == asset._id) {
                 s.show_collection = !s.show_collection;
@@ -125,9 +141,12 @@ export default function NacpEdit(props: any) {
                 s.show_collection = false;
             }
 
+            if (s.show_collection) is_open = true;
+
             return s;
         })
 
+        setIsCollectionOpen(is_open);
         setAssets(_assets);
     }
 
@@ -135,13 +154,26 @@ export default function NacpEdit(props: any) {
         if (!_assets.length) return;
 
         let a = JSON.parse(JSON.stringify(assetsHistoryStack));
-        a.push(_assets);
-        setHistoryIndex(a.length - 1);
-        setAssetsHistoryStack(a);
-
         let p = JSON.parse(JSON.stringify(phaseHistoryStack));
-        p.push(_phases);
-        setPhaseHistoryStack(p);
+
+        // 修改 asset 发生在 undo/redo 时
+        if (historyIndex + 1 !== assetsHistoryStack.length) {
+            a.splice(historyIndex + 1, assetsHistoryStack.length - historyIndex);
+            a.push(_assets);
+            setHistoryIndex(a.length - 1);
+            setAssetsHistoryStack(a);
+
+            p.splice(historyIndex + 1, phaseHistoryStack.length - historyIndex);
+            p.push(_phases);
+            setPhaseHistoryStack(p);
+        } else {
+            a.push(_assets);
+            setHistoryIndex(a.length - 1);
+            setAssetsHistoryStack(a);
+
+            p.push(_phases);
+            setPhaseHistoryStack(p);
+        }
     }
 
     async function fnOperateBack() {
@@ -149,6 +181,8 @@ export default function NacpEdit(props: any) {
         setHistoryIndex(historyIndex - 1);
         setPhases(phaseHistoryStack[historyIndex - 1]);
         fnUpdateCurrCategory(phaseHistoryStack[historyIndex - 1]);
+
+        console.log('assetsHistoryStack', assetsHistoryStack);
     }
 
     async function fnOperateNext() {
@@ -156,10 +190,100 @@ export default function NacpEdit(props: any) {
         setHistoryIndex(historyIndex + 1);
         setPhases(phaseHistoryStack[historyIndex + 1]);
         fnUpdateCurrCategory(phaseHistoryStack[historyIndex + 1]);
+
+        console.log('assetsHistoryStack', assetsHistoryStack);
     }
 
     async function fnRandomizeAssets() {
+        let _phases = JSON.parse(JSON.stringify(phases));
 
+        const _assets: NacpAsset[] = [];
+        // 1. 随机排序当前 Phase category
+        const _categories = JSON.parse(JSON.stringify(phases[selectPhase].categories));
+        _categories.sort(() => { return Math.random() - 0.5 });
+        // 2.按顺序随机当前category asset
+        await Promise.all(
+            _categories.map(async category => {
+                const __assets = await nervapeApi.fnGetAssets(category._id, state.currentAddress);
+                const randomAsset: NacpAsset = __assets[Math.floor((Math.random() * __assets.length))];
+
+                if (!_assets.length) {
+                    _assets.push(randomAsset);
+
+                    _phases = await fnUpdatePhaseCategorySelected(_assets, _phases, randomAsset);
+                } else {
+                    // 3.顺序判断其他asset是否可选
+                    // 检查 asset.excludes
+                    let is_right = true;
+
+                    _assets.forEach(asset => {
+                        if (asset.excludes && asset.excludes.length) {
+                            const filters = asset.excludes.filter(e => e._id == randomAsset._id);
+                            if (filters.length > 0) is_right = false;
+                        }
+                        // 检查 所属分类的 excludes
+                        if (asset.category?.excludes && asset.category?.excludes.length) {
+                            const filters = asset.category.excludes.filter(e => e._id == randomAsset.category?._id);
+                            if (filters.length > 0) is_right = false;
+                        }
+
+                        // 特殊约定 1. mask_only/headwear
+                        if ((asset.is_mask_only && randomAsset.category?.name == 'Headwear')
+                            || (asset.category?.name == 'Headwear' && randomAsset.is_mask_only)) {
+                            return is_right = false;
+                        }
+
+                        // 特殊约定 2. headwear -- front/back
+                        // 特殊约定 3. eyewear as mask
+                        if (asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
+                            const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == randomAsset.category?._id);
+                            if (filters.length > 0) is_right = false;
+                        }
+
+                        if (asset.category?.excludes_eyewear_as_mask) {
+                            if (randomAsset.eyewear_as_mask) is_right = false;
+                        }
+                    });
+
+                    if (is_right) {
+                        _assets.push(randomAsset);
+
+                        _phases = await fnUpdatePhaseCategorySelected(_assets, _phases, randomAsset);
+                    }
+                }
+            })
+        )
+        updateHistoryStack(_assets, _phases);
+
+        setSelectedAssets(_assets);
+        setPhases(_phases);
+        // 得到最终随机assets
+    }
+
+    async function fnAssetExcludes(asset: NacpAsset, _asset: NacpAsset) {
+
+    }
+    async function fnUpdatePhaseCategorySelected(_assets: NacpAsset[], _phases: NacpPhase[], asset: NacpAsset) {
+        const selectedAssetsIds = _assets.map(s => s._id);
+        _phases.map((phase: NacpPhase) => {
+            phase.categories.map(_category => {
+                if (_category._id == asset.category?._id) {
+                    _category.selected = asset;
+                } else {
+                    if (!selectedAssetsIds.includes(_category.selected?._id || '')) {
+                        _category.selected = undefined;
+                    }
+                }
+
+                if (_category._id == currCategory._id) {
+                    setCurrCategory(_category);
+                }
+                return _category;
+            })
+            return phase;
+        });
+
+        return _phases;
     }
 
     const htmlToImageConvert = () => {
@@ -253,18 +377,23 @@ export default function NacpEdit(props: any) {
                             <div className="phase-name-operate flex-align">
                                 <div className="name">{phases[selectPhase]?.name}</div>
                                 <div className="btn-groups flex-align">
-                                    <button className="cursor btn randomize-btn">Randomize</button>
+                                    <button
+                                        disabled={phases[selectPhase].status !== 1}
+                                        className="cursor btn randomize-btn"
+                                        onClick={() => {
+                                            fnRandomizeAssets();
+                                        }}>Randomize</button>
                                     <button
                                         disabled={assetsHistoryStack.length <= 1 || historyIndex == 0}
                                         className={`cursor btn undo-btn`}
                                         onClick={() => {
-                                            fnOperateBack()
+                                            fnOperateBack();
                                         }}>Undo</button>
                                     <button
                                         disabled={!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1}
                                         className={`cursor btn redo-btn`}
                                         onClick={() => {
-                                            fnOperateNext()
+                                            fnOperateNext();
                                         }}>Redo</button>
                                 </div>
                             </div>
@@ -323,8 +452,9 @@ export default function NacpEdit(props: any) {
                                         return (
                                             <div
                                                 key={index}
-                                                className={`cursor transation asset-item ${selected && 'selected'}`}
+                                                className={`cursor transation asset-item ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
                                                 onClick={() => {
+                                                    if (isCollectionOpen && !asset.show_collection) return;
                                                     // 使用 asset 逻辑
                                                     if (!asset.is_collection) {
                                                         chooseAsset(asset);
