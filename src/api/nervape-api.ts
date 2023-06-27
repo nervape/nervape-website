@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { NFT, NFT_QUERY } from "../nervape/nft";
 import { ChapterList, Story } from "../nervape/story";
+import { UpdateMetadataForm } from "../nervape/nacp";
 
 class NervapeApi {
   //@ts-ignore
@@ -128,9 +129,9 @@ class NervapeApi {
     return this._fnDealSessionResponse(res, url);
   }
 
-  public async fnSendForVerify(message: string, signature: string) {
+  public async fnSendForVerify(message: string, signature: string, updateMetadatForm: UpdateMetadataForm) {
     const url = `${this.baseUrl}/nacp/verify`;
-    const res = await axios.post(url, JSON.stringify({ message, signature }), {
+    const res = await axios.post(url, JSON.stringify({ message, signature, ...updateMetadatForm }), {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -248,6 +249,16 @@ class NervapeApi {
     });
 
     return this._fnDealSessionResponse(res, url);
+  }
+
+  public async NacpFileUpload(url: string, formData: any) {
+    const header = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+
+    return await axios.post(url, formData, header);
   }
 }
 

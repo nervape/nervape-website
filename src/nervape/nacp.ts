@@ -73,3 +73,12 @@ export class NacpAsset {
     category?: NacpCategory;
     eyewear_as_mask: boolean = false;
 }
+
+export class MetadataAttribute {
+    asset_id?: string;
+}
+export class UpdateMetadataForm {
+    tokenId: string = '';
+    url: string = '';
+    attributes: MetadataAttribute[] = [];
+}

@@ -1,16 +1,27 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
-import { NacpAsset, NacpCategory, NacpPhase } from "../../../nervape/nacp";
+import { NacpAsset, NacpCategory, NacpPhase, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon } from "../../../nervape/svg";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
 import DiscardPopup from "./discard";
+import { Types } from "../../../utils/reducers";
+import { SiweMessage } from "siwe";
+import { useSignMessage } from "wagmi";
+import { godWoken } from "../../../utils/Chain";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function NacpEdit(props: any) {
     const { show, setShowNacpEdit } = props;
 
     const { state, dispatch } = useContext(DataContext);
+
+    const setLoading = (flag: boolean) => {
+        dispatch({
+            type: flag ? Types.ShowLoading : Types.HideLoading
+        })
+    }
 
     const elementRef = useRef(null);
 
@@ -25,6 +36,7 @@ export default function NacpEdit(props: any) {
     const [selectedAssets, setSelectedAssets] = useState<NacpAsset[]>([]);
     const [showDiscardPopup, setShowDiscardPopup] = useState(false);
     const [isCollectionOpen, setIsCollectionOpen] = useState(false);
+    const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     async function fnGetPhases() {
         const res = await nervapeApi.fnGetPhases();
@@ -260,9 +272,6 @@ export default function NacpEdit(props: any) {
         // 得到最终随机assets
     }
 
-    async function fnAssetExcludes(asset: NacpAsset, _asset: NacpAsset) {
-
-    }
     async function fnUpdatePhaseCategorySelected(_assets: NacpAsset[], _phases: NacpPhase[], asset: NacpAsset) {
         const selectedAssetsIds = _assets.map(s => s._id);
         _phases.map((phase: NacpPhase) => {
@@ -286,17 +295,92 @@ export default function NacpEdit(props: any) {
         return _phases;
     }
 
-    const htmlToImageConvert = () => {
-        toPng(elementRef.current as unknown as HTMLElement, { cacheBust: true, style: { top: '0px' } })
-            .then(dataUrl => {
-                const link = document.createElement('a');
-                link.download = 'nacp.png';
-                link.href = dataUrl;
-                link.click();
-            })
-            .catch(err => {
-                console.log(err);
-            })
+    const domain = window.location.host;
+    const origin = window.location.origin;
+
+    const { signMessageAsync, error } = useSignMessage();
+
+    const createSiweMessage = async (_address: string, statement: string) => {
+        const res = await nervapeApi.fnGetNonce();
+
+        res.fields.key = res.fields.key + uuidv4() + 'test.png';
+        res.fields.success_action_status = "200";
+
+        const url = res.fields.host + res.fields.key;
+        
+        await htmlToImageConvert(res);
+
+        const message = new SiweMessage({
+            domain,
+            address: _address,
+            statement,
+            uri: origin,
+            version: '1',
+            chainId: godWoken.id,
+            nonce: res.nonce
+        });
+
+        return {
+            message: message.prepareMessage(),
+            url: url
+        };
+    }
+
+    const signInWithEthereum = async () => {
+        setLoading(true);
+
+        const { message, url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
+
+        const signature = await signMessageAsync({ message });
+
+        const _metadata = JSON.parse(JSON.stringify(updateMetadataForm));
+        _metadata.url = url;
+
+        const res = await nervapeApi.fnSendForVerify(message, signature, _metadata);
+
+        setLoading(false);
+    }
+
+    function dataURItoBlob(dataURI: string) {
+        // convert base64 to raw binary data held in a string
+        // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+        var byteString = atob(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to an ArrayBuffer
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        //New Code
+        return new Blob([ab], { type: mimeString });
+    }
+
+    // 生成文件并上传
+    const htmlToImageConvert = async (signData: { fields: any; url: string; }) => {
+        delete signData.fields.host;
+
+        const dataUrl = await toPng(elementRef.current as unknown as HTMLElement, { cacheBust: true, style: { top: '0px' } });
+
+        const formData = new FormData();
+        formData.append('bucket', signData.fields.bucket);
+        formData.append('X-Amz-Algorithm', signData.fields['X-Amz-Algorithm']);
+        formData.append('X-Amz-Credential', signData.fields['X-Amz-Credential']);
+        formData.append('X-Amz-Date', signData.fields['X-Amz-Date']);
+        formData.append('X-Amz-Security-Token', signData.fields['X-Amz-Security-Token']);
+        formData.append('Policy', signData.fields['Policy']);
+        formData.append('X-Amz-Signature', signData.fields['X-Amz-Signature']);
+        formData.append('key', signData.fields['key']);
+        formData.append('success_action_status', signData.fields['success_action_status']);
+        formData.append('file', dataURItoBlob(dataUrl));
+
+        const result = await nervapeApi.NacpFileUpload(signData.url, formData);
+        console.log(result);
+
     }
 
     useEffect(() => {
@@ -316,7 +400,7 @@ export default function NacpEdit(props: any) {
                 <div className="edit-header flex-align">
                     <div className="title">NACP spot #01</div>
                     <div className="btn-groups flex-align">
-                        <button className="cursor btn save-btn" onClick={htmlToImageConvert}>Save</button>
+                        <button className="cursor btn save-btn" onClick={signInWithEthereum}>Save</button>
                         <button className="cursor btn discard-btn" onClick={() => {
                             setShowDiscardPopup(true);
                         }}>Discard</button>
