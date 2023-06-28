@@ -4,10 +4,17 @@ import {
     mainnet, useAccount, useSignMessage,
     usePrepareContractWrite,
     useContractWrite,
+    useContractRead,
     useWaitForTransaction,
     useNetwork,
-    useDisconnect
+    useDisconnect,
+    useContract,
+    useContractReads,
+    useSigner,
+    goerli
 } from "wagmi";
+
+
 import { CONFIG } from '../../../utils/config';
 import { nervapeApi } from "../../../api/nervape-api";
 import nacpAbi from '../../../contracts/NervapeComposite.json';
@@ -15,37 +22,40 @@ import { DataContext } from "../../../utils/utils";
 import { LoginWalletType } from "../../../utils/Wallet";
 import { godWoken, godWokenTestnet } from "../../../utils/Chain";
 import NacpLogin from "../../components/nacp-login";
+import { SwitchChainSpan } from "../../components/switchChain";
 
 export default function Nacp() {
     const domain = window.location.host;
     const origin = window.location.origin;
-
     const { state, dispatch } = useContext(DataContext);
-    const [nacps, setNacps] = useState<any>([]);
     const [showWalletError, setShowWalletError] = useState(false);
 
     const { address, isConnected } = useAccount();
     const { chain } = useNetwork();
     const { disconnect } = useDisconnect();
+    const { data: signer } = useSigner();
 
-    const [ids, setIds] = useState([]);
-    const [signatures, setSignatures] = useState([]);
+    const { data: tokenIds } = useContractRead({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        functionName: 'tokensOfOwner',
+        cacheOnBlock: true,
+        args: [ address ]
+        // watch: true
+    })
+
+    const contract = useContract({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        signerOrProvider: signer
+    })
+
 
     const disconnectReload = () => {
         localStorage.clear();
         disconnect();
         window.location.reload();
     };
-
-    const { config, error: prepareError, isSuccess: isPreparedSuccess } = usePrepareContractWrite({
-        address: CONFIG.NACP_ADDRESS,
-        abi: nacpAbi,
-        functionName: "bonelistMint",
-        args: [ids, signatures]
-    });
-
-    const { data: writeData, error: writeError, isError: isWriteError, write } = useContractWrite(config);
-
 
     const { data, isError, isLoading, isSuccess, signMessageAsync } = useSignMessage();
 
@@ -72,22 +82,8 @@ export default function Nacp() {
 
         const signature = await signMessageAsync({ message });
 
-        const res = await nervapeApi.fnSendForVerify(message, signature);
-
-        return res;
-    }
-
-    const createNacp = async () => {
-        if (!address) return false;
-        const res = await nervapeApi.fnCreateNacp(address, { skin: "Red" });
-
-        console.log('createNacp', res);
-    }
-
-    const fetchNacps = async () => {
-        if (!address) return;
-        const res = await nervapeApi.fnGetNacps(address);
-        setNacps(res)
+        // const res = await nervapeApi.fnSendForVerify(message, signature);
+        // return res;
     }
 
     useEffect(() => {
@@ -102,60 +98,58 @@ export default function Nacp() {
         }
 
         if (!address) return;
-        // 验证是否登录
-        fnVerifyLogin();
+
     }, [address, state.loginWalletType, state.currentAddress, chain]);
 
-    const handleMint = async () => {
-        const ids = nacps.map(nacp => nacp._id)
-        const signatures = await nervapeApi.fnGetSignature(ids);
-        setIds(ids.map(id => `0x${id}`));
-        setSignatures(signatures)
-        if (isPreparedSuccess) {
-            write?.();
+    
+    const handleBonelistMint = async () => {
+        const signature = await nervapeApi.fnGetSignature(address as string);
+        try {
+            const tx = await contract?.bonelistMint(signature);
+            const receipt = await tx.wait()
+            if(receipt.status) {
+                // tx success
+            } else {
+                // tx failed
+            }
+        } catch(err: any) {
+            console.log("err=", err.reason)
         }
     }
-
-    const { data: txData, isLoading: isTxLoading, isSuccess: isTxSuccess } = useWaitForTransaction({
-        hash: writeData?.hash,
-    });
-
-    // console.log("wait = ", writeData, txData, isTxLoading, isTxSuccess);
-    // console.log("isPreparedSuccess = ", isPreparedSuccess);
-
-    const fnVerifyLogin = async () => {
-        const res = await nervapeApi.fnVerifyLogin();
-        if (res.code == 0) {
-            await fetchNacps();
-        } else if (res.code == 401) {
-            // 未登录
-            await signInWithEthereum();
+    const handleMint = async () => {
+        try {
+            const tx = await contract?.mint();
+            const receipt = await tx.wait()
+            if(receipt.status) {
+                // success
+            }
+        } catch(err: any) {
+            console.log("err=", err.reason)
         }
     }
 
     return (
         <div className="nacp-container main-container">
-            <button className="sign-btn" onClick={createNacp}>Create NACP</button>
-
             {
-                nacps && nacps.map(nacp =>
-                    <div key={nacp._id} style={{ color: "#fff" }}>
-                        {nacp._id} {nacp.skin}
-                    </div>
-                )
+                chain?.id !== goerli.id && 
+                <button style={{background: "#fff"}}>
+                    <SwitchChainSpan title="Switch Chain" chainId={5} />
+                </button>
             }
-            <button className="sign-btn" onClick={handleMint}>Mint</button>
-            <div style={{ color: "#fff" }}>
-                writeError: {isWriteError} {writeError?.message}
-            </div>
-            <div style={{ color: "#fff" }}>
-                prepareError: {prepareError?.message}
-            </div>
-            <button className="sign-btn" onClick={async () => {
-                await fnVerifyLogin();
-            }}>Get Information</button>
+            
+            &nbsp;
+            <button onClick={handleBonelistMint}>Bonelist Mint</button>
+            &nbsp;
+            <button onClick={handleMint}>Mint</button>
+            &nbsp;
 
-            <NacpLogin show={showWalletError} logout={disconnectReload}></NacpLogin>
+            <br />
+            <div style={{ color: "#fff"}}>
+            {
+                tokenIds && tokenIds.map(id => id.toNumber()).join(",")
+            }
+            </div>
+            {/*<NacpLogin show={showWalletError} logout={disconnectReload}></NacpLogin>*/}
         </div>
     );
 }
