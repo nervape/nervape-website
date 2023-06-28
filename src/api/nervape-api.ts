@@ -151,9 +151,10 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
 
-  public async fnGetSignature(ids: string[]) {
-    const url = `${this.baseUrl}/nacp/sign`;
-    const res = await axios.post(url, JSON.stringify({ ids }), {
+  public async fnGetSignature(address: string) {
+    const url = `${this.baseUrl}/nacp/get_signature`;
+    const res = await axios.get(url, {
+      params: { address },
       headers: {
         'Content-Type': 'application/json'
       },

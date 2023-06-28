@@ -19,7 +19,7 @@ import PageView from "./components/page-view";
 import StoryProfile from "./stories/profile/profile";
 import HomePage from "./home";
 import MaintenancePage from "./maintenance";
-import { configureChains, createClient, mainnet, WagmiConfig } from "wagmi";
+import { configureChains, createClient, mainnet, goerli, WagmiConfig } from "wagmi";
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
@@ -41,7 +41,7 @@ export default function App() {
     return <MaintenancePage></MaintenancePage>;
   }
 
-  const chains = [godWoken, godWokenTestnet, mainnet];
+  const chains = [godWoken, godWokenTestnet, mainnet, goerli];
 
   const { provider, webSocketProvider } = configureChains(chains, [
     alchemyProvider({ apiKey: 'BbyuzUYnWmVjjGxGfgHnkUluVj2fiHBo' }),
