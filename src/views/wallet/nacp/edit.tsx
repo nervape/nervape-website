@@ -208,8 +208,10 @@ export default function NacpEdit(props: any) {
 
     async function fnRandomizeAssets() {
         let _phases = JSON.parse(JSON.stringify(phases));
+        let _assets: NacpAsset[] = [];
 
-        const _assets: NacpAsset[] = [];
+        const _selectedAssets = JSON.parse(JSON.stringify(selectedAssets));
+        _assets = _assets.concat(_selectedAssets);
         // 1. 随机排序当前 Phase category
         const _categories = JSON.parse(JSON.stringify(phases[selectPhase].categories));
         _categories.sort(() => { return Math.random() - 0.5 });
@@ -217,6 +219,8 @@ export default function NacpEdit(props: any) {
         await Promise.all(
             _categories.map(async category => {
                 const __assets = await nervapeApi.fnGetAssets(category._id, state.currentAddress);
+                if (!__assets.length) return;
+                
                 const randomAsset: NacpAsset = __assets[Math.floor((Math.random() * __assets.length))];
 
                 if (!_assets.length) {
@@ -265,6 +269,7 @@ export default function NacpEdit(props: any) {
                 }
             })
         )
+
         updateHistoryStack(_assets, _phases);
 
         setSelectedAssets(_assets);
@@ -273,6 +278,7 @@ export default function NacpEdit(props: any) {
     }
 
     async function fnUpdatePhaseCategorySelected(_assets: NacpAsset[], _phases: NacpPhase[], asset: NacpAsset) {
+        console.log(_assets);
         const selectedAssetsIds = _assets.map(s => s._id);
         _phases.map((phase: NacpPhase) => {
             phase.categories.map(_category => {
@@ -308,7 +314,7 @@ export default function NacpEdit(props: any) {
 
         const url = res.fields.host + res.fields.key;
         
-        await htmlToImageConvert(res);
+        htmlToImageConvert(res);
 
         const message = new SiweMessage({
             domain,
@@ -588,6 +594,7 @@ export default function NacpEdit(props: any) {
                 show={showDiscardPopup}
                 confirm={() => {
                     setShowNacpEdit(false);
+                    setShowDiscardPopup(false);
                 }}></DiscardPopup>
         </div>
     );
