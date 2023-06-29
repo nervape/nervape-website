@@ -44,6 +44,17 @@ export default function Nacp() {
         // watch: true
     })
 
+    const { data: minted } = useContractRead({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        functionName: 'minted',
+        cacheOnBlock: true,
+        args: [ address ]
+        // watch: true
+    })
+
+    const hasMinted = (minted as any)?.toNumber() > 0
+
     const contract = useContract({
         address: CONFIG.NACP_ADDRESS,
         abi: nacpAbi,
@@ -136,7 +147,9 @@ export default function Nacp() {
                     <SwitchChainSpan title="Switch Chain" chainId={5} />
                 </button>
             }
-            
+            {
+                hasMinted && "minted"
+            }
             &nbsp;
             <button onClick={handleBonelistMint}>Bonelist Mint</button>
             &nbsp;
