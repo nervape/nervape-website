@@ -20,7 +20,7 @@ export const CONFIG = {
     UNIPASS_ASSET_LOCK_CODE_HASH: import.meta.env.VITE_UNIPASS_ASSET_LOCK_CODE_HASH,
     UNIPASS_AGGREGATOR_URL: import.meta.env.VITE_UNIPASS_AGGREGATOR_URL,
     WEBSITE_HOST: import.meta.env.VITE_HOST,
-    BRIDGE_API_HOST: import.meta.env.VITE_API_HOST,
+    API_HOST: import.meta.env.VITE_API_HOST,
 
     NERVAPE_MNFT_ISSUER_ID: import.meta.env.VITE_NERVAPE_MNFT_ISSUER_ID,
     BRIDGE_STORAGE_ADDRESS_CKB: 110,
@@ -43,5 +43,8 @@ export const CONFIG = {
     YOKAI_URL: import.meta.env.VITE_YOKAI_URL,
 
     // metamask app url
-    METAMASK_APP_URL: import.meta.env.VITE_METAMASK_URL
+    METAMASK_APP_URL: import.meta.env.VITE_METAMASK_URL,
+
+    // metadata api host
+    METADATA_API_HOST: import.meta.env.VITE_METADATA_API_HOST
 }

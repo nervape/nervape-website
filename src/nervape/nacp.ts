@@ -53,6 +53,8 @@ export class NacpCategory {
     eyewear_as_mask_excludes?: NacpCategory[];
     as_mask_level: number = 0;
     excludes_eyewear_as_mask?: boolean = false;
+    status?: number = 0; // 0 未开始 1 进行中 2 已结束
+    asset?: NacpAsset;
 }
 
 export class NacpAsset {
@@ -81,4 +83,23 @@ export class UpdateMetadataForm {
     tokenId: string = '';
     url: string = '';
     attributes: MetadataAttribute[] = [];
+}
+
+export class NacpMetadataAttribute {
+    trait_type: string = '';
+    value: string = '';
+    is_special: boolean = false;
+    asset_id: string = '';
+    asset_url: string = '';
+    asset_url_thumb: string = '';
+}
+export class NacpMetadata {
+    id: string = '';
+    name: string = '';
+    image: string = '';
+    description: string = '';
+    external_url?: string;
+    animation_url?: string;
+    attributes: NacpMetadataAttribute[] = [];
+    categories?: NacpCategory[] = [];
 }

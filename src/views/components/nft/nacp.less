@@ -1,0 +1,215 @@
+.nacp-ape-detail-container {
+  .nft-card-detail {
+    width: 1000px;
+    display: flex;
+
+    .preview-model {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      background: #d9d9d9;
+
+      .cover-image {
+        width: 100%;
+        height: 100%;
+      }
+
+      .close-detail-c {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 6px;
+        transition: all 0.3s;
+      }
+
+      .close-detail-c {
+        top: 10px;
+        right: 10px;
+      }
+
+      .close-detail {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .close-detail {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .detail-info {
+      width: 500px;
+      height: 500px;
+      background: #454f5c;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+
+      .info-content {
+        padding: 32px;
+        color: #ffffff;
+        letter-spacing: -0.05em;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .name {
+          font-weight: 800;
+          font-size: 32px;
+          line-height: 38px;
+        }
+
+        .chain {
+          margin-bottom: 20px;
+
+          span {
+            font-size: 10px;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            padding: 2px 4px;
+          }
+        }
+
+        .nacp-categories {
+          flex-wrap: wrap;
+
+          .nacp-category {
+            width: calc((100% - 12px) / 3);
+            padding: 6px 8px;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            margin-right: 6px;
+            margin-bottom: 6px;
+
+            &:nth-child(3n) {
+              margin-right: 0;
+            }
+
+            &.active {
+              color: #ffffff;
+
+              .left-icon {
+                svg {
+                  fill: rgba(255, 255, 255, 1);
+                }
+              }
+            }
+
+            .left-icon {
+              margin-right: 8px;
+              width: 26px;
+              height: 26px;
+
+              svg {
+                width: 26px;
+                height: 26px;
+                fill: rgba(255, 255, 255, 0.1);
+              }
+            }
+
+            .right-info {
+              letter-spacing: -0.5px;
+              flex: 1;
+
+              .category-name {
+                font-size: 12px;
+                font-weight: 300;
+                line-height: 12px;
+                margin-bottom: 4px;
+              }
+
+              .asset-name {
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 14.4px;
+              }
+            }
+          }
+        }
+
+        .btn-groups {
+          margin-top: 84px;
+          height: 32px;
+          display: flex;
+          flex-direction: row-reverse;
+
+          .btn {
+            height: 32px;
+            border: unset;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 17px;
+            color: #ffffff;
+            background: #f44d37;
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            padding: 0 16px;
+            margin-left: 8px;
+          }
+        }
+      }
+      .transfer-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: -0.05em;
+          color: #ffffff;
+          padding-bottom: 8px;
+        }
+
+        .name {
+          padding-bottom: 6px;
+        }
+
+        .attributes {
+          margin-bottom: 20px;
+        }
+
+        .destination {
+          padding: 20px 0;
+          flex: 1;
+          border-top: 1px solid #b0b8cc;
+
+          .text {
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 24px;
+            letter-spacing: -0.05em;
+            color: #ffffff;
+            padding-bottom: 8px;
+          }
+
+          .value {
+            input {
+              width: 100%;
+              height: 34px;
+              box-sizing: border-box;
+              padding: 10px 16px;
+              border-radius: 6px;
+              border: none;
+              color: rgba(0, 0, 0, 0.5);
+              font-size: 12px;
+            }
+
+            input:focus {
+              outline: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,11 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import { NFT, NFT_QUERY } from "../nervape/nft";
 import { ChapterList, Story } from "../nervape/story";
-import { UpdateMetadataForm } from "../nervape/nacp";
+import { NacpMetadataAttribute, UpdateMetadataForm } from "../nervape/nacp";
+import { CONFIG } from "../utils/config";
 
 class NervapeApi {
   //@ts-ignore
-  public baseUrl = import.meta.env.VITE_API_HOST;
+  public baseUrl = CONFIG.API_HOST;
+  public metadataBaseUrl = CONFIG.METADATA_API_HOST;
 
   private _fnDealResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
@@ -210,13 +212,13 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetPhases() {
     const url = `${this.baseUrl}/pfp-asset/website/phases`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetAssets(category: string, address: string) {
     const url = `${this.baseUrl}/pfp-asset/website/phase/${category}/assets/${address}`;
     const res = await axios.get(url);
@@ -260,6 +262,23 @@ class NervapeApi {
     };
 
     return await axios.post(url, formData, header);
+  }
+
+  public async fnMintAllow(address: string) {
+    const url = `${this.baseUrl}/nacp/mint/allow?address=${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetMetadataByTokenId(tokenId: number) {
+    const url = `${this.metadataBaseUrl}/nacp/${tokenId}`;
+    return await axios.get(url);
+  }
+
+  public async fnGetCategoriesByAttributes(attributes: NacpMetadataAttribute[]) {
+    const url = `${this.baseUrl}/pfp-asset/website/categories`;
+    const res = await axios.post(url, { attributes: attributes });
+    return this._fnDealResponse(res, url);
   }
 }
 

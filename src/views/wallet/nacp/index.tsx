@@ -6,18 +6,123 @@ import DefaultNacpApe from '../../../assets/wallet/nacp/default_nacp_ape.png';
 import BonelistRequired from '../../../assets/wallet/nacp/Bonelist_Required.png';
 import { Popover } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
-import { DataContext } from "../../../utils/utils";
-import { NACP_APE, NACP_SPECIAL_ASSET } from "../../../nervape/nacp";
+import { DataContext, updateBodyOverflow } from "../../../utils/utils";
+import { NACP_APE, NACP_SPECIAL_ASSET, NacpMetadata } from "../../../nervape/nacp";
 import AssetItem from "./asset-item";
+import { goerli, useAccount, useContract, useContractRead, useNetwork, useSigner } from "wagmi";
+import { CONFIG } from "../../../utils/config";
+import nacpAbi from '../../../contracts/NervapeComposite.json';
+import NacpApeDetail from "../../components/nft/nacp";
+import NacpEdit from "./edit";
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; }) {
     const { isFold, isBonelist, setLoading } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
+    const [showMint, setShowMint] = useState(false);
     const [currNacpTab, setCurrNacpTab] = useState('ape');
     const [nacpApes, setNacpApes] = useState<NACP_APE[]>([]);
+    const [chainApes, setChainApes] = useState<NacpMetadata[]>([]);
     const [nacpAssets, setNacpAssets] = useState<NACP_SPECIAL_ASSET[]>([]);
+    const [showNacpDetail, setShowNacpDetail] = useState(false);
+    const [selectedNacp, setSelectedNacp] = useState<NacpMetadata>();
+
+    const [showNacpEdit, setShowNacpEdit] = useState(false);
+
+    const { address, isConnected } = useAccount();
+    const { data: signer } = useSigner();
+    const { chain } = useNetwork();
+
+    const { data: tokenIds, isSuccess: isTokenSuccess } = useContractRead({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        functionName: 'tokensOfOwner',
+        cacheOnBlock: true,
+        args: [address]
+        // watch: true
+    })
+
+    const { data: minted, isSuccess: isMintedSuccess } = useContractRead({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        functionName: 'minted',
+        cacheOnBlock: true,
+        args: [address]
+        // watch: true
+    });
+
+    const hasMinted = (minted as any)?.toNumber() > 0;
+
+    const contract = useContract({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        signerOrProvider: signer
+    });
+
+    async function fnGetNacpByTokenIds() {
+        let _chainApes: NacpMetadata[] = [];
+
+        await Promise.all(
+            (tokenIds as any).map(async (t: any) => {
+                const { data } = await nervapeApi.fnGetMetadataByTokenId(t.toNumber());
+                console.log('fnGetNacpByTokenIds', data);
+                _chainApes.push(data);
+            })
+        );
+
+        setChainApes(_chainApes);
+    }
+
+    const handleBonelistMint = async () => {
+        const signature = await nervapeApi.fnGetSignature(address as string);
+        try {
+            const tx = await contract?.bonelistMint(signature);
+            const receipt = await tx.wait()
+            if (receipt.status) {
+                // tx success
+            } else {
+                // tx failed
+            }
+        } catch (err: any) {
+            console.log("err=", err.reason)
+        }
+    }
+
+    const handleMint = async () => {
+        try {
+            const tx = await contract?.mint();
+            const receipt = await tx.wait()
+            if (receipt.status) {
+                // success
+            }
+        } catch (err: any) {
+            console.log("err=", err.reason)
+        }
+    }
+
+    useEffect(() => {
+        if (!isMintedSuccess) return;
+        if (!state.currentAddress) return;
+        if (!chain || chain?.id !== goerli.id) {
+            setShowMint(false);
+            return;
+        }
+
+        if (!hasMinted) {
+            nervapeApi.fnMintAllow(state.currentAddress).then(res => {
+                if (res && !hasMinted) setShowMint(true);
+            })
+        } else {
+            setShowMint(false);
+        }
+    }, [state.currentAddress, chain, hasMinted, isMintedSuccess]);
+
+    useEffect(() => {
+        if (!isTokenSuccess) return;
+
+        fnGetNacpByTokenIds();
+    }, [isTokenSuccess]);
 
     useEffect(() => {
         let _apes: NACP_APE[] = [];
@@ -43,6 +148,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             fnGetStorySpecialAsset(state.currentAddress);
         }
     }, [currNacpTab]);
+
+    useEffect(() => {
+        console.log('tokenIds', tokenIds);
+    }, [tokenIds]);
 
     async function fnGetStorySpecialAsset(address: string) {
         setLoading(true);
@@ -114,10 +223,56 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
             <div className="wallet-nacp-content">
                 {currNacpTab == 'ape' ? (
-                    <div className="nacp-content-apes flex-align">
-                        {nacpApes.map((ape, index) => {
-                            return <ApeItem ape={ape} key={index}></ApeItem>
-                        })}
+                    <div className="spot-apes">
+                        {showMint && (
+                            <div className="spot-items">
+                                <div className="item-title flex-align">
+                                    <div className="text">SPOT</div>
+                                    <button className="mint-btn cursor" onClick={() => {
+                                        if (isBonelist) {
+                                            handleBonelistMint();
+                                        } else {
+                                            handleMint();
+                                        }
+                                    }}>MINT</button>
+                                </div>
+
+                                <div className="nacp-content-apes flex-align">
+                                    {nacpApes.map((ape, index) => {
+                                        return <ApeItem ape={ape} key={index}></ApeItem>
+                                    })}
+                                </div>
+                            </div>
+                        )}
+                        {
+                            chainApes.length && (
+                                <div className="spot-items">
+                                    <div className="item-title flex-align">
+                                        <div className="text">APE</div>
+                                    </div>
+
+                                    <div className="nacp-content-apes flex-align">
+                                        {chainApes.map((ape, index) => {
+                                            return (
+                                                <div className="nacp-ape-item cursor" key={index} onClick={async () => {
+                                                    const res = await nervapeApi.fnGetCategoriesByAttributes(ape.attributes);
+                                                    updateBodyOverflow(false);
+                                                    const _ape = JSON.parse(JSON.stringify(ape));
+                                                    _ape.categories = res;
+                                                    setSelectedNacp(_ape);
+                                                    setShowNacpDetail(true);
+                                                }}>
+                                                    <div className="cover-image">
+                                                        <img className="cover" src={ape.image} alt="DefaultNacpApe" />
+                                                    </div>
+                                                    <div className="name">{ape.name}</div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
                 ) : (
                     <div className="nacp-content-assets flex-align">
@@ -127,6 +282,19 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     </div>
                 )}
             </div>
+
+            <NacpApeDetail
+                show={showNacpDetail}
+                close={() => {
+                    setShowNacpDetail(false);
+                    updateBodyOverflow(true);
+                }}
+                editNacp={() => {
+                    setShowNacpDetail(false);
+                    setShowNacpEdit(true);
+                }}
+                nacp={selectedNacp as NacpMetadata}></NacpApeDetail>
+            <NacpEdit show={showNacpEdit} setShowNacpEdit={setShowNacpEdit}></NacpEdit>
         </div>
     );
 }

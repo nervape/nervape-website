@@ -22,7 +22,6 @@ import WalletNFT3D from "./nft";
 import WalletTx from "./tx";
 import WalletBadge from "./badge";
 import WalletEvent from "./event";
-import { scrollToTop } from "../../utils/utils";
 import WalletHeader from "./header";
 import { useLocation } from "react-router";
 
@@ -32,7 +31,6 @@ import EventIcon from "../../assets/wallet/navbar/event.svg";
 import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
 import InvitationClaim from "./invitation";
-import NacpEdit from "./nacp/edit";
 
 export class WalletNavBar {
     name: string = "";
@@ -66,8 +64,6 @@ export default function WalletNewPage() {
     const [navbars, setNavbars] = useState<WalletNavBar[]>([]);
     const [currNavbar, setCurrNavbar] = useState(0);
     const [isBonelist, setIsBonelist] = useState(false);
-
-    const [showNacpEdit, setShowNacpEdit] = useState(true);
 
     const setLoading = (flag: boolean) => {
         dispatch({
@@ -317,7 +313,10 @@ export default function WalletNewPage() {
                             <div className="wallet-content transition">
                                 {/* <NavbarContent></NavbarContent> */}
                                 {navbars[currNavbar]?.name == WalletNavbarTypes.NACP ? (
-                                    <WalletNacp isFold={isFold} isBonelist={isBonelist} setLoading={setLoading}></WalletNacp>
+                                    <WalletNacp 
+                                        isFold={isFold} 
+                                        isBonelist={isBonelist} 
+                                        setLoading={setLoading}></WalletNacp>
                                 ) : (
                                     navbars[currNavbar]?.name == WalletNavbarTypes.NFT ? (
                                         <WalletNFT3D
@@ -385,7 +384,6 @@ export default function WalletNewPage() {
                 setInviteClaim={setInviteClaim}
                 searchBonelist={searchBonelist}
             ></InvitationClaim>
-            <NacpEdit show={showNacpEdit} setShowNacpEdit={setShowNacpEdit}></NacpEdit>
         </div>
     );
 }

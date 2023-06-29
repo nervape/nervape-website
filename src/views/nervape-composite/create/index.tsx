@@ -159,7 +159,7 @@ export default function Nacp() {
             <br />
             <div style={{ color: "#fff"}}>
             {
-                tokenIds && tokenIds.map(id => id.toNumber()).join(",")
+                tokenIds && (tokenIds as any).map(id => id.toNumber()).join(",")
             }
             </div>
             {/*<NacpLogin show={showWalletError} logout={disconnectReload}></NacpLogin>*/}
