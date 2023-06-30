@@ -82,6 +82,7 @@ export class MetadataAttribute {
 export class UpdateMetadataForm {
     tokenId: string = '';
     url: string = '';
+    thumb_url: string = '';
     attributes: MetadataAttribute[] = [];
 }
 

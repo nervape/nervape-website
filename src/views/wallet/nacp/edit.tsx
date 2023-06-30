@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
-import { NacpAsset, NacpCategory, NacpPhase, UpdateMetadataForm } from "../../../nervape/nacp";
+import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon } from "../../../nervape/svg";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
@@ -12,8 +12,8 @@ import { useSignMessage } from "wagmi";
 import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
 
-export default function NacpEdit(props: any) {
-    const { show, setShowNacpEdit } = props;
+export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; nacp: NacpMetadata; }) {
+    const { show, setShowNacpEdit, nacp } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -24,6 +24,7 @@ export default function NacpEdit(props: any) {
     }
 
     const elementRef = useRef(null);
+    const coverElementRef = useRef(null);
 
     const [phases, setPhases] = useState<NacpPhase[]>([]);
     const [selectPhase, setSelectPhase] = useState(0);
@@ -40,14 +41,44 @@ export default function NacpEdit(props: any) {
 
     async function fnGetPhases() {
         const res = await nervapeApi.fnGetPhases();
+        // 初始化 history
+        setAssetsHistoryStack([]);
+        setPhaseHistoryStack([]);
+        setHistoryIndex(-1);
         // 处理 categories
-        setPhases(res);
         setCurrCategory(res[0].categories[0]);
         setSelectCategory(res[0].categories[0]._id);
+        const _phases = await initNacpAsset(res);
+        setPhases(_phases);
+    }
+
+    async function initNacpAsset(_phases: NacpPhase[]) {
+        let nacpAssets: NacpAsset[] = [];
+
+        nacp?.categories?.forEach(async c => {
+            if (c.asset) {
+                nacpAssets.push(c.asset);
+
+                _phases.map(p => {
+                    p.categories.map(_c => {
+                        if (_c._id == c._id) {
+                            _c.selected = c.asset;
+                        }
+
+                        return _c;
+                    });
+
+                    return p;
+                })
+            }
+        })
+        console.log('nacpAssets', nacpAssets);
+        setSelectedAssets(nacpAssets);
+        return _phases;
     }
 
     async function fnGetAssets(category: string) {
-        if (phases[selectPhase].status !== 1) return;
+        if (phases[selectPhase]?.status !== 1) return;
         setIsCollectionOpen(false);
 
         const res = await nervapeApi.fnGetAssets(category, state.currentAddress);
@@ -56,9 +87,11 @@ export default function NacpEdit(props: any) {
 
     async function chooseAsset(asset: NacpAsset) {
         if (!currCategory) return;
+        console.log(asset);
 
         // 更新 selectedAssets
         let _selectedAssets: NacpAsset[] = JSON.parse(JSON.stringify(selectedAssets));
+        console.log('_selectedAssets', _selectedAssets);
         _selectedAssets = _selectedAssets.filter(_asset => {
             // 检查 asset.excludes
             if (asset.excludes && asset.excludes.length) {
@@ -220,7 +253,7 @@ export default function NacpEdit(props: any) {
             _categories.map(async category => {
                 const __assets = await nervapeApi.fnGetAssets(category._id, state.currentAddress);
                 if (!__assets.length) return;
-                
+
                 const randomAsset: NacpAsset = __assets[Math.floor((Math.random() * __assets.length))];
 
                 if (!_assets.length) {
@@ -271,14 +304,24 @@ export default function NacpEdit(props: any) {
         )
 
         updateHistoryStack(_assets, _phases);
-
-        setSelectedAssets(_assets);
         setPhases(_phases);
         // 得到最终随机assets
     }
 
+    useEffect(() => {
+        let _assets: NacpAsset[] = [];
+        phases.map(p => {
+            p.categories.map(c => {
+                if (c.selected) {
+                    _assets.push(c.selected);
+                }
+            })
+        })
+
+        setSelectedAssets(_assets);
+    }, [phases]);
+
     async function fnUpdatePhaseCategorySelected(_assets: NacpAsset[], _phases: NacpPhase[], asset: NacpAsset) {
-        console.log(_assets);
         const selectedAssetsIds = _assets.map(s => s._id);
         _phases.map((phase: NacpPhase) => {
             phase.categories.map(_category => {
@@ -309,12 +352,16 @@ export default function NacpEdit(props: any) {
     const createSiweMessage = async (_address: string, statement: string) => {
         const res = await nervapeApi.fnGetNonce();
 
-        res.fields.key = res.fields.key + uuidv4() + 'test.png';
+        const filename = res.fields.key + uuidv4();
+        res.fields.key = filename + '-test.png';
+        res.fields.thumb_key = filename + '-thumb-test.png';
         res.fields.success_action_status = "200";
 
         const url = res.fields.host + res.fields.key;
-        
-        htmlToImageConvert(res);
+        const thumb_url = res.fields.host + res.fields.thumb_key;
+
+        htmlToImageConvert(res, elementRef, 'key');
+        htmlToImageConvert(res, coverElementRef, 'thumb_key');
 
         const message = new SiweMessage({
             domain,
@@ -328,19 +375,26 @@ export default function NacpEdit(props: any) {
 
         return {
             message: message.prepareMessage(),
-            url: url
+            url,
+            thumb_url
         };
     }
 
     const signInWithEthereum = async () => {
         setLoading(true);
 
-        const { message, url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
+        const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
 
         const signature = await signMessageAsync({ message });
 
         const _metadata = JSON.parse(JSON.stringify(updateMetadataForm));
         _metadata.url = url;
+        _metadata.thumb_url = thumb_url;
+        _metadata.attributes = selectedAssets.map(s => {
+            return {
+                asset_id: s._id
+            }
+        });
 
         const res = await nervapeApi.fnSendForVerify(message, signature, _metadata);
 
@@ -367,10 +421,10 @@ export default function NacpEdit(props: any) {
     }
 
     // 生成文件并上传
-    const htmlToImageConvert = async (signData: { fields: any; url: string; }) => {
+    const htmlToImageConvert = async (signData: { fields: any; url: string; }, ref: any, key: string) => {
         delete signData.fields.host;
 
-        const dataUrl = await toPng(elementRef.current as unknown as HTMLElement, { cacheBust: true, style: { top: '0px' } });
+        const dataUrl = await toPng(ref.current as unknown as HTMLElement, { cacheBust: true, style: { top: '0px' } });
 
         const formData = new FormData();
         formData.append('bucket', signData.fields.bucket);
@@ -380,7 +434,7 @@ export default function NacpEdit(props: any) {
         formData.append('X-Amz-Security-Token', signData.fields['X-Amz-Security-Token']);
         formData.append('Policy', signData.fields['Policy']);
         formData.append('X-Amz-Signature', signData.fields['X-Amz-Signature']);
-        formData.append('key', signData.fields['key']);
+        formData.append('key', signData.fields[key]);
         formData.append('success_action_status', signData.fields['success_action_status']);
         formData.append('file', dataURItoBlob(dataUrl));
 
@@ -390,8 +444,17 @@ export default function NacpEdit(props: any) {
     }
 
     useEffect(() => {
+        if (!nacp) return;
+
         fnGetPhases();
-    }, []);
+
+        setUpdateMetadataForm({
+            tokenId: nacp.id,
+            url: '',
+            thumb_url: '',
+            attributes: []
+        });
+    }, [nacp]);
 
     useEffect(() => {
         if (!currCategory?._id) return;
@@ -404,7 +467,7 @@ export default function NacpEdit(props: any) {
         <div className={`wallet-nacp-edit-container popup-container ${show && 'show'}`}>
             <div className="wallet-nacp-edit-content">
                 <div className="edit-header flex-align">
-                    <div className="title">NACP spot #01</div>
+                    <div className="title">{nacp.name}</div>
                     <div className="btn-groups flex-align">
                         <button className="cursor btn save-btn" onClick={signInWithEthereum}>Save</button>
                         <button className="cursor btn discard-btn" onClick={() => {
@@ -450,7 +513,21 @@ export default function NacpEdit(props: any) {
                                 )}
 
                                 {selectedAssets.length > 0 ? (
-                                    <div className={`nacp-assets-save transation`} ref={elementRef}>
+                                    <div className={`nacp-assets-save transation`} style={{width: '500px', height: '500px'}} ref={elementRef}>
+                                        {selectedAssets.map((asset, index) => {
+                                            return (
+                                                <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
+                                                    <img src={asset.url} alt="" />
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <></>
+                                )}
+
+                                {selectedAssets.length > 0 ? (
+                                    <div className={`nacp-assets-save scale transation`} ref={coverElementRef}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
@@ -545,8 +622,10 @@ export default function NacpEdit(props: any) {
                                                 className={`cursor transation asset-item ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
                                                 onClick={() => {
                                                     if (isCollectionOpen && !asset.show_collection) return;
+
                                                     // 使用 asset 逻辑
                                                     if (!asset.is_collection) {
+                                                        if (selected) return;
                                                         chooseAsset(asset);
                                                     }
 
@@ -567,6 +646,7 @@ export default function NacpEdit(props: any) {
                                                                         className={`cursor transation collection-item ${_asset._id == currCategory.selected?._id && 'selected'}`}
                                                                         key={_index}
                                                                         onClick={e => {
+                                                                            if (_asset._id == currCategory.selected?._id) return;
                                                                             chooseAsset(_asset);
                                                                             e.stopPropagation();
                                                                         }}>

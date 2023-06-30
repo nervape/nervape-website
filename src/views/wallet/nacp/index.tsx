@@ -294,7 +294,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     setShowNacpEdit(true);
                 }}
                 nacp={selectedNacp as NacpMetadata}></NacpApeDetail>
-            <NacpEdit show={showNacpEdit} setShowNacpEdit={setShowNacpEdit}></NacpEdit>
+            <NacpEdit show={showNacpEdit} nacp={selectedNacp as NacpMetadata} setShowNacpEdit={setShowNacpEdit}></NacpEdit>
         </div>
     );
 }
