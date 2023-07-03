@@ -298,7 +298,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 setShowNacpEdit(false);
                 setShowSaveSuccess(true);
             }}></NacpEdit>
-            <SaveSuccessPopup show={showSaveSuccess} comfirm={async () => {
+            <SaveSuccessPopup show={showSaveSuccess} confirm={async () => {
                 setShowSaveSuccess(false);
                 await fnGetNacpByTokenIds();
             }}></SaveSuccessPopup>
