@@ -63,7 +63,7 @@ export async function getNFTsAtAddress(address: Address) {
 }
 
 export async function getHistories(address: string) {
-    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/transaction/histories/${address}`, {
+    const response = await fetch(`${CONFIG.API_HOST}/transaction/histories/${address}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -72,7 +72,7 @@ export async function getHistories(address: string) {
 }
 
 export async function getUnipassHistories(address: string) {
-    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/bridge/histories/${address}`, {
+    const response = await fetch(`${CONFIG.API_HOST}/bridge/histories/${address}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -81,7 +81,7 @@ export async function getUnipassHistories(address: string) {
 }
 
 export async function getUnipassCkbHistories(address: string) {
-    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/transaction/ckb/histories/${address}`, {
+    const response = await fetch(`${CONFIG.API_HOST}/transaction/ckb/histories/${address}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -90,7 +90,7 @@ export async function getUnipassCkbHistories(address: string) {
 }
 
 export async function insertHistories(from: string, to: string, txHash: string, tokenId: number) {
-    await fetch(`${CONFIG.BRIDGE_API_HOST}/transaction/histories`, {
+    await fetch(`${CONFIG.API_HOST}/transaction/histories`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -108,7 +108,7 @@ export async function insertTransferCkbHistory(
     amount: string,
     txHash?: string
 ) {
-    await fetch(`${CONFIG.BRIDGE_API_HOST}/transaction/ckb/histories`, {
+    await fetch(`${CONFIG.API_HOST}/transaction/ckb/histories`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -121,7 +121,7 @@ export async function insertTransferCkbHistory(
 }
 
 export async function getNFTNameCoverImg() {
-    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/nft/nameCoverImageUrl`, {
+    const response = await fetch(`${CONFIG.API_HOST}/nft/nameCoverImageUrl`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -131,7 +131,7 @@ export async function getNFTNameCoverImg() {
 }
 
 export async function getBridgeTokensUsed() {
-    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/bridge/tokens/used`, {
+    const response = await fetch(`${CONFIG.API_HOST}/bridge/tokens/used`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -141,7 +141,7 @@ export async function getBridgeTokensUsed() {
 }
 
 export async function getAllHoldPoaps(address: string) {
-    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/campaign/poap_badges/all/hold/${address}`, {
+    const response = await fetch(`${CONFIG.API_HOST}/campaign/poap_badges/all/hold/${address}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -151,7 +151,7 @@ export async function getAllHoldPoaps(address: string) {
 }
 
 export async function getPublishedPoaps() {
-    const response = await fetch(`${CONFIG.BRIDGE_API_HOST}/campaign/poap_badges/all`, {
+    const response = await fetch(`${CONFIG.API_HOST}/campaign/poap_badges/all`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -162,7 +162,7 @@ export async function getPublishedPoaps() {
 
 export async function queryOatPoaps(address: string, campaignId: string) {
     const response = await fetch(
-        `${CONFIG.BRIDGE_API_HOST}/campaign/poap_badges/oat/${address}/${campaignId}`,
+        `${CONFIG.API_HOST}/campaign/poap_badges/oat/${address}/${campaignId}`,
         {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
@@ -175,7 +175,7 @@ export async function queryOatPoaps(address: string, campaignId: string) {
 
 export async function queryOatPoapInfo(campaignId: string) {
     const response = await fetch(
-        `${CONFIG.BRIDGE_API_HOST}/campaign/poap_badges/oat_info/${campaignId}`,
+        `${CONFIG.API_HOST}/campaign/poap_badges/oat_info/${campaignId}`,
         {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
