@@ -14,6 +14,7 @@ import { CONFIG } from "../../../utils/config";
 import nacpAbi from '../../../contracts/NervapeComposite.json';
 import NacpApeDetail from "../../components/nft/nacp";
 import NacpEdit from "./edit";
+import SaveSuccessPopup from "./save/success";
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; }) {
     const { isFold, isBonelist, setLoading } = props;
@@ -29,6 +30,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [selectedNacp, setSelectedNacp] = useState<NacpMetadata>();
 
     const [showNacpEdit, setShowNacpEdit] = useState(false);
+    const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
     const { address, isConnected } = useAccount();
     const { data: signer } = useSigner();
@@ -61,6 +63,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     });
 
     async function fnGetNacpByTokenIds() {
+        setLoading(true);
         let _chainApes: NacpMetadata[] = [];
 
         await Promise.all(
@@ -72,6 +75,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         );
 
         setChainApes(_chainApes);
+        setLoading(false);
     }
 
     const handleBonelistMint = async () => {
@@ -148,10 +152,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             fnGetStorySpecialAsset(state.currentAddress);
         }
     }, [currNacpTab]);
-
-    useEffect(() => {
-        console.log('tokenIds', tokenIds);
-    }, [tokenIds]);
 
     async function fnGetStorySpecialAsset(address: string) {
         setLoading(true);
@@ -294,7 +294,14 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     setShowNacpEdit(true);
                 }}
                 nacp={selectedNacp as NacpMetadata}></NacpApeDetail>
-            <NacpEdit show={showNacpEdit} nacp={selectedNacp as NacpMetadata} setShowNacpEdit={setShowNacpEdit}></NacpEdit>
+            <NacpEdit show={showNacpEdit} nacp={selectedNacp as NacpMetadata} setShowNacpEdit={setShowNacpEdit} setShowSaveSuccess={() => {
+                setShowNacpEdit(false);
+                setShowSaveSuccess(true);
+            }}></NacpEdit>
+            <SaveSuccessPopup show={showSaveSuccess} comfirm={async () => {
+                setShowSaveSuccess(false);
+                await fnGetNacpByTokenIds();
+            }}></SaveSuccessPopup>
         </div>
     );
 }

@@ -12,8 +12,8 @@ import { useSignMessage } from "wagmi";
 import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
 
-export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; nacp: NacpMetadata; }) {
-    const { show, setShowNacpEdit, nacp } = props;
+export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; }) {
+    const { show, setShowNacpEdit, setShowSaveSuccess, nacp } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -399,6 +399,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         const res = await nervapeApi.fnSendForVerify(message, signature, _metadata);
 
         setLoading(false);
+
+        setShowSaveSuccess();
     }
 
     function dataURItoBlob(dataURI: string) {
