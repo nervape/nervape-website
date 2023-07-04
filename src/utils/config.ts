@@ -46,5 +46,8 @@ export const CONFIG = {
     METAMASK_APP_URL: import.meta.env.VITE_METAMASK_URL,
 
     // metadata api host
-    METADATA_API_HOST: import.meta.env.VITE_METADATA_API_HOST
+    METADATA_API_HOST: import.meta.env.VITE_METADATA_API_HOST,
+
+    // 允许的网络链接
+    WALLET_ALLOW_CHAINS: JSON.parse(import.meta.env.VITE_WALLET_ALLOW_CHAINS),
 }

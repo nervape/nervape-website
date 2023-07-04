@@ -12,13 +12,14 @@ import FailedIcon from '../../../assets/wallet/header/fail.svg';
 import { Dropdown, MenuProps, message } from "antd";
 import { StoryCollectable } from "../../../nervape/story";
 import { Event } from "../../../nervape/campaign";
-import { mainnet } from "@wagmi/core";
+import { goerli, mainnet } from "@wagmi/core";
 import { useNetwork } from "wagmi";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { LoginWalletType } from "../../../utils/Wallet";
 import { godWoken } from "../../../utils/Chain";
 import { Types } from "../../../utils/reducers";
+import { CONFIG } from "../../../utils/config";
 
 const AvatarBackgroundColors = [
     "#FFE3EB",
@@ -143,7 +144,7 @@ export default function WalletHeader(props: any) {
     const walletIcon = () => {
         if (state.loginWalletType === LoginWalletType.UNIPASS_V3) return NervosLogo;
         // 检查是否支持当前网络
-        if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
+        if (!chain || !CONFIG.WALLET_ALLOW_CHAINS.includes(chain.id)) {
             return InfoIcon;
         }
         return chain.id === godWoken.id ? GodwokenLogo : EthLogo;

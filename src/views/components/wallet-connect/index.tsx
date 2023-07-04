@@ -3,7 +3,7 @@ import { DataContext } from "../../../utils/utils";
 import './index.less';
 
 import { clearStorage, getStorage, LoginWalletType, setStorage, WALLET_CONNECT } from '../../../utils/Wallet';
-import { mainnet, useAccount, useDisconnect, useNetwork } from "wagmi";
+import { goerli, mainnet, useAccount, useDisconnect, useNetwork } from "wagmi";
 import { UnipassV3Wrapper } from "../../../utils/UnipassV3Wrapper";
 import { Dropdown, MenuProps, message } from "antd";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -18,6 +18,7 @@ import DisconnectIcon from '../../../assets/icons/disconnect.svg';
 import { Types } from "../../../utils/reducers";
 import { godWoken } from "../../../utils/Chain";
 import { SwitchChainSpan } from "../switchChain";
+import { CONFIG } from "../../../utils/config";
 
 export default function WallectConnect(props: any) {
     const { setDisableList } = props;
@@ -268,7 +269,7 @@ export default function WallectConnect(props: any) {
     const walletIcon = () => {
         if (state.loginWalletType === LoginWalletType.UNIPASS_V3) return NervosLogo;
         // 检查是否支持当前网络
-        if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
+        if (!chain || !CONFIG.WALLET_ALLOW_CHAINS.includes(chain.id)) {
             return InfoIcon;
         }
         return chain.id === godWoken.id ? GodwokenLogo : EthLogo;
@@ -296,7 +297,7 @@ export default function WallectConnect(props: any) {
     useEffect(() => {
         setItems([]);
         if (state.loginWalletType === LoginWalletType.WALLET_CONNECT) {
-            if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
+            if (!chain || !CONFIG.WALLET_ALLOW_CHAINS.includes(chain.id)) {
                 setItems(_items1);
             } else {
                 setItems(_items);

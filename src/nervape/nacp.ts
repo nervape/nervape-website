@@ -26,6 +26,13 @@ export class NACP_SPECIAL_ASSET {
     story_quiz?: Story;
 }
 
+export class USER_ASSET {
+    address: string = '';
+    asset: NACP_SPECIAL_ASSET = new NACP_SPECIAL_ASSET();
+    used: boolean = false;
+    is_holder: boolean = false;
+}
+
 export enum STORY_QUIZ_STATUS {
     NOT_START = 'not_start',
     IN_PROGRESS = 'in_progress',

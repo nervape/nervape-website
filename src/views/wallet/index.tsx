@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 import { Amount } from '@lay2/pw-core';
-import { mainnet, useAccount, useNetwork } from 'wagmi';
+import { goerli, mainnet, useAccount, useNetwork } from 'wagmi';
 import { DataContext, getWindowScrollTop, updateBodyOverflow } from '../../utils/utils';
 import { TransferSuccess } from '../components/nft/nft';
 import { LoginWalletType } from '../../utils/Wallet';
@@ -31,6 +31,7 @@ import EventIcon from "../../assets/wallet/navbar/event.svg";
 import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
 import InvitationClaim from "./invitation";
+import { CONFIG } from "../../utils/config";
 
 export class WalletNavBar {
     name: string = "";
@@ -133,10 +134,9 @@ export default function WalletNewPage() {
     }, [history, navbars]);
 
     useEffect(() => {
-        console.log('chain', chain);
         if (!chain) return;
         if (state.loginWalletType === LoginWalletType.WALLET_CONNECT) {
-            if (![godWoken.id, mainnet.id].includes(chain.id)) {
+            if (!CONFIG.WALLET_ALLOW_CHAINS.includes(chain.id)) {
                 setSwitchChain(true);
             } else {
                 setSwitchChain(false);
