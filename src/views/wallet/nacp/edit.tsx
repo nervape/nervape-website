@@ -729,6 +729,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 confirm={() => {
                     setShowNacpEdit(false);
                     setShowDiscardPopup(false);
+                    updateBodyOverflow(true);
                 }}></DiscardPopup>
         </div>
     );

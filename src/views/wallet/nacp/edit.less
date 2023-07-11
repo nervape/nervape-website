@@ -386,14 +386,14 @@
 
             .nacp-camera-content {
               margin-top: 8px;
-              height: 347px;
+              height: calc(100vh - 386px);
               margin: 32px auto 16px;
 
               max-width: 347px;
               max-height: 347px;
 
               &.fold {
-                height: calc(100vh - 308.5px);
+                height: calc(100vh - 419.5px);
               }
             }
 
@@ -481,8 +481,10 @@
 
           .assets {
             padding-top: 8px;
-            height: calc(100vh - 539.5px - 39px);
+            max-height: calc(100vh - 539.5px - 39px);
+            min-height: 181px;
             overflow-y: scroll;
+            align-items: flex-start;
 
             .asset-item {
               width: calc((100% - 20px) / 3);
@@ -562,6 +564,7 @@
         position: absolute;
         width: 347px;
         height: calc(100vh - 539.5px);
+        min-height: 220px;
         border-radius: 16px 16px 0 0;
         background: #434351;
         bottom: 0;
