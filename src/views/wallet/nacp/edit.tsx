@@ -12,6 +12,8 @@ import { useSignMessage } from "wagmi";
 import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
 
+let touchYStart = 0;
+
 export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; }) {
     const { show, setShowNacpEdit, setShowSaveSuccess, nacp } = props;
 
@@ -37,7 +39,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [selectedAssets, setSelectedAssets] = useState<NacpAsset[]>([]);
     const [showDiscardPopup, setShowDiscardPopup] = useState(false);
     const [isCollectionOpen, setIsCollectionOpen] = useState(false);
+    const [isFold, setIsFold] = useState(false);
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
+
+    const [mShowCollection, setMShowCollection] = useState(false);
+    const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
         const res = await nervapeApi.fnGetPhases();
@@ -46,8 +52,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setPhaseHistoryStack([]);
         setHistoryIndex(-1);
         // 处理 categories
-        setCurrCategory(res[0].categories[0]);
-        setSelectCategory(res[0].categories[0]._id);
+        if (state.windowWidth > 375) {
+            setCurrCategory(res[0].categories[0]);
+            setSelectCategory(res[0].categories[0]._id);
+        }
+
         const _phases = await initNacpAsset(res);
         setPhases(_phases);
     }
@@ -191,6 +200,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             return s;
         })
 
+        setMCollectionAsset(asset);
         setIsCollectionOpen(is_open);
         setAssets(_assets);
     }
@@ -467,7 +477,21 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     return (
         <div className={`wallet-nacp-edit-container popup-container ${show && 'show'}`}>
-            <div className="wallet-nacp-edit-content">
+            <div
+                className={`wallet-nacp-edit-content transition ${isFold && 'fold'}`}
+                onTouchStart={e => {
+                    if (state.windowWidth <= 375) {
+                        touchYStart = e.changedTouches[0].clientY;
+                    }
+                }}
+                onTouchEnd={e => {
+                    if (state.windowWidth <= 375) {
+                        const end = e.changedTouches[0].clientY;
+                        if (end - touchYStart > 100) {
+                            setIsFold(false);
+                        }
+                    }
+                }}>
                 <div className="edit-header flex-align">
                     <div className="title">{nacp.name}</div>
                     <div className="btn-groups flex-align">
@@ -477,7 +501,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                         }}>Discard</button>
                     </div>
                 </div>
-                <div className="edit-content flex-align">
+                <div className={`edit-content ${state.windowWidth > 375 && 'flex-align'}`}>
                     <div className="left-content">
                         <div className="content-container">
                             <div className="phases-tabs flex-align">
@@ -485,7 +509,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                     return (
                                         <div
                                             key={index}
-                                            className={`cursor transation phase-tab ${index == selectPhase && 'selected'}`}
+                                            className={`cursor transition phase-tab ${index == selectPhase && 'selected'}`}
                                             onClick={() => {
                                                 if (index == selectPhase) return;
                                                 setSelectPhase(index);
@@ -493,15 +517,15 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                 setCurrCategory(phases[index].categories[0]);
                                             }}>
                                             {phase.status !== 1 ? <NacpPhaseLockedIcon></NacpPhaseLockedIcon> : <NacpPhaseOpenIcon></NacpPhaseOpenIcon>}
-                                            <div className="transation name">{phase.name}</div>
+                                            <div className="transition name">{phase.name}</div>
                                         </div>
                                     );
                                 })}
                             </div>
 
-                            <div className="nacp-camera-content">
+                            <div className={`nacp-camera-content transition ${isFold && 'fold'}`}>
                                 {selectedAssets.length > 0 ? (
-                                    <div className={`nacp-assets transation ${selectPhase == 1 && 'scale'}`}>
+                                    <div className={`nacp-assets transition ${selectPhase == 1 && 'scale'}`}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
@@ -515,7 +539,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 )}
 
                                 {selectedAssets.length > 0 ? (
-                                    <div className={`nacp-assets-save transation`} style={{width: '500px', height: '500px'}} ref={elementRef}>
+                                    <div className={`nacp-assets-save transition`} style={{ width: '500px', height: '500px' }} ref={elementRef}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
@@ -529,7 +553,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 )}
 
                                 {selectedAssets.length > 0 ? (
-                                    <div className={`nacp-assets-save scale transation`} ref={coverElementRef}>
+                                    <div className={`nacp-assets-save scale transition`} ref={coverElementRef}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
@@ -566,15 +590,16 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         }}>Redo</button>
                                 </div>
                             </div>
-                            <div className="phase-categories flex-align">
+                            <div className={`phase-categories flex-align ${isFold && 'fold'}`}>
                                 {phases[selectPhase]?.categories.map((category, index) => {
                                     return (
                                         <div
                                             key={index}
-                                            className={`cursor transation phase-category ${selectCategory == category._id && 'selected'}`}
+                                            className={`cursor transition phase-category ${selectCategory == category._id && 'selected'}`}
                                             onClick={() => {
                                                 setSelectCategory(category._id);
                                                 setCurrCategory(category);
+                                                if (!isFold) setIsFold(true);
                                             }}>
                                             {NacpCategoryIcons.get(category.name)}
                                             <div className="select-asset-img">
@@ -588,7 +613,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                             </div>
                         </div>
                     </div>
-                    <div className="right-content">
+                    <div
+                        className={`right-content ${!isFold && 'hide'}`}
+                        onTouchStart={e => e.stopPropagation()}
+                        onTouchEnd={e => e.stopPropagation()}>
                         {phases[selectPhase].status !== 1 ? (
                             <div className="locked-content">
                                 <NacpPhaseLockedIcon></NacpPhaseLockedIcon>
@@ -621,7 +649,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         return (
                                             <div
                                                 key={index}
-                                                className={`cursor transation asset-item ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
+                                                className={`cursor transition asset-item ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
                                                 onClick={() => {
                                                     if (isCollectionOpen && !asset.show_collection) return;
 
@@ -634,7 +662,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                     openOrCloseCollection(asset);
                                                 }}>
                                                 <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
-                                                {asset.is_collection && asset.show_collection && (
+                                                {asset.is_collection && asset.show_collection && state.windowWidth > 375 && (
                                                     <div
                                                         className={`asset-collection ${selected && 'selected'}`}
                                                         style={devStyle}
@@ -645,7 +673,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             {asset.includes?.map((_asset, _index) => {
                                                                 return (
                                                                     <div
-                                                                        className={`cursor transation collection-item ${_asset._id == currCategory.selected?._id && 'selected'}`}
+                                                                        className={`cursor transition collection-item ${_asset._id == currCategory.selected?._id && 'selected'}`}
                                                                         key={_index}
                                                                         onClick={e => {
                                                                             if (_asset._id == currCategory.selected?._id) return;
@@ -665,6 +693,30 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 </div>
                             </>
                         )}
+                    </div>
+                </div>
+            </div>
+
+            <div className={`popup-container m-collection-assets-content ${isCollectionOpen && 'show'}`} onClick={() => {
+                if (mCollectionAsset)
+                    openOrCloseCollection(mCollectionAsset);
+            }}>
+                <div className={`m-collection-assets transition`}>
+                    <div className="collection-imgs flex-align">
+                        {mCollectionAsset?.includes?.map((_asset, _index) => {
+                            return (
+                                <div
+                                    className={`cursor transition collection-item ${_asset._id == currCategory.selected?._id && 'selected'}`}
+                                    key={_index}
+                                    onClick={e => {
+                                        if (_asset._id == currCategory.selected?._id) return;
+                                        chooseAsset(_asset);
+                                        e.stopPropagation();
+                                    }}>
+                                    <img src={_asset.thumb_url} alt="CollectionImg" className="collection-img" />
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

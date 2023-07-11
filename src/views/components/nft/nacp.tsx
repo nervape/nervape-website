@@ -60,15 +60,14 @@ export default function NacpApeDetail(props: {
                         </div>
                         <div className="btn-groups">
                             <button
-                                className="btn cursor"
+                                className="btn cursor profile"
                                 onClick={() => {
-                                    console.log('opensea');
-                                }}
-                            >
-                                VIEW ON OPENSEA
+                                    // 设置头像
+                                }}>
+                                SET PROFILE IMAGE
                             </button>
                             <button
-                                className="btn cursor"
+                                className="btn cursor edit"
                                 onClick={() => {
                                     // edit
                                     close();
@@ -78,11 +77,12 @@ export default function NacpApeDetail(props: {
                                 EDIT
                             </button>
                             <button
-                                className="btn cursor"
+                                className="btn cursor opensea"
                                 onClick={() => {
-                                    // 设置头像
-                                }}>
-                                SET PROFILE IMAGE
+                                    console.log('opensea');
+                                }}
+                            >
+                                VIEW ON OPENSEA
                             </button>
                         </div>
                     </div>
