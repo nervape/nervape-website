@@ -437,8 +437,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         delete signData.fields.host;
 
         await toPng(ref.current as unknown as HTMLElement, { cacheBust: true, fontEmbedCSS: '', style: { top: '0px' } });
-        // await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
-        // await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
+        await toPng(ref.current as unknown as HTMLElement, { cacheBust: true, fontEmbedCSS: '', style: { top: '0px' } });
+        await toPng(ref.current as unknown as HTMLElement, { cacheBust: true, fontEmbedCSS: '', style: { top: '0px' } });
 
         const dataUrl = await toPng(ref.current as unknown as HTMLElement, { cacheBust: true, fontEmbedCSS: '', style: { top: '0px' } });
 
