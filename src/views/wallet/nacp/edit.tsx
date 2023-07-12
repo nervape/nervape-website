@@ -370,8 +370,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         const url = res.fields.host + res.fields.key;
         const thumb_url = res.fields.host + res.fields.thumb_key;
 
-        htmlToImageConvert(res, elementRef, 'key');
-        htmlToImageConvert(res, coverElementRef, 'thumb_key');
+        await htmlToImageConvert(res, elementRef, 'key');
+        await htmlToImageConvert(res, coverElementRef, 'thumb_key');
 
         const message = new SiweMessage({
             domain,
@@ -450,9 +450,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         formData.append('success_action_status', signData.fields['success_action_status']);
         formData.append('file', dataURItoBlob(dataUrl));
 
-        const result = await nervapeApi.NacpFileUpload(signData.url, formData);
-        console.log(result);
-
+        nervapeApi.NacpFileUpload(signData.url, formData);
     }
 
     useEffect(() => {
