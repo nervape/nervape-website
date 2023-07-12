@@ -436,7 +436,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const htmlToImageConvert = async (signData: { fields: any; url: string; }, ref: any, key: string) => {
         delete signData.fields.host;
 
-        await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
+        await toPng(ref.current as unknown as HTMLElement, { cacheBust: true, fontEmbedCSS: '', style: { top: '0px' } });
         // await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         // await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
 
