@@ -531,7 +531,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
-                                                    <img crossOrigin="anonymous" src={asset.url} alt="" />
+                                                    <img src={asset.url} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -545,7 +545,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
-                                                    <img crossOrigin="anonymous" src={asset.url} alt="" />
+                                                    <img src={asset.url} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -559,7 +559,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
-                                                    <img crossOrigin="anonymous" src={asset.url} alt="" />
+                                                    <img src={asset.url} alt="" />
                                                 </div>
                                             );
                                         })}
