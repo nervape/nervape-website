@@ -55,6 +55,7 @@ export class NacpCategory {
     excludes?: NacpCategory[];
     level: number = 0;
     headwear_back_level: number = 0; // 如果是 headwear ,back的层级
+    eyewear_back_level: number = 0; // 如果是 eyewear ,back的层级
     sort: number = 0;
     selected?: NacpAsset;
     eyewear_as_mask_excludes?: NacpCategory[];
@@ -71,6 +72,7 @@ export class NacpAsset {
     url: string = "";
     is_mask_only?: boolean;
     is_headwear_back?: boolean;
+    is_eyewear_back?: boolean;
     excludes?: NacpAsset[];
     sort: number = 0;
     description: string = "";

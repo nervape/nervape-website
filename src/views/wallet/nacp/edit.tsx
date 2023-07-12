@@ -530,7 +530,14 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                     <div className={`nacp-assets transition ${selectPhase == 1 && 'scale'}`}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
-                                                <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
+                                                <div
+                                                    key={index}
+                                                    className="nacp-asset"
+                                                    style={{
+                                                        zIndex: asset.is_headwear_back
+                                                            ? asset.category?.headwear_back_level
+                                                            : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
+                                                    }}>
                                                     <img crossOrigin="anonymous" src={`${asset.url}?v=1`} alt="" />
                                                 </div>
                                             );
@@ -544,7 +551,14 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                     <div className={`nacp-assets-save transition`} style={{ width: '500px', height: '500px' }} ref={elementRef}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
-                                                <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
+                                                <div
+                                                    key={index}
+                                                    className="nacp-asset"
+                                                    style={{
+                                                        zIndex: asset.is_headwear_back
+                                                            ? asset.category?.headwear_back_level
+                                                            : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
+                                                    }}>
                                                     <img crossOrigin="anonymous" src={`${asset.url}?v=1`} alt="" />
                                                 </div>
                                             );
@@ -558,7 +572,14 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                     <div className={`nacp-assets-save scale transition`} ref={coverElementRef}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
-                                                <div key={index} className="nacp-asset" style={{ zIndex: asset.is_headwear_back ? asset.category?.headwear_back_level : asset.category?.level }}>
+                                                <div
+                                                    key={index}
+                                                    className="nacp-asset"
+                                                    style={{
+                                                        zIndex: asset.is_headwear_back
+                                                            ? asset.category?.headwear_back_level
+                                                            : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
+                                                    }}>
                                                     <img crossOrigin="anonymous" src={`${asset.url}?v=1`} alt="" />
                                                 </div>
                                             );
