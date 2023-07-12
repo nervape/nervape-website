@@ -217,24 +217,9 @@
   }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 1200px) {
   .nacp-ape-detail-container {
     .nft-card-detail {
-      width: 100vw;
-      height: 100vh;
-      display: unset;
-
-      .preview-model {
-        width: 100vw;
-        height: 100vw;
-      }
-
-      .detail-info {
-        width: 100vw;
-        height: calc(100vh - 100vw);
-        overflow-y: scroll;
-      }
-
       .detail-info.m {
         .info-content {
           padding: 16px;
@@ -280,6 +265,46 @@
             }
           }
         }
+      }
+    }
+  }
+}
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+  .nacp-ape-detail-container {
+    .nft-card-detail {
+      width: 600px;
+      height: 100vh;
+      display: unset;
+
+      .preview-model {
+        width: 100%;
+        height: 600px;
+      }
+
+      .detail-info {
+        width: 100%;
+        height: calc(100vh - 600px);
+        overflow-y: scroll;
+      }
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .nacp-ape-detail-container {
+    .nft-card-detail {
+      width: 100vw;
+      height: 100vh;
+      display: unset;
+
+      .preview-model {
+        width: 100vw;
+        height: 100vw;
+      }
+
+      .detail-info {
+        width: 100vw;
+        height: calc(100vh - 100vw);
+        overflow-y: scroll;
       }
     }
   }
