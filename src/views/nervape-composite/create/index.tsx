@@ -11,9 +11,15 @@ import {
     useContract,
     useContractReads,
     useSigner,
-    goerli
+    goerli,
+    useTransaction
 } from "wagmi";
 
+import {
+  waitForTransaction,
+  fetchTransaction,
+
+} from '@wagmi/core'
 
 import { CONFIG } from '../../../utils/config';
 import { nervapeApi } from "../../../api/nervape-api";
@@ -112,20 +118,45 @@ export default function Nacp() {
 
     }, [address, state.loginWalletType, state.currentAddress, chain]);
 
+
+    console.log("minting-tx", localStorage.getItem("minting-tx"))
+
+    const mintTransaction = useTransaction({
+        hash: localStorage.getItem("minting-tx") ? localStorage.getItem("minting-tx") as `0x${string}` : undefined,
+    })
+
+    console.log("mintTransaction=", mintTransaction)
+
+    if(!mintTransaction.data) {
+        // replaced or not send to network
+        console.log("tx not found")
+    } else {
+        if(mintTransaction.data.confirmations > 0) {
+        // success
+        } else {
+            // pending
+            console.log("wait for confirming")
+        }
+    }
     
     const handleBonelistMint = async () => {
         const signature = await nervapeApi.fnGetSignature(address as string);
         try {
             const tx = await contract?.bonelistMint(signature);
+            // save txhash to localStorage
+            localStorage.setItem("minting-tx", tx.hash)
+
             const receipt = await tx.wait()
             if(receipt.status) {
                 // tx success
             } else {
                 // tx failed
             }
+            
         } catch(err: any) {
             console.log("err=", err.reason)
         }
+        localStorage.removeItem("minting-tx")
     }
     const handleMint = async () => {
         try {
