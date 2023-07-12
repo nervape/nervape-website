@@ -436,7 +436,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const htmlToImageConvert = async (signData: { fields: any; url: string; }, ref: any, key: string) => {
         delete signData.fields.host;
 
-        const dataUrl = await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, style: { top: '0px' } });
+        const dataUrl = await toPng(ref.current as unknown as HTMLElement, { cacheBust: true, style: { top: '0px' } });
 
         const formData = new FormData();
         formData.append('bucket', signData.fields.bucket);
