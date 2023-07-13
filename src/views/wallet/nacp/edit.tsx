@@ -252,11 +252,16 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     async function fnRandomizeAssets() {
         let _phases = JSON.parse(JSON.stringify(phases));
         let _assets: NacpAsset[] = [];
+        const _categories: NacpCategory[] = JSON.parse(JSON.stringify(phases[selectPhase].categories));
+        const _categoryIds = _categories.map(_c => _c._id);
 
-        const _selectedAssets = JSON.parse(JSON.stringify(selectedAssets));
+        let _selectedAssets = JSON.parse(JSON.stringify(selectedAssets));
+        // 过滤当前已选择的asset是否是当前category
+        _selectedAssets = _selectedAssets.filter((_s: NacpAsset) => {
+            return !_categoryIds.includes(_s.category?._id || '');
+        })
         _assets = _assets.concat(_selectedAssets);
         // 1. 随机排序当前 Phase category
-        const _categories = JSON.parse(JSON.stringify(phases[selectPhase].categories));
         _categories.sort(() => { return Math.random() - 0.5 });
         // 2.按顺序随机当前category asset
         await Promise.all(
@@ -648,10 +653,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                             </div>
                         ) : (
                             <>
-                                <div className="curr-category flex-align">
-                                    {NacpCategoryIcons.get(currCategory?.name)}
-                                    <div className="category-name">{currCategory?.name}</div>
-                                </div>
+                                {state.windowWidth > 375 && (
+                                    <div className="curr-category flex-align">
+                                        {NacpCategoryIcons.get(currCategory?.name)}
+                                        <div className="category-name">{currCategory?.name}</div>
+                                    </div>
+                                )}
 
                                 <div className="assets flex-align">
                                     {assets.map((asset, index) => {

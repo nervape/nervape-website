@@ -9,7 +9,7 @@ import { nervapeApi } from "../../../api/nervape-api";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { NACP_APE, NACP_SPECIAL_ASSET, NacpMetadata } from "../../../nervape/nacp";
 import AssetItem from "./asset-item";
-import { goerli, useAccount, useContract, useContractRead, useNetwork, useSigner } from "wagmi";
+import { goerli, useAccount, useContract, useContractRead, useNetwork, useSigner, useTransaction } from "wagmi";
 import { CONFIG } from "../../../utils/config";
 import nacpAbi from '../../../contracts/NervapeComposite.json';
 import NacpApeDetail from "../../components/nft/nacp";
@@ -43,18 +43,18 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
     const setHideHeader = (value: boolean) => {
         dispatch({
-          type: Types.IsVisibleHeader,
-          value: value
+            type: Types.IsVisibleHeader,
+            value: value
         })
-      }
+    }
 
     const { data: tokenIds, isSuccess: isTokenSuccess } = useContractRead({
         address: CONFIG.NACP_ADDRESS,
         abi: nacpAbi,
         functionName: 'tokensOfOwner',
         cacheOnBlock: true,
-        args: [address]
-        // watch: true
+        args: [address],
+        watch: true
     })
 
     const { data: minted, isSuccess: isMintedSuccess } = useContractRead({
@@ -62,9 +62,20 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         abi: nacpAbi,
         functionName: 'minted',
         cacheOnBlock: true,
-        args: [address]
-        // watch: true
+        args: [address],
+        watch: true
     });
+
+    useTransaction({
+        hash: localStorage.getItem("minting-tx") ? localStorage.getItem("minting-tx") as `0x${string}` : undefined,
+        onSettled(data, error) {
+            console.log('Settled', { data, error })
+            // 查询 txhash 交易状态
+            if (data && data.confirmations > 0) {
+                localStorage.removeItem('minting-tx');
+            }
+        },
+    })
 
     const hasMinted = (minted as any)?.toNumber() > 0;
 
@@ -75,6 +86,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     });
 
     async function fnGetNacpByTokenIds() {
+        if (chainApes.length) return;
         setLoading(true);
         let _chainApes: NacpMetadata[] = [];
 
@@ -94,7 +106,14 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         const signature = await nervapeApi.fnGetSignature(address as string);
         try {
             const tx = await contract?.bonelistMint(signature);
-            const receipt = await tx.wait()
+            console.log('handleBonelistMint', tx);
+            // save txhash to localStorage 0xb8d8193b34e56a1e59c87e9c00b2a4f1e3bcf539e5b7fe38df2f12aeffeb3c92
+            localStorage.setItem("minting-tx", tx.hash);
+
+            setShowMintTip(false);
+            setShowMint(false);
+
+            const receipt = await tx.wait();
             if (receipt.status) {
                 // tx success
             } else {
@@ -108,7 +127,13 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const handleMint = async () => {
         try {
             const tx = await contract?.mint();
-            const receipt = await tx.wait()
+            // save txhash to localStorage
+            localStorage.setItem("minting-tx", tx.hash)
+
+            setShowMintTip(false);
+            setShowMint(false);
+
+            const receipt = await tx.wait();
             if (receipt.status) {
                 // success
             }
@@ -127,9 +152,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
         if (!hasMinted) {
             nervapeApi.fnMintAllow(state.currentAddress).then(res => {
-                if (res && !hasMinted) setShowMint(true);
+                if (res && !hasMinted && !localStorage.getItem("minting-tx")) setShowMint(true);
             })
         } else {
+            localStorage.removeItem('minting-tx');
             setShowMint(false);
         }
     }, [state.currentAddress, chain, hasMinted, isMintedSuccess]);
@@ -331,7 +357,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     setShowSwitchChain(false);
                     updateBodyOverflow(true);
                 }}></SwitchChainPopup>
-            <MintTipPopup 
+            <MintTipPopup
                 show={showMintTip}
                 close={() => {
                     setShowMintTip(false);
