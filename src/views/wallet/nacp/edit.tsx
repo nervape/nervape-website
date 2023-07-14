@@ -27,6 +27,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     const elementRef = useRef(null);
     const coverElementRef = useRef(null);
+    const assetsRef = useRef(null);
 
     const [phases, setPhases] = useState<NacpPhase[]>([]);
     const [selectPhase, setSelectPhase] = useState(0);
@@ -52,7 +53,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setPhaseHistoryStack([]);
         setHistoryIndex(-1);
         // 处理 categories
-        if (state.windowWidth > 375) {
+        if (state.windowWidth > 750) {
             setCurrCategory(res[0].categories[0]);
             setSelectCategory(res[0].categories[0]._id);
         }
@@ -81,7 +82,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 })
             }
         })
-        console.log('nacpAssets', nacpAssets);
         setSelectedAssets(nacpAssets);
         return _phases;
     }
@@ -96,11 +96,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     async function chooseAsset(asset: NacpAsset) {
         if (!currCategory) return;
-        console.log(asset);
 
         // 更新 selectedAssets
         let _selectedAssets: NacpAsset[] = JSON.parse(JSON.stringify(selectedAssets));
-        console.log('_selectedAssets', _selectedAssets);
         _selectedAssets = _selectedAssets.filter(_asset => {
             // 检查 asset.excludes
             if (asset.excludes && asset.excludes.length) {
@@ -236,8 +234,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setHistoryIndex(historyIndex - 1);
         setPhases(phaseHistoryStack[historyIndex - 1]);
         fnUpdateCurrCategory(phaseHistoryStack[historyIndex - 1]);
-
-        console.log('assetsHistoryStack', assetsHistoryStack);
     }
 
     async function fnOperateNext() {
@@ -245,8 +241,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setHistoryIndex(historyIndex + 1);
         setPhases(phaseHistoryStack[historyIndex + 1]);
         fnUpdateCurrCategory(phaseHistoryStack[historyIndex + 1]);
-
-        console.log('assetsHistoryStack', assetsHistoryStack);
     }
 
     async function fnRandomizeAssets() {
@@ -487,12 +481,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             <div
                 className={`wallet-nacp-edit-content transition ${isFold && 'fold'}`}
                 onTouchStart={e => {
-                    if (state.windowWidth <= 375) {
+                    if (state.windowWidth <= 750) {
                         touchYStart = e.changedTouches[0].clientY;
                     }
                 }}
                 onTouchEnd={e => {
-                    if (state.windowWidth <= 375) {
+                    if (state.windowWidth <= 750) {
                         const end = e.changedTouches[0].clientY;
                         if (end - touchYStart > 100) {
                             setIsFold(false);
@@ -508,7 +502,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                         }}>Discard</button>
                     </div>
                 </div>
-                <div className={`edit-content ${state.windowWidth > 375 && 'flex-align'}`}>
+                <div className={`edit-content ${state.windowWidth > 750 && 'flex-align'}`}>
                     <div className="left-content">
                         <div className="content-container">
                             <div className="phases-tabs flex-align">
@@ -642,7 +636,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                         </div>
                     </div>
                     <div
-                        className={`right-content ${!isFold && 'hide'}`}
+                        className={`right-content ${!isFold && 'hide'} ${phases[selectPhase].status !== 1 && 'locked'}`}
                         onTouchStart={e => e.stopPropagation()}
                         onTouchEnd={e => e.stopPropagation()}>
                         {phases[selectPhase].status !== 1 ? (
@@ -653,28 +647,38 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                             </div>
                         ) : (
                             <>
-                                {state.windowWidth > 375 && (
+                                {state.windowWidth > 750 && (
                                     <div className="curr-category flex-align">
                                         {NacpCategoryIcons.get(currCategory?.name)}
                                         <div className="category-name">{currCategory?.name}</div>
                                     </div>
                                 )}
 
-                                <div className="assets flex-align">
+                                <div className="assets flex-align" ref={assetsRef}>
                                     {assets.map((asset, index) => {
                                         let devStyle = {}
                                         let filters: NacpAsset[] = [];
                                         let selected: boolean = asset._id == currCategory.selected?._id;
+                                        let preNumber = 4;
+
+                                        if (state.windowWidth == 1000 || state.windowWidth == 1440) {
+                                            preNumber = 3;
+                                        }
+
+                                        if (!assetsRef.current) return <></>;
+                                        
+                                        const assetsWidth = (assetsRef.current as unknown as HTMLElement).offsetWidth;
+                                        const preWidth = (assetsWidth - (preNumber - 1) * 10) / preNumber;
 
                                         if (asset.is_collection) {
                                             // 是否选中集合中的asset
                                             filters = asset.includes?.filter(a => a._id == currCategory.selected?._id) || [];
                                             selected = selected || filters.length > 0;
-                                            const i = index % 4;
-                                            const offsetPx = 12 * i;
-                                            const extraPx = selected ? `${6 * i + 4}px` : '1px';
 
-                                            devStyle = { left: `calc(-100% * ${i} - ${extraPx} - ${offsetPx}px)` }
+                                            const j = Math.floor(index / preNumber) + 1;
+                                            const offsetTopPx = 10;
+
+                                            devStyle = {width: assetsWidth + 'px', top: ((preWidth + offsetTopPx) * j + 16) + 'px'};
                                         }
                                         return (
                                             <div
@@ -692,7 +696,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                     openOrCloseCollection(asset);
                                                 }}>
                                                 <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
-                                                {asset.is_collection && asset.show_collection && state.windowWidth > 375 && (
+                                                {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (
                                                     <div
                                                         className={`asset-collection ${selected && 'selected'}`}
                                                         style={devStyle}
@@ -727,7 +731,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 </div>
             </div>
 
-            <div className={`popup-container m-collection-assets-content ${state.windowWidth <= 375 && isCollectionOpen && 'show'}`} onClick={() => {
+            <div className={`popup-container m-collection-assets-content ${state.windowWidth <= 750 && isCollectionOpen && 'show'}`} onClick={() => {
                 if (mCollectionAsset)
                     openOrCloseCollection(mCollectionAsset);
             }}>

@@ -31,7 +31,7 @@ export default function Login(props: any) {
             const maskCover = document.getElementById('mask-cover');
             const bottomContent = document.getElementById('bottom-content');
 
-            if (windowWidth === 375) return;
+            if (windowWidth <= 750) return;
             if (maskCover && bottomContent) {
                 if (window.innerHeight - 64 - 95 - 40 < maskCover.offsetHeight) {
                     document.body.style.overflow = 'auto';
@@ -160,7 +160,7 @@ export default function Login(props: any) {
                         {/* <Tutorial></Tutorial> */}
                     </div>
                 </div>
-                {windowWidth === 375 && <div className="bottom"></div>}
+                {windowWidth <= 750 && <div className="bottom"></div>}
             </div>
             {/* <Footer></Footer> */}
             <LoginModal></LoginModal>

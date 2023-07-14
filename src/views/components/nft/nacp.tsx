@@ -5,6 +5,7 @@ import DetailCloseIcon from '../../../assets/images/nft/close_detail.svg';
 import { NacpMetadata } from "../../../nervape/nacp";
 import './nacp.less';
 import { NacpCategoryIcons } from "../../../nervape/svg";
+import { CONFIG } from "../../../utils/config";
 
 export default function NacpApeDetail(props: {
     show: boolean;
@@ -22,7 +23,7 @@ export default function NacpApeDetail(props: {
             <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
                     <img src={nacp.image} className="cover-image" alt="" />
-                    {state.windowWidth !== 1200 && (
+                    {state.windowWidth <= 1200 && (
                         <div className="close-detail-c">
                             <img
                                 loading="lazy"
@@ -80,6 +81,7 @@ export default function NacpApeDetail(props: {
                                 className="btn cursor opensea"
                                 onClick={() => {
                                     console.log('opensea');
+                                    window.open(CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS + '/' + nacp.id);
                                 }}
                             >
                                 VIEW ON OPENSEA

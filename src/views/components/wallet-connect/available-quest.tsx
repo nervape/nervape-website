@@ -41,7 +41,7 @@ export default function AvailableQuest(props: { events: Event[]; quizes: StoryCo
                     <img src={isEvent ? EventIcon : QuizIcon} alt="" />
                     <div className="text">{isEvent ? 'Badge' : 'Quiz'}</div>
                 </div>
-                <div className={`quest-right ${state.windowWidth > 375 && 'flex-align'}`}>
+                <div className={`quest-right ${state.windowWidth > 750 && 'flex-align'}`}>
                     <div className="quest-title">{isEvent ? item.title : item.quizName}</div>
                     {isEvent && (
                         <div className="quest-date">{`ends ${moment(item.endTime).format("M/D/Y")}`}</div>

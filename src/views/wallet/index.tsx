@@ -73,7 +73,7 @@ export default function WalletNewPage() {
     }
 
     const setSwitchChain = (flag: boolean) => {
-        const _extra_padding = flag ? (state.windowWidth > 375 ? '60px' : '64px') : '0px'
+        const _extra_padding = flag ? (state.windowWidth > 750 ? '60px' : '64px') : '0px'
         document.body.style.setProperty('--extra-padding', _extra_padding);
 
         dispatch({
@@ -282,7 +282,7 @@ export default function WalletNewPage() {
     }
 
     useEffect(() => {
-        if (state.windowWidth > 375) {
+        if (state.windowWidth > 750) {
             window.addEventListener('scroll', fnScrollPage, true);
 
             return () => window.removeEventListener('scroll', fnScrollPage, true);

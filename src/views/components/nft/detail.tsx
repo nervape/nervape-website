@@ -130,7 +130,7 @@ export default function NftCardDetail(props: {
                 <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                     <div className="preview-model">
                         <PreviewModel enableModuleUrl={nft?.renderer} id="card"></PreviewModel>
-                        {state.windowWidth !== 1200 && (
+                        {state.windowWidth <= 1200 && (
                             <div className="close-detail-c">
                                 <img
                                     loading="lazy"

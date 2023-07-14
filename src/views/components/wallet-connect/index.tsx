@@ -320,7 +320,7 @@ export default function WallectConnect(props: any) {
 
     return (
         <div className="wallect-connect-modal">
-            {state.windowWidth > 750 ? (
+            {state.windowWidth > 1200 ? (
                 !state.currentAddress ? (
                     <button
                         className="login-image hover cursor"

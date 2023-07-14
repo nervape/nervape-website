@@ -360,7 +360,7 @@ export default function NavHeader(props: any) {
       timer = setTimeout(() => {
         const currTop = getWindowScrollTop();
 
-        if (state.windowWidth > 375 && activeIndex == 7 && currTop < 400) {
+        if (state.windowWidth > 750 && activeIndex == 7 && currTop < 400) {
           setHideHeader(true);
           return;
         } else {
@@ -433,12 +433,12 @@ export default function NavHeader(props: any) {
             className={`btn-group ${disableList === true ? "active-group" : ""}`}
             onClick={(e) => { e.stopPropagation() }}
           >
-            {state.windowWidth <= 750 && (
+            {state.windowWidth <= 1200 && (
               <div className="nav-area wallet-login">
                 <WalletConnect setDisableList={setDisableList}></WalletConnect>
               </div>
             )}
-            {state.windowWidth > 750 ? (
+            {state.windowWidth > 1200 ? (
               pages?.map((v: NavPageInfo, i: number) => {
                 return (
                   <div
@@ -455,7 +455,7 @@ export default function NavHeader(props: any) {
                     {v.type === 'logo'
                       ? (
                         <div className="nacp-logo">
-                          <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
+                          <img className="icon-image" src={state.windowWidth <= 1200 ? v.mImage : v.image} alt="" />
                         </div>
                       )
                       : v.type === 'hover' ? (v.eleItem && v.eleItem()) : (<div className="title-text">{v.title}</div>)}
@@ -471,7 +471,7 @@ export default function NavHeader(props: any) {
                     handleHeaderClick('nacp');
                   }}>
                   <div className="nacp-logo">
-                    <img className="icon-image" src={state.windowWidth <= 750 ? MNacpLogo : NacpLogo} alt="" />
+                    <img className="icon-image" src={state.windowWidth <= 1200 ? MNacpLogo : NacpLogo} alt="" />
                   </div>
                 </div>
                 <Menu
@@ -491,7 +491,7 @@ export default function NavHeader(props: any) {
                   items={mPages}></Menu>
               </>
             )}
-            <div className={`icon-nav-c ${state.windowWidth <= 750 && 'mobile'}`}>
+            <div className={`icon-nav-c ${state.windowWidth <= 1200 && 'mobile'}`}>
               <div
                 className={`nav-area cursor icon`}
                 onClick={() => {
@@ -512,7 +512,7 @@ export default function NavHeader(props: any) {
               </div>
             </div>
 
-            {state.windowWidth > 750 && (
+            {state.windowWidth > 1200 && (
               <div className="nav-area wallet-login">
                 <WalletConnect></WalletConnect>
               </div>

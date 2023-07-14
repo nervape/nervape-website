@@ -308,7 +308,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                                     _ape.categories = res;
                                                     setSelectedNacp(_ape);
                                                     setShowNacpDetail(true);
-                                                    if (state.windowWidth <= 375) setHideHeader(false);
+                                                    if (state.windowWidth <= 750) setHideHeader(false);
                                                 }}>
                                                     <div className="cover-image">
                                                         <img className="cover" src={ape.image} alt="DefaultNacpApe" />

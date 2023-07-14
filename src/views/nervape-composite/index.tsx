@@ -139,7 +139,7 @@ export default function Composite() {
 
     useEffect(() => {
         if (!phases.length) return;
-        if (state.windowWidth <= 750) setPhaseCover(phases[0].cover);
+        if (state.windowWidth <= 1200) setPhaseCover(phases[0].cover);
     }, [state.windowWidth, phases]);
 
     useEffect(() => {
@@ -172,7 +172,7 @@ export default function Composite() {
                                             <div className="banner">
                                                 <img className="banner-img banner-img-1" src={banner?.qaBg} alt="" />
                                                 <Parallax
-                                                    animation={{ top: `${state.windowWidth > 750 ? '-50px' : '-20px'}`, opacity: 0, playScale: [1, 1.5] }}
+                                                    animation={{ top: `${state.windowWidth > 1200 ? '-50px' : '-20px'}`, opacity: 0, playScale: [1, 1.5] }}
                                                     style={{ top: 0, opacity: 1 }}
                                                     location="banner-section"
                                                     className="banner-img"
@@ -181,7 +181,7 @@ export default function Composite() {
                                                 </Parallax>
                                                 <Parallax
                                                     animation={{ top: 0, opacity: 1, playScale: [1.5, 1.8] }}
-                                                    style={{ top: `${state.windowWidth > 750 ? '50px' : '20px'}`, opacity: 0 }}
+                                                    style={{ top: `${state.windowWidth > 1200 ? '50px' : '20px'}`, opacity: 0 }}
                                                     location="banner-section"
                                                     className="banner-img"
                                                 >
@@ -201,7 +201,7 @@ export default function Composite() {
                                             key="0" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                             <div className="composite">
                                                 <div className="title transition">
-                                                    <img src={state.windowWidth === 375 ? NacpMTitle : NacpTitle} />
+                                                    <img src={state.windowWidth <= 750 ? NacpMTitle : NacpTitle} />
                                                 </div>
                                                 <div className="description">
                                                     NERVAPE COMPOSITE (NACP) is Nervape’s customizable 2D PFP NFTs that let users express themselves. Build and mint your own ape PFPs by selecting from over 700 different design assets created by the team and our community!
@@ -272,7 +272,7 @@ export default function Composite() {
                                     <li>
                                         <span>SHOW YOUR CREATIVITY</span>
                                         <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 375 ? (
+                                        {state.windowWidth > 750 ? (
                                             <>
                                                 <span>SHOW YOUR CREATIVITY</span>
                                                 <span className="express-yourself">EXPRESS YOURSELF</span>
@@ -284,7 +284,7 @@ export default function Composite() {
                                     <li>
                                         <span>SHOW YOUR CREATIVITY</span>
                                         <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 375 ? (
+                                        {state.windowWidth > 750 ? (
                                             <>
                                                 <span>SHOW YOUR CREATIVITY</span>
                                                 <span className="express-yourself">EXPRESS YOURSELF</span>
@@ -317,7 +317,7 @@ export default function Composite() {
                                             </div>
                                         </TweenOne>
 
-                                        {state.windowWidth > 750 ? (
+                                        {state.windowWidth > 1200 ? (
                                             <QueueAnim className="phase-step"
                                                 type="right"
                                                 delay={200}
@@ -400,7 +400,7 @@ export default function Composite() {
                                     </TweenOne>
 
                                     <div className="new-parthership">
-                                        {state.windowWidth > 750 && (
+                                        {state.windowWidth > 1200 && (
                                             <div className="new-left cursor" onClick={() => {
                                                 window.open(parthershipItems[0].link);
                                             }}>
@@ -424,7 +424,7 @@ export default function Composite() {
                                                 ]}
                                                 className="parthership-items">
                                                 {parthershipItems.filter((p, index) => {
-                                                    if (state.windowWidth > 375) {
+                                                    if (state.windowWidth > 750) {
                                                         return index > 0;
                                                     } else {
                                                         return true;
@@ -455,7 +455,7 @@ export default function Composite() {
                                         <TweenOne className="top-left" key="partner-1" animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}>
                                             <div className="section-title">
-                                                {state.windowWidth > 750 ? ('COLLABORATE WITH US!') : (
+                                                {state.windowWidth > 1200 ? ('COLLABORATE WITH US!') : (
                                                     <>
                                                         COLLABORATE
                                                         <br />
@@ -525,7 +525,7 @@ export default function Composite() {
                         {/* <section className="qa-section">
                             <div className="qa-container">
                                 <OverPack className="flex-justify" always={false} playScale={0.3}>
-                                    {state.windowWidth > 750 && (
+                                    {state.windowWidth > 1200 && (
                                         <TweenOne key="qa-1"
                                             animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}

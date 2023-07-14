@@ -50,4 +50,7 @@ export const CONFIG = {
 
     // 允许的网络链接
     WALLET_ALLOW_CHAINS: JSON.parse(import.meta.env.VITE_WALLET_ALLOW_CHAINS),
+
+    // NACP OPENSEA LINK
+    NACP_OPENSEA_URL: import.meta.env.VITE_OPENSEA_URL,
 }

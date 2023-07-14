@@ -211,7 +211,7 @@ export default function WalletNFT3D(props: any) {
 
     return (
         <div className={`wallet-nft-3d-container ${isFold && 'fold'}`}>
-            <div className={`wallet-nft-3d-header transition position-sticky ${state.windowWidth > 375 && 'flex-align'}`}>
+            <div className={`wallet-nft-3d-header transition position-sticky ${state.windowWidth > 750 && 'flex-align'}`}>
                 <div className="nft-3d-title">3D NFT</div>
 
                 <div className="nft-3d-tabs flex-align">
@@ -238,7 +238,7 @@ export default function WalletNFT3D(props: any) {
                                 showDetail={() => {
                                     setShowNftCard(true);
                                     updateBodyOverflow(false);
-                                    if (state.windowWidth <= 375) {
+                                    if (state.windowWidth <= 750) {
                                         dispatch({
                                             type: Types.IsVisibleHeader,
                                             value: false

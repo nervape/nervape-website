@@ -98,7 +98,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
                         <div className="badge-title">STORY REWARD</div>
                     </div>
 
-                    <div className={`wallet-badge-content transition wallet-story-reward-content ${state.windowWidth > 375 && 'flex-align'}`}>
+                    <div className={`wallet-badge-content transition wallet-story-reward-content ${state.windowWidth > 750 && 'flex-align'}`}>
                         <div className="review-card-content transition position-sticky">
                             <div
                                 className={`review-card ${!selectedStoryOat?.story?.isHolderOat && 'unholder'}`}

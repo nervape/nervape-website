@@ -136,13 +136,13 @@ export default function CampaignPage() {
                         return (
                             <SwiperSlide key={index}>
                                 <div className="banner-image">
-                                    <img loading="lazy" src={state.windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
+                                    <img loading="lazy" src={state.windowWidth > 750 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                                 </div>
                             </SwiperSlide>
                         );
                     })}
                 </Swiper>
-                {state.windowWidth !== 375 ? (
+                {state.windowWidth > 750 ? (
                     <Parallax
                         animation={{ opacity: 1, playScale: [1, 2.5] }}
                         style={{ opacity: 0 }}

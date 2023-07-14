@@ -7,7 +7,7 @@ export default function Footer() {
     const { state } = useContext(DataContext);
 
     useEffect(() => {
-        setIsMobile(!(state.windowWidth !== 375));
+        setIsMobile(!(state.windowWidth > 750));
     }, [state.windowWidth]);
 
     return (

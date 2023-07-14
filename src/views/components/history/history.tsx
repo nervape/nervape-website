@@ -384,7 +384,7 @@ const History = (
                     <div className="type">Type</div>
                     <div className="date">Timestamp</div>
                     <div className="status">Status</div>
-                    {state.windowWidth !== 375 && <div className="number">TX</div>}
+                    {state.windowWidth > 750 && <div className="number">TX</div>}
                 </div>
                 <div className="histories">
                     {histories.map((history, index) => (
@@ -394,7 +394,7 @@ const History = (
                             address={address}
                             loginWalletType={loginWalletType}
                             showHistoryDetail={showHistoryDetail}
-                            showTx={state.windowWidth !== 375}
+                            showTx={state.windowWidth > 750}
                         ></HistoryItem>
                     ))}
                 </div>

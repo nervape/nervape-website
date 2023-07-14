@@ -35,11 +35,16 @@ export const DataContext = createContext<{
 
 
 // eslint-disable-next-line consistent-return
+
 export function getWindowWidthRange() {
     const width = window.innerWidth;
-    if (width <= 750) return 375;
-    if (width > 750 && width <= 1200) return 750;
-    return 1200;
+    if (width <= 375) return 375;
+    else if (width > 375 && width <= 600) return 600;
+    else if (width > 600 && width <= 750) return 750;
+    else if (width > 750 && width <= 1000) return 1000;
+    else if (width > 1000 && width <= 1200) return 1200;
+    else if (width > 1200 && width <= 1440) return 1440;
+    return 1920;
 }
 
 export function getWindowScrollTop() {

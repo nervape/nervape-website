@@ -246,7 +246,7 @@ export default function WalletHeader(props: any) {
 
     return (
         <div className={`wallet-header-container transition position-sticky ${state.isVisibleHeader ? 'visible-header' : 'hide-header'} ${isFold && 'fold'} ${state.switchChain && 'extra-switch-chain'}`}>
-            {state.windowWidth > 375 ? (
+            {state.windowWidth > 750 ? (
                 <>
                     <div className={`visible-header-line transition`}></div>
                     <div className={`user-center-content transition flex-align`}>
