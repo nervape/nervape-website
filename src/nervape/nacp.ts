@@ -74,15 +74,19 @@ export class NacpAsset {
     is_headwear_back?: boolean;
     is_eyewear_back?: boolean;
     excludes?: NacpAsset[];
-    sort: number = 0;
-    description: string = "";
-    is_collection: boolean = false;
-    show_collection: boolean = false;
+    sort?: number = 0;
+    description?: string = "";
+    is_collection?: boolean = false;
+    show_collection?: boolean = false;
     collection_selected?: NacpAsset;
-    is_collection_child: boolean = false;
+    is_collection_child?: boolean = false;
     includes?: NacpAsset[];
     category?: NacpCategory;
-    eyewear_as_mask: boolean = false;
+    eyewear_as_mask?: boolean = false;
+    category_name?: string;
+    ape_id?: string;
+    is_equip?: boolean = false;
+    skin_color?: string;
 }
 
 export class MetadataAttribute {
@@ -101,7 +105,8 @@ export class NacpMetadataAttribute {
     is_special: boolean = false;
     asset_id: string = '';
     asset_url: string = '';
-    asset_url_thumb: string = '';
+    asset_thumb_url: string = '';
+    skin_color: string = '';
 }
 export class NacpMetadata {
     id: string = '';

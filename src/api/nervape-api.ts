@@ -286,6 +286,12 @@ class NervapeApi {
     const res = await axios.post(url, { attributes: attributes });
     return this._fnDealResponse(res, url);
   }
+
+  public async fnGetUserAssets(address: string) {
+    const url = `${this.baseUrl}/pfp-asset/website/user/assets/${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();

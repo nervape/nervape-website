@@ -7,8 +7,8 @@ import BonelistRequired from '../../../assets/wallet/nacp/Bonelist_Required.png'
 import { Popover } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
-import { NACP_APE, NACP_SPECIAL_ASSET, NacpMetadata } from "../../../nervape/nacp";
-import AssetItem from "./asset-item";
+import { NACP_APE, NACP_SPECIAL_ASSET, NacpAsset, NacpMetadata, NacpMetadataAttribute } from "../../../nervape/nacp";
+// import AssetItem from "./special-asset-item";
 import { goerli, useAccount, useContract, useContractRead, useNetwork, useSigner, useTransaction } from "wagmi";
 import { CONFIG } from "../../../utils/config";
 import nacpAbi from '../../../contracts/NervapeComposite.json';
@@ -18,6 +18,7 @@ import SaveSuccessPopup from "./save/success";
 import SwitchChainPopup from "./chain/chain";
 import MintTipPopup from "./mint/mint";
 import { Types } from "../../../utils/reducers";
+import NacpAssetItem from "./asset-item";
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; }) {
     const { isFold, isBonelist, setLoading } = props;
@@ -29,7 +30,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [currNacpTab, setCurrNacpTab] = useState('ape');
     const [nacpApes, setNacpApes] = useState<NACP_APE[]>([]);
     const [chainApes, setChainApes] = useState<NacpMetadata[]>([]);
-    const [nacpAssets, setNacpAssets] = useState<NACP_SPECIAL_ASSET[]>([]);
+    // const [nacpAssets, setNacpAssets] = useState<NACP_SPECIAL_ASSET[]>([]);
+    const [nacpAssets, setNacpAssets] = useState<NacpAsset[]>([]);
+    const [holdAssets, setHoldAssets] = useState<NacpAsset[]>([]);
     const [showNacpDetail, setShowNacpDetail] = useState(false);
     const [selectedNacp, setSelectedNacp] = useState<NacpMetadata>();
 
@@ -85,19 +88,36 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         signerOrProvider: signer
     });
 
-    async function fnGetNacpByTokenIds() {
-        if (chainApes.length) return;
+    async function fnGetNacpByTokenIds(flag = false) {
+        if (!flag && chainApes.length) return;
         setLoading(true);
         let _chainApes: NacpMetadata[] = [];
+        let _nacpAssets: NacpAsset[] = [];
 
         await Promise.all(
             (tokenIds as any).map(async (t: any) => {
-                const { data } = await nervapeApi.fnGetMetadataByTokenId(t.toNumber());
-                console.log('fnGetNacpByTokenIds', data);
+                const res = await nervapeApi.fnGetMetadataByTokenId(t.toNumber());
+                const data: NacpMetadata = res.data;
+                
+                data.attributes.map((a: NacpMetadataAttribute) => {
+                    _nacpAssets.push({
+                        _id: a.asset_id,
+                        name: a.value,
+                        thumb_url: a.asset_thumb_url,
+                        url: a.asset_url,
+                        category_name: a.trait_type,
+                        ape_id: data.id,
+                        is_equip: true,
+                        skin_color: a.skin_color
+                    });
+                });
+                
                 _chainApes.push(data);
             })
         );
-
+        
+        console.log(_nacpAssets);
+        setNacpAssets(_nacpAssets);
         setChainApes(_chainApes);
         setLoading(false);
     }
@@ -199,7 +219,26 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
     useEffect(() => {
         if (currNacpTab == 'asset') {
-            fnGetStorySpecialAsset(state.currentAddress);
+            // Story quiz special asset
+            // fnGetStorySpecialAsset(state.currentAddress);
+            // 当前持有 Assets
+            nervapeApi.fnGetUserAssets(state.currentAddress).then(res => {
+                console.log(res);
+                let _holdAssets: NacpAsset[] = [];
+
+                res.map((r: any) => {
+                    _holdAssets.push({
+                        _id: r.asset._id,
+                        name: r.asset.name,
+                        thumb_url: r.asset.thumb_url,
+                        url: r.asset.url,
+                        category_name: r.asset.category.name,
+                    })
+                });
+
+                setHoldAssets(_holdAssets);
+            });
+
         }
     }, [currNacpTab]);
 
@@ -325,7 +364,11 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 ) : (
                     <div className="nacp-content-assets flex-align">
                         {nacpAssets.map((asset, index) => {
-                            return <AssetItem asset={asset} key={index} ></AssetItem>
+                            return <NacpAssetItem asset={asset} key={index}></NacpAssetItem>
+                            // return <AssetItem asset={asset} key={index} ></AssetItem>
+                        })}
+                        {holdAssets.map((asset, index) => {
+                            return <NacpAssetItem asset={asset} key={index}></NacpAssetItem>
                         })}
                     </div>
                 )}
@@ -349,7 +392,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             }}></NacpEdit>
             <SaveSuccessPopup show={showSaveSuccess} confirm={async () => {
                 setShowSaveSuccess(false);
-                await fnGetNacpByTokenIds();
+                await fnGetNacpByTokenIds(true);
             }}></SaveSuccessPopup>
             <SwitchChainPopup
                 show={showSwitchChain}
