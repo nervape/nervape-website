@@ -12,9 +12,10 @@ export default function NacpApeDetail(props: {
     close: any;
     nacp: NacpMetadata;
     editNacp: any;
+    setShowProfileImage: Function;
 }) {
     const { state, dispatch } = useContext(DataContext);
-    const { show, close, nacp, editNacp } = props;
+    const { show, close, nacp, editNacp, setShowProfileImage } = props;
 
     if (!nacp) return <></>;
 
@@ -64,6 +65,7 @@ export default function NacpApeDetail(props: {
                                 className="btn cursor profile"
                                 onClick={() => {
                                     // 设置头像
+                                    setShowProfileImage(nacp.id);
                                 }}>
                                 SET PROFILE IMAGE
                             </button>

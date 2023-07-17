@@ -122,6 +122,14 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetProfileNonce() {
+    const url = `${this.baseUrl}/nacp/profile/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnVerifyLogin() {
     const url = `${this.baseUrl}/nacp/verify/login`;
@@ -134,6 +142,17 @@ class NervapeApi {
   public async fnSendForVerify(message: string, signature: string, updateMetadatForm: UpdateMetadataForm) {
     const url = `${this.baseUrl}/nacp/verify`;
     const res = await axios.post(url, JSON.stringify({ message, signature, ...updateMetadatForm }), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnUserProfileVerify(message: string, signature: string, nacp: number) {
+    const url = `${this.baseUrl}/nacp/profile/verify`;
+    const res = await axios.post(url, JSON.stringify({ message, signature, nacp }), {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -289,6 +308,12 @@ class NervapeApi {
 
   public async fnGetUserAssets(address: string) {
     const url = `${this.baseUrl}/pfp-asset/website/user/assets/${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetUserProfile(address: string) {
+    const url = `${this.baseUrl}/nacp/profile/${address}`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }

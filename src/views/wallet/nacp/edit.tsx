@@ -11,11 +11,12 @@ import { SiweMessage } from "siwe";
 import { useSignMessage } from "wagmi";
 import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
+import OperatePopup from "../../components/operate-popup";
 
 let touchYStart = 0;
 
-export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; }) {
-    const { show, setShowNacpEdit, setShowSaveSuccess, nacp } = props;
+export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; userProfile: any; }) {
+    const { show, setShowNacpEdit, setShowSaveSuccess, nacp, userProfile } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -44,6 +45,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     const [mShowCollection, setMShowCollection] = useState(false);
+    const [showCurrNacpTip, setShowCurrNacpTip] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
@@ -496,7 +498,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 <div className="edit-header flex-align">
                     <div className="title">{nacp.name}</div>
                     <div className="btn-groups flex-align">
-                        <button className="cursor btn save-btn" onClick={signInWithEthereum}>Save</button>
+                        <button className="cursor btn save-btn" onClick={() => {
+                            if (nacp.id == userProfile.id) {
+                                setShowCurrNacpTip(true);
+                            } else {
+                                signInWithEthereum();
+                            }
+                        }}>Save</button>
                         <button className="cursor btn discard-btn" onClick={() => {
                             setShowDiscardPopup(true);
                         }}>Discard</button>
@@ -765,6 +773,17 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     setShowDiscardPopup(false);
                     updateBodyOverflow(true);
                 }}></DiscardPopup>
+            <OperatePopup
+                show={showCurrNacpTip}
+                closeText="CANCEL"
+                confirmText="PROCEED TO SAVE"
+                content="Current NACP NFT is being used as your profile image. Changes made to this NFT will also appear in your profile image."
+                close={() => {
+                    setShowCurrNacpTip(false);
+                }}
+                confirm={() => {
+                    signInWithEthereum();
+                }}></OperatePopup>
         </div>
     );
 }

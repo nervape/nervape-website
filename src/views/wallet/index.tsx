@@ -61,6 +61,7 @@ export default function WalletNewPage() {
 
     // UNIPASS V3 钱包 Balance
     const [balance, setBalance] = useState('0.0');
+    const [userProfile, setUserProfile] = useState(null);
 
     const [navbars, setNavbars] = useState<WalletNavBar[]>([]);
     const [currNavbar, setCurrNavbar] = useState(0);
@@ -115,6 +116,7 @@ export default function WalletNewPage() {
         if (nftCoverImages.length) return;
         // 后台读取 NFTS 查找对应 CoverImage
         fnNFTNameCoverImg();
+        fnGetUserProfile();
     }, [state.currentAddress]);
 
     useEffect(() => {
@@ -212,6 +214,17 @@ export default function WalletNewPage() {
         setLoading(false);
     };
 
+    async function fnGetUserProfile() {
+        const res = await nervapeApi.fnGetUserProfile(state.currentAddress);
+
+        if (res.nacp) {
+            const _nacp = await nervapeApi.fnGetMetadataByTokenId(res.nacp);
+            setUserProfile(_nacp.data);
+        } else {
+            setUserProfile(null);
+        }
+    }
+
     const NavbarItems = () => {
         return (
             <div className="navbar-items">
@@ -304,6 +317,7 @@ export default function WalletNewPage() {
                             setInviteClaim={setInviteClaim}
                             isBonelist={isBonelist}
                             setShowTransfer={setShowTransfer}
+                            userProfile={userProfile}
                             balance={balance}></WalletHeader>
 
                         <section className={`wallet-section flex-align ${isFold && 'fold'}`}>
@@ -315,7 +329,9 @@ export default function WalletNewPage() {
                                 {navbars[currNavbar]?.name == WalletNavbarTypes.NACP ? (
                                     <WalletNacp 
                                         isFold={isFold} 
-                                        isBonelist={isBonelist} 
+                                        isBonelist={isBonelist}
+                                        fnGetUserProfile={fnGetUserProfile}
+                                        userProfile={userProfile}
                                         setLoading={setLoading}></WalletNacp>
                                 ) : (
                                     navbars[currNavbar]?.name == WalletNavbarTypes.NFT ? (

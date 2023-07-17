@@ -9,7 +9,7 @@ import { nervapeApi } from "../../../api/nervape-api";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { NACP_APE, NACP_SPECIAL_ASSET, NacpAsset, NacpMetadata, NacpMetadataAttribute } from "../../../nervape/nacp";
 // import AssetItem from "./special-asset-item";
-import { goerli, useAccount, useContract, useContractRead, useNetwork, useSigner, useTransaction } from "wagmi";
+import { goerli, mainnet, useAccount, useContract, useContractRead, useNetwork, useSignMessage, useSigner, useTransaction } from "wagmi";
 import { CONFIG } from "../../../utils/config";
 import nacpAbi from '../../../contracts/NervapeComposite.json';
 import NacpApeDetail from "../../components/nft/nacp";
@@ -19,9 +19,11 @@ import SwitchChainPopup from "./chain/chain";
 import MintTipPopup from "./mint/mint";
 import { Types } from "../../../utils/reducers";
 import NacpAssetItem from "./asset-item";
+import OperatePopup from "../../components/operate-popup";
+import { SiweMessage } from "siwe";
 
-export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; }) {
-    const { isFold, isBonelist, setLoading } = props;
+export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; fnGetUserProfile: Function; userProfile: any; }) {
+    const { isFold, isBonelist, setLoading, fnGetUserProfile, userProfile } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -39,6 +41,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [showNacpEdit, setShowNacpEdit] = useState(false);
     const [showSaveSuccess, setShowSaveSuccess] = useState(false);
     const [showSwitchChain, setShowSwitchChain] = useState(false);
+    const [showProfileImage, setShowProfileImage] = useState(false);
+    const [showProfileSuccess, setShowProfileSuccess] = useState(false);
+    const [currentNacpId, setCurrentNacpId] = useState(0);
 
     const { address, isConnected } = useAccount();
     const { data: signer } = useSigner();
@@ -98,7 +103,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             (tokenIds as any).map(async (t: any) => {
                 const res = await nervapeApi.fnGetMetadataByTokenId(t.toNumber());
                 const data: NacpMetadata = res.data;
-                
+
                 data.attributes.map((a: NacpMetadataAttribute) => {
                     _nacpAssets.push({
                         _id: a.asset_id,
@@ -111,11 +116,11 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                         skin_color: a.skin_color
                     });
                 });
-                
+
                 _chainApes.push(data);
             })
         );
-        
+
         console.log(_nacpAssets);
         setNacpAssets(_nacpAssets);
         setChainApes(_chainApes);
@@ -297,6 +302,48 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         return _html();
     }
 
+    const domain = window.location.host;
+    const origin = window.location.origin;
+
+    const { signMessageAsync, error } = useSignMessage();
+
+    const createSiweMessage = async (_address: string, statement: string) => {
+        const res = await nervapeApi.fnGetProfileNonce();
+
+        const message = new SiweMessage({
+            domain,
+            address: _address,
+            statement,
+            uri: origin,
+            version: '1',
+            chainId: mainnet.id,
+            nonce: res.nonce
+        });
+
+        return {
+            message: message.prepareMessage(),
+        };
+    }
+
+    const signInWithEthereum = async () => {
+        setLoading(true);
+
+        try {
+            const { message } = await createSiweMessage(state.currentAddress, 'sign in to update your current profile image.');
+
+            const signature = await signMessageAsync({ message });
+            const res = await nervapeApi.fnUserProfileVerify(message, signature, currentNacpId);
+
+            setLoading(false);
+
+            setShowProfileImage(false);
+            setShowProfileSuccess(true);
+        } catch {
+            updateBodyOverflow(false);
+            setLoading(false);
+        }
+    }
+
     return (
         <div className={`wallet-nacp-container ${isFold && 'fold'}`}>
             <div className="wallet-nacp-header transition position-sticky flex-align">
@@ -385,15 +432,27 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     updateBodyOverflow(false);
                     setShowNacpEdit(true);
                 }}
+                setShowProfileImage={(id: number) => {
+                    setShowProfileImage(true);
+                    setCurrentNacpId(id);
+                }}
                 nacp={selectedNacp as NacpMetadata}></NacpApeDetail>
-            <NacpEdit show={showNacpEdit} nacp={selectedNacp as NacpMetadata} setShowNacpEdit={setShowNacpEdit} setShowSaveSuccess={() => {
-                setShowNacpEdit(false);
-                setShowSaveSuccess(true);
-            }}></NacpEdit>
-            <SaveSuccessPopup show={showSaveSuccess} confirm={async () => {
-                setShowSaveSuccess(false);
-                await fnGetNacpByTokenIds(true);
-            }}></SaveSuccessPopup>
+            <NacpEdit
+                show={showNacpEdit}
+                nacp={selectedNacp as NacpMetadata}
+                userProfile={userProfile}
+                setShowNacpEdit={setShowNacpEdit}
+                setShowSaveSuccess={() => {
+                    setShowNacpEdit(false);
+                    setShowSaveSuccess(true);
+                }}></NacpEdit>
+            <SaveSuccessPopup
+                show={showSaveSuccess}
+                confirm={async () => {
+                    setShowSaveSuccess(false);
+                    await fnGetNacpByTokenIds(true);
+                    await fnGetUserProfile();
+                }}></SaveSuccessPopup>
             <SwitchChainPopup
                 show={showSwitchChain}
                 close={() => {
@@ -414,6 +473,27 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     }
                     updateBodyOverflow(true);
                 }}></MintTipPopup>
+            <OperatePopup
+                show={showProfileImage}
+                closeText="CANCEL"
+                confirmText="PROCEED"
+                content="This will replace your current profile image with this NACP NFT."
+                close={() => {
+                    setShowProfileImage(false);
+                }}
+                confirm={() => {
+                    signInWithEthereum();
+                }}></OperatePopup>
+            <OperatePopup
+                show={showProfileSuccess}
+                hideClose={true}
+                confirmText="DONE"
+                content="Your profile image has been updated."
+                confirm={async () => {
+                    setShowProfileSuccess(false);
+                    await fnGetUserProfile();
+                    setShowNacpDetail(false);
+                }}></OperatePopup>
         </div>
     );
 }

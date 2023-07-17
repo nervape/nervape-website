@@ -41,7 +41,7 @@ const AvatarBackgroundColors = [
 
 export default function WalletHeader(props: any) {
     const { state, dispatch } = useContext(DataContext);
-    const { setShowTransfer, balance, isBonelist, isFold, setInviteClaim } = props;
+    const { setShowTransfer, balance, isBonelist, isFold, setInviteClaim, userProfile } = props;
 
     const { chain } = useNetwork();
 
@@ -250,9 +250,16 @@ export default function WalletHeader(props: any) {
                 <>
                     <div className={`visible-header-line transition`}></div>
                     <div className={`user-center-content transition flex-align`}>
-                        <div className="user-avatar" style={{ background: avatarBackgroundColor }}>
-                            <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
-                        </div>
+                        {userProfile ? (
+                            <div className="user-avatar">
+                                <img className="transition" src={userProfile.image} alt="UserAvatar" />
+                            </div>
+                        ) : (
+                            <div className="user-avatar" style={{ background: avatarBackgroundColor }}>
+                                <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
+                            </div>
+                        )}
+
                         <div className="user-info">
                             {AddressDropdown()}
 

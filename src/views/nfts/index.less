@@ -788,12 +788,19 @@
       .nft-card-detail {
         width: 600px;
         display: unset;
+        top: 0;
+        transform: translate(-50%, 0);
+
         .preview-model {
           width: 600px;
           height: 600px;
         }
+
         .detail-info {
           width: 600px;
+          overflow-y: scroll;
+          height: calc(100vh - 600px);
+          
           .info-content {
             padding: 16px 32px;
           }
