@@ -49,19 +49,26 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
+        setSelectPhase(0);
         const res = await nervapeApi.fnGetPhases();
         // 初始化 history
         setAssetsHistoryStack([]);
         setPhaseHistoryStack([]);
         setHistoryIndex(-1);
+
+        const _phases = await initNacpAsset(res);
+        setPhases(_phases);
+
         // 处理 categories
         if (state.windowWidth > 750) {
             setCurrCategory(res[0].categories[0]);
             setSelectCategory(res[0].categories[0]._id);
-        }
 
-        const _phases = await initNacpAsset(res);
-        setPhases(_phases);
+            console.log('res[0].categories[0]', _phases[0]);
+            if (_phases[0].status == 1) {
+                fnGetAssets(_phases[0].categories[0]._id);
+            }
+        }
     }
 
     async function initNacpAsset(_phases: NacpPhase[]) {
@@ -121,13 +128,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
             // 特殊约定 2. headwear -- front/back
             // 特殊约定 3. eyewear as mask
-            if (asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
+            if (asset.category?.name == 'Eyewear' && asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
                 const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == _asset.category?._id);
                 if (filters.length > 0) return false;
             }
 
             if (asset.category?.excludes_eyewear_as_mask) {
-                if (_asset.eyewear_as_mask) return false;
+                if (_asset.category?.name == 'Eyewear' && _asset.eyewear_as_mask) return false;
             }
 
             return true;
