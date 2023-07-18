@@ -217,7 +217,7 @@ export default function WalletNewPage() {
     async function fnGetUserProfile() {
         const res = await nervapeApi.fnGetUserProfile(state.currentAddress);
 
-        if (res.nacp) {
+        if (res && res.nacp) {
             const _nacp = await nervapeApi.fnGetMetadataByTokenId(res.nacp);
             setUserProfile(_nacp.data);
         } else {
