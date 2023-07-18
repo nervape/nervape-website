@@ -394,24 +394,29 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const signInWithEthereum = async () => {
         setLoading(true);
 
-        const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
+        try {
+            const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
 
-        const signature = await signMessageAsync({ message });
+            const signature = await signMessageAsync({ message });
 
-        const _metadata = JSON.parse(JSON.stringify(updateMetadataForm));
-        _metadata.url = url;
-        _metadata.thumb_url = thumb_url;
-        _metadata.attributes = selectedAssets.map(s => {
-            return {
-                asset_id: s._id
-            }
-        });
+            const _metadata = JSON.parse(JSON.stringify(updateMetadataForm));
+            _metadata.url = url;
+            _metadata.thumb_url = thumb_url;
+            console.log('selectedAssets', selectedAssets);
+            _metadata.attributes = selectedAssets.map(s => {
+                return {
+                    asset_id: s._id
+                }
+            });
 
-        const res = await nervapeApi.fnSendForVerify(message, signature, _metadata);
+            const res = await nervapeApi.fnSendForVerify(message, signature, _metadata);
 
-        setLoading(false);
+            setLoading(false);
 
-        setShowSaveSuccess();
+            setShowSaveSuccess();
+        } catch {
+            setLoading(false);
+        }
     }
 
     function dataURItoBlob(dataURI: string) {
@@ -674,7 +679,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         }
 
                                         if (!assetsRef.current) return <></>;
-                                        
+
                                         const assetsWidth = (assetsRef.current as unknown as HTMLElement).offsetWidth;
                                         const preWidth = (assetsWidth - (preNumber - 1) * 10) / preNumber;
 
@@ -686,7 +691,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                             const j = Math.floor(index / preNumber) + 1;
                                             const offsetTopPx = 10;
 
-                                            devStyle = {width: assetsWidth + 'px', top: ((preWidth + offsetTopPx) * j + 16) + 'px'};
+                                            devStyle = { width: assetsWidth + 'px', top: ((preWidth + offsetTopPx) * j + 16) + 'px' };
                                         }
                                         return (
                                             <div
