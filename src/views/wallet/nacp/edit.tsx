@@ -504,7 +504,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     <div className="title">{nacp.name}</div>
                     <div className="btn-groups flex-align">
                         <button className="cursor btn save-btn" onClick={() => {
-                            if (nacp.id == userProfile.id) {
+                            if (userProfile && nacp.id == userProfile.id) {
                                 setShowCurrNacpTip(true);
                             } else {
                                 signInWithEthereum();
