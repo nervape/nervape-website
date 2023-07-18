@@ -15,9 +15,10 @@ import CloseIcon from '../../assets/icons/close_icon.png';
 import FullscrenIcon from '../../assets/nft/fullscreen.svg';
 import DetailCloseIcon from '../../assets/nft/close_detail.svg';
 import LoadingGif from "../../assets/gallery/loading.gif";
-import { DataContext } from "../../utils/utils";
+import { DataContext, updateBodyOverflow } from "../../utils/utils";
 
 import { Parallax } from 'rc-scroll-anim';
+import { Types } from "../../utils/reducers";
 
 declare global {
     namespace JSX {
@@ -56,7 +57,7 @@ function PreviewModel(props: any) {
         console.log(enableModuleUrl)
         if (!enableModuleUrl) return;
         (document.querySelector(revealId) as any)?.showPoster();
-    
+
     }, [enableModuleUrl]);
 
     return (
@@ -188,7 +189,20 @@ export default function NFTPage() {
     const [showFullscreen, setShowFullscreen] = useState(false);
     const [nftDetail, setNftDetail] = useState<NFT>();
 
-    const { state } = useContext(DataContext);
+    const { state, dispatch } = useContext(DataContext);
+
+    const setHideHeader = (value: boolean) => {
+        dispatch({
+            type: Types.IsVisibleHeader,
+            value: value
+        })
+    }
+
+    const setLoading = (flag: boolean) => {
+        dispatch({
+            type: flag ? Types.ShowLoading : Types.HideLoading
+        })
+    }
 
     SwiperCore.use([Autoplay, Pagination]);
 
@@ -201,8 +215,10 @@ export default function NFTPage() {
                 clearTimeout(timer);
             }
             timer = setTimeout(() => {
+                setLoading(true);
                 nervapeApi.fnGetNfts(_query).then(res => {
                     setNfts(res);
+                    setLoading(false);
                 })
             }, 1000);
         }
@@ -259,7 +275,13 @@ export default function NFTPage() {
         });
 
         setQuery(_query);
-    }, [filters])
+    }, [filters]);
+
+    useEffect(() => {
+        if (state.windowWidth <= 1000) {
+            setShowMFilter(false);
+        }
+    }, [state.windowWidth]);
     return (
         <div className="nft-container main-container">
             <Parallax
@@ -337,8 +359,10 @@ export default function NFTPage() {
                 <div className="content">
                     <div className="filter-items">
                         <div className="input-c">
-                            <div className={`filter-menu ${state.windowWidth > 1200 && 'hidden'}`} onClick={() => {
+                            <div className={`filter-menu ${state.windowWidth > 1000 && 'hidden'}`} onClick={() => {
+                                setHideHeader(false);
                                 setShowMFilter(!showMFilter);
+                                updateBodyOverflow(false);
                             }}>
                                 <img loading="lazy" src={FilterIcon} alt="FilterIcon" />
                                 {filterSelectCount > 0 && <span>{filterSelectCount}</span>}
@@ -357,8 +381,15 @@ export default function NFTPage() {
                                 }}
                             />
                         </div>
-                        {showMFilter && (
-                            <div className="filters">
+                        <div className={`filter-container ${state.windowWidth <= 1000 && 'popup-container'} ${showMFilter && 'show'}`}
+                            onClick={() => {
+                                setShowMFilter(!showMFilter);
+                                updateBodyOverflow(true);
+                            }}>
+                            <div className="filters"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                }}>
                                 {filters?.map((filter, i) => {
                                     return (
                                         <div className="filter" key={i}>
@@ -393,8 +424,8 @@ export default function NFTPage() {
                                     );
                                 })}
                             </div>
-                        )}
-                        {!showMFilter && filterSelectCount > 0 && (
+                        </div>
+                        {/* {!showMFilter && filterSelectCount > 0 && (
                             <div className="filter-selected-items">
                                 {query.origin?.map(origin => {
                                     return (
@@ -423,7 +454,7 @@ export default function NFTPage() {
                                     )
                                 })}
                             </div>
-                        )}
+                        )} */}
                     </div>
                     <div className="nft-items">
                         <div className="nfts">
@@ -442,15 +473,17 @@ export default function NFTPage() {
                                         </div>
                                         <div className="nft-info">
                                             <div className="nervape">NERVAPE</div>
-                                            <div className="name">{nft.name}</div>
+                                            <div className="name-item flex-align">
+                                                <div className="name">{nft.name}</div>
+                                                <div className="nft-icon">
+                                                    <img loading="lazy" src={IconMap.get(nft.type)} alt="icon" />
+                                                </div>
+                                            </div>
                                             {nft?.coming_soon ? (
                                                 <div className="coming-soon">Coming soon</div>
                                             ) : (
                                                 <div className="distributed">{`${nft.issued}/${nft.total} distributed`}</div>
                                             )}
-                                            <div className="nft-icon">
-                                                <img loading="lazy" src={IconMap.get(nft.type)} alt="icon" />
-                                            </div>
                                         </div>
                                     </div>
                                 );
