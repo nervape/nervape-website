@@ -567,7 +567,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 )}
 
                                 {selectedAssets.length > 0 ? (
-                                    <div className={`nacp-assets-save transition`} style={{ width: '500px', height: '500px' }} ref={elementRef}>
+                                    <div className={`nacp-assets-save transition`} style={{ width: '1000px', height: '1000px' }} ref={elementRef}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div

@@ -360,14 +360,16 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             <div className="wallet-nacp-content">
                 {currNacpTab == 'ape' ? (
                     <div className="spot-apes">
-                        {showMint && (
+                        {!hasMinted && (
                             <div className="spot-items">
                                 <div className="item-title flex-align">
                                     <div className="text">SPOT</div>
-                                    <button className="mint-btn cursor" onClick={() => {
-                                        setShowMintTip(true);
-                                        updateBodyOverflow(false);
-                                    }}>MINT</button>
+                                    {showMint && (
+                                        <button className="mint-btn cursor" onClick={() => {
+                                            setShowMintTip(true);
+                                            updateBodyOverflow(false);
+                                        }}>MINT</button>
+                                    )}
                                 </div>
 
                                 <div className="nacp-content-apes flex-align">
