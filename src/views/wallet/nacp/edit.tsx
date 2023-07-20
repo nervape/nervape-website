@@ -596,7 +596,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=2`} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -617,7 +617,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=2`} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -638,7 +638,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=2`} alt="" />
                                                 </div>
                                             );
                                         })}
