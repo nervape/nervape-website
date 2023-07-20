@@ -3,7 +3,7 @@ import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon } from "../../../nervape/svg";
-import { DataContext, updateBodyOverflow } from "../../../utils/utils";
+import { DataContext, preloadImage, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
 import DiscardPopup from "./discard";
 import { Types } from "../../../utils/reducers";
@@ -42,6 +42,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [showDiscardPopup, setShowDiscardPopup] = useState(false);
     const [isCollectionOpen, setIsCollectionOpen] = useState(false);
     const [isFold, setIsFold] = useState(false);
+    const [isLoadingEnded, setIsLoadingEnded] = useState(false);
+    const [progress, setProgress] = useState('0.00');
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     const [mShowCollection, setMShowCollection] = useState(false);
@@ -49,8 +51,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
+        setLoading(true);
         setSelectPhase(0);
-        const res = await nervapeApi.fnGetPhases();
+        const res = await nervapeApi.fnGetPhases(state.currentAddress);
         // 初始化 history
         setAssetsHistoryStack([]);
         setPhaseHistoryStack([]);
@@ -58,6 +61,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
         const _phases = await initNacpAsset(res);
         setPhases(_phases);
+
+        // 预加载图片
+        assetsPreload(_phases);
 
         // 处理 categories
         if (state.windowWidth > 750) {
@@ -69,6 +75,35 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 fnGetAssets(_phases[0].categories[0]._id);
             }
         }
+    }
+
+    async function assetsPreload(_phases: NacpPhase[]) {
+        let totalLength = 0;
+        let currLength = 0;
+        let urls: string[] = [];
+        _phases.forEach(async _p => {
+            _p.categories.forEach(_c => {
+                _c.assets.forEach(_a => {
+                    urls.push(_a.thumb_url);
+                });
+            });
+        });
+
+        totalLength = urls.length;
+        console.log('totalLength', totalLength);
+
+        urls.forEach(url => {
+            preloadImage(url, () => {
+                currLength++;
+                setProgress((currLength / totalLength  * 100).toFixed(0));
+                console.log('progress', (currLength / totalLength  * 100).toFixed(0) + '%');
+                if (currLength == totalLength) {
+                    setIsLoadingEnded(true);
+                    setLoading(false);
+                }
+                
+            })
+        })
     }
 
     async function initNacpAsset(_phases: NacpPhase[]) {
@@ -99,8 +134,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         if (phases[selectPhase]?.status !== 1) return;
         setIsCollectionOpen(false);
 
-        const res = await nervapeApi.fnGetAssets(category, state.currentAddress);
-        setAssets(res);
+        let _category = phases[selectPhase].categories.filter(c => c._id == category);
+        const _assets = _category[0].assets;
+        setAssets(_assets);
     }
 
     async function chooseAsset(asset: NacpAsset) {
@@ -269,7 +305,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         // 2.按顺序随机当前category asset
         await Promise.all(
             _categories.map(async category => {
-                const __assets = await nervapeApi.fnGetAssets(category._id, state.currentAddress);
+                let _category = phases[selectPhase].categories.filter(c => c._id == category._id);
+                const __assets = _category[0].assets;
+
                 if (!__assets.length) return;
 
                 const randomAsset: NacpAsset = __assets[Math.floor((Math.random() * __assets.length))];
@@ -471,7 +509,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     useEffect(() => {
-        if (!nacp) return;
+        if (!nacp || !show) return;
+        setIsLoadingEnded(false);
 
         fnGetPhases();
 
@@ -481,7 +520,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             thumb_url: '',
             attributes: []
         });
-    }, [nacp]);
+    }, [nacp, show]);
 
     useEffect(() => {
         if (!currCategory?._id) return;
@@ -491,7 +530,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     if (!phases || !phases.length) return <></>;
 
     return (
-        <div className={`wallet-nacp-edit-container popup-container ${show && 'show'}`}>
+        <div className={`wallet-nacp-edit-container popup-container ${(show && isLoadingEnded) && 'show'}`}>
             <div
                 className={`wallet-nacp-edit-content transition ${isFold && 'fold'}`}
                 onTouchStart={e => {
@@ -557,7 +596,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=1`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}`} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -578,7 +617,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=1`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}`} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -599,7 +638,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=1`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}`} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -703,7 +742,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         return (
                                             <div
                                                 key={index}
-                                                className={`cursor transition asset-item ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
+                                                className={`cursor asset-item transition ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
                                                 onClick={() => {
                                                     if (isCollectionOpen && !asset.show_collection) return;
 
@@ -718,7 +757,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                 <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
                                                 {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (
                                                     <div
-                                                        className={`asset-collection ${selected && 'selected'}`}
+                                                        className={`asset-collection transition ${selected && 'selected'}`}
                                                         style={devStyle}
                                                         onClick={() => {
                                                             openOrCloseCollection(asset);

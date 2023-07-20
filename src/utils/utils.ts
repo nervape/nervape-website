@@ -89,3 +89,14 @@ export function shuffle(arr: []) {
 
     return stack;
 }
+
+// 图片加载
+export function preloadImage(url: string, callback: Function) {
+    let img = new Image();
+    img.onload = function() {
+        img.onload = null;
+        callback && callback();
+    }
+
+    img.src = url;
+}

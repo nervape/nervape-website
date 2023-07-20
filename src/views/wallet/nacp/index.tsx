@@ -120,7 +120,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 _chainApes.push(data);
             })
         );
-
+        _chainApes.sort(function(a, b) {
+            return a.id - b.id;
+        })
         console.log(_nacpAssets);
         setNacpAssets(_nacpAssets);
         setChainApes(_chainApes);
@@ -343,6 +345,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        setLoading(true);
+    }, []);
 
     return (
         <div className={`wallet-nacp-container ${isFold && 'fold'}`}>
