@@ -73,7 +73,6 @@ export default function NacpApeDetail(props: {
                                 className="btn cursor edit"
                                 onClick={() => {
                                     // edit
-                                    close();
                                     editNacp();
                                 }}
                             >

@@ -21,6 +21,7 @@ import { Types } from "../../../utils/reducers";
 import NacpAssetItem from "./asset-item";
 import OperatePopup from "../../components/operate-popup";
 import { SiweMessage } from "siwe";
+import useDebounce from "../../../hooks/useDebounce";
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; fnGetUserProfile: Function; userProfile: any; }) {
     const { isFold, isBonelist, setLoading, fnGetUserProfile, userProfile } = props;
@@ -42,12 +43,18 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [showSaveSuccess, setShowSaveSuccess] = useState(false);
     const [showSwitchChain, setShowSwitchChain] = useState(false);
     const [showProfileImage, setShowProfileImage] = useState(false);
+    const [showCurrNacpTip, setShowCurrNacpTip] = useState(false);
     const [showProfileSuccess, setShowProfileSuccess] = useState(false);
+    const [isMinting, setIsMinting] = useState(false);
     const [currentNacpId, setCurrentNacpId] = useState(0);
 
     const { address, isConnected } = useAccount();
     const { data: signer } = useSigner();
     const { chain } = useNetwork();
+
+    const debounce = useDebounce((flag: boolean) => {
+        fnGetNacpByTokenIds(flag);
+    }, 1000);
 
     const setHideHeader = (value: boolean) => {
         dispatch({
@@ -81,6 +88,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             // 查询 txhash 交易状态
             if (data && data.confirmations > 0) {
                 localStorage.removeItem('minting-tx');
+                setIsMinting(false);
+                setLoading(true);
+            } else {
+                setIsMinting(true);
             }
         },
     })
@@ -94,8 +105,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     });
 
     async function fnGetNacpByTokenIds(flag = false) {
-        if (!flag && chainApes.length) return;
-        setLoading(true);
+        if (!flag) return;
         let _chainApes: NacpMetadata[] = [];
         let _nacpAssets: NacpAsset[] = [];
 
@@ -120,10 +130,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 _chainApes.push(data);
             })
         );
-        _chainApes.sort(function(a, b) {
+        _chainApes.sort(function (a, b) {
             return a.id - b.id;
         })
-        console.log(_nacpAssets);
         setNacpAssets(_nacpAssets);
         setChainApes(_chainApes);
         setLoading(false);
@@ -138,10 +147,13 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             localStorage.setItem("minting-tx", tx.hash);
 
             setShowMintTip(false);
-            setShowMint(false);
+            setIsMinting(true);
 
             const receipt = await tx.wait();
-            if (receipt.status) {
+            setIsMinting(false);
+
+            console.log('receipt', receipt);
+            if (receipt.status == 1) {
                 // tx success
             } else {
                 // tx failed
@@ -158,10 +170,14 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             localStorage.setItem("minting-tx", tx.hash)
 
             setShowMintTip(false);
-            setShowMint(false);
+            setIsMinting(true);
 
             const receipt = await tx.wait();
-            if (receipt.status) {
+            setIsMinting(false);
+
+            console.log('receipt', receipt);
+
+            if (receipt.status == 1) {
                 // success
             }
         } catch (err: any) {
@@ -178,12 +194,14 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         }
 
         if (!hasMinted) {
+            initUnMintApes();
             nervapeApi.fnMintAllow(state.currentAddress).then(res => {
-                if (res && !hasMinted && !localStorage.getItem("minting-tx")) setShowMint(true);
-            })
+                setShowMint(res);
+            });
         } else {
             localStorage.removeItem('minting-tx');
             setShowMint(false);
+            setNacpApes([]);
         }
     }, [state.currentAddress, chain, hasMinted, isMintedSuccess]);
 
@@ -199,13 +217,29 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         }
     }, [chain]);
 
+
     useEffect(() => {
         if (!isTokenSuccess) return;
+        if (!tokenIds) return;
 
-        fnGetNacpByTokenIds();
-    }, [isTokenSuccess]);
+        if (!(tokenIds as any).length) setChainApes([]);
 
-    useEffect(() => {
+        let hasChange: boolean = true;
+
+        if (chainApes.length) {
+            hasChange = false;
+
+            (tokenIds as any).map(t => {
+                let filter = chainApes.filter(c => c.id == t.toNumber());
+                if (!filter.length) hasChange = true;
+            });
+        }
+
+        debounce(hasChange);
+
+    }, [isTokenSuccess, tokenIds]);
+
+    async function initUnMintApes() {
         let _apes: NACP_APE[] = [];
 
         for (let i = 0; i < 3; i++) {
@@ -222,7 +256,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             })
         }
         setNacpApes(_apes);
-    }, [isBonelist]);
+    }
 
     useEffect(() => {
         if (currNacpTab == 'asset') {
@@ -346,10 +380,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         }
     }
 
-    useEffect(() => {
-        setLoading(true);
-    }, []);
-
     return (
         <div className={`wallet-nacp-container ${isFold && 'fold'}`}>
             <div className="wallet-nacp-header transition position-sticky flex-align">
@@ -366,17 +396,27 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             <div className="wallet-nacp-content">
                 {currNacpTab == 'ape' ? (
                     <div className="spot-apes">
-                        {isMintedSuccess && !hasMinted && (
+                        {!hasMinted && (
                             <div className="spot-items">
-                                <div className="item-title flex-align">
-                                    <div className="text">SPOT</div>
-                                    {showMint && (
+                                {(nacpApes.length > 0 && chainApes.length > 0) && (
+                                    <div className="item-title flex-align">
+                                        <div className="text">SPOT</div>
+                                    </div>
+                                )}
+
+                                {showMint && (
+                                    <div className={`mint-content ${isMinting && 'minting'}`}>
+                                        <div className="mint-tip-title">{isMinting ? 'MINTING NACPs...' : 'BONELIST MINT HAS STARTED'}</div>
+                                        <div className="mint-tip-desc">
+                                            {isMinting ? 'This might take several minutes.'
+                                                : 'To maintain your Bonelist spots you MUST mint before hh,mm, dd/mm/yyyy. Clicking the mint button below will mint all 3 of your spots at the same time.'}
+                                        </div>
                                         <button className="mint-btn cursor" onClick={() => {
                                             setShowMintTip(true);
                                             updateBodyOverflow(false);
-                                        }}>MINT</button>
-                                    )}
-                                </div>
+                                        }}>{isMinting ? 'MINTING...' : 'MINT'}</button>
+                                    </div>
+                                )}
 
                                 <div className="nacp-content-apes flex-align">
                                     {nacpApes.map((ape, index) => {
@@ -386,11 +426,13 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                             </div>
                         )}
                         {
-                            chainApes.length && (
+                            chainApes.length > 0 && (
                                 <div className="spot-items">
-                                    <div className="item-title flex-align">
-                                        <div className="text">APE</div>
-                                    </div>
+                                    {(nacpApes.length > 0 && chainApes.length > 0) && (
+                                        <div className="item-title flex-align">
+                                            <div className="text">APE</div>
+                                        </div>
+                                    )}
 
                                     <div className="nacp-content-apes flex-align">
                                         {chainApes.map((ape, index) => {
@@ -436,9 +478,13 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     updateBodyOverflow(true);
                 }}
                 editNacp={() => {
-                    setShowNacpDetail(false);
-                    updateBodyOverflow(false);
-                    setShowNacpEdit(true);
+                    if (userProfile && selectedNacp && selectedNacp.id == userProfile.id) {
+                        setShowCurrNacpTip(true);
+                    } else {
+                        setShowNacpDetail(false);
+                        updateBodyOverflow(false);
+                        setShowNacpEdit(true);
+                    }
                 }}
                 setShowProfileImage={(id: number) => {
                     setShowProfileImage(true);
@@ -448,7 +494,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             <NacpEdit
                 show={showNacpEdit}
                 nacp={selectedNacp as NacpMetadata}
-                userProfile={userProfile}
                 setShowNacpEdit={setShowNacpEdit}
                 setShowSaveSuccess={() => {
                     setShowNacpEdit(false);
@@ -501,6 +546,20 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     setShowProfileSuccess(false);
                     await fnGetUserProfile();
                     setShowNacpDetail(false);
+                }}></OperatePopup>
+            <OperatePopup
+                show={showCurrNacpTip}
+                closeText="CANCEL"
+                confirmText="PROCEED TO SAVE"
+                content="Current NACP NFT is being used as your profile image. Changes made to this NFT will also appear in your profile image."
+                close={() => {
+                    setShowCurrNacpTip(false);
+                }}
+                confirm={() => {
+                    setShowCurrNacpTip(false);
+                    setShowNacpDetail(false);
+                    updateBodyOverflow(false);
+                    setShowNacpEdit(true);
                 }}></OperatePopup>
         </div>
     );

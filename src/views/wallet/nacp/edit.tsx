@@ -12,11 +12,12 @@ import { useSignMessage } from "wagmi";
 import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
 import OperatePopup from "../../components/operate-popup";
+import EquipSelected from '../../../assets/wallet/nacp/equip_selected.svg';
 
 let touchYStart = 0;
 
-export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; userProfile: any; }) {
-    const { show, setShowNacpEdit, setShowSaveSuccess, nacp, userProfile } = props;
+export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; }) {
+    const { show, setShowNacpEdit, setShowSaveSuccess, nacp } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -47,7 +48,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     const [mShowCollection, setMShowCollection] = useState(false);
-    const [showCurrNacpTip, setShowCurrNacpTip] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
@@ -95,13 +95,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         urls.forEach(url => {
             preloadImage(url, () => {
                 currLength++;
-                setProgress((currLength / totalLength  * 100).toFixed(0));
-                console.log('progress', (currLength / totalLength  * 100).toFixed(0) + '%');
+                setProgress((currLength / totalLength * 100).toFixed(0));
+                console.log('progress', (currLength / totalLength * 100).toFixed(0) + '%');
                 if (currLength == totalLength) {
                     setIsLoadingEnded(true);
                     setLoading(false);
                 }
-                
+
             })
         })
     }
@@ -550,11 +550,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     <div className="title">{nacp.name}</div>
                     <div className="btn-groups flex-align">
                         <button className="cursor btn save-btn" onClick={() => {
-                            if (userProfile && nacp.id == userProfile.id) {
-                                setShowCurrNacpTip(true);
-                            } else {
-                                signInWithEthereum();
-                            }
+                            signInWithEthereum();
                         }}>Save</button>
                         <button className="cursor btn discard-btn" onClick={() => {
                             setShowDiscardPopup(true);
@@ -742,7 +738,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         return (
                                             <div
                                                 key={index}
-                                                className={`cursor asset-item transition ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
+                                                className={`cursor asset-item ${selected && 'selected'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
                                                 onClick={() => {
                                                     if (isCollectionOpen && !asset.show_collection) return;
 
@@ -754,10 +750,15 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
                                                     openOrCloseCollection(asset);
                                                 }}>
-                                                <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
+                                                <div className="asset-img-cover">
+                                                    <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
+                                                    {selected && (
+                                                        <img src={EquipSelected} className="equip-selected" alt="" />
+                                                    )}
+                                                </div>
                                                 {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (
                                                     <div
-                                                        className={`asset-collection transition ${selected && 'selected'}`}
+                                                        className={`asset-collection ${selected && 'selected'}`}
                                                         style={devStyle}
                                                         onClick={() => {
                                                             openOrCloseCollection(asset);
@@ -766,14 +767,20 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             {asset.includes?.map((_asset, _index) => {
                                                                 return (
                                                                     <div
-                                                                        className={`cursor transition collection-item ${_asset._id == currCategory.selected?._id && 'selected'}`}
+                                                                        className={`cursor collection-item ${_asset._id == currCategory.selected?._id && 'selected'}`}
                                                                         key={_index}
                                                                         onClick={e => {
                                                                             if (_asset._id == currCategory.selected?._id) return;
                                                                             chooseAsset(_asset);
                                                                             e.stopPropagation();
                                                                         }}>
-                                                                        <img src={_asset.thumb_url} alt="CollectionImg" className="collection-img" />
+                                                                        <div className="collection-img-cover">
+                                                                            <img src={_asset.thumb_url} alt="CollectionImg" className="collection-img transition" />
+                                                                            {_asset._id == currCategory.selected?._id && (
+                                                                                <img src={EquipSelected} className="equip-selected" alt="" />
+                                                                            )}
+                                                                        </div>
+
                                                                     </div>
                                                                 );
                                                             })}
@@ -824,17 +831,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     setShowDiscardPopup(false);
                     updateBodyOverflow(true);
                 }}></DiscardPopup>
-            <OperatePopup
-                show={showCurrNacpTip}
-                closeText="CANCEL"
-                confirmText="PROCEED TO SAVE"
-                content="Current NACP NFT is being used as your profile image. Changes made to this NFT will also appear in your profile image."
-                close={() => {
-                    setShowCurrNacpTip(false);
-                }}
-                confirm={() => {
-                    signInWithEthereum();
-                }}></OperatePopup>
         </div>
     );
 }

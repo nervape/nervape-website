@@ -119,6 +119,7 @@ export default function WallectConnect(props: any) {
 
     useEffect(() => {
         if (!address || !chain) return;
+        console.log('setStorage', address, chain);
         setCurrentAddress(address);
         setLoginWalletType(LoginWalletType.WALLET_CONNECT);
         setStorage({

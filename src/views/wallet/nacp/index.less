@@ -43,12 +43,12 @@
         &:last-child {
           padding-bottom: 48px;
         }
-        
+
         .item-title {
           padding-top: 32px;
           padding-bottom: 16px;
           margin-bottom: 16px;
-          border-bottom: 1px dotted rgba(180, 188, 208, 0.50);
+          border-bottom: 1px dotted rgba(180, 188, 208, 0.5);
 
           .text {
             color: #fff;
@@ -57,9 +57,44 @@
             letter-spacing: -1.2px;
             flex: 1;
           }
+        }
+
+        .mint-content {
+          width: 100%;
+          max-width: 658px;
+          margin: 16px 0;
+          padding: 16px;
+          border-radius: 16px;
+          border: 2px solid rgba(180, 188, 208, 0.5);
+          background: rgba(180, 188, 208, 0.1);
+
+          &.minting {
+            .mint-btn {
+              opacity: 0.1;
+            }
+          }
+
+          .mint-tip-title {
+            color: #fff;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 800;
+            line-height: 18px;
+            letter-spacing: -0.8px;
+          }
+
+          .mint-tip-desc {
+            color: #FFF;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 18px;
+            letter-spacing: -0.6px;
+            padding: 12px 0;
+          }
 
           .mint-btn {
-            padding: 0 16px;
+            width: 100%;
             height: 32px;
             line-height: 32px;
             border-radius: 6px;
@@ -117,7 +152,7 @@
         margin-bottom: 16px;
 
         .cover-image {
-          background: #FFFFFF;
+          background: #ffffff;
         }
 
         .asset-name {
@@ -136,7 +171,7 @@
 
         &.equip {
           .cover-image {
-            border: 4px solid #DE9858;
+            border: 4px solid #de9858;
             position: relative;
 
             .tag-item {
@@ -151,7 +186,7 @@
               }
 
               .ape-id {
-                color: #FFFFFF;
+                color: #ffffff;
                 font-size: 12px;
                 font-weight: 700;
                 letter-spacing: -0.6px;
