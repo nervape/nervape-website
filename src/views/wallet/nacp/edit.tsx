@@ -13,11 +13,12 @@ import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
 import OperatePopup from "../../components/operate-popup";
 import EquipSelected from '../../../assets/wallet/nacp/equip_selected.svg';
+import LoadingAssetsModal from "./loading/loading";
 
 let touchYStart = 0;
 
-export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; }) {
-    const { show, setShowNacpEdit, setShowSaveSuccess, nacp } = props;
+export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Function; setShowSaveSuccess: Function; nacp: NacpMetadata; setLoadingAssets: Function; setProgress: Function; }) {
+    const { show, setShowNacpEdit, setShowSaveSuccess, nacp, setLoadingAssets, setProgress } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -44,14 +45,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [isCollectionOpen, setIsCollectionOpen] = useState(false);
     const [isFold, setIsFold] = useState(false);
     const [isLoadingEnded, setIsLoadingEnded] = useState(false);
-    const [progress, setProgress] = useState('0.00');
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     const [mShowCollection, setMShowCollection] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
-        setLoading(true);
+        setLoadingAssets(true);
         setSelectPhase(0);
         const res = await nervapeApi.fnGetPhases(state.currentAddress);
         // 初始化 history
@@ -94,7 +94,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
         if (currLength == totalLength) {
             setIsLoadingEnded(true);
-            setLoading(false);
+            setLoadingAssets(false);
         }
 
         urls.forEach(url => {
@@ -104,7 +104,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 console.log('progress', (currLength / totalLength * 100).toFixed(0) + '%');
                 if (currLength == totalLength) {
                     setIsLoadingEnded(true);
-                    setLoading(false);
+                    setLoadingAssets(false);
                 }
             })
         })
@@ -132,7 +132,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         })
         setSelectedAssets(nacpAssets);
         updateHistoryStack(nacpAssets, _phases);
-        
+
         return _phases;
     }
 
@@ -162,28 +162,28 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     const filters = asset.category.excludes.filter(e => e._id == _asset.category?._id);
                     if (filters.length > 0) return false;
                 }
-    
+
                 // 特殊约定 1. mask_only/headwear
                 if ((asset.is_mask_only && _asset.category?.name == 'Headwear')
                     || (asset.category?.name == 'Headwear' && _asset.is_mask_only)) {
                     return false;
                 }
-    
+
                 // 特殊约定 2. headwear -- front/back
                 // 特殊约定 3. eyewear as mask
                 if (asset.category?.name == 'Eyewear' && asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
                     const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == _asset.category?._id);
                     if (filters.length > 0) return false;
                 }
-    
+
                 if (asset.category?.excludes_eyewear_as_mask) {
                     if (_asset.category?.name == 'Eyewear' && _asset.eyewear_as_mask) return false;
                 }
-    
+
                 return true;
             });
         }
-        
+
         const selectedAssetsIds = _selectedAssets.map(s => s._id);
 
         const _phases = JSON.parse(JSON.stringify(phases));
@@ -718,13 +718,15 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 )}
 
                                 <div className="assets flex-align" ref={assetsRef}>
-                                    <div 
-                                        className={`asset-item cursor ${isCollectionOpen && 'opacity'}`}
-                                        onClick={() => {
-                                            if (isCollectionOpen) return;
-                                            // 取消当前选择
-                                            chooseAsset(undefined);
-                                        }}></div>
+                                    {currCategory.name !== 'Skin' && (
+                                        <div
+                                            className={`asset-item cursor ${isCollectionOpen && 'opacity'}`}
+                                            onClick={() => {
+                                                if (isCollectionOpen) return;
+                                                // 取消当前选择
+                                                chooseAsset(undefined);
+                                            }}></div>
+                                    )}
                                     {assets.map((asset, index) => {
                                         let devStyle = {}
                                         let filters: NacpAsset[] = [];

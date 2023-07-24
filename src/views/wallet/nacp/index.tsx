@@ -22,6 +22,7 @@ import NacpAssetItem from "./asset-item";
 import OperatePopup from "../../components/operate-popup";
 import { SiweMessage } from "siwe";
 import useDebounce from "../../../hooks/useDebounce";
+import LoadingAssetsModal from "./loading/loading";
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; fnGetUserProfile: Function; userProfile: any; }) {
     const { isFold, isBonelist, setLoading, fnGetUserProfile, userProfile } = props;
@@ -47,6 +48,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [showProfileSuccess, setShowProfileSuccess] = useState(false);
     const [isMinting, setIsMinting] = useState(false);
     const [currentNacpId, setCurrentNacpId] = useState(0);
+
+    const [loadingAssets, setLoadingAssets] = useState(false);
+    const [progress, setProgress] = useState('0.00');
 
     const { address, isConnected } = useAccount();
     const { data: signer } = useSigner();
@@ -222,10 +226,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             updateBodyOverflow(true);
         }
     }, [chain]);
-
-    useEffect(() => {
-        
-    }, []);
 
     useEffect(() => {
         if (!isTokenSuccess) return;
@@ -504,6 +504,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 show={showNacpEdit}
                 nacp={selectedNacp as NacpMetadata}
                 setShowNacpEdit={setShowNacpEdit}
+                setLoadingAssets={setLoadingAssets}
+                setProgress={setProgress}
                 setShowSaveSuccess={() => {
                     setShowNacpEdit(false);
                     setShowSaveSuccess(true);
@@ -570,6 +572,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     updateBodyOverflow(false);
                     setShowNacpEdit(true);
                 }}></OperatePopup>
+            <LoadingAssetsModal 
+                show={loadingAssets}
+                progress={progress}></LoadingAssetsModal>
         </div>
     );
 }
