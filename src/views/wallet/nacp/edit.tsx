@@ -51,6 +51,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
+        setProgress('0');
         setLoadingAssets(true);
         setSelectPhase(0);
         const res = await nervapeApi.fnGetPhases(state.currentAddress);
