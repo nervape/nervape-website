@@ -106,7 +106,7 @@ export class NacpMetadataAttribute {
     is_special: boolean = false;
     asset_id: string = '';
     asset_url: string = '';
-    asset_thumb_url: string = '';
+    asset_url_thumb: string = '';
     skin_color: string = '';
 }
 export class NacpMetadata {

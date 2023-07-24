@@ -92,6 +92,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         totalLength = urls.length;
         console.log('totalLength', totalLength);
 
+        if (currLength == totalLength) {
+            setIsLoadingEnded(true);
+            setLoading(false);
+        }
+
         urls.forEach(url => {
             preloadImage(url, () => {
                 currLength++;
@@ -101,7 +106,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     setIsLoadingEnded(true);
                     setLoading(false);
                 }
-
             })
         })
     }
@@ -127,6 +131,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             }
         })
         setSelectedAssets(nacpAssets);
+        updateHistoryStack(nacpAssets, _phases);
+        
         return _phases;
     }
 
@@ -139,43 +145,45 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setAssets(_assets);
     }
 
-    async function chooseAsset(asset: NacpAsset) {
+    async function chooseAsset(asset: NacpAsset | undefined) {
         if (!currCategory) return;
 
         // 更新 selectedAssets
         let _selectedAssets: NacpAsset[] = JSON.parse(JSON.stringify(selectedAssets));
-        _selectedAssets = _selectedAssets.filter(_asset => {
-            // 检查 asset.excludes
-            if (asset.excludes && asset.excludes.length) {
-                const filters = asset.excludes.filter(e => e._id == _asset._id);
-                if (filters.length > 0) return false;
-            }
-            // 检查 所属分类的 excludes
-            if (asset.category?.excludes && asset.category?.excludes.length) {
-                const filters = asset.category.excludes.filter(e => e._id == _asset.category?._id);
-                if (filters.length > 0) return false;
-            }
-
-            // 特殊约定 1. mask_only/headwear
-            if ((asset.is_mask_only && _asset.category?.name == 'Headwear')
-                || (asset.category?.name == 'Headwear' && _asset.is_mask_only)) {
-                return false;
-            }
-
-            // 特殊约定 2. headwear -- front/back
-            // 特殊约定 3. eyewear as mask
-            if (asset.category?.name == 'Eyewear' && asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
-                const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == _asset.category?._id);
-                if (filters.length > 0) return false;
-            }
-
-            if (asset.category?.excludes_eyewear_as_mask) {
-                if (_asset.category?.name == 'Eyewear' && _asset.eyewear_as_mask) return false;
-            }
-
-            return true;
-        });
-
+        if (asset) {
+            _selectedAssets = _selectedAssets.filter(_asset => {
+                // 检查 asset.excludes
+                if (asset.excludes && asset.excludes.length) {
+                    const filters = asset.excludes.filter(e => e._id == _asset._id);
+                    if (filters.length > 0) return false;
+                }
+                // 检查 所属分类的 excludes
+                if (asset.category?.excludes && asset.category?.excludes.length) {
+                    const filters = asset.category.excludes.filter(e => e._id == _asset.category?._id);
+                    if (filters.length > 0) return false;
+                }
+    
+                // 特殊约定 1. mask_only/headwear
+                if ((asset.is_mask_only && _asset.category?.name == 'Headwear')
+                    || (asset.category?.name == 'Headwear' && _asset.is_mask_only)) {
+                    return false;
+                }
+    
+                // 特殊约定 2. headwear -- front/back
+                // 特殊约定 3. eyewear as mask
+                if (asset.category?.name == 'Eyewear' && asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
+                    const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == _asset.category?._id);
+                    if (filters.length > 0) return false;
+                }
+    
+                if (asset.category?.excludes_eyewear_as_mask) {
+                    if (_asset.category?.name == 'Eyewear' && _asset.eyewear_as_mask) return false;
+                }
+    
+                return true;
+            });
+        }
+        
         const selectedAssetsIds = _selectedAssets.map(s => s._id);
 
         const _phases = JSON.parse(JSON.stringify(phases));
@@ -710,6 +718,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 )}
 
                                 <div className="assets flex-align" ref={assetsRef}>
+                                    <div 
+                                        className={`asset-item cursor ${isCollectionOpen && 'opacity'}`}
+                                        onClick={() => {
+                                            if (isCollectionOpen) return;
+                                            // 取消当前选择
+                                            chooseAsset(undefined);
+                                        }}></div>
                                     {assets.map((asset, index) => {
                                         let devStyle = {}
                                         let filters: NacpAsset[] = [];

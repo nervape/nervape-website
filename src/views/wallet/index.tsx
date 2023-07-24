@@ -126,7 +126,6 @@ export default function WalletNewPage() {
     useEffect(() => {
         if (!navbars.length) return;
         console.log('history', history);
-        setLoading(true);
         const { hash } = history;
         if (!hash) {
             setCurrNavbar(0);

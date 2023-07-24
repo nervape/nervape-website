@@ -294,6 +294,12 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+ 
+  public async fnNacpSetting() {
+    const url = `${this.baseUrl}/nacp/setting`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnGetMetadataByTokenId(tokenId: number) {
     const url = `${this.metadataBaseUrl}/nacp/${tokenId}`;

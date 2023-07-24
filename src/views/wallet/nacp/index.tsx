@@ -118,7 +118,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     _nacpAssets.push({
                         _id: a.asset_id,
                         name: a.value,
-                        thumb_url: a.asset_thumb_url,
+                        thumb_url: a.asset_url_thumb,
                         url: a.asset_url,
                         category_name: a.trait_type,
                         ape_id: data.id,
@@ -136,6 +136,11 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         setNacpAssets(_nacpAssets);
         setChainApes(_chainApes);
         setLoading(false);
+    }
+
+    // public mint 是否结束
+    async function nacpSetting() {
+        const res = await nervapeApi.fnNacpSetting();
     }
 
     const handleBonelistMint = async () => {
@@ -207,8 +212,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
     useEffect(() => {
         if (!chain) return;
-
+        setLoading(true);
         if (chain.id !== goerli.id) {
+            setLoading(false);
             setShowSwitchChain(true);
             updateBodyOverflow(false);
         } else {
@@ -217,6 +223,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         }
     }, [chain]);
 
+    useEffect(() => {
+        
+    }, []);
 
     useEffect(() => {
         if (!isTokenSuccess) return;
