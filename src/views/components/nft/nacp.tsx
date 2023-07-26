@@ -47,7 +47,7 @@ export default function NacpApeDetail(props: {
                             {
                                 nacp?.categories && nacp.categories.map((category, index) => {
                                     return (
-                                        <div className={`nacp-category flex-align ${category.status == 1 && 'active'}`} key={index}>
+                                        <div className={`nacp-category flex-align ${category.status == 1 && 'active'}`} key={index} title={category.asset && category.asset.name}>
                                             <div className="left-icon">
                                                 {NacpCategoryIcons.get(category.name)}
                                             </div>

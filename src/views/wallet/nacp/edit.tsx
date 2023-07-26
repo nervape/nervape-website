@@ -105,6 +105,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             _p.categories.forEach(_c => {
                 _c.assets.forEach(_a => {
                     urls.push(_a.thumb_url);
+                    urls.push(`${_a.url}?v=3`);
                 });
             });
         });
@@ -618,7 +619,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=2`} alt="" />
+                                                    <img src={`${asset.url}?v=3`} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -639,7 +640,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=2`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
                                                 </div>
                                             );
                                         })}
@@ -660,7 +661,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             ? asset.category?.headwear_back_level
                                                             : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
                                                     }}>
-                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=2`} alt="" />
+                                                    <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
                                                 </div>
                                             );
                                         })}
