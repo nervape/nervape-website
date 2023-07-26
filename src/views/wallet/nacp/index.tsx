@@ -127,7 +127,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                         category_name: a.trait_type,
                         ape_id: data.id,
                         is_equip: true,
-                        skin_color: a.skin_color
+                        skin_color: a.skin_color,
+                        can_use: true
                     });
                 });
 
@@ -283,6 +284,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                         thumb_url: r.asset.thumb_url,
                         url: r.asset.url,
                         category_name: r.asset.category.name,
+                        can_use: true
                     })
                 });
 

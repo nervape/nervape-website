@@ -98,5 +98,10 @@ export function preloadImage(url: string, callback: Function) {
         callback && callback();
     }
 
+    img.onerror = function() {
+        img.onerror = null;
+        callback && callback();
+    }
+
     img.src = url;
 }

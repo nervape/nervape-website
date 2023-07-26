@@ -88,6 +88,7 @@ export class NacpAsset {
     ape_id?: number;
     is_equip?: boolean = false;
     skin_color?: string;
+    can_use: boolean = false;
 }
 
 export class MetadataAttribute {
