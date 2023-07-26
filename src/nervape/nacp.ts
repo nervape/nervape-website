@@ -76,6 +76,7 @@ export class NacpAsset {
     is_eyewear_back?: boolean;
     excludes?: NacpAsset[];
     sort?: number = 0;
+    level?: number = 0;
     description?: string = "";
     is_collection?: boolean = false;
     show_collection?: boolean = false;

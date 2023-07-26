@@ -45,7 +45,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [showDiscardPopup, setShowDiscardPopup] = useState(false);
     const [isCollectionOpen, setIsCollectionOpen] = useState(false);
     const [isFold, setIsFold] = useState(false);
+    const [isUploadCount, setIsUploadCount] = useState(0);
     const [isLoadingEnded, setIsLoadingEnded] = useState(false);
+    const [isSaveVerify, setIsSaveVerify] = useState(false);
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     const [mShowCollection, setMShowCollection] = useState(false);
@@ -465,6 +467,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     const signInWithEthereum = async () => {
         setLoading(true);
+        setIsUploadCount(2);
 
         try {
             const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
@@ -481,11 +484,14 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 }
             });
 
-            const res = await nervapeApi.fnSendForVerify(message, signature, _metadata);
+            await nervapeApi.fnSendForVerify(message, signature, _metadata);
 
-            setLoading(false);
+            setIsSaveVerify(true);
 
-            setShowSaveSuccess();
+            if (isUploadCount <= 0) {
+                setLoading(false);
+                setShowSaveSuccess();
+            }
         } catch {
             setLoading(false);
         }
@@ -532,7 +538,14 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         formData.append('success_action_status', signData.fields['success_action_status']);
         formData.append('file', dataURItoBlob(dataUrl));
 
-        nervapeApi.NacpFileUpload(signData.url, formData);
+        nervapeApi.NacpFileUpload(signData.url, formData).then(res => {
+            setIsUploadCount(isUploadCount - 1);
+
+            if (isSaveVerify) {
+                setLoading(false);
+                setShowSaveSuccess();
+            }
+        });
     }
 
     useEffect(() => {
@@ -615,9 +628,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                     key={index}
                                                     className="nacp-asset"
                                                     style={{
-                                                        zIndex: asset.is_headwear_back
-                                                            ? asset.category?.headwear_back_level
-                                                            : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
+                                                        zIndex: asset.level
+                                                            ? asset.level
+                                                            : (asset.is_headwear_back
+                                                                ? asset.category?.headwear_back_level
+                                                                : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
                                                     }}>
                                                     <img src={`${asset.url}?v=3`} alt="" />
                                                 </div>
@@ -636,9 +651,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                     key={index}
                                                     className="nacp-asset"
                                                     style={{
-                                                        zIndex: asset.is_headwear_back
-                                                            ? asset.category?.headwear_back_level
-                                                            : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
+                                                        zIndex: asset.level
+                                                            ? asset.level
+                                                            : (asset.is_headwear_back
+                                                                ? asset.category?.headwear_back_level
+                                                                : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
                                                     }}>
                                                     <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
                                                 </div>
@@ -657,9 +674,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                     key={index}
                                                     className="nacp-asset"
                                                     style={{
-                                                        zIndex: asset.is_headwear_back
-                                                            ? asset.category?.headwear_back_level
-                                                            : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level)
+                                                        zIndex: asset.level
+                                                            ? asset.level
+                                                            : (asset.is_headwear_back
+                                                                ? asset.category?.headwear_back_level
+                                                                : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
                                                     }}>
                                                     <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
                                                 </div>
