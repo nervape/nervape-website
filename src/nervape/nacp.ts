@@ -90,6 +90,7 @@ export class NacpAsset {
     is_equip?: boolean = false;
     skin_color?: string;
     can_use: boolean = false;
+    access_type?: string = '';
 }
 
 export class MetadataAttribute {

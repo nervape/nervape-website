@@ -11,10 +11,9 @@ import { SiweMessage } from "siwe";
 import { useSignMessage } from "wagmi";
 import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
-import OperatePopup from "../../components/operate-popup";
 import EquipSelected from '../../../assets/wallet/nacp/equip_selected.svg';
-import LoadingAssetsModal from "./loading/loading";
 import FoldIcon from '../../../assets/wallet/nacp/fold_icon.svg';
+import SpecialIcon from '../../../assets/wallet/nacp/special.svg';
 
 let touchYStart = 0;
 
@@ -811,6 +810,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                     {selected && (
                                                         <img src={EquipSelected} className="equip-selected" alt="" />
                                                     )}
+                                                    {asset.access_type == 'Special' && (
+                                                        <img src={SpecialIcon} className="special-icon" alt="SpecialIcon" />
+                                                    )}
                                                 </div>
                                                 {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (
                                                     <div
@@ -835,6 +837,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                                             <img src={_asset.thumb_url} alt="CollectionImg" className="collection-img transition" />
                                                                             {_asset._id == currCategory.selected?._id && (
                                                                                 <img src={EquipSelected} className="equip-selected" alt="" />
+                                                                            )}
+                                                                            {_asset.access_type == 'Special' && (
+                                                                                <img src={SpecialIcon} className="special-icon" alt="SpecialIcon" />
                                                                             )}
                                                                         </div>
 

@@ -76,6 +76,10 @@
           }
         }
 
+        .nacp-categories-c {
+          flex: 1;
+        }
+
         .nacp-categories {
           flex-wrap: wrap;
 
@@ -138,24 +142,21 @@
             }
           }
         }
-
+        
         .btn-groups {
-          margin-top: 84px;
-          height: 32px;
           display: flex;
+          justify-content: end;
 
           .btn {
-            height: 32px;
-            border: unset;
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 17px;
-            color: #ffffff;
-            background: #f44d37;
-            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-            border-radius: 6px;
-            padding: 0 16px;
             margin-left: 8px;
+            padding: 7px;
+            border-radius: 16px;
+            background: #f44d37;
+
+            img {
+              width: 34px;
+              height: 34px;
+            }
           }
         }
       }
@@ -217,58 +218,6 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
-  .nacp-ape-detail-container {
-    .nft-card-detail {
-      .detail-info.m {
-        .info-content {
-          padding: 16px;
-
-          .nacp-categories {
-            flex-wrap: wrap;
-
-            .nacp-category {
-              width: calc((100% - 6px) / 2);
-
-              &:nth-child(3n) {
-                margin-right: 6px;
-              }
-
-              &:nth-child(2n) {
-                margin-right: 0;
-              }
-            }
-          }
-          
-          .btn-groups {
-            margin-top: 20px;
-            padding-bottom: 120px;
-            flex-wrap: wrap;
-            flex-direction: row;
-
-            .btn {
-              margin-left: 0;
-              padding: 0;
-            }
-
-            .profile, .edit {
-              width: calc((100% - 8px) / 2);
-            }
-
-            .profile {
-              margin-right: 8px;
-            }
-
-            .opensea {
-              width: 100%;
-              margin-top: 8px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
 @media screen and (min-width: 750px) and (max-width: 1200px) {
   .nacp-ape-detail-container {
     .nft-card-detail {
@@ -281,10 +230,35 @@
         height: 600px;
       }
 
-      .detail-info {
+      .detail-info.m {
         width: 100%;
         height: calc(100vh - 600px);
         overflow-y: scroll;
+
+        .info-content {
+          padding: 16px;
+
+          .nacp-categories {
+            flex-wrap: wrap;
+
+            .nacp-category {
+              width: calc((100% - 12px) / 3);
+
+              &:nth-child(2n) {
+                margin-right: 6px;
+              }
+
+              &:nth-child(3n) {
+                margin-right: 0;
+              }
+            }
+          }
+
+          .btn-groups {
+            margin-top: 20px;
+            padding-bottom: 32px;
+          }
+        }
       }
     }
   }
@@ -305,6 +279,31 @@
         width: 100vw;
         height: calc(100vh - 100vw);
         overflow-y: scroll;
+
+        .info-content {
+          padding: 16px;
+
+          .nacp-categories {
+            flex-wrap: wrap;
+
+            .nacp-category {
+              width: calc((100% - 6px) / 2);
+
+              &:nth-child(3n) {
+                margin-right: 6px;
+              }
+
+              &:nth-child(2n) {
+                margin-right: 0;
+              }
+            }
+          }
+
+          .btn-groups {
+            margin-top: 20px;
+            padding-bottom: 16px;
+          }
+        }
       }
     }
   }
