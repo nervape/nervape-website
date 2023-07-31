@@ -14,6 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
 import EquipSelected from '../../../assets/wallet/nacp/equip_selected.svg';
 import FoldIcon from '../../../assets/wallet/nacp/fold_icon.svg';
 import SpecialIcon from '../../../assets/wallet/nacp/special.svg';
+import BodyViewScaleIcon from '../../../assets/wallet/nacp/body.svg';
+import HeadViewScaleIcon from '../../../assets/wallet/nacp/head.svg';
 
 let touchYStart = 0;
 
@@ -31,6 +33,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const elementRef = useRef(null);
     const coverElementRef = useRef(null);
     const assetsRef = useRef(null);
+    const rightRef = useRef(null);
 
     const [phases, setPhases] = useState<NacpPhase[]>([]);
     const [selectPhase, setSelectPhase] = useState(0);
@@ -49,7 +52,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [isSaveVerify, setIsSaveVerify] = useState(false);
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
-    const [mShowCollection, setMShowCollection] = useState(false);
+    const [viewScale, setViewScale] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
     async function fnGetPhases() {
@@ -563,8 +566,23 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     useEffect(() => {
         if (!currCategory?._id) return;
+
+        if (currCategory.name == 'Suit' || currCategory.name == 'Mask') {
+            document.body.style.setProperty('--nacp-asset-min-height', '83px');
+            document.body.style.setProperty('--nacp-asset-offset', '0px');
+        } else {
+            document.body.style.setProperty('--nacp-asset-min-height', '120px');
+            document.body.style.setProperty('--nacp-asset-offset', '37px');
+        }
+
+        (rightRef.current as unknown as HTMLElement).scroll({ top: 0, behavior: "smooth" });
+
         fnGetAssets(currCategory._id);
     }, [currCategory?._id]);
+
+    useEffect(() => {
+        setViewScale(selectPhase == 1);
+    }, [selectPhase]);
 
     if (!phases || !phases.length) return <></>;
 
@@ -620,7 +638,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
                             <div className={`nacp-camera-content transition ${isFold && 'fold'}`}>
                                 {selectedAssets.length > 0 ? (
-                                    <div className={`nacp-assets transition ${selectPhase == 1 && 'scale'}`}>
+                                    <div className={`nacp-assets transition ${(selectPhase == 1 && viewScale) && 'scale'}`}>
                                         {selectedAssets.map((asset, index) => {
                                             return (
                                                 <div
@@ -641,7 +659,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 ) : (
                                     <></>
                                 )}
-
+                                {selectPhase == 1 && (
+                                    <div className="view-scale cursor" onClick={() => {
+                                        setViewScale(!viewScale);
+                                    }}>
+                                        <img className="transition" src={viewScale ? BodyViewScaleIcon : HeadViewScaleIcon} alt="" />
+                                    </div>
+                                )}
                                 {selectedAssets.length > 0 ? (
                                     <div className={`nacp-assets-save transition`} style={{ width: '1000px', height: '1000px' }} ref={elementRef}>
                                         {selectedAssets.map((asset, index) => {
@@ -712,31 +736,46 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         }}>Redo</button>
                                 </div>
                             </div>
-                            <div className={`phase-categories flex-align ${isFold && 'fold'}`}>
-                                {phases[selectPhase]?.categories.map((category, index) => {
-                                    return (
-                                        <div
-                                            key={index}
-                                            className={`cursor transition phase-category ${selectCategory == category._id && 'selected'}`}
-                                            onClick={() => {
-                                                setSelectCategory(category._id);
-                                                setCurrCategory(category);
-                                                if (!isFold) setIsFold(true);
-                                            }}>
-                                            {NacpCategoryIcons.get(category.name)}
-                                            <div className="select-asset-img">
-                                                {category.selected && (
-                                                    <img src={category.selected.thumb_url} />
-                                                )}
+                            <div className={`phase-categories ${isFold && 'fold'}`}>
+                                <div className="flex-align phase-category-c">
+                                    {phases[selectPhase]?.categories.map((category, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`cursor transition phase-category ${selectCategory == category._id && 'selected'}`}
+                                                onClick={() => {
+                                                    setSelectCategory(category._id);
+                                                    setCurrCategory(category);
+                                                    if (!isFold) setIsFold(true);
+                                                }}>
+                                                {NacpCategoryIcons.get(category.name)}
+                                                <div className="select-asset-img">
+                                                    {category.selected && (
+                                                        <img src={category.selected.thumb_url} />
+                                                    )}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                {state.windowWidth <= 750 && (
+                                    (currCategory.name == 'Mask' || currCategory.name == 'Suit') && (
+                                        <div className="mask-suit-tip flex-align">
+                                            {NacpCategoryIcons.get(currCategory?.name)}
+                                            <div className="text">
+                                                {currCategory.name == 'Mask'
+                                                    ? 'Some masks may cover the whole head. When selected, all head assets except for the mask will be removed.'
+                                                    : 'Suits will replace both upper body and lower body assets.'}
                                             </div>
                                         </div>
-                                    );
-                                })}
+                                    )
+                                )}
                             </div>
                         </div>
                     </div>
                     <div
                         className={`right-content ${!isFold && 'hide'} ${phases[selectPhase].status !== 1 && 'locked'}`}
+                        ref={rightRef}
                         onTouchStart={e => e.stopPropagation()}
                         onTouchEnd={e => e.stopPropagation()}>
                         {phases[selectPhase].status !== 1 ? (
@@ -748,9 +787,21 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                         ) : (
                             <>
                                 {state.windowWidth > 750 && (
-                                    <div className="curr-category flex-align">
-                                        {NacpCategoryIcons.get(currCategory?.name)}
-                                        <div className="category-name">{currCategory?.name}</div>
+                                    <div className={`curr-category-top ${!(state.windowWidth == 1000 || state.windowWidth == 1440) && 'flex-align'}`}>
+                                        <div className="curr-category flex-align">
+                                            {NacpCategoryIcons.get(currCategory?.name)}
+                                            <div className="category-name">{currCategory?.name}</div>
+                                        </div>
+                                        {(currCategory.name == 'Mask' || currCategory.name == 'Suit') && (
+                                            <div className="mask-suit-tip flex-align">
+                                                {NacpCategoryIcons.get(currCategory?.name)}
+                                                <div className="text">
+                                                    {currCategory.name == 'Mask'
+                                                        ? 'Some masks may cover the whole head. When selected, all head assets except for the mask will be removed.'
+                                                        : 'Suits will replace both upper body and lower body assets.'}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
 

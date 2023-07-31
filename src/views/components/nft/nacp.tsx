@@ -67,14 +67,6 @@ export default function NacpApeDetail(props: {
                         </div>
                         <div className="btn-groups">
                             <div
-                                className="btn cursor profile"
-                                onClick={() => {
-                                    // 设置头像
-                                    setShowProfileImage(nacp.id);
-                                }}>
-                                <img src={ProfileIcon} alt="ProfileIcon" />
-                            </div>
-                            <div
                                 className="btn cursor edit"
                                 onClick={() => {
                                     // edit
@@ -82,7 +74,19 @@ export default function NacpApeDetail(props: {
                                 }}
                             >
                                 <img src={EditIcon} alt="EditIcon" />
+                                EDIT
                             </div>
+                            
+                            <div
+                                className="btn cursor profile"
+                                onClick={() => {
+                                    // 设置头像
+                                    setShowProfileImage(nacp.id);
+                                }}>
+                                <img src={ProfileIcon} alt="ProfileIcon" />
+                                SET AS PFP
+                            </div>
+
                             <div
                                 className="btn cursor opensea"
                                 onClick={() => {
