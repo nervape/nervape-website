@@ -584,6 +584,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setViewScale(selectPhase == 1);
     }, [selectPhase]);
 
+    useEffect(() => {
+        if (show && state.windowWidth <= 750) updateBodyOverflow(false);
+    }, [show, state.windowWidth]);
+
     if (!phases || !phases.length) return <></>;
 
     return (

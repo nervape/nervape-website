@@ -407,7 +407,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             <div className="wallet-nacp-content">
                 {currNacpTab == 'ape' ? (
                     <div className="spot-apes">
-                        {!hasMinted && (
+                        {!hasMinted && nacpApes.length > 0 && (
                             <div className="spot-items">
                                 {(nacpApes.length > 0 && chainApes.length > 0) && (
                                     <div className="item-title flex-align">

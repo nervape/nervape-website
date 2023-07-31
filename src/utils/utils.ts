@@ -75,6 +75,7 @@ export function isMetaMaskMobile() {
 }
 
 export function updateBodyOverflow(open: boolean) {
+    console.log('updateBodyOverflow', open);
     document.body.style.overflow = open ? 'auto' : 'hidden';
 }
 
