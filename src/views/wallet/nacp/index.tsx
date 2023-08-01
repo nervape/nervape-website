@@ -217,12 +217,12 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
     useEffect(() => {
         if (!chain) return;
-        setLoading(true);
         if (chain.id !== goerli.id) {
             setLoading(false);
             setShowSwitchChain(true);
             updateBodyOverflow(false);
         } else {
+            // setLoading(true);
             setShowSwitchChain(false);
             updateBodyOverflow(true);
         }

@@ -73,7 +73,9 @@ export default function WalletEvent(props: any) {
             })
         )
         setEvents(events);
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
     }
 
     useEffect(() => {

@@ -303,6 +303,12 @@ export default function WalletNewPage() {
         }
     });
 
+    useEffect(() => {
+        if (currNavbar > -1 && navbars.length && navbars[currNavbar]?.name == WalletNavbarTypes.NACP) {
+            setLoading(true);
+        }
+    }, [currNavbar, navbars]);
+
     return (
         <div className="wallet-new-page">
             {state.currentAddress && (
