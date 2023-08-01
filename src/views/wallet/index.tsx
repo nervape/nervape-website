@@ -64,7 +64,7 @@ export default function WalletNewPage() {
     const [userProfile, setUserProfile] = useState(null);
 
     const [navbars, setNavbars] = useState<WalletNavBar[]>([]);
-    const [currNavbar, setCurrNavbar] = useState(0);
+    const [currNavbar, setCurrNavbar] = useState(-1);
     const [isBonelist, setIsBonelist] = useState(false);
 
     const setLoading = (flag: boolean) => {
