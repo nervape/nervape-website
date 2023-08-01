@@ -114,6 +114,7 @@ export class NacpMetadataAttribute {
 }
 export class NacpMetadata {
     id: number = 0;
+    token_id?: number;
     name: string = '';
     image: string = '';
     description: string = '';

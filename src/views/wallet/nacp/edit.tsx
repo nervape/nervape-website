@@ -144,6 +144,14 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     p.categories.map(_c => {
                         if (_c._id == c._id) {
                             _c.selected = c.asset;
+
+                            _c.assets.map(a => {
+                                if (c.asset?.access_type == "Special") {
+                                    a.can_use = true;
+                                }
+                                
+                                return a;
+                            })
                         }
 
                         return _c;
@@ -491,6 +499,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             setIsSaveVerify(true);
 
             if (isUploadCount <= 0) {
+                setIsSaveVerify(false);
                 setLoading(false);
                 setShowSaveSuccess();
             }
@@ -544,6 +553,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             setIsUploadCount(isUploadCount - 1);
 
             if (isSaveVerify) {
+                setIsSaveVerify(false);
                 setLoading(false);
                 setShowSaveSuccess();
             }

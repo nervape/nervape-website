@@ -106,3 +106,26 @@ export class NFT_FILTER {
   open: boolean = true;
   items: NFT_FILTER_ITEM[] = [];
 }
+
+export class NACP_NFT_QUERY {
+  tokenId?: number;
+  assets?: string[];
+}
+
+export class NACP_ASSET_QUERY {
+  categoryId: string = "";
+  name: string = "";
+}
+
+export class NACP_NFT_FILTER_ITEM {
+  _id: string = "";
+  name: string = "";
+  checked: boolean = false;
+}
+export class NACP_NFT_FILTER {
+  _id: string = "";
+  name: string = "";
+  open: boolean = true;
+  asset_name?: string;
+  assets: NACP_NFT_FILTER_ITEM[] = [];
+}

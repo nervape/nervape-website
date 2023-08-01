@@ -323,6 +323,24 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetNacpCategories() {
+    const url = `${this.baseUrl}/pfp-asset/website/nacp/categories/filter`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetNacpAssetsByCategory(categoryId: string, name: string) {
+    const url = `${this.baseUrl}/pfp-asset/website/nacp/assets/filter/${categoryId}?name=${name}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnfilterNacp(tokenId: number | undefined, assets: string[] | undefined) {
+    const url = `${this.baseUrl}/nacp/website/search`;
+    const res = await axios.post(url, {tokenId, assets});
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();
