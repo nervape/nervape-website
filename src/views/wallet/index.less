@@ -12,8 +12,13 @@ body {
 }
 
 .wallet-new-page {
-  background-color: #17171E;
+  background-color: #17171e;
   min-height: 100vh;
+
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
 
   .wallet-home-container {
     opacity: 0;
@@ -36,7 +41,7 @@ body {
       .wallet-section {
         .wallet-navbar-content {
           width: 68px;
-          background: #494D5E;
+          background: #494d5e;
           border-radius: 20px;
           align-self: flex-start;
 
@@ -162,8 +167,8 @@ body {
         .wallet-section {
           position: relative;
           z-index: 2;
-          background: #17171E;
-          
+          background: #17171e;
+
           .wallet-navbar-content {
             width: 100%;
             position: fixed;
