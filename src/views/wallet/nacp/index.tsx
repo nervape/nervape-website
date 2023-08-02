@@ -88,7 +88,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     useTransaction({
         hash: localStorage.getItem("minting-tx") ? localStorage.getItem("minting-tx") as `0x${string}` : undefined,
         onSettled(data, error) {
-            console.log('Settled', { data, error })
             // 查询 txhash 交易状态
             if (data && data.confirmations > 0) {
                 localStorage.removeItem('minting-tx');
@@ -153,7 +152,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         try {
             const tx = await contract?.bonelistMint(signature);
             console.log('handleBonelistMint', tx);
-            // save txhash to localStorage 0xb8d8193b34e56a1e59c87e9c00b2a4f1e3bcf539e5b7fe38df2f12aeffeb3c92
             localStorage.setItem("minting-tx", tx.hash);
 
             setShowMintTip(false);
@@ -449,11 +447,13 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                         {chainApes.map((ape, index) => {
                                             return (
                                                 <div className="nacp-ape-item cursor" key={index} onClick={async () => {
+                                                    setLoading(true);
                                                     const res = await nervapeApi.fnGetCategoriesByAttributes(ape.attributes);
                                                     updateBodyOverflow(false);
                                                     const _ape = JSON.parse(JSON.stringify(ape));
                                                     _ape.categories = res;
                                                     setSelectedNacp(_ape);
+                                                    setLoading(false);
                                                     setShowNacpDetail(true);
                                                     if (state.windowWidth <= 750) setHideHeader(false);
                                                 }}>

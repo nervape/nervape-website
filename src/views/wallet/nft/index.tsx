@@ -117,7 +117,6 @@ export default function WalletNFT3D(props: any) {
     }
 
     async function fetchERC721NFTS() {
-        console.log('tokenIds', tokenIds);
         setNfts([]);
         setLoading(true);
         try {
@@ -141,7 +140,6 @@ export default function WalletNFT3D(props: any) {
                     });
                 }
             });
-            console.log('_processedMNFTs', _processedMNFTs)
             setNfts(_processedMNFTs);
         } catch (error) {
             console.error(error);

@@ -125,7 +125,6 @@ export default function WalletNewPage() {
 
     useEffect(() => {
         if (!navbars.length) return;
-        console.log('history', history);
         const { hash } = history;
         if (!hash) {
             setCurrNavbar(0);
@@ -208,7 +207,6 @@ export default function WalletNewPage() {
             const res = await state.layerOneWrapper?.transferCKB(toAddress, new Amount(amount));
             setShowTransferSuccess(true);
             await insertTransferCkbHistory(state.currentAddress, toAddress, amount, res);
-            console.log(res);
         } catch (err) {
             console.log(err);
         }

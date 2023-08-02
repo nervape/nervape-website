@@ -342,7 +342,6 @@ const WalletTx = (
         if (state.loginWalletType !== LoginWalletType.UNIPASS_V3) {
             fnGetHistories(state.currentAddress);
         } else {
-            console.log('fnGetUnipassHistories');
             fnGetUnipassHistories(state.currentAddress);
         }
     }, [state.currentAddress, state.loginWalletType]);

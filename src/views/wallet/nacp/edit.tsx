@@ -80,7 +80,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             setCurrCategory(activePhase.categories[0]);
             setSelectCategory(activePhase.categories[0]._id);
 
-            console.log('res[0].categories[0]', activePhase);
             if (activePhase.status == 1) {
                 fnGetAssets(activePhase.categories[0]._id);
             }
@@ -149,7 +148,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 if (c.asset?.access_type == "Special") {
                                     a.can_use = true;
                                 }
-                                
+
                                 return a;
                             })
                         }
@@ -487,7 +486,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             const _metadata = JSON.parse(JSON.stringify(updateMetadataForm));
             _metadata.url = url;
             _metadata.thumb_url = thumb_url;
-            console.log('selectedAssets', selectedAssets);
             _metadata.attributes = selectedAssets.map(s => {
                 return {
                     asset_id: s._id
