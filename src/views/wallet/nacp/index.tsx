@@ -134,9 +134,14 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 _chainApes.push(data);
             })
         );
+        
         _chainApes.sort(function (a, b) {
             return a.id - b.id;
-        })
+        });
+
+        _nacpAssets.sort(function (a: any, b: any) {
+            return a?.ape_id - b?.ape_id;
+        });
         setNacpAssets(_nacpAssets);
         setChainApes(_chainApes);
         setLoading(false);

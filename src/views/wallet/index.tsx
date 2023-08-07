@@ -303,7 +303,9 @@ export default function WalletNewPage() {
 
     useEffect(() => {
         if (currNavbar > -1 && navbars.length && navbars[currNavbar]?.name == WalletNavbarTypes.NACP) {
-            setLoading(true);
+            if (chain && chain.id == goerli.id) {
+                setLoading(true);
+            }
         }
     }, [currNavbar, navbars]);
 
@@ -332,8 +334,8 @@ export default function WalletNewPage() {
                             <div className="wallet-content transition">
                                 {/* <NavbarContent></NavbarContent> */}
                                 {navbars[currNavbar]?.name == WalletNavbarTypes.NACP ? (
-                                    <WalletNacp 
-                                        isFold={isFold} 
+                                    <WalletNacp
+                                        isFold={isFold}
                                         isBonelist={isBonelist}
                                         fnGetUserProfile={fnGetUserProfile}
                                         userProfile={userProfile}
