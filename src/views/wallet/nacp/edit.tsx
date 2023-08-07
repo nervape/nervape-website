@@ -37,6 +37,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     const [phases, setPhases] = useState<NacpPhase[]>([]);
     const [selectPhase, setSelectPhase] = useState(0);
+    const [maxStep, setMaxStep] = useState(15);
     const [selectCategory, setSelectCategory] = useState('');
     const [currCategory, setCurrCategory] = useState<NacpCategory>(new NacpCategory());
     const [assets, setAssets] = useState<NacpAsset[]>([]);
@@ -292,14 +293,20 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         let a = JSON.parse(JSON.stringify(assetsHistoryStack));
         let p = JSON.parse(JSON.stringify(phaseHistoryStack));
 
+        // 最大 maxStep
+        if (a.length >= maxStep) {
+            a.shift();
+            p.shift();
+        }
+
         // 修改 asset 发生在 undo/redo 时
-        if (historyIndex + 1 !== assetsHistoryStack.length) {
-            a.splice(historyIndex + 1, assetsHistoryStack.length - historyIndex);
+        if (historyIndex + 1 !== a.length) {
+            a.splice(historyIndex + 1, a.length - historyIndex);
             a.push(_assets);
             setHistoryIndex(a.length - 1);
             setAssetsHistoryStack(a);
 
-            p.splice(historyIndex + 1, phaseHistoryStack.length - historyIndex);
+            p.splice(historyIndex + 1, p.length - historyIndex);
             p.push(_phases);
             setPhaseHistoryStack(p);
         } else {
@@ -403,6 +410,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     useEffect(() => {
+        if (!phases) return;
+
         let _assets: NacpAsset[] = [];
         phases.map(p => {
             p.categories.map(c => {

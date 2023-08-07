@@ -5,7 +5,6 @@
   .nfts-content {
     position: relative;
     background: #141d26;
-    padding-bottom: 160px;
     min-height: 100vh;
 
     .content {
@@ -17,6 +16,9 @@
       .filter-items {
         width: 300px;
         margin-right: 64px;
+        height: calc(100vh - 128px);
+        position: sticky;
+        top: 128px;
 
         input {
           border: none;
@@ -33,14 +35,24 @@
             outline: unset;
           }
         }
+
+        .filter-container {
+          height: calc(100vh - 128px);
+          overflow-y: scroll;
+          padding-top: 32px;
+          padding-bottom: 64px;
+        }
+
         .filters {
           color: #ffffff;
-          padding-top: 32px;
+
           .filter {
             padding-bottom: 21px;
+
             .f-title {
               display: flex;
               align-items: center;
+
               .filter-arrow-icon {
                 width: 12px;
                 height: 12px;
@@ -50,15 +62,21 @@
                   transform: rotate(-90deg);
                 }
               }
+
               .name {
                 font-weight: 700;
                 font-size: 14px;
                 line-height: 18px;
               }
             }
+
             .childrens {
               transition: all 0.3s;
               padding-left: 20px;
+              padding-right: 20px;
+              max-height: 320px;
+              overflow-y: scroll;
+
               &.close {
                 height: 0;
               }
@@ -103,6 +121,47 @@
       }
       .nft-items {
         flex: 1;
+
+        .filter-selected-assets {
+          border-bottom: 1px solid #B4BCD0;
+
+          .title {
+            color: #b4bcd0;
+            padding-top: 5px;
+            font-size: 16px;
+            line-height: normal;
+            letter-spacing: -0.8px;
+            margin-right: 16px;
+            align-self: flex-start;
+          }
+
+          .selected-assets {
+            flex-wrap: wrap;
+
+            .filter-selected {
+              border: 1px solid #B4BCD0;
+              margin-right: 8px;
+              height: 32px;
+              padding: 0 12px;
+              border-radius: 99px;
+              letter-spacing: -0.6px;
+              font-size: 12px;
+              color: #B4BCD0;
+              margin-bottom: 8px;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+
+              img {
+                width: 9px;
+                height: 9px;
+                margin-left: 16px;
+              }
+
+            }
+          }
+        }
 
         .nfts {
           display: flex;
@@ -314,10 +373,14 @@
         .filter-items {
           width: 100%;
           margin-right: 0;
+          height: unset;
+          position: relative;
+          top: 0;
 
           .input-c {
             display: flex;
             align-items: center;
+
             .filter-menu {
               height: 34px;
               border-radius: 8px;
@@ -341,6 +404,9 @@
           }
 
           .filter-container {
+            height: unset;
+            padding-top: unset;
+
             .filters {
               padding: 16px;
               // border-bottom: 1px solid #ffffff;
@@ -509,6 +575,7 @@
     }
   }
 }
+
 @keyframes show {
   0% {
     opacity: 0;

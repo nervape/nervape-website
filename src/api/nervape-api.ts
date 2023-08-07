@@ -3,6 +3,7 @@ import { NFT, NFT_QUERY } from "../nervape/nft";
 import { ChapterList, Story } from "../nervape/story";
 import { NacpMetadataAttribute, UpdateMetadataForm } from "../nervape/nacp";
 import { CONFIG } from "../utils/config";
+import { notification } from 'antd';
 
 class NervapeApi {
   //@ts-ignore
@@ -12,12 +13,14 @@ class NervapeApi {
   private _fnDealResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
       console.warn(res);
+      notification.error({ message: 'Request Error', description: res.data.message });
       throw `request failed:${url} `;
     }
     const data = res.data;
     if (data.code !== 0) {
       console.warn(data);
-      throw `request failed:${data.msg} from  ${url} `;
+      notification.error({ message: 'Request Error', description: data.message });
+      throw `request failed:${data.message} from  ${url} `;
     }
     return data.data;
   }
@@ -25,7 +28,15 @@ class NervapeApi {
   private _fnDealSessionResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
       console.warn(res);
+      notification.error({ message: 'Request Error', description: res.data.message });
       throw `request failed:${url} `;
+    }
+
+    const data = res.data;
+    
+    if (data.code !== 0) {
+      notification.error({ message: 'Request Error', description: data.message });
+      throw `request failed:${data.message} from  ${url} `;
     }
 
     return res.data;

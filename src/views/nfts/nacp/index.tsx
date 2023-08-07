@@ -8,9 +8,11 @@ import FilterIcon from '../../../assets/icons/filter_icon.png';
 import FullscrenIcon from '../../../assets/nft/fullscreen.svg';
 import DetailCloseIcon from '../../../assets/nft/close_detail.svg';
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
+import CloseIcon from '../../../assets/icons/close_icon.png';
 
 import { Types } from "../../../utils/reducers";
 import { NacpMetadata } from "../../../nervape/nacp";
+import NacpApeDetail from "../../components/nft/nacp";
 
 function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boolean; }) {
     const { nft, close, fullscreen, show } = props;
@@ -111,8 +113,8 @@ export default function NacpNFTPage() {
     const [lastQuery, setLastQuery] = useState('');
     const [showMFilter, setShowMFilter] = useState(true);
 
-    const [showNftCard, setShowNftCard] = useState(false);
-    const [showFullscreen, setShowFullscreen] = useState(false);
+    const [showNacpDetail, setShowNacpDetail] = useState(false);
+    const [selectedNacp, setSelectedNacp] = useState<NacpMetadata>();
     const [nftDetail, setNftDetail] = useState<NFT>();
 
     const { state, dispatch } = useContext(DataContext);
@@ -142,14 +144,14 @@ export default function NacpNFTPage() {
             timer = setTimeout(() => {
                 setLoading(true);
                 setLastQuery(JSON.stringify(_query));
-                nervapeApi.fnfilterNacp(_query?.tokenId, _query?.assets).then(res => {
+                nervapeApi.fnfilterNacp(_query?.tokenId, _query?.assets?.map(a => a._id)).then(res => {
                     setNfts(res);
                     setLoading(false);
                 })
             }, 1000);
         }
     }
-    
+
     function getAssetByName() {
         let timer: any;
         return function (_filters: NACP_NFT_FILTER[], _query?: NACP_ASSET_QUERY) {
@@ -160,7 +162,7 @@ export default function NacpNFTPage() {
                 setLoading(true);
                 nervapeApi.fnGetNacpAssetsByCategory(_query?.categoryId || '', _query?.name || '').then(res => {
                     setLoading(false);
-                    
+
                     _filters.map((filter) => {
                         if (filter._id == _query?.categoryId) {
                             filter.assets = res;
@@ -174,11 +176,11 @@ export default function NacpNFTPage() {
         }
     }
 
-    function delSelectedFilter(name: string) {
+    function delSelectedFilter(_id: string) {
         const _filters: NACP_NFT_FILTER[] = JSON.parse(JSON.stringify(filters));
         _filters.map((filter) => {
             filter.assets.map((item) => {
-                if (item.name === name) {
+                if (item._id === _id) {
                     item.checked = false;
                 }
             })
@@ -202,7 +204,7 @@ export default function NacpNFTPage() {
         const _query: any = JSON.parse(JSON.stringify(query));
         _query.assets = [];
         filters.map((filter) => {
-            const selected = filter.assets.filter(item => item.checked).map(item => item._id);
+            const selected = filter.assets.filter(item => item.checked);
             _query.assets = _query.assets ? _query.assets.concat(selected) : selected;
         });
 
@@ -303,15 +305,43 @@ export default function NacpNFTPage() {
                         </div>
                     </div>
                     <div className="nft-items">
-                        <div className="nfts">
+                        {(state.windowWidth >= 750 && query.assets?.length) ? (
+                            <div className="filter-selected-assets flex-align">
+                                <div className="title">Filter</div>
+                                <div className="selected-assets flex-align">
+                                    {query.assets.map((asset, index) => {
+                                        return (
+                                            <div
+                                                className="filter-selected flex-center cursor"
+                                                onClick={() => {
+                                                    delSelectedFilter(asset._id);
+                                                }}
+                                                key={index}>
+                                                <span>{asset.name}</span>
+                                                <img loading="lazy" src={CloseIcon} alt="CloseIcon" />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ) : (
+                            <></>
+                        )}
+                        <div className="nfts" style={{ paddingTop: query.assets?.length ? '16px' : '0' }}>
                             {nfts?.map((nft, index) => {
                                 return (
                                     <div className="nft" key={index}>
                                         <div
                                             className="cover-image cursor"
-                                            onClick={() => {
-                                                // document.body.style.overflow = 'hidden';
-                                                // setShowNftCard(true);
+                                            onClick={async () => {
+                                                setLoading(true);
+                                                const res = await nervapeApi.fnGetCategoriesByAttributes(nft.attributes);
+                                                updateBodyOverflow(false);
+                                                const _nft = JSON.parse(JSON.stringify(nft));
+                                                _nft.categories = res;
+                                                setLoading(false);
+                                                setSelectedNacp(_nft);
+                                                setShowNacpDetail(true);
                                             }}
                                         >
                                             <img loading="lazy" src={nft.image} alt="cover-image" />
@@ -328,25 +358,13 @@ export default function NacpNFTPage() {
                     </div>
                 </div>
             </div>
-            <NftCardDetail
-                show={showNftCard}
-                nft={nftDetail as NFT}
+            <NacpApeDetail
+                show={showNacpDetail}
                 close={() => {
-                    document.body.style.overflow = 'auto';
-                    setShowNftCard(false)
+                    setShowNacpDetail(false);
+                    updateBodyOverflow(true);
                 }}
-                fullscreen={() => {
-                    setShowNftCard(false);
-                    setShowFullscreen(true);
-                }}></NftCardDetail>
-            {showFullscreen && (
-                <FullscreenPreview
-                    nft={nftDetail}
-                    close={() => {
-                        document.body.style.overflow = 'auto';
-                        setShowFullscreen(false)
-                    }}></FullscreenPreview>
-            )}
+                nacp={selectedNacp as NacpMetadata}></NacpApeDetail>
         </div>
     );
 }

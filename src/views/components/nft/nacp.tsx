@@ -14,8 +14,8 @@ export default function NacpApeDetail(props: {
     show: boolean;
     close: any;
     nacp: NacpMetadata;
-    editNacp: any;
-    setShowProfileImage: Function;
+    editNacp?: any;
+    setShowProfileImage?: Function;
 }) {
     const { state, dispatch } = useContext(DataContext);
     const { show, close, nacp, editNacp, setShowProfileImage } = props;
@@ -66,26 +66,30 @@ export default function NacpApeDetail(props: {
                             </div>
                         </div>
                         <div className="btn-groups">
-                            <div
-                                className="btn cursor edit"
-                                onClick={() => {
-                                    // edit
-                                    editNacp();
-                                }}
-                            >
-                                <img src={EditIcon} alt="EditIcon" />
-                                EDIT
-                            </div>
-                            
-                            <div
-                                className="btn cursor profile"
-                                onClick={() => {
-                                    // 设置头像
-                                    setShowProfileImage(nacp.id);
-                                }}>
-                                <img src={ProfileIcon} alt="ProfileIcon" />
-                                SET AS PFP
-                            </div>
+                            {editNacp && (
+                                <div
+                                    className="btn cursor edit"
+                                    onClick={() => {
+                                        // edit
+                                        editNacp();
+                                    }}
+                                >
+                                    <img src={EditIcon} alt="EditIcon" />
+                                    EDIT
+                                </div>
+                            )}
+
+                            {setShowProfileImage && (
+                                <div
+                                    className="btn cursor profile"
+                                    onClick={() => {
+                                        // 设置头像
+                                        setShowProfileImage(nacp.id);
+                                    }}>
+                                    <img src={ProfileIcon} alt="ProfileIcon" />
+                                    SET AS PFP
+                                </div>
+                            )}
 
                             <div
                                 className="btn cursor opensea"

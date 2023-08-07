@@ -71,7 +71,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         address: CONFIG.NACP_ADDRESS,
         abi: nacpAbi,
         functionName: 'tokensOfOwner',
-        cacheOnBlock: true,
+        cacheOnBlock: false,
         args: [address],
         watch: true
     })
@@ -80,7 +80,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         address: CONFIG.NACP_ADDRESS,
         abi: nacpAbi,
         functionName: 'minted',
-        cacheOnBlock: true,
+        cacheOnBlock: false,
         args: [address],
         watch: true
     });

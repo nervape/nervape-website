@@ -109,7 +109,12 @@ export class NFT_FILTER {
 
 export class NACP_NFT_QUERY {
   tokenId?: number;
-  assets?: string[];
+  assets?: NACP_NFT_QUERY_ASSET[] = [];
+}
+
+export class NACP_NFT_QUERY_ASSET {
+  _id: string = "";
+  name: string = "";
 }
 
 export class NACP_ASSET_QUERY {
