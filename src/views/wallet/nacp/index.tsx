@@ -23,6 +23,7 @@ import OperatePopup from "../../components/operate-popup";
 import { SiweMessage } from "siwe";
 import useDebounce from "../../../hooks/useDebounce";
 import LoadingAssetsModal from "./loading/loading";
+import { notification } from 'antd';
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; fnGetUserProfile: Function; userProfile: any; }) {
     const { isFold, isBonelist, setLoading, fnGetUserProfile, userProfile } = props;
@@ -172,7 +173,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 // tx failed
             }
         } catch (err: any) {
-            console.log("err=", err.reason)
+            console.log("err=", err.reason);
+            notification.error({ message: err.reason });
         }
     }
 
@@ -194,7 +196,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 // success
             }
         } catch (err: any) {
-            console.log("err=", err.reason)
+            console.log("err=", err.reason);
+            notification.error({ message: err.reason });
         }
     }
 
