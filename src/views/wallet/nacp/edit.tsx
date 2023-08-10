@@ -856,7 +856,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                             filters = asset.includes?.filter(a => a._id == currCategory.selected?._id) || [];
                                             selected = selected || filters.length > 0;
 
-                                            const j = Math.floor(index / preNumber) + 1;
+                                            const j = Math.floor((index + 1) / preNumber) + 1;
                                             const offsetTopPx = 10;
 
                                             devStyle = { width: assetsWidth + 'px', top: ((preWidth + offsetTopPx) * j + 16) + 'px' };
