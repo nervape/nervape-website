@@ -764,7 +764,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         className="cursor btn randomize-btn"
                                         onClick={() => {
                                             fnReset();
-                                        }}>Reset</button>
+                                        }}>Clear</button>
                                     <button
                                         disabled={phases[selectPhase].status !== 1}
                                         className="cursor btn randomize-btn"
