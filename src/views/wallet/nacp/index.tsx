@@ -425,8 +425,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                     <div className={`mint-content ${isMinting && 'minting'}`}>
                                         <div className="mint-tip-title">{isMinting ? 'MINTING NACPs...' : 'BONELIST MINT HAS STARTED'}</div>
                                         <div className="mint-tip-desc">
-                                            {isMinting ? 'This might take several minutes.'
-                                                : 'To maintain your Bonelist spots you MUST mint before hh,mm, dd/mm/yyyy. Clicking the mint button below will mint all 3 of your spots at the same time.'}
+                                            {isMinting ? 'This might take several minutes. Sit back and enjoy a Gorilla Cola!'
+                                                : 'To maintain your bonelist spots you MUST mint before hh,mm, dd/mm/yyyy. Clicking the mint button below will mint all 3 of your spots at the same time. Don’t miss out!'}
                                         </div>
                                         <button className="mint-btn cursor" onClick={() => {
                                             setShowMintTip(true);
@@ -572,7 +572,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 show={showCurrNacpTip}
                 closeText="CANCEL"
                 confirmText="PROCEED TO SAVE"
-                content="Current NACP NFT is being used as your profile image. Changes made to this NFT will also appear in your profile image."
+                content="The current NACP NFT is being used as your profile image. Changes made to this NFT will also appear in your profile image. Pretty cool, huh?"
                 close={() => {
                     setShowCurrNacpTip(false);
                 }}

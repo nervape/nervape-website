@@ -43,6 +43,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [assets, setAssets] = useState<NacpAsset[]>([]);
     const [assetsHistoryStack, setAssetsHistoryStack] = useState<NacpAsset[][]>([]);
     const [phaseHistoryStack, setPhaseHistoryStack] = useState<NacpPhase[][]>([]);
+    const [assetsHistoryJson, setAssetsHistoryJson] = useState<NacpAsset[]>([]);
+    const [phaseHistoryJson, setPhaseHistoryJson] = useState<NacpPhase[]>([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     const [selectedAssets, setSelectedAssets] = useState<NacpAsset[]>([]);
     const [showDiscardPopup, setShowDiscardPopup] = useState(false);
@@ -61,9 +63,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setLoadingAssets(true);
         const res = await nervapeApi.fnGetPhases(state.currentAddress);
         // 初始化 history
-        setAssetsHistoryStack([]);
-        setPhaseHistoryStack([]);
-        setHistoryIndex(-1);
+        initAssetData();
 
         const _phases = await initNacpAsset(res);
         setPhases(_phases);
@@ -85,6 +85,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 fnGetAssets(activePhase.categories[0]._id);
             }
         }
+    }
+
+    function initAssetData() {
+        setAssetsHistoryStack([]);
+        setPhaseHistoryStack([]);
+        setHistoryIndex(-1);
     }
 
     function fnGetActivePhaseIndex(_phases: NacpPhase[]) {
@@ -409,6 +415,15 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         // 得到最终随机assets
     }
 
+    async function fnReset() {
+        setSelectedAssets(assetsHistoryJson);
+        setPhases(phaseHistoryJson);
+        setAssetsHistoryStack([assetsHistoryJson]);
+        setPhaseHistoryStack([phaseHistoryJson]);
+        setHistoryIndex(0);
+        fnUpdateCurrCategory(phaseHistoryJson);
+    }
+
     useEffect(() => {
         if (!phases) return;
 
@@ -422,6 +437,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         })
 
         setSelectedAssets(_assets);
+        
+        if (phaseHistoryJson.length <= 0) {
+            setAssetsHistoryJson(_assets);
+            setPhaseHistoryJson(phases);
+        }
     }, [phases]);
 
     async function fnUpdatePhaseCategorySelected(_assets: NacpAsset[], _phases: NacpPhase[], asset: NacpAsset) {
@@ -509,6 +529,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 setIsSaveVerify(false);
                 setLoading(false);
                 setShowSaveSuccess();
+                initAssetData();
             }
         } catch {
             setLoading(false);
@@ -563,6 +584,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 setIsSaveVerify(false);
                 setLoading(false);
                 setShowSaveSuccess();
+                initAssetData();
             }
         });
     }
@@ -738,6 +760,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 <div className="name">{phases[selectPhase]?.name}</div>
                                 <div className="btn-groups flex-align">
                                     <button
+                                        disabled={assetsHistoryStack.length <= 1}
+                                        className="cursor btn randomize-btn"
+                                        onClick={() => {
+                                            fnReset();
+                                        }}>Reset</button>
+                                    <button
                                         disabled={phases[selectPhase].status !== 1}
                                         className="cursor btn randomize-btn"
                                         onClick={() => {
@@ -786,7 +814,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                             <div className="text">
                                                 {currCategory.name == 'Mask'
                                                     ? 'Some masks may cover the whole head. When selected, all head assets except for the mask will be removed.'
-                                                    : 'Suits will replace both upper body and lower body assets.'}
+                                                    : 'Suits and costumes will replace both upper body and lower body assets.'}
                                             </div>
                                         </div>
                                     )
@@ -803,7 +831,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                             <div className="locked-content">
                                 <NacpPhaseLockedIcon></NacpPhaseLockedIcon>
                                 <div className="locked">Locked</div>
-                                <div className="locked-tip">The phase for this asset type is expired.</div>
+                                <div className="locked-tip">Sorry my fellow ape, the phase for this asset type is expired.</div>
                             </div>
                         ) : (
                             <>
@@ -819,7 +847,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                 <div className="text">
                                                     {currCategory.name == 'Mask'
                                                         ? 'Some masks may cover the whole head. When selected, all head assets except for the mask will be removed.'
-                                                        : 'Suits will replace both upper body and lower body assets.'}
+                                                        : 'Suits and costumes will replace both upper body and lower body assets.'}
                                                 </div>
                                             </div>
                                         )}
@@ -964,6 +992,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     setShowNacpEdit(false);
                     setShowDiscardPopup(false);
                     updateBodyOverflow(true);
+                    initAssetData();
                 }}></DiscardPopup>
             {state.windowWidth <= 750 && (
                 <div className={`transition fold-icon ${isFold && 'show'}`} onClick={() => {

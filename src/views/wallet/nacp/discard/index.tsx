@@ -7,7 +7,7 @@ export default function DiscardPopup(props: any) {
         <div className={`discard-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
                 <div className="desc">
-                    Are you sure you want to leave the edit mode without saving?
+                    Careful! Are you sure you want to leave the edit mode without saving?
                 </div>
                 <div className="btn-groups">
                     <button className="cancel btn" onClick={close}>

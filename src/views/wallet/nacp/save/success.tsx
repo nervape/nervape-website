@@ -7,7 +7,7 @@ export default function SaveSuccessPopup(props: any) {
         <div className={`save-success-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
                 <div className="desc">
-                    Assets successfully updated! Heading back to wallet page.
+                    Assets successfully updated! Yay! Heading back to the wallet page.
                 </div>
                 <div className="btn-groups">
                     <button className="confirm btn" onClick={confirm}>
