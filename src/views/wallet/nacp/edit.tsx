@@ -357,7 +357,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         await Promise.all(
             _categories.map(async category => {
                 let _category = phases[selectPhase].categories.filter(c => c._id == category._id);
-                const __assets = _category[0].assets;
+                const __assets = _category[0].assets.filter(a => a.can_use);
 
                 if (!__assets.length) return;
 
@@ -437,7 +437,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         })
 
         setSelectedAssets(_assets);
-        
+
         if (phaseHistoryJson.length <= 0) {
             setAssetsHistoryJson(_assets);
             setPhaseHistoryJson(phases);
@@ -649,9 +649,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 <div className="edit-header flex-align">
                     <div className="title">{nacp.name}</div>
                     <div className="btn-groups flex-align">
-                        <button className="cursor btn save-btn" onClick={() => {
-                            signInWithEthereum();
-                        }}>Save</button>
+                        {phases.filter(p => p.status == 1).length > 0 && (
+                            <button className="cursor btn save-btn" onClick={() => {
+                                signInWithEthereum();
+                            }}>Save</button>
+                        )}
                         <button className="cursor btn discard-btn" onClick={() => {
                             setShowDiscardPopup(true);
                         }}>Discard</button>

@@ -116,6 +116,10 @@ export default function WalletNewPage() {
         if (nftCoverImages.length) return;
         // 后台读取 NFTS 查找对应 CoverImage
         fnNFTNameCoverImg();
+    }, [state.currentAddress]);
+
+    useEffect(() => {
+        if (!state.currentAddress) return;
         fnGetUserProfile();
     }, [state.currentAddress]);
 
