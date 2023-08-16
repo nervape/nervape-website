@@ -422,12 +422,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
         const _selectedAssets = JSON.parse(JSON.stringify(selectedAssets));
         _selectedAssets.filter((a: NacpAsset) => {
-            return a.category_name != 'Skin' && !canEditPhaseIds.includes(a.category?.phase || '');
+            if (a.category_name != 'Skin') return true;
+            return !canEditPhaseIds.includes(a.category?.phase || '');
         });
 
         _phases.map(p => {
             p.categories.map(c => {
-                if (c.name != 'Skin') c.selected = undefined;
+                if (c.name != 'Skin' && canEditPhaseIds.includes(c.phase || '')) c.selected = undefined;
 
                 return c;
             });
