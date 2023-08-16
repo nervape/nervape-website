@@ -28,7 +28,9 @@ export default function NacpApeDetail(props: {
 
         const now = new Date().getTime();
 
-        setPhaseIStart(now > phasesSetting[0].start_date)
+        const active = phasesSetting.filter(p => p.status == 1).length > 0;
+
+        setPhaseIStart(now > phasesSetting[0].start_date && active);
     }, [phasesSetting]);
 
     if (!nacp) return <></>;
