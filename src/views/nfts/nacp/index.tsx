@@ -348,7 +348,7 @@ export default function NacpNFTPage() {
                                         </div>
                                         <div className="nft-info">
                                             <div className="name-item flex-align">
-                                                <div className="name">{nft.name + ' #' + nft.token_id}</div>
+                                                <div className="name">{nft.name}</div>
                                             </div>
                                         </div>
                                     </div>

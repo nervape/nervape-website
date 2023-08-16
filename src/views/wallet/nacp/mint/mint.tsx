@@ -9,7 +9,7 @@ export default function MintTipPopup(props: any) {
         <div className={`mint-tip-popup-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
                 <div className="desc">
-                    Pleaes switch to Ethereum mainnet in order to see and interact with your NACP.
+                    This action will all mint 3 NACP apes according to your available spot.
                 </div>
                 <div className="btn-groups">
                     <button className="cancel btn" onClick={close}>

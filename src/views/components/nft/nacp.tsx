@@ -14,7 +14,7 @@ export default function NacpApeDetail(props: {
     show: boolean;
     close: any;
     nacp: NacpMetadata;
-    phasesSetting: NacpPhase[];
+    phasesSetting?: NacpPhase[];
     editNacp?: any;
     setShowProfileImage?: Function;
 }) {
@@ -24,7 +24,7 @@ export default function NacpApeDetail(props: {
     const [phaseIStart, setPhaseIStart] = useState(false);
 
     useEffect(() => {
-        if (!phasesSetting.length) return;
+        if (!phasesSetting?.length) return;
 
         const now = new Date().getTime();
 
