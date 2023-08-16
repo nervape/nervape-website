@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../utils/utils";
 import DetailCloseIcon from '../../../assets/images/nft/close_detail.svg';
-import { NacpMetadata } from "../../../nervape/nacp";
+import { NacpMetadata, NacpPhase, NacpSetting } from "../../../nervape/nacp";
 import './nacp.less';
 import { NacpCategoryIcons } from "../../../nervape/svg";
 import { CONFIG } from "../../../utils/config";
@@ -14,11 +14,22 @@ export default function NacpApeDetail(props: {
     show: boolean;
     close: any;
     nacp: NacpMetadata;
+    phasesSetting: NacpPhase[];
     editNacp?: any;
     setShowProfileImage?: Function;
 }) {
     const { state, dispatch } = useContext(DataContext);
-    const { show, close, nacp, editNacp, setShowProfileImage } = props;
+    const { show, close, nacp, phasesSetting, editNacp, setShowProfileImage } = props;
+
+    const [phaseIStart, setPhaseIStart] = useState(false);
+
+    useEffect(() => {
+        if (!phasesSetting.length) return;
+
+        const now = new Date().getTime();
+
+        setPhaseIStart(now > phasesSetting[0].start_date)
+    }, [phasesSetting]);
 
     if (!nacp) return <></>;
 
@@ -66,7 +77,7 @@ export default function NacpApeDetail(props: {
                             </div>
                         </div>
                         <div className="btn-groups">
-                            {editNacp && (
+                            {editNacp && phaseIStart && (
                                 <div
                                     className="btn cursor edit"
                                     onClick={() => {

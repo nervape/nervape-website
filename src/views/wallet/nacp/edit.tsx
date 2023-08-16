@@ -50,7 +50,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [showDiscardPopup, setShowDiscardPopup] = useState(false);
     const [isCollectionOpen, setIsCollectionOpen] = useState(false);
     const [isFold, setIsFold] = useState(false);
-    const [isUploadCount, setIsUploadCount] = useState(0);
+    const [isUploadCount, setIsUploadCount] = useState(2);
     const [isLoadingEnded, setIsLoadingEnded] = useState(false);
     const [isSaveVerify, setIsSaveVerify] = useState(false);
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
@@ -416,12 +416,30 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     async function fnReset() {
-        setSelectedAssets(assetsHistoryJson);
-        setPhases(phaseHistoryJson);
-        setAssetsHistoryStack([assetsHistoryJson]);
-        setPhaseHistoryStack([phaseHistoryJson]);
-        setHistoryIndex(0);
-        fnUpdateCurrCategory(phaseHistoryJson);
+        // 清除当前可编辑Phase的assets
+        const _phases: NacpPhase[] = JSON.parse(JSON.stringify(phases));
+        const canEditPhaseIds = _phases.filter(p => p.status == 1).map(p => p._id);
+
+        const _selectedAssets = JSON.parse(JSON.stringify(selectedAssets));
+        _selectedAssets.filter((a: NacpAsset) => {
+            return a.category_name != 'Skin' && !canEditPhaseIds.includes(a.category?.phase || '');
+        });
+
+        _phases.map(p => {
+            p.categories.map(c => {
+                if (c.name != 'Skin') c.selected = undefined;
+
+                return c;
+            });
+
+            return p;
+        })
+        setSelectedAssets(_selectedAssets);
+        setPhases(_phases);
+        setAssetsHistoryStack([]);
+        setPhaseHistoryStack([]);
+        setHistoryIndex(-1);
+        fnUpdateCurrCategory(_phases);
     }
 
     useEffect(() => {
@@ -505,7 +523,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     const signInWithEthereum = async () => {
         setLoading(true);
-        setIsUploadCount(2);
 
         try {
             const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
@@ -525,11 +542,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
             setIsSaveVerify(true);
 
+            console.log('isUploadCount-fnSendForVerify', isUploadCount);
             if (isUploadCount <= 0) {
                 setIsSaveVerify(false);
                 setLoading(false);
                 setShowSaveSuccess();
                 initAssetData();
+                setIsUploadCount(2);
             }
         } catch {
             setLoading(false);
@@ -579,12 +598,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
         nervapeApi.NacpFileUpload(signData.url, formData).then(res => {
             setIsUploadCount(isUploadCount - 1);
-
-            if (isSaveVerify) {
+            console.log('isUploadCount-NacpFileUpload', isUploadCount);
+            if (isSaveVerify && isUploadCount <= 0) {
                 setIsSaveVerify(false);
                 setLoading(false);
                 setShowSaveSuccess();
                 initAssetData();
+                setIsUploadCount(2);
             }
         });
     }
@@ -762,7 +782,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 <div className="name">{phases[selectPhase]?.name}</div>
                                 <div className="btn-groups flex-align">
                                     <button
-                                        disabled={assetsHistoryStack.length <= 1}
+                                        disabled={assetsHistoryStack.length <= 0}
                                         className="cursor btn randomize-btn"
                                         onClick={() => {
                                             fnReset();

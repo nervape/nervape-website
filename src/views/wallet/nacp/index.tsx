@@ -7,7 +7,7 @@ import BonelistRequired from '../../../assets/wallet/nacp/Bonelist_Required.png'
 import { Popover } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
 import { DataContext, updateBodyOverflow } from "../../../utils/utils";
-import { NACP_APE, NACP_SPECIAL_ASSET, NacpAsset, NacpMetadata, NacpMetadataAttribute } from "../../../nervape/nacp";
+import { NACP_APE, NACP_SPECIAL_ASSET, NacpAsset, NacpMetadata, NacpMetadataAttribute, NacpPhase, NacpSetting } from "../../../nervape/nacp";
 // import AssetItem from "./special-asset-item";
 import { goerli, mainnet, useAccount, useContract, useContractRead, useNetwork, useSignMessage, useSigner, useTransaction } from "wagmi";
 import { CONFIG } from "../../../utils/config";
@@ -40,6 +40,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [holdAssets, setHoldAssets] = useState<NacpAsset[]>([]);
     const [showNacpDetail, setShowNacpDetail] = useState(false);
     const [selectedNacp, setSelectedNacp] = useState<NacpMetadata>();
+    const [nacpSetting, setNacpSetting] = useState<NacpSetting>();
+    const [phasesSetting, setPhasesSetting] = useState<NacpPhase[]>([]);
 
     const [showNacpEdit, setShowNacpEdit] = useState(false);
     const [showSaveSuccess, setShowSaveSuccess] = useState(false);
@@ -149,8 +151,14 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     }
 
     // public mint 是否结束
-    async function nacpSetting() {
+    async function fnGetNacpSetting() {
         const res = await nervapeApi.fnNacpSetting();
+        setNacpSetting(res);
+    }
+    
+    async function fnPhasesSetting() {
+        const res = await nervapeApi.fnPhasesSetting();
+        setPhasesSetting(res);
     }
 
     const handleBonelistMint = async () => {
@@ -254,6 +262,11 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         debounce(hasChange);
 
     }, [isTokenSuccess, tokenIds]);
+
+    useEffect(() => {
+        // fnGetNacpSetting();
+        fnPhasesSetting();
+    }, []);
 
     async function initUnMintApes() {
         let _apes: NACP_APE[] = [];
@@ -505,6 +518,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                         setShowNacpEdit(true);
                     }
                 }}
+                phasesSetting={phasesSetting}
                 setShowProfileImage={(id: number) => {
                     setShowProfileImage(true);
                     setCurrentNacpId(id);

@@ -312,6 +312,13 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
 
+  public async fnPhasesSetting() {
+    const url = `${this.baseUrl}/pfp-asset/website/phases/setting`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
+
   public async fnGetMetadataByTokenId(tokenId: number) {
     const url = `${this.metadataBaseUrl}/nacp/${tokenId}`;
     return await axios.get(url);

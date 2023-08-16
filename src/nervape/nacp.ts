@@ -64,6 +64,7 @@ export class NacpCategory {
     status?: number = 0; // 0 未开始 1 进行中 2 已结束
     asset?: NacpAsset;
     assets: NacpAsset[] = [];
+    phase?: string;
 }
 
 export class NacpAsset {
@@ -122,4 +123,11 @@ export class NacpMetadata {
     animation_url?: string;
     attributes: NacpMetadataAttribute[] = [];
     categories?: NacpCategory[] = [];
+}
+
+export class NacpSetting {
+    bonelist_start_time: number = 0;
+    bonelist_end_time: number = 0;
+    public_start_time: number = 0;
+    public_end_time: number = 0;
 }
