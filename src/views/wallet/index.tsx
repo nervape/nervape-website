@@ -306,6 +306,7 @@ export default function WalletNewPage() {
     });
 
     useEffect(() => {
+        console.log(currNavbar, navbars);
         if (currNavbar > -1 && navbars.length && navbars[currNavbar]?.name == WalletNavbarTypes.NACP) {
             if (chain && chain.id == goerli.id) {
                 setLoading(true);

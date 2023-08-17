@@ -24,6 +24,7 @@ import { SiweMessage } from "siwe";
 import useDebounce from "../../../hooks/useDebounce";
 import LoadingAssetsModal from "./loading/loading";
 import { notification } from 'antd';
+import MintButton from "./mint-button";
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; fnGetUserProfile: Function; userProfile: any; }) {
     const { isFold, isBonelist, setLoading, fnGetUserProfile, userProfile } = props;
@@ -50,6 +51,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [showCurrNacpTip, setShowCurrNacpTip] = useState(false);
     const [showProfileSuccess, setShowProfileSuccess] = useState(false);
     const [isMinting, setIsMinting] = useState(false);
+    const [isMintEnd, setIsMintEnd] = useState(false);
     const [currentNacpId, setCurrentNacpId] = useState(0);
 
     const [loadingAssets, setLoadingAssets] = useState(false);
@@ -94,7 +96,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             // 查询 txhash 交易状态
             if (data && data.confirmations > 0) {
                 localStorage.removeItem('minting-tx');
-                setIsMinting(false);
                 setLoading(true);
             } else {
                 setIsMinting(true);
@@ -137,7 +138,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 _chainApes.push(data);
             })
         );
-        
+
         _chainApes.sort(function (a, b) {
             return a.id - b.id;
         });
@@ -155,7 +156,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         const res = await nervapeApi.fnNacpSetting();
         setNacpSetting(res);
     }
-    
+
     async function fnPhasesSetting() {
         const res = await nervapeApi.fnPhasesSetting();
         setPhasesSetting(res);
@@ -172,7 +173,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             setIsMinting(true);
 
             const receipt = await tx.wait();
-            setIsMinting(false);
 
             console.log('receipt', receipt);
             if (receipt.status == 1) {
@@ -196,7 +196,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             setIsMinting(true);
 
             const receipt = await tx.wait();
-            setIsMinting(false);
 
             console.log('receipt', receipt);
 
@@ -218,16 +217,33 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         }
 
         if (!hasMinted) {
-            initUnMintApes();
             nervapeApi.fnMintAllow(state.currentAddress).then(res => {
+                setLoading(false);
                 setShowMint(res);
             });
         } else {
             localStorage.removeItem('minting-tx');
             setShowMint(false);
-            setNacpApes([]);
         }
     }, [state.currentAddress, chain, hasMinted, isMintedSuccess]);
+
+    useEffect(() => {
+        if (!isMintedSuccess) return;
+
+        if (hasMinted) {
+            setNacpApes([]);
+            setIsMinting(false);
+        } else {
+            initUnMintApes(nacpSetting);
+        }
+    }, [isBonelist, isMintedSuccess, hasMinted, nacpSetting]);
+
+    useEffect(() => {
+        if (!nacpSetting) return;
+        const now = new Date().getTime();
+
+        setIsMintEnd(now > nacpSetting.public_end_time);
+    }, [nacpSetting]);
 
     useEffect(() => {
         if (!chain) return;
@@ -236,7 +252,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             setShowSwitchChain(true);
             updateBodyOverflow(false);
         } else {
-            // setLoading(true);
+            setLoading(false);
             setShowSwitchChain(false);
             updateBodyOverflow(true);
         }
@@ -264,27 +280,60 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     }, [isTokenSuccess, tokenIds]);
 
     useEffect(() => {
-        // fnGetNacpSetting();
+        fnGetNacpSetting();
         fnPhasesSetting();
     }, []);
 
-    async function initUnMintApes() {
-        let _apes: NACP_APE[] = [];
+    useEffect(() => {
+        if (!chainApes.length) return;
 
-        for (let i = 0; i < 3; i++) {
-            let isRight = false;
+        setLoading(true);
+        let count = 0;
 
-            if (i == 0) isRight = true;
-            else {
-                isRight = isBonelist;
+        chainApes.forEach(c => {
+            let image = new Image();
+            image.src = c.image;
+            image.onload = () => {
+                count++;
+                if (count == chainApes.length) {
+                    setLoading(false);
+                }
             }
-            _apes.push({
-                coverImage: DefaultNacpApe,
-                name: `NACP Spot #${i + 1}`,
-                isRight: isRight
-            })
+
+            image.onerror = () => {
+                count++;
+                if (count == chainApes.length) {
+                    setLoading(false);
+                }
+            }
+        });
+    }, [chainApes]);
+
+    async function initUnMintApes(nacpSetting: NacpSetting | undefined) {
+        if (nacpSetting) {
+            const now = new Date().getTime();
+
+            const number = (now > nacpSetting.public_start_time && now < nacpSetting.public_end_time)
+                ? 1
+                : now > nacpSetting.public_end_time ? 0 : 3;
+
+            let _apes: NACP_APE[] = [];
+
+            for (let i = 0; i < number; i++) {
+                let isRight = false;
+
+                if (i == 0) isRight = true;
+                else {
+                    isRight = isBonelist;
+                }
+                _apes.push({
+                    coverImage: DefaultNacpApe,
+                    name: `NACP Spot #${i + 1}`,
+                    isRight: isRight
+                })
+            }
+            setNacpApes(_apes);
         }
-        setNacpApes(_apes);
     }
 
     useEffect(() => {
@@ -434,19 +483,21 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                     </div>
                                 )}
 
-                                {showMint && (
-                                    <div className={`mint-content ${isMinting && 'minting'}`}>
-                                        <div className="mint-tip-title">{isMinting ? 'MINTING NACPs...' : 'BONELIST MINT HAS STARTED'}</div>
-                                        <div className="mint-tip-desc">
-                                            {isMinting ? 'This might take several minutes. Sit back and enjoy a Gorilla Cola!'
-                                                : 'To maintain your bonelist spots you MUST mint before hh,mm, dd/mm/yyyy. Clicking the mint button below will mint all 3 of your spots at the same time. Don’t miss out!'}
-                                        </div>
-                                        <button className="mint-btn cursor" onClick={() => {
+                                <MintButton
+                                    nacpSetting={nacpSetting}
+                                    isBonelist={isBonelist}
+                                    isMinting={isMinting}
+                                    isMintedSuccess={isMintedSuccess}
+                                    hasMinted={hasMinted}
+                                    setShowMintTip={() => {
+                                        if (nacpApes.length > 1) {
                                             setShowMintTip(true);
-                                            updateBodyOverflow(false);
-                                        }}>{isMinting ? 'MINTING...' : 'MINT'}</button>
-                                    </div>
-                                )}
+                                        } else {
+                                            handleMint();
+                                        }
+                                    }}
+                                    phasesSetting={phasesSetting}
+                                    type="spot"></MintButton>
 
                                 <div className="nacp-content-apes flex-align">
                                     {nacpApes.map((ape, index) => {
@@ -462,6 +513,17 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                         <div className="item-title flex-align">
                                             <div className="text">APE</div>
                                         </div>
+                                    )}
+
+                                    {phasesSetting.length > 0 && (
+                                        <MintButton
+                                            nacpSetting={nacpSetting}
+                                            isBonelist={isBonelist}
+                                            isMinting={isMinting}
+                                            isMintedSuccess={isMintedSuccess}
+                                            hasMinted={hasMinted}
+                                            phasesSetting={phasesSetting}
+                                            type="ape"></MintButton>
                                     )}
 
                                     <div className="nacp-content-apes flex-align">
@@ -489,6 +551,17 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                 </div>
                             )
                         }
+                        {isMintEnd && tokenIds && !(tokenIds as any).length && (
+                            <MintButton
+                                nacpSetting={nacpSetting}
+                                isBonelist={isBonelist}
+                                isMinting={isMinting}
+                                isMintedSuccess={isMintedSuccess}
+                                hasMinted={hasMinted}
+                                phasesSetting={phasesSetting}
+                                isTokenSuccess={isTokenSuccess}
+                                type="end"></MintButton>
+                        )}
                     </div>
                 ) : (
                     <div className="nacp-content-assets flex-align">
@@ -554,11 +627,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     updateBodyOverflow(true);
                 }}
                 confirm={() => {
-                    if (isBonelist) {
-                        handleBonelistMint();
-                    } else {
-                        handleMint();
-                    }
+                    handleBonelistMint();
                     updateBodyOverflow(true);
                 }}></MintTipPopup>
             <OperatePopup
@@ -596,7 +665,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     updateBodyOverflow(false);
                     setShowNacpEdit(true);
                 }}></OperatePopup>
-            <LoadingAssetsModal 
+            <LoadingAssetsModal
                 show={loadingAssets}
                 progress={progress}></LoadingAssetsModal>
         </div>

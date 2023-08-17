@@ -53,6 +53,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [isUploadCount, setIsUploadCount] = useState(2);
     const [isLoadingEnded, setIsLoadingEnded] = useState(false);
     const [isSaveVerify, setIsSaveVerify] = useState(false);
+    const [canReset, setCanReset] = useState(false);
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     const [viewScale, setViewScale] = useState(false);
@@ -435,11 +436,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
             return p;
         })
+        setCanReset(false);
         setSelectedAssets(_selectedAssets);
         setPhases(_phases);
-        setAssetsHistoryStack([]);
-        setPhaseHistoryStack([]);
-        setHistoryIndex(-1);
+        updateHistoryStack(_selectedAssets, _phases);
         fnUpdateCurrCategory(_phases);
     }
 
@@ -456,6 +456,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         })
 
         setSelectedAssets(_assets);
+        setCanReset(_assets.length > 1);
 
         if (phaseHistoryJson.length <= 0) {
             setAssetsHistoryJson(_assets);
@@ -542,15 +543,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             await nervapeApi.fnSendForVerify(message, signature, _metadata);
 
             setIsSaveVerify(true);
-
-            console.log('isUploadCount-fnSendForVerify', isUploadCount);
-            if (isUploadCount <= 0) {
-                setIsSaveVerify(false);
-                setLoading(false);
-                setShowSaveSuccess();
-                initAssetData();
-                setIsUploadCount(2);
-            }
         } catch {
             setLoading(false);
         }
@@ -598,17 +590,22 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         formData.append('file', dataURItoBlob(dataUrl));
 
         nervapeApi.NacpFileUpload(signData.url, formData).then(res => {
-            setIsUploadCount(isUploadCount - 1);
-            console.log('isUploadCount-NacpFileUpload', isUploadCount);
-            if (isSaveVerify && isUploadCount <= 0) {
-                setIsSaveVerify(false);
-                setLoading(false);
-                setShowSaveSuccess();
-                initAssetData();
-                setIsUploadCount(2);
-            }
+            setIsUploadCount(isUploadCount => {
+                return isUploadCount - 1;
+            });
         });
     }
+
+    useEffect(() => {
+        console.log(isSaveVerify, isUploadCount)
+        if (isSaveVerify && isUploadCount <= 0) {
+            setLoading(false);
+            setIsSaveVerify(false);
+            setShowSaveSuccess();
+            initAssetData();
+            setIsUploadCount(2);
+        }
+    }, [isSaveVerify, isUploadCount]);
 
     useEffect(() => {
         if (!nacp || !show) return;
@@ -623,6 +620,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             attributes: []
         });
     }, [nacp, show]);
+
+    useEffect(() => {
+        if (nacp && nacp.attributes.length > 1) setCanReset(true);
+        else setCanReset(false);
+    }, [nacp]);
 
     useEffect(() => {
         if (!currCategory?._id) return;
@@ -783,17 +785,17 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 <div className="name">{phases[selectPhase]?.name}</div>
                                 <div className="btn-groups flex-align">
                                     <button
-                                        disabled={assetsHistoryStack.length <= 0}
+                                        disabled={!canReset}
                                         className="cursor btn randomize-btn"
                                         onClick={() => {
                                             fnReset();
-                                        }}>Clear</button>
+                                        }}>Reset</button>
                                     <button
                                         disabled={phases[selectPhase].status !== 1}
                                         className="cursor btn randomize-btn"
                                         onClick={() => {
                                             fnRandomizeAssets();
-                                        }}>Randomize</button>
+                                        }}>Random</button>
                                     <button
                                         disabled={assetsHistoryStack.length <= 1 || historyIndex == 0}
                                         className={`cursor btn undo-btn`}
