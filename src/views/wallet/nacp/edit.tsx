@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, UpdateMetadataForm } from "../../../nervape/nacp";
-import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon } from "../../../nervape/svg";
+import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
 import { DataContext, preloadImage, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
 import DiscardPopup from "./discard";
@@ -884,7 +884,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         <div
                                             className={`asset-item cursor ${isCollectionOpen && 'opacity'}`}
                                             onClick={() => {
-                                                if (isCollectionOpen) return;
+                                                if (isCollectionOpen) {
+                                                    mCollectionAsset && openOrCloseCollection(mCollectionAsset);
+                                                    return;
+                                                }
                                                 // 取消当前选择
                                                 chooseAsset(undefined);
                                             }}></div>
@@ -919,7 +922,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                 key={index}
                                                 className={`cursor asset-item ${selected && 'selected'} ${!asset.can_use && 'cant-use'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
                                                 onClick={() => {
-                                                    if (isCollectionOpen && !asset.show_collection) return;
+                                                    if (isCollectionOpen && !asset.show_collection) {
+                                                        mCollectionAsset && openOrCloseCollection(mCollectionAsset);
+                                                        return;
+                                                    }
 
                                                     // 使用 asset 逻辑
                                                     if (!asset.is_collection) {
@@ -936,7 +942,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                         <img src={EquipSelected} className="equip-selected" alt="" />
                                                     )}
                                                     {asset.access_type == 'Special' && (
-                                                        <img src={SpecialIcon} className="special-icon" alt="SpecialIcon" />
+                                                        <div className="special-asset-count flex-align" style={{ background: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
+                                                            {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
+                                                            {asset.task_type != 'Bonelist' && (
+                                                                <div className="text">{`x${asset.count || 0}`}</div>
+                                                            )}
+                                                        </div>
                                                     )}
                                                 </div>
                                                 {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (

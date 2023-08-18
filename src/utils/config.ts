@@ -53,4 +53,7 @@ export const CONFIG = {
 
     // NACP OPENSEA LINK
     NACP_OPENSEA_URL: import.meta.env.VITE_OPENSEA_URL,
+
+    // NACP Provider rpc
+    NACP_PROVIDER_RPC: import.meta.env.VITE_NACP_PROVIDER_RPC,
 }

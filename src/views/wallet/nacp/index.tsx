@@ -654,7 +654,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             <OperatePopup
                 show={showCurrNacpTip}
                 closeText="CANCEL"
-                confirmText="PROCEED TO SAVE"
+                confirmText="Proceed to Edit"
                 content="The current NACP NFT is being used as your profile image. Changes made to this NFT will also appear in your profile image. Pretty cool, huh?"
                 close={() => {
                     setShowCurrNacpTip(false);

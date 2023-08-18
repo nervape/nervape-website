@@ -40,11 +40,11 @@ export default function MintButton(props: {
         if (now >= nacpSetting.bonelist_start_time && now <= nacpSetting.bonelist_end_time) {
             if (isBonelist) {
                 setMintButtonObj({
-                    title: isMinting ? 'MINTING NACPs…' : 'BONELIST MINT HAS STARTED',
+                    title: isMinting ? 'MINTING NACPs…' : 'BONELIST MINT HAS STARTED!',
                     desc: isMinting
                         ? 'This might take several minutes. Sit back and enjoy a Gorilla Cola!'
-                        : `To maintain your Bonelist spots you MUST mint before ${new Date(nacpSetting.bonelist_end_time).toLocaleString("en-US")}. 
-                                Clicking the mint button below will mint all 3 of your spots at the same time.`,
+                        : `To maintain your bonelist spots you MUST mint before ${new Date(nacpSetting.bonelist_end_time).toLocaleString("en-US")}. 
+                                Clicking the mint button below will mint all 3 of your spots at the same time. Don’t miss out!`,
                     showMintButton: true,
                     buttonText: isMinting ? 'MINTING...' : 'MINT'
                 });
@@ -58,7 +58,7 @@ export default function MintButton(props: {
             }
         } else if (now >= nacpSetting.public_start_time && now <= nacpSetting.public_end_time) {
             setMintButtonObj({
-                title: isMinting ? 'MINTING NACPs…' : 'PUBLIC MINT HAS STARTED',
+                title: isMinting ? 'MINTING NACPs…' : 'PUBLIC MINT HAS STARTED!',
                 desc: isMinting
                     ? 'This might take several minutes. Sit back and enjoy a Gorilla Cola!'
                     : `Public mint ends ${new Date(nacpSetting.public_end_time).toLocaleString("en-US")}. Make sure you mint your NACP!`,

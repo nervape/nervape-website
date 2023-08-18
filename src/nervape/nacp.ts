@@ -92,6 +92,8 @@ export class NacpAsset {
     skin_color?: string;
     can_use: boolean = false;
     access_type?: string = '';
+    task_type?: string;
+    count?: number = 0;
 }
 
 export class MetadataAttribute {
