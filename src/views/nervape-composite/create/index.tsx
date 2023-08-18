@@ -29,8 +29,29 @@ import { LoginWalletType } from "../../../utils/Wallet";
 import { godWoken, godWokenTestnet } from "../../../utils/Chain";
 import NacpLogin from "../../components/nacp-login";
 import { SwitchChainSpan } from "../../components/switchChain";
+import { providers } from 'ethers';
+import { publicProvider } from 'wagmi/providers/public'
+
 
 export default function Nacp() {
+
+    const mainnetProvider = new providers.StaticJsonRpcProvider("https://ethereum-goerli.publicnode.com/")
+    const contractReader = useContract({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        signerOrProvider: mainnetProvider
+    })
+
+    useEffect(() => {
+        const fetchOwner = async() => {
+            const owner = await contractReader?.ownerOf(1)
+            console.log("owner = ", owner)
+        }
+        
+        fetchOwner()
+    }, [])
+
+
     const domain = window.location.host;
     const origin = window.location.origin;
     const { state, dispatch } = useContext(DataContext);

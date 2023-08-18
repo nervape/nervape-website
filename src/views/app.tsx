@@ -139,6 +139,14 @@ export default function App() {
             }>
           </Route>
           <Route
+            path="/nacp/create"
+            element={
+              <PageView activeIndex={0} disableFooter={true}>
+                <Nacp></Nacp>
+              </PageView>
+            }>
+          </Route>
+          <Route
             path="/nacp/nft"
             element={
               <PageView activeIndex={8}>
