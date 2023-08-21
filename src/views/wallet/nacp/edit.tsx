@@ -785,7 +785,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 <div className="name">{phases[selectPhase]?.name}</div>
                                 <div className="btn-groups flex-align">
                                     <button
-                                        disabled={!canReset}
+                                        disabled={phases[selectPhase].status !== 1 || !canReset}
                                         className="cursor btn randomize-btn"
                                         onClick={() => {
                                             fnReset();
@@ -797,13 +797,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                             fnRandomizeAssets();
                                         }}>Random</button>
                                     <button
-                                        disabled={assetsHistoryStack.length <= 1 || historyIndex == 0}
+                                        disabled={phases[selectPhase].status !== 1 || (assetsHistoryStack.length <= 1 || historyIndex == 0)}
                                         className={`cursor btn undo-btn`}
                                         onClick={() => {
                                             fnOperateBack();
                                         }}>Undo</button>
                                     <button
-                                        disabled={!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1}
+                                        disabled={phases[selectPhase].status !== 1 || (!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1)}
                                         className={`cursor btn redo-btn`}
                                         onClick={() => {
                                             fnOperateNext();
@@ -855,8 +855,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                         {phases[selectPhase].status !== 1 ? (
                             <div className="locked-content">
                                 <NacpPhaseLockedIcon></NacpPhaseLockedIcon>
-                                <div className="locked">Locked</div>
-                                <div className="locked-tip">Sorry my fellow ape, the phase for this asset type is expired.</div>
+                                <div className="locked">Locked!</div>
+                                <div className="locked-tip">
+                                    {phases[selectPhase].status == 0 
+                                        ? 'Sorry my fellow ape, the phase for this asset type has not started yet.' 
+                                        : 'Sorry my fellow ape, the phase for this asset type is expired.'}
+                                </div>
                             </div>
                         ) : (
                             <>

@@ -6,7 +6,7 @@ import DefaultNacpApe from '../../../assets/wallet/nacp/default_nacp_ape.png';
 import BonelistRequired from '../../../assets/wallet/nacp/Bonelist_Required.png';
 import { Popover } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
-import { DataContext, updateBodyOverflow } from "../../../utils/utils";
+import { DataContext, showErrorNotification, updateBodyOverflow } from "../../../utils/utils";
 import { NACP_APE, NACP_SPECIAL_ASSET, NacpAsset, NacpMetadata, NacpMetadataAttribute, NacpPhase, NacpSetting } from "../../../nervape/nacp";
 // import AssetItem from "./special-asset-item";
 import { goerli, mainnet, useAccount, useContract, useContractRead, useNetwork, useSignMessage, useSigner, useTransaction } from "wagmi";
@@ -23,7 +23,6 @@ import OperatePopup from "../../components/operate-popup";
 import { SiweMessage } from "siwe";
 import useDebounce from "../../../hooks/useDebounce";
 import LoadingAssetsModal from "./loading/loading";
-import { notification } from 'antd';
 import MintButton from "./mint-button";
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; fnGetUserProfile: Function; userProfile: any; }) {
@@ -182,7 +181,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             }
         } catch (err: any) {
             console.log("err=", err.reason);
-            notification.error({ message: err.reason });
+            showErrorNotification({
+                message: 'Request Error',
+                description: err.reason
+            });
         }
     }
 
@@ -204,7 +206,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             }
         } catch (err: any) {
             console.log("err=", err.reason);
-            notification.error({ message: err.reason });
+            showErrorNotification({
+                message: 'Request Error',
+                description: err.reason
+            });
         }
     }
 
@@ -453,7 +458,13 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
             setShowProfileImage(false);
             setShowProfileSuccess(true);
-        } catch {
+        } catch(err: any) {
+            console.log(err);
+
+            showErrorNotification({
+                message: 'Request Error',
+                description: err.message
+            });
             updateBodyOverflow(false);
             setLoading(false);
         }

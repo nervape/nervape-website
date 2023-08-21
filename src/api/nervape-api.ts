@@ -3,7 +3,9 @@ import { NFT, NFT_QUERY } from "../nervape/nft";
 import { ChapterList, Story } from "../nervape/story";
 import { NacpMetadataAttribute, UpdateMetadataForm } from "../nervape/nacp";
 import { CONFIG } from "../utils/config";
-import { notification } from 'antd';
+import htmr from "htmr";
+import { getWindowWidthRange, showErrorNotification } from "../utils/utils";
+import AssetTypeIcon from '../assets/icons/asset_type_icon.svg';
 
 class NervapeApi {
   //@ts-ignore
@@ -13,13 +15,19 @@ class NervapeApi {
   private _fnDealResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
       console.warn(res);
-      notification.error({ message: 'Request Error', description: res.data.message });
       throw `request failed:${url} `;
     }
     const data = res.data;
     if (data.code !== 0) {
       console.warn(data);
-      notification.error({ message: 'Request Error', description: data.message });
+      if ([10422, 10423].includes(data.code)) {
+        showErrorNotification({
+          message: data.code == 10422 ? 'Request Error' : 'Insufficient Asset',
+          description: data.message,
+          icon: data.code == 10423 ? htmr(`<img src=${AssetTypeIcon} alt="" />`) : '',
+        });
+      }
+
       throw `request failed:${data.message} from  ${url} `;
     }
     return data.data;
@@ -28,14 +36,20 @@ class NervapeApi {
   private _fnDealSessionResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
       console.warn(res);
-      notification.error({ message: 'Request Error', description: res.data.message });
+      showErrorNotification({
+        message: 'Request Error',
+        description: res.data.message,
+      });
       throw `request failed:${url} `;
     }
 
     const data = res.data;
-    
+
     if (data.code !== 0) {
-      notification.error({ message: 'Request Error', description: data.message });
+      showErrorNotification({
+        message: 'Request Error',
+        description: res.data.message
+      });
       throw `request failed:${data.message} from  ${url} `;
     }
 
@@ -133,7 +147,7 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetProfileNonce() {
     const url = `${this.baseUrl}/nacp/profile/nonce`;
     const res = await axios.get(url, {
@@ -160,7 +174,7 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnUserProfileVerify(message: string, signature: string, nacp: number) {
     const url = `${this.baseUrl}/nacp/profile/verify`;
     const res = await axios.post(url, JSON.stringify({ message, signature, nacp }), {
@@ -242,7 +256,7 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetUserAsseta(address: string) {
     const url = `${this.baseUrl}/pfp-asset/website/user/assets/${address}`;
     const res = await axios.get(url);
@@ -305,7 +319,7 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
- 
+
   public async fnNacpSetting() {
     const url = `${this.baseUrl}/nacp/setting`;
     const res = await axios.get(url);
@@ -341,13 +355,13 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetNacpCategories() {
     const url = `${this.baseUrl}/pfp-asset/website/nacp/categories/filter`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetNacpAssetsByCategory(categoryId: string, name: string) {
     const url = `${this.baseUrl}/pfp-asset/website/nacp/assets/filter/${categoryId}?name=${name}`;
     const res = await axios.get(url);
@@ -356,7 +370,7 @@ class NervapeApi {
 
   public async fnfilterNacp(tokenId: number | undefined, assets: string[] | undefined) {
     const url = `${this.baseUrl}/nacp/website/search`;
-    const res = await axios.post(url, {tokenId, assets});
+    const res = await axios.post(url, { tokenId, assets });
     return this._fnDealResponse(res, url);
   }
 }

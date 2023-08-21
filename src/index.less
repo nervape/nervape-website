@@ -13,7 +13,7 @@
 
 body,
 html {
-  font-family: 'input-sans' !important;
+  font-family: "input-sans" !important;
   letter-spacing: -0.05em;
 }
 
@@ -40,5 +40,37 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.ant-notification-notice.global-notification-container {
+  border-radius: 16px;
+  background: #506077;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+
+  .ant-notification-notice-message,
+  .ant-notification-notice-description {
+    color: #ffffff;
+  }
+
+  .ant-notification-notice-with-icon {
+    .ant-notification-notice-icon {
+      margin-left: 0;
+    }
+
+    .ant-notification-notice-message {
+      font-weight: 800;
+      margin-left: 27px;
+    }
+
+    .ant-notification-notice-description {
+      font-weight: 500;
+      margin-left: 27px;
+    }
+  }
+
+  .ant-notification-notice-close {
+    right: 16px;
+  }
 }
 // @import "./assets/font//ethnocentric_book_macroman/stylesheet.css";
