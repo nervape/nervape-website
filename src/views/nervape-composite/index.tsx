@@ -108,7 +108,6 @@ export default function Composite() {
     const [phaseCover, setPhaseCover] = useState(PhaseDefaultCover);
     const [banner, setBanner] = useState<Banner>();
 
-    const [sneakPercent, setSneakPercent] = useState(0);
     const [sneakCurrPercent, setSneakCurrPercent] = useState(0);
     const sneakRef = useRef(null);
 
@@ -168,19 +167,12 @@ export default function Composite() {
         fnGetSneakPeeks();
     }, []);
 
-    useEffect(() => {
-        if (!sneakPeeks.length) return;
-        const offset = window.innerWidth - 64;
-        const sneakW = 664 * sneakPeeks.length;
-        setSneakPercent(sneakW - offset);
-    }, [state.windowWidth, sneakPeeks]);
-
     function handleScroll() {
         if (!sneakRef.current) return;
         if (!sneakPeeks.length) return;
 
-        const offset = window.innerWidth - 64;
-        const sneakW = 664 * sneakPeeks.length;
+        const offset = window.innerWidth - (state.windowWidth > 750 ? 64 : 32);
+        const sneakW = (state.windowWidth > 750 ? 664 : 379) * sneakPeeks.length;
 
         const sTop = getWindowScrollTop();
         const sneakTop = (sneakRef.current as HTMLElement).offsetTop;
@@ -496,7 +488,7 @@ export default function Composite() {
                             </div>
                         </section>
 
-                        <section className="sneak-peek-section" style={{ height: `calc(${664 * sneakPeeks.length + 'px'} - 100vw + 64px + 128px + 100vh)` }} ref={sneakRef}>
+                        <section className="sneak-peek-section" style={{ height: `calc(${(state.windowWidth > 750 ? 664 : 379) * sneakPeeks.length + 'px'} - 100vw + ${state.windowWidth > 750 ? 192 : 64}px + 100vh)` }} ref={sneakRef}>
                             <div className="sticky-wrap">
                                 <div className="scroll-inner" style={{ width: 664 * sneakPeeks.length + 'px', transform: `translateX(${-sneakCurrPercent}px)` }}>
                                     {sneakPeeks.map((s, index) => {
