@@ -125,7 +125,7 @@ export default function MintButton(props: {
 
     }, [type, isMintedSuccess, hasMinted, isTokenSuccess]);
 
-    if (type == 'spot' && !nacpSetting && !mintStart) return <></>;
+    if (type == 'spot' && (!nacpSetting || !mintStart)) return <></>;
 
     if (type == 'ape' && !phasesSetting.length) return <></>;
 
