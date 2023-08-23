@@ -541,7 +541,7 @@ export default function NavHeader(props: any) {
                 className={`nav-area cursor icon`}
                 onClick={() => {
                   setDisableList(true);
-                  window.open('https://discord.com/invite/7br6nvuNHP')
+                  window.open('https://www.instagram.com/nervapes/')
                 }}
               >
                 <img className="icon-image" src={instegram} alt="" />
