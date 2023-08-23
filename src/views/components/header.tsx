@@ -4,6 +4,7 @@ import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
 import twitter from "../../assets/icons/twitter.svg";
 import discord from "../../assets/icons/discord.svg";
+import instegram from "../../assets/icons/instegram.svg";
 import NacpLogo from '../../assets/logo/logo_nacp.svg';
 import MNacpLogo from '../../assets/logo/m_nacp_logo.svg';
 import HeaderOpenIcon from '../../assets/icons/header-open.svg';
@@ -13,6 +14,7 @@ import { DataContext, getWindowScrollTop, scrollToTop, updateBodyOverflow } from
 import WalletConnect from "./wallet-connect";
 import { Types } from "../../utils/reducers";
 import { Dropdown, Menu, MenuProps, Tooltip } from 'antd';
+import { CONFIG } from "../../utils/config";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -173,7 +175,11 @@ const BuyItems: MenuProps = {
       key: '-1'
     },
     {
-      label: NacpTooltip('buy-open-icon', 'buyNacp'),
+      label: (
+        <div onClick={() => {
+          window.open(CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS)
+        }}>NACP</div>
+      ),
       key: '0'
     }
   ]
@@ -306,8 +312,8 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     type: HeaderType.Open
   },
   buyNacp: {
-    url: '',
-    type: HeaderType.Coming
+    url: CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS,
+    type: HeaderType.Open
   },
   campaign: {
     url: '/campaign',
@@ -319,7 +325,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
   }
 };
 
-const mPages: MenuItem[] = [
+const mPages = [
   getItem('ABOUT', 'about'),
   getItem('STORY', 'story'),
   getItem('GALLERY', 'gallery', null, [
@@ -334,15 +340,18 @@ const mPages: MenuItem[] = [
       getItem('SCENE', 'buyCollectionScene'),
       getItem('SPECIAL', 'buyCollectionSpecial'),
     ]),
-    getItem(MNacpTooltip('buyNacp', 'right'), 'buyNacp')
+    getItem('NACP', 'buyNacp')
   ]),
   getItem('CAMPAIGN', 'campaign'),
   getItem('BRIDGE', 'bridge')
 ];
 
+const rootSubmenuKeys = ['gallery', 'buy'];
+
 export default function NavHeader(props: any) {
   const { activeIndex } = props;
   const [disableList, setDisableList] = useState(true);
+  const [openKeys, setOpenKeys] = useState(['gallery']);
 
   const { state, dispatch } = useContext(DataContext);
 
@@ -493,10 +502,19 @@ export default function NavHeader(props: any) {
                   mode="inline"
                   inlineIndent={16}
                   onClick={e => {
+                    console.log(e);
                     if (e.key !== HeaderType.Coming) setDisableList(true);
                     handleHeaderClick(e.key);
                   }}
-                  openKeys={['gallery']}
+                  onOpenChange={(keys) => {
+                    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+                    if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
+                      setOpenKeys(keys);
+                    } else {
+                      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+                    }
+                  }}
+                  openKeys={openKeys}
                   items={mPages}></Menu>
               </>
             )}
@@ -518,6 +536,15 @@ export default function NavHeader(props: any) {
                 }}
               >
                 <img className="icon-image" src={discord} alt="" />
+              </div>
+              <div
+                className={`nav-area cursor icon`}
+                onClick={() => {
+                  setDisableList(true);
+                  window.open('https://discord.com/invite/7br6nvuNHP')
+                }}
+              >
+                <img className="icon-image" src={instegram} alt="" />
               </div>
             </div>
 

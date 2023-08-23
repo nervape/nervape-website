@@ -25,6 +25,7 @@ export default function MintButton(props: {
     const { nacpSetting, isBonelist, isMinting, isMintedSuccess, hasMinted, type, phasesSetting, isTokenSuccess, setShowMintTip } = props;
 
     const [mintButtonObj, setMintButtonObj] = useState<MintButtobObj>(new MintButtobObj());
+    const [mintStart, setMintStart] = useState(false);
 
     useEffect(() => {
         if (type != 'spot') return;
@@ -35,6 +36,7 @@ export default function MintButton(props: {
         const now = new Date().getTime();
 
         if (now < nacpSetting.bonelist_start_time || now > nacpSetting.public_end_time) return;
+        setMintStart(true);
         // 当前在 bonelist_start_time 和 public_end_time 之间
         // 当前时间在 bonelist mint 时间段内
         if (now >= nacpSetting.bonelist_start_time && now <= nacpSetting.bonelist_end_time) {
@@ -123,7 +125,7 @@ export default function MintButton(props: {
 
     }, [type, isMintedSuccess, hasMinted, isTokenSuccess]);
 
-    if (type == 'spot' && !nacpSetting) return <></>;
+    if (type == 'spot' && !nacpSetting && !mintStart) return <></>;
 
     if (type == 'ape' && !phasesSetting.length) return <></>;
 

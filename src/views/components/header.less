@@ -8,7 +8,7 @@
   height: 64px;
 
   .header {
-    max-width: 1440px;
+    max-width: 1840px;
     margin: 0 auto;
     position: relative;
     display: flex;
@@ -41,7 +41,7 @@
 
       .nav-area {
         position: relative;
-        margin-right: 16px;
+        margin-right: 8px;
         height: 32px;
         background: rgba(0, 0, 0, 0.2);
         border-radius: 6px;
@@ -117,7 +117,7 @@
 
       .nav-area.icon {
         padding: 6px;
-        margin-right: 16px;
+        margin-right: 8px;
       }
 
       .icon-nav-c {
@@ -301,7 +301,7 @@
 @media screen and (max-width: 1200px) {
   .header-container {
     .header {
-      padding: 0px 14px;
+      padding: 0px 40px;
 
       .logo {
         width: 80.4px;
@@ -337,7 +337,7 @@
         padding-top: 64px;
         top: 0;
         width: 100%;
-        padding: 64px 14px 16px;
+        padding: 64px 40px 16px;
         flex-direction: column;
         align-items: flex-start;
         height: auto;
@@ -425,7 +425,7 @@
           height: 40px;
           padding-left: 16px;
 
-          .nav-area.icon:first-child {
+          .nav-area.icon {
             margin-right: 24px;
           }
 
@@ -569,6 +569,28 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1840px) {
+  .header-container {
+    .header {
+      padding: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header-container {
+    .header {
+      padding: 0 14px;
+    }
+
+    .header-menu {
+      .btn-group {
+        padding: 64px 14px 16px;
       }
     }
   }
