@@ -527,7 +527,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setLoading(true);
 
         try {
-            const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update Nacp Metadata.');
+            const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update your NACP metadata.');
 
             const signature = await signMessageAsync({ message });
 

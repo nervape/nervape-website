@@ -449,7 +449,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         setLoading(true);
 
         try {
-            const { message } = await createSiweMessage(state.currentAddress, 'sign in to update your current profile image.');
+            const { message } = await createSiweMessage(state.currentAddress, 'Sign in to update your current profile image.');
 
             const signature = await signMessageAsync({ message });
             const res = await nervapeApi.fnUserProfileVerify(message, signature, currentNacpId);
@@ -656,7 +656,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 show={showProfileSuccess}
                 hideClose={true}
                 confirmText="DONE"
-                content="Your profile image has been updated."
+                content="Your profile image has been updated! =)"
                 confirm={async () => {
                     setShowProfileSuccess(false);
                     await fnGetUserProfile();

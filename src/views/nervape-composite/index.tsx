@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 
 import LandingBanner from '../../assets/landing-page/banner.png';
@@ -17,11 +17,11 @@ import DiscodeIcon from '../../assets/nacp/discode.svg';
 import BannerText1 from '../../assets/nacp/banner_text_1.png';
 import BannerText2 from '../../assets/nacp/banner_text_2.png';
 
-import { Banner, Intro, Parthership, Phase, Question } from "../../nervape/composite";
+import { Banner, Intro, Parthership, Phase, Question, SneakPeek } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
-import { DataContext } from "../../utils/utils";
+import { DataContext, getWindowScrollTop } from "../../utils/utils";
 import { Tooltip } from "antd";
 // "build": "tsc --noEmit && vite build", 打包报错, build 命令先去除 TS 检测
 import { OverPack, Parallax } from 'rc-scroll-anim';
@@ -104,9 +104,19 @@ export default function Composite() {
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [phases, setPhases] = useState<Phase[]>([]);
+    const [sneakPeeks, setSneakPeeks] = useState<SneakPeek[]>([]);
     const [phaseCover, setPhaseCover] = useState(PhaseDefaultCover);
     const [banner, setBanner] = useState<Banner>();
 
+    const [sneakPercent, setSneakPercent] = useState(0);
+    const [sneakCurrPercent, setSneakCurrPercent] = useState(0);
+    const sneakRef = useRef(null);
+
+    const fnGetSneakPeeks = async () => {
+        const res = await nervapeApi.fnNacpSneakPeek();
+        console.log('fnGetSneakPeeks', res);
+        setSneakPeeks(res);
+    }
 
     const IntroItem = (props: { item: any; }) => {
         const { item } = props;
@@ -155,7 +165,44 @@ export default function Composite() {
         setPhases(phaseData);
         setQuestions(questionsData);
         setBanner(bannerData[Math.floor(Math.random() * bannerData.length)]);
+        fnGetSneakPeeks();
     }, []);
+
+    useEffect(() => {
+        if (!sneakPeeks.length) return;
+        const offset = window.innerWidth - 64;
+        const sneakW = 664 * sneakPeeks.length;
+        setSneakPercent(sneakW - offset);
+    }, [state.windowWidth, sneakPeeks]);
+
+    function handleScroll() {
+        if (!sneakRef.current) return;
+        if (!sneakPeeks.length) return;
+
+        const offset = window.innerWidth - 64;
+        const sneakW = 664 * sneakPeeks.length;
+
+        const sTop = getWindowScrollTop();
+        const sneakTop = (sneakRef.current as HTMLElement).offsetTop;
+
+        const diffOffset = sTop - sneakTop;
+
+        if (diffOffset > 0 && diffOffset < sneakW - offset) {
+            setSneakCurrPercent(diffOffset);
+        } else if (diffOffset < 0) {
+            setSneakCurrPercent(0);
+        } else {
+            setSneakCurrPercent(sneakW - offset);
+        }
+
+        console.log('handleScroll', diffOffset);
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll, true);
+
+        return () => window.removeEventListener('scroll', handleScroll, true);
+    });
 
     return (
         <div className="home-page font-color">
@@ -405,7 +452,7 @@ export default function Composite() {
                                                 window.open(parthershipItems[0].link);
                                             }}>
                                                 <TweenOne key="what-2" animation={{ opacity: 1, delay: 400, duration: 600 }} style={{ opacity: 0 }}>
-                                                <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/635274dd-3202-40de-990a-5eb2cbc8f1d1.png" alt="" />
+                                                    <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/635274dd-3202-40de-990a-5eb2cbc8f1d1.png" alt="" />
                                                 </TweenOne>
 
                                                 <TweenOne key="what-3" animation={{ opacity: 1, delay: 600, duration: 600 }} style={{ opacity: 0 }}>
@@ -448,6 +495,21 @@ export default function Composite() {
                                 </OverPack>
                             </div>
                         </section>
+
+                        <section className="sneak-peek-section" style={{ height: `calc(${664 * sneakPeeks.length + 'px'} - 100vw + 64px + 128px + 100vh)` }} ref={sneakRef}>
+                            <div className="sticky-wrap">
+                                <div className="scroll-inner" style={{ width: 664 * sneakPeeks.length + 'px', transform: `translateX(${-sneakCurrPercent}px)` }}>
+                                    {sneakPeeks.map((s, index) => {
+                                        return (
+                                            <div className="scroll-card" key={index}>
+                                                <img src={s.url} alt="Sneak Peek" />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </section>
+
                         <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.2}>
