@@ -24,6 +24,7 @@ import { SiweMessage } from "siwe";
 import useDebounce from "../../../hooks/useDebounce";
 import LoadingAssetsModal from "./loading/loading";
 import MintButton from "./mint-button";
+import NftEmptyIcon from '../../../assets/wallet/nft/nft_empty.png';
 
 export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean; setLoading: Function; fnGetUserProfile: Function; userProfile: any; }) {
     const { isFold, isBonelist, setLoading, fnGetUserProfile, userProfile } = props;
@@ -458,7 +459,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
             setShowProfileImage(false);
             setShowProfileSuccess(true);
-        } catch(err: any) {
+        } catch (err: any) {
             console.log(err);
 
             showErrorNotification({
@@ -583,6 +584,19 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                         {holdAssets.map((asset, index) => {
                             return <NacpAssetItem asset={asset} key={index}></NacpAssetItem>
                         })}
+                        {!nacpAssets.length && !holdAssets.length && (
+                            <div className="no-assets-content flex-center">
+                                <div className="no-result">
+                                    <div className="cover-image">
+                                        <img src={NftEmptyIcon} alt="NftEmptyIcon" />
+                                    </div>
+                                    <div className="title">YOU DON’T HAVE ANY ASSET YET...</div>
+                                    <div className="tip">
+                                        You currently don’t have any NACP asset.You currently don’t have any NACP asset.You currently don’t have any NACP asset.
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
