@@ -544,12 +544,12 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                                 <div className="nacp-ape-item cursor" key={index} onClick={async () => {
                                                     setLoading(true);
                                                     const res = await nervapeApi.fnGetCategoriesByAttributes(ape.attributes);
-                                                    updateBodyOverflow(false);
                                                     const _ape = JSON.parse(JSON.stringify(ape));
                                                     _ape.categories = res;
                                                     setSelectedNacp(_ape);
                                                     setLoading(false);
                                                     setShowNacpDetail(true);
+                                                    updateBodyOverflow(false);
                                                     if (state.windowWidth <= 750) setHideHeader(false);
                                                 }}>
                                                     <div className="cover-image">
