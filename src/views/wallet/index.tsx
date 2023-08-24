@@ -338,6 +338,9 @@ export default function WalletNewPage() {
                             balance={balance}></WalletHeader>
 
                         <section className={`wallet-section flex-align ${isFold && 'fold'}`}>
+                            <div className="wallet-navbar-content transition">
+                                <NavbarItems></NavbarItems>
+                            </div>
                             <div className="wallet-content transition">
                                 {/* <NavbarContent></NavbarContent> */}
                                 {navbars[currNavbar]?.name == WalletNavbarTypes.NACP ? (
@@ -374,9 +377,6 @@ export default function WalletNewPage() {
                                         )
                                     )
                                 )}
-                            </div>
-                            <div className="wallet-navbar-content transition">
-                                <NavbarItems></NavbarItems>
                             </div>
                         </section>
                     </div>
