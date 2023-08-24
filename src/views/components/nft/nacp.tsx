@@ -108,7 +108,7 @@ export default function NacpApeDetail(props: {
                                 className="btn cursor opensea"
                                 onClick={() => {
                                     console.log('opensea');
-                                    window.open(CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS + '/' + nacp.id);
+                                    window.open(CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS + '/' + (nacp.id || nacp.token_id));
                                 }}
                             >
                                 <img src={OpenseaIcon} alt="OpenseaIcon" />

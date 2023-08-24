@@ -7,7 +7,7 @@
   .user-avatar {
     margin: 8px;
     border-radius: 16px;
-    background: #FFFFFF;
+    background: #ffffff;
 
     img {
       width: 166px;
@@ -229,77 +229,83 @@
 }
 
 @media screen and (max-width: 750px) {
-  .user-center-content {
-    height: auto;
+  .wallet-header-container {
+    &.position-sticky {
+      z-index: 0;
+    }
 
-    &.m {
-      border: unset;
-      margin-bottom: 0;
+    .user-center-content {
+      height: auto;
 
-      .user-avatar {
-        padding: 0;
+      &.m {
+        border: unset;
+        margin-bottom: 0;
 
-        img {
-          width: 64px;
-          height: 64px;
-        }
-      }
+        .user-avatar {
+          padding: 0;
 
-      .user-info {
-        margin: 0;
-        padding-bottom: 16px;
-        border-bottom: 1px solid rgba(180, 188, 208, 0.25);
-        padding-top: 16px;
-        position: sticky;
-        top: var(--extra-padding);
-        background: #17171e;
-
-        .user-address {
-          border-bottom: unset;
-          padding-bottom: 0;
-          margin-top: 8px;
-          align-self: flex-start;
-
-          .address {
-            // width: 180px;
-          }
-        }
-      }
-
-      .ckb-balance {
-        margin: 16px 0 0;
-        padding-bottom: 16px;
-        border-bottom: 1px solid rgba(180, 188, 208, 0.25);
-
-        .balance-value {
-          height: 44px;
-          line-height: 44px;
-          margin-top: 12px;
-          padding-top: 0;
-        }
-      }
-
-      .bone-list-points {
-        margin: 16px 0 0;
-        padding-bottom: 16px;
-        border-bottom: 1px solid rgba(180, 188, 208, 0.5);
-
-        .bone-item {
-          display: flex;
-          flex-direction: column;
-          align-self: flex-start;
-
-          .nft-3d {
-            padding-bottom: 8px;
+          img {
+            width: 64px;
+            height: 64px;
           }
         }
 
-        .bone-list {
-          padding-right: 16px;
+        .user-info {
+          margin: 0;
+          padding-bottom: 16px;
+          border-bottom: 1px solid rgba(180, 188, 208, 0.25);
+          padding-top: 16px;
+          position: sticky;
+          top: var(--extra-padding);
+          background: #17171e;
+
+          .user-address {
+            border-bottom: unset;
+            padding-bottom: 0;
+            margin-top: 8px;
+            align-self: flex-start;
+
+            .address {
+              // width: 180px;
+            }
+          }
         }
 
-        .bone-points {
-          margin-left: 16px;
+        .ckb-balance {
+          margin: 16px 0 0;
+          padding-bottom: 16px;
+          border-bottom: 1px solid rgba(180, 188, 208, 0.25);
+
+          .balance-value {
+            height: 44px;
+            line-height: 44px;
+            margin-top: 12px;
+            padding-top: 0;
+          }
+        }
+
+        .bone-list-points {
+          margin: 16px 0 0;
+          padding-bottom: 16px;
+          border-bottom: 1px solid rgba(180, 188, 208, 0.5);
+
+          .bone-item {
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start;
+
+            .nft-3d {
+              padding-bottom: 8px;
+            }
+          }
+
+          .bone-list {
+            padding-right: 16px;
+          }
+
+          .bone-points {
+            margin-left: 16px;
+          }
         }
       }
     }

@@ -1,21 +1,19 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 import { Amount } from '@lay2/pw-core';
-import { goerli, mainnet, useAccount, useContract, useNetwork } from 'wagmi';
-import { DataContext, getWindowScrollTop, updateBodyOverflow } from '../../utils/utils';
+import { goerli, useNetwork } from 'wagmi';
+import { DataContext, getWindowScrollTop, ownerOf } from '../../utils/utils';
 import { TransferSuccess } from '../components/nft/nft';
 import { LoginWalletType } from '../../utils/Wallet';
 
 import { PoapItem, PoapWrapper } from '../../utils/poap';
-import { getNFTNameCoverImg, getPublishedPoaps, insertTransferCkbHistory, queryOatPoaps } from '../../utils/api';
+import { getNFTNameCoverImg, getPublishedPoaps, insertTransferCkbHistory } from '../../utils/api';
 import SwitchChain from '../components/switchChain';
 import { NFT } from '../../utils/nft-utils';
 import TransferCkb from '../components/transfer';
 import { useUnipassBalance } from '../../hooks/useUnipassBalance';
 import ChainInfo from '../components/switchChain/chain-info';
 import { Types } from '../../utils/reducers';
-import { godWoken } from '../../utils/Chain';
-import nacpAbi from '../../contracts/NervapeComposite.json';
 
 import WalletNacp from "./nacp";
 import { nervapeApi } from "../../api/nervape-api";
@@ -33,8 +31,6 @@ import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
 import InvitationClaim from "./invitation";
 import { CONFIG } from "../../utils/config";
-import { providers } from "ethers";
-import { getContract } from "@wagmi/core";
 
 export class WalletNavBar {
     name: string = "";
@@ -226,7 +222,7 @@ export default function WalletNewPage() {
 
         if (res && res.nacp) {
             // 验证 tokenId 的持有者
-            if (await ownerOf(res.nacp)) {
+            if (await ownerOf(res.nacp, state.currentAddress)) {
                 const _nacp = await nervapeApi.fnGetMetadataByTokenId(res.nacp);
                 setUserProfile(_nacp.data);
             } else {
@@ -235,19 +231,6 @@ export default function WalletNewPage() {
         } else {
             setUserProfile(null);
         }
-    }
-
-    async function ownerOf(tokenId: number) {
-        const mainnetProvider = new providers.StaticJsonRpcProvider(CONFIG.NACP_PROVIDER_RPC);
-        const contractReader = getContract({
-            address: CONFIG.NACP_ADDRESS,
-            abi: nacpAbi,
-            signerOrProvider: mainnetProvider
-        });
-        
-        const owner = await contractReader?.ownerOf(tokenId);
-        console.log('ownerOf=', owner);
-        return owner == state.currentAddress;
     }
 
     const NavbarItems = () => {

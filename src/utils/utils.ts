@@ -8,6 +8,10 @@ import ColseIcon from '../assets/icons/close_icon.svg';
 import { notification } from 'antd';
 import htmr from 'htmr';
 import { ArgsProps } from 'antd/lib/notification';
+import { providers } from 'ethers';
+import { CONFIG } from './config';
+import { getContract } from '@wagmi/core';
+import nacpAbi from '../contracts/NervapeComposite.json';
 
 export const initialState = {
     windowWidth: getWindowWidthRange(),
@@ -118,4 +122,17 @@ export function showErrorNotification(config: ArgsProps) {
         icon: config.icon || htmr(`<img src=${ErrorColseIcon} alt="" />`),
         closeIcon: htmr(`<img src=${ColseIcon} alt="" />`)
       });
+}
+
+export async function ownerOf(tokenId: number, address: string) {
+    const mainnetProvider = new providers.StaticJsonRpcProvider(CONFIG.NACP_PROVIDER_RPC);
+    const contractReader = getContract({
+        address: CONFIG.NACP_ADDRESS,
+        abi: nacpAbi,
+        signerOrProvider: mainnetProvider
+    });
+    
+    const owner = await contractReader?.ownerOf(tokenId);
+    console.log('ownerOf=', owner);
+    return owner == address;
 }

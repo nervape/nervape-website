@@ -3,7 +3,7 @@ import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
-import { DataContext, preloadImage, updateBodyOverflow } from "../../../utils/utils";
+import { DataContext, ownerOf, preloadImage, showErrorNotification, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
 import DiscardPopup from "./discard";
 import { Types } from "../../../utils/reducers";
@@ -153,8 +153,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                             _c.selected = c.asset;
 
                             _c.assets.map(a => {
-                                if (c.asset?.access_type == "Special") {
+                                if (c.asset?.access_type == "Special" && c.asset._id == a._id) {
                                     a.can_use = true;
+                                    a.count = 1;
                                 }
 
                                 return a;
@@ -179,6 +180,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setIsCollectionOpen(false);
 
         let _category = phases[selectPhase].categories.filter(c => c._id == category);
+        
+        if (!_category.length) return;
         const _assets = _category[0].assets;
         setAssets(_assets);
     }
@@ -456,7 +459,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         })
 
         setSelectedAssets(_assets);
-        setCanReset(_assets.length > 1);
+
+        if (_assets.length == 1) {
+            setCanReset(false);
+        }
 
         if (phaseHistoryJson.length <= 0) {
             setAssetsHistoryJson(_assets);
@@ -524,7 +530,19 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     const signInWithEthereum = async () => {
+        // nacp 持有者验证
         setLoading(true);
+
+        if (!await ownerOf(nacp.id, state.currentAddress)) {
+            setLoading(false);
+
+            showErrorNotification({
+                message: 'Request Error',
+                description: 'You are no longer the holder of the current nacp'
+            });
+
+            return;
+        }
 
         try {
             const { message, url, thumb_url } = await createSiweMessage(state.currentAddress, 'Sign in to update your NACP metadata.');
@@ -857,8 +875,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 <NacpPhaseLockedIcon></NacpPhaseLockedIcon>
                                 <div className="locked">Locked!</div>
                                 <div className="locked-tip">
-                                    {phases[selectPhase].status == 0 
-                                        ? 'Sorry my fellow ape, the phase for this asset type has not started yet.' 
+                                    {phases[selectPhase].status == 0
+                                        ? 'Sorry my fellow ape, the phase for this asset type has not started yet.'
                                         : 'Sorry my fellow ape, the phase for this asset type is expired.'}
                                 </div>
                             </div>

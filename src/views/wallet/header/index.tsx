@@ -270,9 +270,15 @@ export default function WalletHeader(props: any) {
             ) : (
                 <div className="user-center-content m">
                     <div className="user-info flex-align">
-                        <div className="user-avatar" style={{ background: avatarBackgroundColor }}>
-                            <img src={DefaultAvatar} alt="UserAvatar" />
-                        </div>
+                        {userProfile ? (
+                            <div className="user-avatar">
+                                <img className="transition" src={userProfile.image} alt="UserAvatar" />
+                            </div>
+                        ) : (
+                            <div className="user-avatar" style={{ background: avatarBackgroundColor }}>
+                                <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
+                            </div>
+                        )}
 
                         {AddressDropdown()}
                     </div>
