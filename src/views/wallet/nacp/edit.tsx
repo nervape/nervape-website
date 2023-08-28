@@ -16,6 +16,8 @@ import FoldIcon from '../../../assets/wallet/nacp/fold_icon.svg';
 import SpecialIcon from '../../../assets/wallet/nacp/special.svg';
 import BodyViewScaleIcon from '../../../assets/wallet/nacp/body.svg';
 import HeadViewScaleIcon from '../../../assets/wallet/nacp/head.svg';
+import CategoryLocked from '../../../assets/wallet/nacp/locked.svg';
+import lodash from 'lodash';
 
 let touchYStart = 0;
 
@@ -182,7 +184,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         let _category = phases[selectPhase].categories.filter(c => c._id == category);
         
         if (!_category.length) return;
-        const _assets = _category[0].assets;
+        const _assets = lodash.orderBy(_category[0].assets, ['can_use', 'access_type', 'count'], ['desc', 'asc', 'desc']);
         setAssets(_assets);
     }
 
@@ -842,8 +844,11 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                 }}>
                                                 {NacpCategoryIcons.get(category.name)}
                                                 <div className="select-asset-img">
-                                                    {category.selected && (
-                                                        <img src={category.selected.thumb_url} />
+                                                    {phases[selectPhase].status != 1 && (
+                                                        <img className="category-locked" src={CategoryLocked} alt="" />
+                                                    )}
+                                                    {phases[selectPhase].status == 1 && category.selected && (
+                                                        <img className="category-selected" src={category.selected.thumb_url} />
                                                     )}
                                                 </div>
                                             </div>
