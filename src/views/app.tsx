@@ -30,6 +30,7 @@ import WalletPage from "./wallet";
 import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
 import NacpNFTPage from "./nfts/nacp";
+import { CONFIG } from "../utils/config";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -75,7 +76,7 @@ export default function App() {
       <div className="app">
         <Routes>
           <Route
-            path=""
+            path={`${CONFIG.PUBLIC_PATH}`}
             element={
               <PageView disableFooter={true}>
                 <HomePage />
@@ -83,7 +84,7 @@ export default function App() {
             }
           />
           <Route
-            path="/about"
+            path={`${CONFIG.PUBLIC_PATH}/about`}
             element={
               <PageView activeIndex={1} disableFooter={true}>
                 <AboutPage />
@@ -91,7 +92,7 @@ export default function App() {
             }
           />
           <Route
-            path="/3dnft"
+            path={`${CONFIG.PUBLIC_PATH}/3dnft`}
             element={
               <PageView activeIndex={3}>
                 <NFTPage />
@@ -99,7 +100,7 @@ export default function App() {
             }
           />
           <Route
-            path="/story"
+            path={`${CONFIG.PUBLIC_PATH}/story`}
             element={
               <PageView activeIndex={2}>
                 <Story />
@@ -107,7 +108,7 @@ export default function App() {
             }
           />
           <Route
-            path="/story/:id"
+            path={`${CONFIG.PUBLIC_PATH}/story/:id`}
             element={
               <PageView activeIndex={2} disableFooter={true}>
                 <StoryProfile />
@@ -115,7 +116,7 @@ export default function App() {
             }
           />
           <Route
-            path="/campaign"
+            path={`${CONFIG.PUBLIC_PATH}/campaign`}
             element={
               <PageView activeIndex={5}>
                 <CampaignPage />
@@ -123,7 +124,7 @@ export default function App() {
             }
           />
           <Route
-            path="/wallet"
+            path={`${CONFIG.PUBLIC_PATH}/wallet`}
             element={
               <PageView activeIndex={7} disableFooter={true}>
                 <WalletPage></WalletPage>
@@ -131,7 +132,7 @@ export default function App() {
             }>
           </Route>
           <Route
-            path="/nacp"
+            path={`${CONFIG.PUBLIC_PATH}/nacp`}
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Composite></Composite>
@@ -139,7 +140,7 @@ export default function App() {
             }>
           </Route>
           <Route
-            path="/nacp/create"
+            path={`${CONFIG.PUBLIC_PATH}/nacp/create`}
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Nacp></Nacp>
@@ -147,14 +148,14 @@ export default function App() {
             }>
           </Route>
           <Route
-            path="/nacp/nft"
+            path={`${CONFIG.PUBLIC_PATH}/nacp/nft`}
             element={
               <PageView activeIndex={8}>
                 <NacpNFTPage></NacpNFTPage>
               </PageView>
             }>
           </Route>
-          <Route path="*" element={<Navigate to="" />} />
+          <Route path="*" element={<Navigate to={`${CONFIG.PUBLIC_PATH}`} />} />
         </Routes>
       </div>
     </WagmiConfig>

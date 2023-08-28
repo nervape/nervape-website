@@ -1,3 +1,4 @@
+import { CONFIG } from './../utils/config';
 import { NavigateFunction, Location } from "react-router-dom";
 
 export class NavTool {
@@ -8,7 +9,7 @@ export class NavTool {
   public static location: Location = { ...window.location, state: {}, key: "" };
 
   public static fnJumpToPage = (path: string) => {
-    const toPath = NavTool.fnStdNavStr(path);
+    const toPath = NavTool.fnStdNavStr(CONFIG.PUBLIC_PATH + path);
     const navigation = NavTool.navigation;
     navigation(toPath);
   };

@@ -56,4 +56,7 @@ export const CONFIG = {
 
     // NACP Provider rpc
     NACP_PROVIDER_RPC: import.meta.env.VITE_NACP_PROVIDER_RPC,
+
+    // public path
+    PUBLIC_PATH: import.meta.env.VITE_PUBLIC_PATH,
 }
