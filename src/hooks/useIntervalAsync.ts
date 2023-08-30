@@ -1,45 +1,17 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-const useIntervalAsync = <R = unknown>(fn: () => Promise<R>, ms: number) => {
-    const runningCount = useRef(0);
-    const timeout = useRef<number>();
-    const mountedRef = useRef(false);
-
-    const next = useCallback(
-        (handler: TimerHandler) => {
-            if (mountedRef.current && runningCount.current === 0) {
-                timeout.current = window.setTimeout(handler, ms);
-            }
-        },
-        [ms]
-    );
-
-    const run = useCallback(async () => {
-        runningCount.current += 1;
-        const result = await fn();
-        runningCount.current -= 1;
-
-        next(run);
-
-        return result;
-    }, [fn, next]);
+const useIntervalAsync = <R = unknown>(callback: () => Promise<R>, ms: number) => {
+    const latestCallback = useRef(() => {
+    });
 
     useEffect(() => {
-        mountedRef.current = true;
-        run();
+        latestCallback.current = callback;
+    });
 
-        return () => {
-            mountedRef.current = false;
-            window.clearTimeout(timeout.current);
-        };
-    }, [run]);
-
-    const flush = useCallback(() => {
-        window.clearTimeout(timeout.current);
-        return run();
-    }, [run]);
-
-    return flush;
+    useEffect(() => {
+        const timer = setInterval(() => latestCallback.current(), ms);
+        return () => clearInterval(timer);
+    }, []);
 };
 
 export default useIntervalAsync;

@@ -18,6 +18,7 @@ import BodyViewScaleIcon from '../../../assets/wallet/nacp/body.svg';
 import HeadViewScaleIcon from '../../../assets/wallet/nacp/head.svg';
 import CategoryLocked from '../../../assets/wallet/nacp/locked.svg';
 import lodash from 'lodash';
+import useIntervalAsync from "../../../hooks/useIntervalAsync";
 
 let touchYStart = 0;
 
@@ -57,9 +58,25 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [isSaveVerify, setIsSaveVerify] = useState(false);
     const [canReset, setCanReset] = useState(false);
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
+    const [phaseStatus, setPhaseStatus] = useState([]);
 
     const [viewScale, setViewScale] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
+
+    // useIntervalAsync(updateNacpStatus, 1000);
+
+    async function updateNacpStatus() {
+        if (!phases.length) return;
+        const now = new Date().getTime();
+
+        phases.forEach(p => {
+            if (now >= p.start_date && now <= p.end_date) {
+
+            } else {
+                
+            }
+        })
+    }
 
     async function fnGetPhases() {
         setProgress('0');
@@ -540,7 +557,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
             showErrorNotification({
                 message: 'Request Error',
-                description: 'You are no longer the holder of the current nacp'
+                description: 'Sorry! Looks like you’re not the holder of this NACP. You won’t be able to edit or save this NACP.'
             });
 
             return;
@@ -972,7 +989,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                         <div className="special-asset-count flex-align" style={{ background: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
                                                             {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
                                                             {asset.task_type != 'Bonelist' && (
-                                                                <div className="text">{`x${asset.count || 0}`}</div>
+                                                                <div className="text">{`x${selected ? (asset.count || 0) - 1 : asset.count}`}</div>
                                                             )}
                                                         </div>
                                                     )}

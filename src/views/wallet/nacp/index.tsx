@@ -315,6 +315,15 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         });
     }, [chainApes]);
 
+    async function updateUnMintApes() {
+        if (hasMinted) {
+            setNacpApes([]);
+            setIsMinting(false);
+        } else {
+            initUnMintApes(nacpSetting);
+        }
+    }
+
     async function initUnMintApes(nacpSetting: NacpSetting | undefined) {
         if (nacpSetting) {
             const now = new Date().getTime();
@@ -508,6 +517,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                             handleMint();
                                         }
                                     }}
+                                    initUnMintApes={updateUnMintApes}
                                     phasesSetting={phasesSetting}
                                     type="spot"></MintButton>
 
@@ -590,9 +600,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                     <div className="cover-image">
                                         <img src={NftEmptyIcon} alt="NftEmptyIcon" />
                                     </div>
-                                    <div className="title">YOU DON’T HAVE ANY ASSET YET...</div>
+                                    <div className="title">Huh, it’s so empty...don’t worry! </div>
                                     <div className="tip">
-                                        You currently don’t have any NACP asset.You currently don’t have any NACP asset.You currently don’t have any NACP asset.
+                                        Pass our Nervape Saga Challenges to win Saga Only assets or wait until the next phase opens to see assets here!
                                     </div>
                                 </div>
                             </div>
