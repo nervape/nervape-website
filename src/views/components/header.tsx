@@ -4,6 +4,7 @@ import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
 import twitter from "../../assets/icons/twitter.svg";
 import discord from "../../assets/icons/discord.svg";
+import instegram from "../../assets/icons/instegram.svg";
 import NacpLogo from '../../assets/logo/logo_nacp.svg';
 import MNacpLogo from '../../assets/logo/m_nacp_logo.svg';
 import HeaderOpenIcon from '../../assets/icons/header-open.svg';
@@ -331,9 +332,12 @@ const mPages: MenuItem[] = [
   getItem('BRIDGE', 'bridge')
 ];
 
+const rootSubmenuKeys = ['gallery', 'buy'];
+
 export default function NavHeader(props: any) {
   const { activeIndex } = props;
   const [disableList, setDisableList] = useState(true);
+  const [openKeys, setOpenKeys] = useState(['gallery']);
 
   const { state, dispatch } = useContext(DataContext);
 
@@ -487,7 +491,15 @@ export default function NavHeader(props: any) {
                     if (e.key !== HeaderType.Coming) setDisableList(true);
                     handleHeaderClick(e.key);
                   }}
-                  openKeys={['gallery']}
+                  onOpenChange={(keys) => {
+                    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+                    if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
+                      setOpenKeys(keys);
+                    } else {
+                      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+                    }
+                  }}
+                  openKeys={openKeys}
                   items={mPages}></Menu>
               </>
             )}
@@ -509,6 +521,15 @@ export default function NavHeader(props: any) {
                 }}
               >
                 <img className="icon-image" src={discord} alt="" />
+              </div>
+              <div
+                className={`nav-area cursor icon`}
+                onClick={() => {
+                  setDisableList(true);
+                  window.open('https://www.instagram.com/nervapes/')
+                }}
+              >
+                <img className="icon-image" src={instegram} alt="" />
               </div>
             </div>
 

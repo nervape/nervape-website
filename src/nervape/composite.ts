@@ -40,3 +40,9 @@ export class Banner {
     ape: string = "";
     qaBg: string = "";
 }
+
+export class SneakPeek {
+    _id: string = '';
+    url: string = '';
+    sort: number = 0;
+}
