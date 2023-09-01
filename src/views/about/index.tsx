@@ -61,7 +61,7 @@ export default function AboutPage() {
                             location="intro-top"
                             className="intro-top-text"
                         >
-                            Nervape is a Metaverse with an Ongoing Story and 3D NFTs Shaped by the Community.
+                            Nervape is a Metaverse with an Ongoing Story and NFTs Shaped by the Community.
                         </Parallax>
                     </div>
                 )}

@@ -590,7 +590,20 @@
   }
 
   .fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(232, 232, 232, 0.9);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+
+    &.show {
+      visibility: visible;
+      opacity: 1;
+    }
     .close-c {
       position: absolute;
       width: 40px;

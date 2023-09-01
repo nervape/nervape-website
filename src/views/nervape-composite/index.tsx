@@ -113,7 +113,6 @@ export default function Composite() {
 
     const fnGetSneakPeeks = async () => {
         const res = await nervapeApi.fnNacpSneakPeek();
-        console.log('fnGetSneakPeeks', res);
         setSneakPeeks(res);
     }
 
@@ -186,8 +185,6 @@ export default function Composite() {
         } else {
             setSneakCurrPercent(sneakW - offset);
         }
-
-        console.log('handleScroll', diffOffset);
     }
 
     useEffect(() => {
@@ -351,8 +348,8 @@ export default function Composite() {
                                     <div className="phase-content flex-center">
                                         <TweenOne key="2" animation={{ opacity: 1, delay: 200, duration: 600 }}
                                             style={{ opacity: 0 }}>
-                                            <div className="phase-img-cover">
-                                                <img src={phaseCover} className="phase-img img-filter" alt="" />
+                                            <div className="phase-img-cover img-filter">
+                                                <img src={phaseCover} className="phase-img" alt="" />
                                             </div>
                                         </TweenOne>
 
@@ -444,7 +441,7 @@ export default function Composite() {
                                                 window.open(parthershipItems[0].link);
                                             }}>
                                                 <TweenOne key="what-2" animation={{ opacity: 1, delay: 400, duration: 600 }} style={{ opacity: 0 }}>
-                                                    <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/635274dd-3202-40de-990a-5eb2cbc8f1d1.png" alt="" />
+                                                    <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/8c16604a-3a5e-4e5e-adf2-6236c76249c2.png" alt="" />
                                                 </TweenOne>
 
                                                 <TweenOne key="what-3" animation={{ opacity: 1, delay: 600, duration: 600 }} style={{ opacity: 0 }}>
@@ -501,7 +498,7 @@ export default function Composite() {
                                 </div>
                             </div>
                         </section>
-
+                        
                         <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.2}>

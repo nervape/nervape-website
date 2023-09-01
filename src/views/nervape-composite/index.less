@@ -336,7 +336,7 @@
               width: 572px;
               height: 321.75px;
               border-radius: 40px;
-              background: #bcbcbc;
+              // background: #BCBCBC;
               margin-bottom: 24px;
             }
           }
@@ -420,22 +420,25 @@
             width: 480px;
             height: 480px;
             border-radius: 40px;
+            overflow: hidden;
+            z-index: 2;
 
             img {
               background-color: #ffffff;
               width: 476px;
               height: 476px;
-              border-radius: 40px;
             }
           }
 
           .phase-step {
             padding-left: 16px;
             width: 624px;
+            display: flex;
+            flex-direction: column;
 
             .phase-item {
               width: 100%;
-              height: 106px;
+              flex: 1;
               margin-bottom: 16px;
               border-radius: 16px;
               display: flex;
@@ -540,7 +543,6 @@
         position: sticky;
         top: 0;
         overflow: hidden;
-        padding: 128px 0;
 
         .scroll-inner {
           display: flex;
@@ -957,7 +959,8 @@
 
               .cover-image {
                 width: 472px;
-                height: 472px;
+                height: fit-content;
+                // height: 472px;
               }
             }
           }
@@ -1524,7 +1527,7 @@
           }
         }
       }
-
+      
       .partner-program-section {
         .partner-content {
           width: 347px;

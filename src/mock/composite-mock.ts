@@ -22,7 +22,6 @@ import AssetIconSpecial from '../assets/nacp/assets/assets_icon-14.svg';
 import Phase1Cover from '../assets/nacp/phases/minting_1.gif';
 import Phase2Cover from '../assets/nacp/phases/minting_2.gif';
 import Phase3Cover from '../assets/nacp/phases/minting_3.gif';
-import Phase4Cover from '../assets/nacp/phases/minting_4.gif';
 
 import Banner1Ape from '../assets/nacp/banner_1_ape.png';
 import Banner1Bg from '../assets/nacp/banner_1_bg.png';
@@ -83,6 +82,13 @@ const introData: Intro[] = [
 const parthershipData: Parthership[] = [
     {
         tag: 'COMMUNITY ACTIVITY',
+        date: '06/12/2023',
+        title: 'Saga Challenge Week 3 - Who Stole My Sweets?!',
+        desc: "Win exclusive Saga only assets for Nervape Saga stories 1 thru 4 + story 15! New quizzes up every 24 hours, M-F, 6/12 10a to 6/17 11:59p.",
+        link: "https://tourmaline-elderberry-f93.notion.site/Saga-Challenge-Week-3-Who-Stole-My-Sweets-31b26780fa7d4149b1698693b78cbd44?pvs=4",
+    },
+    {
+        tag: 'COMMUNITY ACTIVITY',
         date: '06/05/2023',
         title: 'Saga Challenge Week 2 - The Princess and the Outsiders',
         desc: "For For this week's challenge we re-visit our ragtag team of outsiders, our favorite princess, the great dragon Yinhe, and much more! ",
@@ -101,13 +107,6 @@ const parthershipData: Parthership[] = [
         title: 'What is an NACP Bonelist?',
         desc: "What is an NACP Bonelist? It's a better whitelist!",
         link: "https://tourmaline-elderberry-f93.notion.site/NACP-Bonelist-aka-Whitelist-f021cb54342549ae95f752d393ab3211",
-    },
-    {
-        tag: 'COMMUNITY ACTIVITY',
-        date: '05/24/2023',
-        title: "Let's Create Nervape Saga Together!",
-        desc: "We're calling on all storytellers to tell Nervape-inspired stories!",
-        link: "https://tourmaline-elderberry-f93.notion.site/Let-s-Create-Nervape-Saga-Together-eb8ead2256a9468ba10bd2c3722fd6af",
     }
 ];
 
@@ -124,18 +123,9 @@ const phaseData: Phase[] = [
                 name: 'Skin'
             },
             {
-                cover: AssetIconBg,
-                name: 'Background'
-            }
-        ]
-    },
-    {
-        title: 'PHASE 2',
-        cover: Phase2Cover,
-        startDate: '10/03/2023',
-        endDate: '20/03/2023',
-        background: '#FEA063',
-        assets: [
+                cover: AssetIconTattoo,
+                name: 'Tattoo'
+            },
             {
                 cover: AssetIconSuit,
                 name: 'Suit'
@@ -151,8 +141,8 @@ const phaseData: Phase[] = [
         ]
     },
     {
-        title: 'PHASE 3',
-        cover: Phase3Cover,
+        title: 'PHASE 2',
+        cover: Phase2Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#A8E9C2',
@@ -176,16 +166,12 @@ const phaseData: Phase[] = [
             {
                 cover: AssetIconEars,
                 name: 'Ears'
-            },
-            {
-                cover: AssetIconTattoo,
-                name: 'Tattoo'
             }
         ]
     },
     {
-        title: 'PHASE 4',
-        cover: Phase4Cover,
+        title: 'PHASE 3',
+        cover: Phase3Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#C5BAF7',
@@ -201,6 +187,10 @@ const phaseData: Phase[] = [
             {
                 cover: AssetIconSpecial,
                 name: 'Special'
+            },
+            {
+                cover: AssetIconBg,
+                name: 'Background'
             }
         ]
     }
