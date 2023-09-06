@@ -361,6 +361,12 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnDeleteUserProfile(address: string, nacp: number) {
+    const url = `${this.baseUrl}/nacp/profile/${address}/${nacp}`;
+    const res = await axios.post(url);
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnGetNacpCategories() {
     const url = `${this.baseUrl}/pfp-asset/website/nacp/categories/filter`;

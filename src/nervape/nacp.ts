@@ -47,6 +47,9 @@ export class NacpPhase {
     sort: number = 0;
     status: number = 0; // 0 未开始 1 进行中 2 已结束
     categories: NacpCategory[] = [];
+}
+
+export class PhaseLeft {
     countdown: number = 0;
     countdownStr: string = '';
     countdownColor: string = '';

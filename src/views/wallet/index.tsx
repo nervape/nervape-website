@@ -226,6 +226,8 @@ export default function WalletNewPage() {
                 const _nacp = await nervapeApi.fnGetMetadataByTokenId(res.nacp);
                 setUserProfile(_nacp.data);
             } else {
+                // 删除绑定关系
+                nervapeApi.fnDeleteUserProfile(state.currentAddress, res.nacp);
                 setUserProfile(null);
             }
         } else {

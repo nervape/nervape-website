@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
-import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, UpdateMetadataForm } from "../../../nervape/nacp";
+import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
 import { DataContext, ownerOf, preloadImage, showErrorNotification, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
@@ -19,6 +19,7 @@ import HeadViewScaleIcon from '../../../assets/wallet/nacp/head.svg';
 import CategoryLocked from '../../../assets/wallet/nacp/locked.svg';
 import lodash from 'lodash';
 import useIntervalAsync from "../../../hooks/useIntervalAsync";
+import OperatePopup from "../../components/operate-popup";
 
 let touchYStart = 0;
 
@@ -57,11 +58,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [isLoadingEnded, setIsLoadingEnded] = useState(false);
     const [isSaveVerify, setIsSaveVerify] = useState(false);
     const [canReset, setCanReset] = useState(false);
+    const [showPhaseEndTip, setShowPhaseEndTip] = useState(false);
     const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
-    const [phaseStatus, setPhaseStatus] = useState([]);
+    const [activePhase, setActivePhase] = useState(-1);
 
     const [viewScale, setViewScale] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
+    const [phaseLefts, setPhaseLefts] = useState<PhaseLeft[]>([]);
 
     useIntervalAsync(updateNacpStatus, 1000);
 
@@ -69,26 +72,30 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         if (!phases.length) return;
         const now = new Date().getTime();
 
-        let _phases: NacpPhase[] = JSON.parse(JSON.stringify(phases));
-        _phases.map(p => {
+        let _phaseLefts: PhaseLeft[] = JSON.parse(JSON.stringify(phaseLefts));
+
+        phases.map((p, i) => {
             if (p.status == 1) {
-                p.countdown = p.end_date - now;
-                if (p.countdown <= 0) {
+                setActivePhase(i);
+
+                _phaseLefts[i].countdown = p.end_date - now;
+                if (p.end_date - now <= 0) {
                     // 提示弹窗
+                    setShowPhaseEndTip(true);
                 } else {
-                    const { text, color } = formatCountdown(p.countdown);
-                    p.countdownStr = text;
-                    p.countdownColor = color;
+                    const { text, color } = formatCountdown(p.end_date - now);
+                    _phaseLefts[i].countdownStr = text;
+                    _phaseLefts[i].countdownColor = color;
                 }
             } else {
-                p.countdown = 0;
-                p.countdownStr = '';
+                _phaseLefts[i].countdown = 0;
+                _phaseLefts[i].countdownStr = '';
             }
 
             return p;
         });
 
-        setPhases(_phases);
+        setPhaseLefts(_phaseLefts);
     }
 
     function formatCountdown(_countdown: number) {
@@ -112,6 +119,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     async function fnGetPhases() {
+        console.log('fnGetPhases');
         setProgress('0');
         setLoadingAssets(true);
         const res = await nervapeApi.fnGetPhases(state.currentAddress);
@@ -125,6 +133,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         assetsPreload(_phases);
 
         const activeIndex = fnGetActivePhaseIndex(_phases);
+
+        initPhaseLefts(_phases);
 
         setSelectPhase(activeIndex);
         const activePhase = _phases[activeIndex];
@@ -140,10 +150,24 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         }
     }
 
+    function initPhaseLefts(_phases: NacpPhase[]) {
+        let _lefts: PhaseLeft[] = [];
+        _phases.forEach(p => {
+            _lefts.push({
+                countdown: 0,
+                countdownStr: '',
+                countdownColor: ''
+            });
+        });
+
+        setPhaseLefts(_lefts);
+    }
+
     function initAssetData() {
         setAssetsHistoryStack([]);
         setPhaseHistoryStack([]);
         setHistoryIndex(-1);
+        setPhases([]);
     }
 
     function fnGetActivePhaseIndex(_phases: NacpPhase[]) {
@@ -241,6 +265,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     async function chooseAsset(asset: NacpAsset | undefined) {
         if (!currCategory) return;
 
+        setCanReset(true);
         // 更新 selectedAssets
         let _selectedAssets: NacpAsset[] = JSON.parse(JSON.stringify(selectedAssets));
         if (asset) {
@@ -382,6 +407,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     async function fnOperateBack() {
+        setCanReset(true);
         setSelectedAssets(assetsHistoryStack[historyIndex - 1]);
         setHistoryIndex(historyIndex - 1);
         setPhases(phaseHistoryStack[historyIndex - 1]);
@@ -389,6 +415,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     async function fnOperateNext() {
+        setCanReset(true);
         setSelectedAssets(assetsHistoryStack[historyIndex + 1]);
         setHistoryIndex(historyIndex + 1);
         setPhases(phaseHistoryStack[historyIndex + 1]);
@@ -396,6 +423,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     async function fnRandomizeAssets() {
+        setCanReset(true);
         let _phases = JSON.parse(JSON.stringify(phases));
         let _assets: NacpAsset[] = [];
         const _categories: NacpCategory[] = JSON.parse(JSON.stringify(phases[selectPhase].categories));
@@ -521,10 +549,6 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             setPhaseHistoryJson(phases);
         }
     }, [phases]);
-
-    useEffect(() => {
-        setCanReset(selectedAssets.length > 1);
-    }, [selectedAssets]);
 
     async function fnUpdatePhaseCategorySelected(_assets: NacpAsset[], _phases: NacpPhase[], asset: NacpAsset) {
         const selectedAssetsIds = _assets.map(s => s._id);
@@ -775,7 +799,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                             {phase.status !== 1 ? (
                                                 <div className="status-tag locked-tag">Locked</div>
                                             ) : (
-                                                <div className="status-tag left-tag" style={{color: phase.countdownColor}}>{phase.countdownStr}</div>
+                                                <div className="status-tag left-tag" style={{color: phaseLefts[index]?.countdownColor}}>{phaseLefts[index]?.countdownStr}</div>
                                             )}
                                         </div>
                                     );
@@ -1115,6 +1139,24 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     updateBodyOverflow(true);
                     initAssetData();
                 }}></DiscardPopup>
+            <OperatePopup
+                show={showPhaseEndTip}
+                closeText="OKAY"
+                confirmText={activePhase >= 2 ? '' : `GO TO PHASE ${activePhase + 2} EDITOR`}
+                content={`Phase ${activePhase + 1} has ended.`}
+                close={() => {
+                    setShowNacpEdit(false);
+                    setShowPhaseEndTip(false);
+                }}
+                confirm={() => {
+                    setShowPhaseEndTip(false);
+                    setShowNacpEdit(false);
+                    initAssetData();
+
+                    setTimeout(() => {
+                        setShowNacpEdit(true);
+                    }, 500);
+                }}></OperatePopup>
             {state.windowWidth <= 750 && (
                 <div className={`transition fold-icon ${isFold && 'show'}`} onClick={() => {
                     setIsFold(false);
