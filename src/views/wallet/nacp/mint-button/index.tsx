@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import './index.less';
 import { NacpPhase, NacpSetting } from "../../../../nervape/nacp";
 import { updateBodyOverflow } from "../../../../utils/utils";
@@ -6,7 +6,7 @@ import useIntervalAsync from "../../../../hooks/useIntervalAsync";
 
 export class MintButtobObj {
     title: string = '';
-    desc: string = '';
+    desc: string | ReactElement = '';
     icon?: string = '';
     showMintButton?: boolean = false;
     buttonText?: string;
@@ -31,6 +31,7 @@ export default function MintButton(props: {
 
     const [mintButtonObj, setMintButtonObj] = useState<MintButtobObj>(new MintButtobObj());
     const [mintStart, setMintStart] = useState(false);
+    const [isNeedUpdate, setIsNeedUpdate] = useState(false);
     const [countdown, setCountdown] = useState(0);
     const [countdownColor, setCountdownColor] = useState('');
     const [updateText, setUpdateText] = useState(0);
@@ -56,6 +57,7 @@ export default function MintButton(props: {
                 } else if (now >= nacpSetting.public_start_time && now <= nacpSetting.public_end_time) {
                     setCountdown(now - nacpSetting.public_end_time);
                 } else {
+                    setCountdown(now - nacpSetting.bonelist_start_time);
                     setMintButtonObj({ ...mintButtonObj, countdownStr: '', countdown: '' });
                 }
             } else {
@@ -86,6 +88,7 @@ export default function MintButton(props: {
         const abs = Math.abs(countdown);
 
         if (abs < 24 * 60 * 60 * 1000) {
+            setIsNeedUpdate(true);
             // 按时分秒格式化
             const hour = Math.floor((abs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minute = Math.floor((abs % (1000 * 60 * 60)) / (1000 * 60));
@@ -105,7 +108,10 @@ export default function MintButton(props: {
             setTimeout(() => {
                 setUpdateText(updateText + 1);
 
-                initUnMintApes && initUnMintApes();
+                if (isNeedUpdate) {
+                    initUnMintApes && initUnMintApes();
+                    setIsNeedUpdate(false);
+                }
             }, 1000);
             return;
         }
@@ -129,16 +135,22 @@ export default function MintButton(props: {
             // mint 未开始
             setMintButtonObj({
                 title: '',
-                desc: `Bonelist Mint will start in ${new Date(nacpSetting.bonelist_start_time).toLocaleString("en-US")}! 
-                    Public Mint will start in ${new Date(nacpSetting.public_start_time).toLocaleString("en-US")}!
-                    Don’t miss out!`,
+                desc: (
+                    <div>
+                        <strong style={{fontWeight: 800}}>Bonelist Mint</strong> will start {new Date(nacpSetting.bonelist_start_time).toLocaleString("en-US")}!
+                        <br />
+                        <strong style={{fontWeight: 800}}>Public Mint</strong> will start {new Date(nacpSetting.public_start_time).toLocaleString("en-US")}!
+                        <br />
+                        Don’t miss out!
+                    </div>
+                ),
                 showMintButton: false,
                 hide: false,
             });
         } else if (now >= nacpSetting.bonelist_start_time && now <= nacpSetting.bonelist_end_time) {
             if (isBonelist) {
                 setMintButtonObj({
-                    title: isMinting ? 'MINTING NACPs…' : 'BONELIST MINT HAS STARTED!',
+                    title: isMinting ? 'MINTING NACPs…' : 'BONELIST MINTING HAS STARTED!',
                     desc: isMinting
                         ? 'This might take several minutes. Sit back and enjoy a Gorilla Cola!'
                         : `To maintain your bonelist spots you MUST mint before ${new Date(nacpSetting.bonelist_end_time).toLocaleString("en-US")}. 
@@ -159,7 +171,7 @@ export default function MintButton(props: {
             }
         } else if (now >= nacpSetting.public_start_time && now <= nacpSetting.public_end_time) {
             setMintButtonObj({
-                title: isMinting ? 'MINTING NACPs…' : 'PUBLIC MINT HAS STARTED',
+                title: isMinting ? 'MINTING NACPs…' : 'PUBLIC MINTING HAS STARTED',
                 desc: isMinting
                     ? 'This might take several minutes. Sit back and enjoy a Gorilla Cola!'
                     : `Public mint ends ${new Date(nacpSetting.public_end_time).toLocaleString("en-US")}. Make sure you mint your NACP before the deadline! Have fun!`,
@@ -200,7 +212,7 @@ export default function MintButton(props: {
                 countdownStr = `{countdown} Left`;
             } else if (now > phase2.start_date && now < phase2.end_date) {
                 title = `PHASE 2 -  “STYLE UP YOUR HEAD” HAS STARTED!`
-                desc = `Phase 2 - Style Up Your Head, ends ${new Date(phase2.end_date).toLocaleString("en-US")}. During this phase you will be able to select hats, masks, glasses, and ear wear. Give your ape’s head some style!`
+                desc = `Phase 2 - Style Up Your Head, ends ${new Date(phase2.end_date).toLocaleString("en-US")}. During this phase you will be able to select hats, masks, glasses, and earwear. Give your ape’s head some style!`
                 countdownStr = `{countdown} Left`;
             } else if (now > phase3.start_date && now < phase3.end_date) {
                 title = `PHASE 3 - “MAKE YOUR APE SPECIAL” HAS STARTED!`
@@ -208,7 +220,7 @@ export default function MintButton(props: {
                 countdownStr = `{countdown} Left`;
             } else {
                 title = ''
-                desc = 'Wow look at the awesome apes you’ve created! Congratulations! All phases have ended and you won’t be able to edit until a new phase is released. Stay tuned!'
+                desc = 'Wow look at the awesome ape(s) you’ve created! Congratulations! All phases have ended and you won’t be able to edit until a new phase is released. Stay tuned!'
             }
             setMintButtonObj({
                 title,
@@ -252,20 +264,20 @@ export default function MintButton(props: {
                     {mintButtonObj.title && (
                         <div className="mint-tip-title">{mintButtonObj.title}</div>
                     )}
-                    {mintButtonObj.countdown && (
+                    {mintButtonObj.countdownStr && mintButtonObj.countdown && (
                         <div className="mint-tip-count" style={{ color: countdownColor, borderColor: countdownColor }}>
                             {mintButtonObj.countdown}
                         </div>
                     )}
-                    {!mintButtonObj.countdown && (
-                        <div className="mint-tip-desc">
+                    {!mintButtonObj.countdownStr && (
+                        <div className={`mint-tip-desc ${!mintButtonObj.title && 'hide'}`}>
                             {mintButtonObj.desc}
                         </div>
                     )}
                 </div>
             </div>
-            {mintButtonObj.countdown && (
-                <div className="mint-tip-desc">
+            {mintButtonObj.countdownStr && (
+                <div className={`mint-tip-desc ${!mintButtonObj.title && 'hide'}`}>
                     {mintButtonObj.desc}
                 </div>
             )}

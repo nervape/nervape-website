@@ -10,6 +10,7 @@ export class Intro {
     cover: string = '';
     title: string = '';
     desc: string = '';
+    color: string = '';
 }
 
 export class Parthership {

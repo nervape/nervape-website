@@ -76,7 +76,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         address: CONFIG.NACP_ADDRESS,
         abi: nacpAbi,
         functionName: 'tokensOfOwner',
-        cacheOnBlock: false,
+        cacheOnBlock: true,
         args: [address],
         watch: true
     })
@@ -113,6 +113,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
 
     async function fnGetNacpByTokenIds(flag = false) {
         if (!flag) return;
+
+        console.log('fnGetNacpByTokenIds');
         let _chainApes: NacpMetadata[] = [];
         let _nacpAssets: NacpAsset[] = [];
 
@@ -275,10 +277,12 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         if (chainApes.length) {
             hasChange = false;
 
-            (tokenIds as any).map(t => {
-                let filter = chainApes.filter(c => c.id == t.toNumber());
-                if (!filter.length) hasChange = true;
-            });
+            const _tokenIds = (tokenIds as any).map(t => t.toNumber()).sort();
+            const chainApesIds = chainApes.map(c => c.id || c.token_id).sort();
+
+            if (_tokenIds.join(',') != chainApesIds.join(',')) {
+                hasChange = true
+            }
         }
 
         debounce(hasChange);
@@ -322,6 +326,12 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         } else {
             initUnMintApes(nacpSetting);
         }
+    }
+
+    async function reloadData() {
+        updateUnMintApes();
+        fnGetNacpByTokenIds(true);
+        fnPhasesSetting();
     }
 
     async function initUnMintApes(nacpSetting: NacpSetting | undefined) {
@@ -517,7 +527,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                             handleMint();
                                         }
                                     }}
-                                    initUnMintApes={updateUnMintApes}
+                                    initUnMintApes={reloadData}
                                     phasesSetting={phasesSetting}
                                     type="spot"></MintButton>
 
@@ -545,6 +555,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                             isMintedSuccess={isMintedSuccess}
                                             hasMinted={hasMinted}
                                             phasesSetting={phasesSetting}
+                                            initUnMintApes={reloadData}
                                             type="ape"></MintButton>
                                     )}
 
@@ -582,6 +593,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                 hasMinted={hasMinted}
                                 phasesSetting={phasesSetting}
                                 isTokenSuccess={isTokenSuccess}
+                                initUnMintApes={reloadData}
                                 type="end"></MintButton>
                         )}
                     </div>

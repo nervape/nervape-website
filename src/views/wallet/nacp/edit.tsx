@@ -63,19 +63,52 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const [viewScale, setViewScale] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
 
-    // useIntervalAsync(updateNacpStatus, 1000);
+    useIntervalAsync(updateNacpStatus, 1000);
 
     async function updateNacpStatus() {
         if (!phases.length) return;
         const now = new Date().getTime();
 
-        phases.forEach(p => {
-            if (now >= p.start_date && now <= p.end_date) {
-
+        let _phases: NacpPhase[] = JSON.parse(JSON.stringify(phases));
+        _phases.map(p => {
+            if (p.status == 1) {
+                p.countdown = p.end_date - now;
+                if (p.countdown <= 0) {
+                    // 提示弹窗
+                } else {
+                    const { text, color } = formatCountdown(p.countdown);
+                    p.countdownStr = text;
+                    p.countdownColor = color;
+                }
             } else {
-                
+                p.countdown = 0;
+                p.countdownStr = '';
             }
-        })
+
+            return p;
+        });
+
+        setPhases(_phases);
+    }
+
+    function formatCountdown(_countdown: number) {
+        if (_countdown < 24 * 60 * 60 * 1000) {
+            // 按时分秒格式化
+            const hour = Math.floor((_countdown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minute = Math.floor((_countdown % (1000 * 60 * 60)) / (1000 * 60));
+            const second = Math.floor((_countdown % (1000 * 60)) / 1000);
+
+            return {
+                text: `${hour < 10 ? ('0' + hour) : hour}:${minute < 10 ? ('0' + minute) : minute}:${second < 10 ? ('0' + second) : second} left`,
+                color: '#FF5151'
+            };
+        } else {
+            // 按天格式化
+            return {
+                text: `${Math.ceil(_countdown / (24 * 60 * 60 * 1000))} days left`,
+                color: '#3BD46F'
+            };
+        }
     }
 
     async function fnGetPhases() {
@@ -199,7 +232,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         setIsCollectionOpen(false);
 
         let _category = phases[selectPhase].categories.filter(c => c._id == category);
-        
+
         if (!_category.length) return;
         const _assets = lodash.orderBy(_category[0].assets, ['can_use', 'access_type', 'count'], ['desc', 'asc', 'desc']);
         setAssets(_assets);
@@ -489,6 +522,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         }
     }, [phases]);
 
+    useEffect(() => {
+        setCanReset(selectedAssets.length > 1);
+    }, [selectedAssets]);
+
     async function fnUpdatePhaseCategorySelected(_assets: NacpAsset[], _phases: NacpPhase[], asset: NacpAsset) {
         const selectedAssetsIds = _assets.map(s => s._id);
         _phases.map((phase: NacpPhase) => {
@@ -734,8 +771,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                 setSelectCategory(phases[index].categories[0]._id);
                                                 setCurrCategory(phases[index].categories[0]);
                                             }}>
-                                            {phase.status !== 1 ? <NacpPhaseLockedIcon></NacpPhaseLockedIcon> : <NacpPhaseOpenIcon></NacpPhaseOpenIcon>}
                                             <div className="transition name">{phase.name}</div>
+                                            {phase.status !== 1 ? (
+                                                <div className="status-tag locked-tag">Locked</div>
+                                            ) : (
+                                                <div className="status-tag left-tag" style={{color: phase.countdownColor}}>{phase.countdownStr}</div>
+                                            )}
                                         </div>
                                     );
                                 })}
