@@ -2,7 +2,7 @@ import React from "react";
 import './index.less';
 
 export default function OperatePopup(props: any) {
-    const { close, show, confirm, hideClose, content, closeText, confirmText } = props;
+    const { close, show, confirm, hideClose, content, closeText, confirmText, hideConfirm } = props;
     return (
         <div className={`operate-popup-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
@@ -15,9 +15,11 @@ export default function OperatePopup(props: any) {
                             {closeText || 'NO'}
                         </button>
                     )}
-                    <button className="confirm btn" onClick={confirm}>
-                        {confirmText || 'YES'}
-                    </button>
+                    {!hideConfirm && (
+                        <button className="confirm btn" onClick={confirm}>
+                            {confirmText || 'YES'}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

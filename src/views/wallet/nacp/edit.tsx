@@ -81,7 +81,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 _phaseLefts[i].countdown = p.end_date - now;
                 if (p.end_date - now <= 0) {
                     // 提示弹窗
-                    setShowPhaseEndTip(true);
+                    show && setShowPhaseEndTip(true);
                 } else {
                     const { text, color } = formatCountdown(p.end_date - now);
                     _phaseLefts[i].countdownStr = text;
@@ -1142,7 +1142,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             <OperatePopup
                 show={showPhaseEndTip}
                 closeText="OKAY"
-                confirmText={activePhase >= 2 ? '' : `GO TO PHASE ${activePhase + 2} EDITOR`}
+                hideConfirm={activePhase >= 2}
+                confirmText={`GO TO PHASE ${activePhase + 2} EDITOR`}
                 content={`Phase ${activePhase + 1} has ended.`}
                 close={() => {
                     setShowNacpEdit(false);
