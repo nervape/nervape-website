@@ -119,7 +119,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         let _nacpAssets: NacpAsset[] = [];
 
         await Promise.all(
-            (tokenIds as any).map(async (t: any) => {
+            (tokenIds as any)?.map(async (t: any) => {
                 const res = await nervapeApi.fnGetMetadataByTokenId(t.toNumber());
                 const data: NacpMetadata = res.data;
 

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import './edit.less';
 import { nervapeApi } from "../../../api/nervape-api";
-import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
-import { NacpCategoryIcons, NacpPhaseLockedIcon, NacpPhaseOpenIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
+import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, NacpPhaseConfig, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
+import { NacpAssetSelected, NacpCategoryIcons, NacpPhaseLeftTime, NacpPhaseLockedIcon, NacpPhaseOpenIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
 import { DataContext, ownerOf, preloadImage, showErrorNotification, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
 import DiscardPopup from "./discard";
@@ -11,7 +11,7 @@ import { SiweMessage } from "siwe";
 import { useSignMessage } from "wagmi";
 import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
-import EquipSelected from '../../../assets/wallet/nacp/equip_selected.svg';
+import DiscardIcon from '../../../assets/wallet/nacp/edit/discard.svg';
 import FoldIcon from '../../../assets/wallet/nacp/fold_icon.svg';
 import SpecialIcon from '../../../assets/wallet/nacp/special.svg';
 import BodyViewScaleIcon from '../../../assets/wallet/nacp/body.svg';
@@ -20,6 +20,12 @@ import CategoryLocked from '../../../assets/wallet/nacp/locked.svg';
 import lodash from 'lodash';
 import useIntervalAsync from "../../../hooks/useIntervalAsync";
 import OperatePopup from "../../components/operate-popup";
+import RandomIcon from '../../../assets/wallet/nacp/edit/randomize.svg';
+import RedoIcon from '../../../assets/wallet/nacp/edit/redo.svg';
+import UndoIcon from '../../../assets/wallet/nacp/edit/undo.svg';
+import ResetIcon from '../../../assets/wallet/nacp/edit/reset.svg';
+import ClearIcon from '../../../assets/wallet/nacp/edit/clear.svg';
+import { Tooltip } from "antd";
 
 let touchYStart = 0;
 
@@ -35,11 +41,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     }
 
     const elementRef = useRef(null);
+    const cameraContentRef = useRef(null);
     const coverElementRef = useRef(null);
     const assetsRef = useRef(null);
     const rightRef = useRef(null);
 
     const [phases, setPhases] = useState<NacpPhase[]>([]);
+    const [phaseConfig, setPhaseConfig] = useState<NacpPhaseConfig[]>([]);
     const [selectPhase, setSelectPhase] = useState(0);
     const [maxStep, setMaxStep] = useState(15);
     const [selectCategory, setSelectCategory] = useState('');
@@ -106,13 +114,13 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             const second = Math.floor((_countdown % (1000 * 60)) / 1000);
 
             return {
-                text: `${hour < 10 ? ('0' + hour) : hour}:${minute < 10 ? ('0' + minute) : minute}:${second < 10 ? ('0' + second) : second} left`,
+                text: `${hour < 10 ? ('0' + hour) : hour}:${minute < 10 ? ('0' + minute) : minute}:${second < 10 ? ('0' + second) : second}`,
                 color: '#FF5151'
             };
         } else {
             // 按天格式化
             return {
-                text: `${Math.ceil(_countdown / (24 * 60 * 60 * 1000))} days left`,
+                text: `${Math.ceil(_countdown / (24 * 60 * 60 * 1000))} days`,
                 color: '#3BD46F'
             };
         }
@@ -137,6 +145,8 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         initPhaseLefts(_phases);
 
         setSelectPhase(activeIndex);
+        document.body.style.setProperty('--phase-tab-color', phaseConfig[activeIndex].extra_color);
+        document.body.style.setProperty('--phase-color', phaseConfig[activeIndex].color);
         const activePhase = _phases[activeIndex];
 
         // 处理 categories
@@ -273,14 +283,23 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 // 检查 asset.excludes
                 if (asset.excludes && asset.excludes.length) {
                     const filters = asset.excludes.filter(e => e._id == _asset._id);
-                    if (filters.length > 0) return false;
+                    if (filters.length) return false;
+                }
+                // 检查 asset.excludes_categories
+                if (asset.excludes_categories && asset.excludes_categories.length) {
+                    const filters = asset.excludes_categories.filter(c => c._id == _asset.category?._id);
+                    if (filters.length) return false;
                 }
                 // 检查 所属分类的 excludes
                 if (asset.category?.excludes && asset.category?.excludes.length) {
                     const filters = asset.category.excludes.filter(e => e._id == _asset.category?._id);
-                    if (filters.length > 0) return false;
+                    if (filters.length) return false;
                 }
-
+                // 检查所属分类的 excludes_assets
+                if (asset.category?.excludes_assets && asset.category.excludes_assets.length) {
+                    const filters = asset.category.excludes_assets.filter(e => e._id == _asset._id);
+                    if (filters.length) return false;
+                }
                 // 特殊约定 1. mask_only/headwear
                 if ((asset.is_mask_only && _asset.category?.name == 'Headwear')
                     || (asset.category?.name == 'Headwear' && _asset.is_mask_only)) {
@@ -291,7 +310,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 // 特殊约定 3. eyewear as mask
                 if (asset.category?.name == 'Eyewear' && asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
                     const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == _asset.category?._id);
-                    if (filters.length > 0) return false;
+                    if (filters.length) return false;
                 }
 
                 if (asset.category?.excludes_eyewear_as_mask) {
@@ -459,12 +478,24 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     _assets.forEach(asset => {
                         if (asset.excludes && asset.excludes.length) {
                             const filters = asset.excludes.filter(e => e._id == randomAsset._id);
-                            if (filters.length > 0) is_right = false;
+                            if (filters.length) is_right = false;
                         }
                         // 检查 所属分类的 excludes
                         if (asset.category?.excludes && asset.category?.excludes.length) {
                             const filters = asset.category.excludes.filter(e => e._id == randomAsset.category?._id);
-                            if (filters.length > 0) is_right = false;
+                            if (filters.length) is_right = false;
+                        }
+
+                        // 检查 asset.excludes_categories
+                        if (asset.excludes_categories && asset.excludes_categories.length) {
+                            const filters = asset.excludes_categories.filter(c => c._id == randomAsset.category?._id);
+                            if (filters.length) is_right = false;
+                        }
+
+                        // 检查所属分类的 excludes_assets
+                        if (asset.category?.excludes_assets && asset.category.excludes_assets.length) {
+                            const filters = asset.category.excludes_assets.filter(e => e._id == randomAsset._id);
+                            if (filters.length) is_right = false;
                         }
 
                         // 特殊约定 1. mask_only/headwear
@@ -477,7 +508,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                         // 特殊约定 3. eyewear as mask
                         if (asset.eyewear_as_mask && asset.category?.eyewear_as_mask_excludes && asset.category?.eyewear_as_mask_excludes?.length) {
                             const filters = asset.category?.eyewear_as_mask_excludes.filter(e => e._id == randomAsset.category?._id);
-                            if (filters.length > 0) is_right = false;
+                            if (filters.length) is_right = false;
                         }
 
                         if (asset.category?.excludes_eyewear_as_mask) {
@@ -729,10 +760,10 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
         if (currCategory.name == 'Suit' || currCategory.name == 'Mask') {
             document.body.style.setProperty('--nacp-asset-min-height', '83px');
-            document.body.style.setProperty('--nacp-asset-offset', '0px');
+            document.body.style.setProperty('--nacp-asset-offset', '37px');
         } else {
             document.body.style.setProperty('--nacp-asset-min-height', '120px');
-            document.body.style.setProperty('--nacp-asset-offset', '37px');
+            document.body.style.setProperty('--nacp-asset-offset', '0px');
         }
 
         (rightRef.current as unknown as HTMLElement).scroll({ top: 0, behavior: "smooth" });
@@ -742,11 +773,40 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     useEffect(() => {
         setViewScale(selectPhase == 1);
+        document.body.style.setProperty('--extra-phase-color', phaseConfig[selectPhase]?.extra_color);
+        document.body.style.setProperty('--phase-color', phaseConfig[selectPhase]?.color);
     }, [selectPhase]);
 
     useEffect(() => {
         if (show && state.windowWidth <= 750) updateBodyOverflow(false);
     }, [show, state.windowWidth]);
+
+    useEffect(() => {
+        setPhaseConfig([{
+            color: '#EFC100',
+            extra_color: '#AF7604'
+        }, {
+            color: '#11C864',
+            extra_color: '#04843E'
+        }, {
+            color: '#8F8BF7',
+            extra_color: '#4434E2'
+        }]);
+    }, []);
+
+    const cameraContentResize = new ResizeObserver((entries) => {
+        let entry = entries[0];
+        let cr = entry.contentRect;
+        let target = entry.target;
+
+        document.body.style.setProperty('--camera-content-height', cr.height + 2 + 'px');
+    })
+
+    useEffect(() => {
+        if (cameraContentRef.current && state.windowWidth <= 750) {
+            cameraContentResize.observe(cameraContentRef.current);
+        }
+    }, [cameraContentRef, isFold]);
 
     if (!phases || !phases.length) return <></>;
 
@@ -771,13 +831,15 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                     <div className="title">{nacp.name}</div>
                     <div className="btn-groups flex-align">
                         {phases.filter(p => p.status == 1).length > 0 && (
-                            <button className="cursor btn save-btn" onClick={() => {
+                            <button className="cursor btn save-btn" style={{ background: phaseConfig[selectPhase].color }} onClick={() => {
                                 signInWithEthereum();
                             }}>Save</button>
                         )}
                         <button className="cursor btn discard-btn" onClick={() => {
                             setShowDiscardPopup(true);
-                        }}>Discard</button>
+                        }}>
+                            <img src={DiscardIcon} alt="DiscardIcon" />
+                        </button>
                     </div>
                 </div>
                 <div className={`edit-content ${state.windowWidth > 750 && 'flex-align'}`}>
@@ -788,25 +850,37 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                     return (
                                         <div
                                             key={index}
-                                            className={`cursor transition phase-tab ${index == selectPhase && 'selected'}`}
+                                            className={`cursor transition phase-tab ${index == selectPhase && 'selected'} ${phase.status !== 1 && 'locked'}`}
+                                            style={{ border: `1px solid ${phaseConfig[index].color}`, boxShadow: `3px 3px 0px 0px ${phaseConfig[index].color}` }}
+                                            onTouchStart={() => {
+                                                document.body.style.setProperty('--phase-tab-color', phaseConfig[index].extra_color);
+                                            }}
+                                            onMouseDown={() => {
+                                                document.body.style.setProperty('--phase-tab-color', phaseConfig[index].extra_color);
+                                            }}
                                             onClick={() => {
                                                 if (index == selectPhase) return;
                                                 setSelectPhase(index);
                                                 setSelectCategory(phases[index].categories[0]._id);
                                                 setCurrCategory(phases[index].categories[0]);
                                             }}>
-                                            <div className="transition name">{phase.name}</div>
+                                            <div className="transition name" style={{ color: phaseConfig[index].color }}>{phase.name}</div>
                                             {phase.status !== 1 ? (
                                                 <div className="status-tag locked-tag">Locked</div>
                                             ) : (
-                                                <div className="status-tag left-tag" style={{color: phaseLefts[index]?.countdownColor}}>{phaseLefts[index]?.countdownStr}</div>
+                                                <div
+                                                    className="status-tag left-tag flex-center"
+                                                    style={{ background: phaseConfig[index].color }}>
+                                                    {NacpPhaseLeftTime()}
+                                                    {phaseLefts[index]?.countdownStr}
+                                                </div>
                                             )}
                                         </div>
                                     );
                                 })}
                             </div>
 
-                            <div className={`nacp-camera-content transition ${isFold && 'fold'}`}>
+                            <div ref={cameraContentRef} id="nacp-camera-content" className={`nacp-camera-content transition ${isFold && 'fold'}`}>
                                 {selectedAssets.length > 0 ? (
                                     <div className={`nacp-assets transition ${(selectPhase == 1 && viewScale) && 'scale'}`}>
                                         {selectedAssets.map((asset, index) => {
@@ -888,28 +962,40 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 <div className="btn-groups flex-align">
                                     <button
                                         disabled={phases[selectPhase].status !== 1 || !canReset}
-                                        className="cursor btn randomize-btn"
+                                        className="cursor btn randomize-btn flex-center"
+                                        style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
                                         onClick={() => {
                                             fnReset();
-                                        }}>Reset</button>
+                                        }}>
+                                        <img src={ResetIcon} alt="ResetIcon" />
+                                    </button>
                                     <button
                                         disabled={phases[selectPhase].status !== 1}
-                                        className="cursor btn randomize-btn"
+                                        className="cursor btn randomize-btn flex-center"
+                                        style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
                                         onClick={() => {
                                             fnRandomizeAssets();
-                                        }}>Random</button>
+                                        }}>
+                                        <img src={RandomIcon} alt="RandomIcon" />
+                                    </button>
                                     <button
                                         disabled={phases[selectPhase].status !== 1 || (assetsHistoryStack.length <= 1 || historyIndex == 0)}
-                                        className={`cursor btn undo-btn`}
+                                        className={`cursor btn undo-btn flex-center`}
+                                        style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
                                         onClick={() => {
                                             fnOperateBack();
-                                        }}>Undo</button>
+                                        }}>
+                                        <img src={UndoIcon} alt="UndoIcon" />
+                                    </button>
                                     <button
                                         disabled={phases[selectPhase].status !== 1 || (!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1)}
-                                        className={`cursor btn redo-btn`}
+                                        className={`cursor btn redo-btn flex-center`}
+                                        style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
                                         onClick={() => {
                                             fnOperateNext();
-                                        }}>Redo</button>
+                                        }}>
+                                        <img src={RedoIcon} alt="RedoIcon" />
+                                    </button>
                                 </div>
                             </div>
                             <div className={`phase-categories ${isFold && 'fold'}`}>
@@ -937,7 +1023,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                         );
                                     })}
                                 </div>
-                                {state.windowWidth <= 750 && (
+                                {state.windowWidth <= 750 && isFold && (
                                     (currCategory.name == 'Mask' || currCategory.name == 'Suit') && (
                                         <div className="mask-suit-tip flex-align">
                                             {NacpCategoryIcons.get(currCategory?.name)}
@@ -991,7 +1077,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                 <div className="assets flex-align" ref={assetsRef}>
                                     {currCategory.name !== 'Skin' && (
                                         <div
-                                            className={`asset-item cursor ${isCollectionOpen && 'opacity'}`}
+                                            className={`asset-item cursor flex-center ${isCollectionOpen && 'opacity'}`}
                                             onClick={() => {
                                                 if (isCollectionOpen) {
                                                     mCollectionAsset && openOrCloseCollection(mCollectionAsset);
@@ -999,7 +1085,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                 }
                                                 // 取消当前选择
                                                 chooseAsset(undefined);
-                                            }}></div>
+                                            }}>
+                                            <img src={ClearIcon} alt="ClearIcon" />
+                                        </div>
                                     )}
                                     {assets.map((asset, index) => {
                                         let devStyle = {}
@@ -1045,20 +1133,56 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
                                                     openOrCloseCollection(asset);
                                                 }}>
-                                                <div className="asset-img-cover">
-                                                    <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
-                                                    {selected && (
-                                                        <img src={EquipSelected} className="equip-selected" alt="" />
-                                                    )}
-                                                    {asset.access_type == 'Special' && (
-                                                        <div className="special-asset-count flex-align" style={{ background: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
-                                                            {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
-                                                            {asset.task_type != 'Bonelist' && (
+
+                                                {asset.can_use ? (
+                                                    // <NacpCategoryAssetItem filters={filters} asset={asset} selected={selected}></NacpCategoryAssetItem>
+                                                    <div className="asset-img-cover">
+                                                        <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img transition" />
+                                                        {selected && (
+                                                            <div className="equip-selected">
+                                                                {NacpAssetSelected(phaseConfig[selectPhase].color)}
+                                                            </div>
+                                                        )}
+                                                        {asset.access_type == 'Special' && (
+                                                            <div className="special-asset-count flex-align" style={{ color: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
+                                                                {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
+                                                                {state.windowWidth > 750 && (
+                                                                    <div className="special-text">{`${NacpSpecialAssetIcons.get(asset.task_type || '')?.text}`}</div>
+                                                                )}
                                                                 <div className="text">{`x${selected ? (asset.count || 0) - 1 : asset.count}`}</div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <Tooltip
+                                                        overlayClassName="nacp-category-asset-tooltip"
+                                                        color="#506077"
+                                                        placement="top"
+                                                        title="You don’t have this SagaOnly asset, or all of this SagaOnly asset are being used by other NACPs"
+                                                        mouseLeaveDelay={3}
+                                                        trigger={['hover', 'click']}
+                                                    >
+                                                        {/* <NacpCategoryAssetItem filters={filters} asset={asset} selected={selected}></NacpCategoryAssetItem> */}
+                                                        <div className="asset-img-cover">
+                                                            <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
+                                                            {selected && (
+                                                                <div className="equip-selected">
+                                                                    {NacpAssetSelected(phaseConfig[selectPhase].color)}
+                                                                </div>
+                                                            )}
+                                                            {asset.access_type == 'Special' && (
+                                                                <div className="special-asset-count flex-align" style={{ color: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
+                                                                    {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
+                                                                    {state.windowWidth > 750 && (
+                                                                        <div className="special-text">{`${NacpSpecialAssetIcons.get(asset.task_type || '')?.text}`}</div>
+                                                                    )}
+                                                                    <div className="text">{`x${selected ? (asset.count || 0) - 1 : asset.count}`}</div>
+                                                                </div>
                                                             )}
                                                         </div>
-                                                    )}
-                                                </div>
+                                                    </Tooltip>
+                                                )}
+
                                                 {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (
                                                     <div
                                                         className={`asset-collection ${selected && 'selected'}`}
@@ -1081,7 +1205,9 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                                         <div className="collection-img-cover">
                                                                             <img src={_asset.thumb_url} alt="CollectionImg" className="collection-img transition" />
                                                                             {_asset._id == currCategory.selected?._id && (
-                                                                                <img src={EquipSelected} className="equip-selected" alt="" />
+                                                                                <div className="equip-selected">
+                                                                                    {NacpAssetSelected(phaseConfig[selectPhase].color)}
+                                                                                </div>
                                                                             )}
                                                                             {_asset.access_type == 'Special' && (
                                                                                 <img src={SpecialIcon} className="special-icon" alt="SpecialIcon" />
@@ -1142,7 +1268,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             <OperatePopup
                 show={showPhaseEndTip}
                 closeText="OKAY"
-                hideConfirm={activePhase >= 2}
+                hideConfirm={true}
                 confirmText={`GO TO PHASE ${activePhase + 2} EDITOR`}
                 content={`Phase ${activePhase + 1} has ended.`}
                 close={() => {

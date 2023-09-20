@@ -1,6 +1,6 @@
 .nacp-ape-detail-container {
   z-index: 999;
-  
+
   .nft-card-detail {
     width: 1000px;
     display: flex;
@@ -9,7 +9,7 @@
       position: relative;
       width: 500px;
       height: 500px;
-      background: #FFFFFF;
+      background: #ffffff;
 
       .cover-image {
         width: 100%;
@@ -46,7 +46,8 @@
     .detail-info {
       width: 500px;
       height: 500px;
-      background: #454f5c;
+      backdrop-filter: blur(5px);
+      background: rgba(73, 77, 94, 0.65);
 
       &::-webkit-scrollbar {
         width: 0;
@@ -150,7 +151,6 @@
           justify-content: end;
 
           .btn {
-            width: 140px;
             margin-left: 8px;
             padding: 7px 12px;
             border-radius: 6px;
@@ -324,10 +324,6 @@
 
             .btn {
               flex: 1;
-
-              &.edit {
-                margin-left: 0;
-              }
 
               &.opensea {
                 flex: unset;

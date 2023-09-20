@@ -79,6 +79,18 @@ export default function NacpApeDetail(props: {
                             </div>
                         </div>
                         <div className="btn-groups">
+                            {setShowProfileImage && (
+                                <div
+                                    className="btn cursor profile"
+                                    onClick={() => {
+                                        // 设置头像
+                                        setShowProfileImage(nacp.id);
+                                    }}>
+                                    <img src={ProfileIcon} alt="ProfileIcon" />
+                                    SET AS PFP
+                                </div>
+                            )}
+
                             {editNacp && phaseIStart && (
                                 <div
                                     className="btn cursor edit"
@@ -89,18 +101,6 @@ export default function NacpApeDetail(props: {
                                 >
                                     <img src={EditIcon} alt="EditIcon" />
                                     EDIT
-                                </div>
-                            )}
-
-                            {setShowProfileImage && (
-                                <div
-                                    className="btn cursor profile"
-                                    onClick={() => {
-                                        // 设置头像
-                                        setShowProfileImage(nacp.id);
-                                    }}>
-                                    <img src={ProfileIcon} alt="ProfileIcon" />
-                                    SET AS PFP
                                 </div>
                             )}
 

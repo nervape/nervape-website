@@ -49,6 +49,11 @@ export class NacpPhase {
     categories: NacpCategory[] = [];
 }
 
+export class NacpPhaseConfig {
+    color: string = '';
+    extra_color: string = '';
+}
+
 export class PhaseLeft {
     countdown: number = 0;
     countdownStr: string = '';
@@ -59,6 +64,7 @@ export class NacpCategory {
     name: string = "";
     _id: string = "";
     excludes?: NacpCategory[];
+    excludes_assets?: NacpAsset[];
     level: number = 0;
     headwear_back_level: number = 0; // 如果是 headwear ,back的层级
     eyewear_back_level: number = 0; // 如果是 eyewear ,back的层级
@@ -82,6 +88,7 @@ export class NacpAsset {
     is_headwear_back?: boolean;
     is_eyewear_back?: boolean;
     excludes?: NacpAsset[];
+    excludes_categories?: NacpCategory[];
     sort?: number = 0;
     level?: number = 0;
     description?: string = "";
