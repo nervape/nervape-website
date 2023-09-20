@@ -1173,7 +1173,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                                             {asset.access_type == 'Special' && (
                                                                 <div className="special-asset-count flex-align" style={{ color: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
                                                                     {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
-                                                                    {state.windowWidth > 750 && (
+                                                                    {state.windowWidth > 1000 && (
                                                                         <div className="special-text">{`${NacpSpecialAssetIcons.get(asset.task_type || '')?.text}`}</div>
                                                                     )}
                                                                     <div className="text">{`x${selected ? (asset.count || 0) - 1 : asset.count}`}</div>
