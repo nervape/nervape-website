@@ -1118,6 +1118,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                                             <div
                                                 key={index}
                                                 className={`cursor asset-item ${selected && 'selected'} ${!asset.can_use && 'cant-use'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
+                                                style={{border: `4px solid ${phaseConfig[selectPhase].color}`}}
                                                 onClick={() => {
                                                     if (isCollectionOpen && !asset.show_collection) {
                                                         mCollectionAsset && openOrCloseCollection(mCollectionAsset);
