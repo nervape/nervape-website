@@ -2,11 +2,11 @@
   border: 1px solid rgba(180, 188, 208, 0.5);
   border-radius: 20px;
   letter-spacing: -0.05em;
-  margin-bottom: 24px;
 
   .user-avatar {
     margin: 8px;
     border-radius: 16px;
+    align-self: flex-start;
 
     img {
       width: 166px;
@@ -76,6 +76,16 @@
           padding: 4px;
         }
       }
+
+      .fold-icon {
+        flex: 1;
+        text-align: right;
+
+        img {
+          width: 32px;
+          height: 32px;
+        }
+      }
     }
   }
 
@@ -118,11 +128,119 @@
     }
   }
 
-  .bone-list-points {
-    margin: 16px;
+  .userinfo-c {
+    .bone-list-points {
+      margin: 16px;
 
-    .bone-item {
-      flex: 1;
+      .bone-item {
+        flex: 1;
+
+        .title {
+          font-style: italic;
+          font-weight: 800;
+          font-size: 12px;
+          line-height: 14px;
+          color: #b4bcd0;
+          padding-bottom: 12px;
+        }
+      }
+
+      .bone-list {
+        border-right: 1px solid rgba(180, 188, 208, 0.25);
+        padding-right: 24px;
+
+        .title {
+          .title-left {
+            align-self: flex-start;
+          }
+
+          .record {
+            flex: 1;
+            text-align: right;
+            font-weight: 400;
+            text-decoration-line: underline;
+            color: rgba(134, 139, 155, 0.75);
+          }
+        }
+
+        .nacp,
+        .nft-3d {
+          color: #ffffff;
+          font-size: 12px;
+          line-height: 14px;
+
+          .name {
+            flex: 1;
+          }
+
+          .icon {
+            width: 14px;
+            height: 14px;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+
+        .nacp {
+          padding-bottom: 8px;
+          border-bottom: 1px dashed rgba(180, 188, 208, 0.25);
+        }
+
+        .nft-3d {
+          padding-top: 8px;
+        }
+      }
+
+      .bone-points {
+        margin-left: 24px;
+        height: 100%;
+
+        .title {
+          .title-left {
+            align-self: flex-start;
+          }
+
+          .record {
+            flex: 1;
+            text-align: right;
+            font-weight: 400;
+            text-decoration-line: underline;
+            color: rgba(134, 139, 155, 0.75);
+          }
+        }
+
+        .points {
+          color: #3e3e3e;
+          text-align: right;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 29px;
+        }
+
+        .daily-add {
+          padding-top: 4px;
+          text-align: right;
+          color: rgba(62, 62, 62, 0.5);
+          font-size: 12px;
+          line-height: 14px;
+        }
+
+        .coming-soon {
+          color: #ffffff;
+          font-size: 16px;
+          line-height: 44px;
+          height: 44px;
+        }
+      }
+    }
+
+    .referrer-item {
+      margin: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(180, 188, 208, 0.25);
 
       .title {
         font-style: italic;
@@ -131,14 +249,7 @@
         line-height: 14px;
         color: #b4bcd0;
         padding-bottom: 12px;
-      }
-    }
 
-    .bone-list {
-      border-right: 1px solid rgba(180, 188, 208, 0.25);
-      padding-right: 24px;
-
-      .title {
         .title-left {
           align-self: flex-start;
         }
@@ -147,81 +258,26 @@
           flex: 1;
           text-align: right;
           font-weight: 400;
-          text-decoration-line: underline;
           color: rgba(134, 139, 155, 0.75);
         }
       }
 
-      .nacp,
-      .nft-3d {
-        color: #ffffff;
+      .code-copy {
+        width: fit-content;
+        color: #fff;
         font-size: 12px;
-        line-height: 14px;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: -0.6px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        margin-top: 8px;
 
-        .name {
-          flex: 1;
+        img {
+          width: 12px;
+          margin-left: 8px;
         }
-
-        .icon {
-          width: 14px;
-          height: 14px;
-
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-
-      .nacp {
-        padding-bottom: 8px;
-        border-bottom: 1px dashed rgba(180, 188, 208, 0.25);
-      }
-
-      .nft-3d {
-        padding-top: 8px;
-      }
-    }
-
-    .bone-points {
-      margin-left: 24px;
-      height: 100%;
-
-      .title {
-        .title-left {
-          align-self: flex-start;
-        }
-
-        .record {
-          flex: 1;
-          text-align: right;
-          font-weight: 400;
-          text-decoration-line: underline;
-          color: rgba(134, 139, 155, 0.75);
-        }
-      }
-
-      .points {
-        color: #3e3e3e;
-        text-align: right;
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 29px;
-      }
-
-      .daily-add {
-        padding-top: 4px;
-        text-align: right;
-        color: rgba(62, 62, 62, 0.5);
-        font-size: 12px;
-        line-height: 14px;
-      }
-
-      .coming-soon {
-        color: #ffffff;
-        font-size: 16px;
-        line-height: 44px;
-        height: 44px;
       }
     }
   }
@@ -230,6 +286,7 @@
 @media screen and (max-width: 750px) {
   .user-center-content {
     height: auto;
+    margin-bottom: 24px;
 
     &.m {
       border: unset;
@@ -281,7 +338,7 @@
       .bone-list-points {
         margin: 16px 0 0;
         padding-bottom: 16px;
-        border-bottom: 1px solid rgba(180, 188, 208, 0.5);
+        border-bottom: 1px solid rgba(180, 188, 208, 0.25);
 
         .bone-item {
           display: flex;
@@ -301,6 +358,51 @@
           margin-left: 16px;
         }
       }
+
+      .referrer-item {
+        margin: 0;
+        padding-bottom: 16px;
+        border-top: unset;
+        border-bottom: 1px solid rgba(180, 188, 208, 0.5);
+  
+        .title {
+          font-style: italic;
+          font-weight: 800;
+          font-size: 12px;
+          line-height: 14px;
+          color: #b4bcd0;
+          padding-bottom: 12px;
+  
+          .title-left {
+            align-self: flex-start;
+          }
+  
+          .record {
+            flex: 1;
+            text-align: right;
+            font-weight: 400;
+            color: rgba(134, 139, 155, 0.75);
+          }
+        }
+  
+        .code-copy {
+          width: fit-content;
+          color: #fff;
+          font-size: 12px;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: -0.6px;
+          padding: 8px 12px;
+          border-radius: 6px;
+          background: rgba(255, 255, 255, 0.1);
+          margin-top: 8px;
+  
+          img {
+            width: 12px;
+            margin-left: 8px;
+          }
+        }
+      }
     }
   }
 
@@ -311,7 +413,7 @@
 
 @media screen and (min-width: 750px) {
   .wallet-header-container {
-    height: calc(208px + var(--wallet-padding));
+    // height: var(--header-height);
     position: sticky;
     z-index: 1;
     top: var(--extra-padding);
@@ -336,8 +438,6 @@
     }
 
     &.fold {
-      height: calc(102px + var(--wallet-padding));
-
       .user-center-content {
         .user-avatar {
           img {
@@ -356,7 +456,6 @@
     }
 
     &.extra-switch-chain.hide-header {
-      height: calc(118px + var(--wallet-padding));
       top: calc(var(--extra-padding) - 16px);
 
       .visible-header-line {

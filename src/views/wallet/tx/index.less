@@ -2,21 +2,21 @@
   letter-spacing: -0.05em;
 
   .wallet-tx-header {
-    background: #17171E;
+    background: #17171e;
     padding-bottom: 16px;
 
     .tx-title {
       font-weight: 800;
       font-size: 24px;
       line-height: 29px;
-      color: #FFFFFF;
+      color: #ffffff;
     }
   }
 
   .wallet-tx-content {
     .tx-tabs,
     .tx-histories {
-      background: #17171E;
+      background: #17171e;
 
       .tx-tab,
       .history-item {
@@ -38,7 +38,7 @@
 
       .tx-tab {
         text-align: center;
-        color: #B4BCD0;
+        color: #b4bcd0;
         font-weight: 700;
         font-size: 12px;
         line-height: 14px;
@@ -68,7 +68,7 @@
           &.index,
           &.date,
           &.number a {
-            color: #FFFFFF;
+            color: #ffffff;
             font-size: 12px;
             line-height: 14px;
             transition: all 0.3s;
@@ -98,7 +98,7 @@
             align-items: center;
 
             svg {
-              fill: #FFFFFF;
+              fill: #ffffff;
               transition: all 0.3s;
             }
 
@@ -154,26 +154,25 @@
 
 @media screen and (min-width: 750px) {
   .wallet-tx-container {
-    &.fold {
-      .wallet-tx-header {
-        top: calc(102px + var(--wallet-padding) + var(--extra-padding));
-      }
-
-      .wallet-tx-content {
-        .tx-tabs {
-          top: calc(147px + var(--wallet-padding) + var(--extra-padding));
-        }
-      }
-    }
     .wallet-tx-header {
-      position: sticky;
-      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
+      // position: sticky;
+      top: calc(
+        var(--header-height) + var(--wallet-padding) + var(--extra-padding)
+      );
     }
 
     .wallet-tx-content {
       .tx-tabs {
-        position: sticky;
-        top: calc(253px + var(--wallet-padding) + var(--extra-padding));
+        // position: sticky;
+        top: calc(
+          var(--header-height) + 45px + var(--wallet-padding) +
+            var(--extra-padding)
+        );
+      }
+
+      .tx-histories {
+        height: calc(100vh - 64px - 45px - 31px - var(--header-height));
+        overflow-y: scroll;
       }
     }
   }
