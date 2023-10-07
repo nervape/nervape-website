@@ -325,7 +325,7 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnNacpSneakPeek() {
     const url = `${this.baseUrl}/pfp-asset/website/sneak-peeks`;
     const res = await axios.get(url);
@@ -361,10 +361,14 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnDeleteUserProfile(address: string, nacp: number) {
     const url = `${this.baseUrl}/nacp/profile/${address}/${nacp}`;
-    const res = await axios.post(url);
+    const res = await axios.post(url, {}, {
+      headers: {
+        Authorization: 'Bearer ' + (localStorage.getItem('front-token') ? JSON.parse(localStorage.getItem('front-token') || '').access_token : '')
+      }
+    });
     return this._fnDealResponse(res, url);
   }
 
@@ -384,6 +388,28 @@ class NervapeApi {
     const url = `${this.baseUrl}/nacp/website/search`;
     const res = await axios.post(url, { tokenId, assets });
     return this._fnDealResponse(res, url);
+  }
+
+  public async fnFrontLoginNonce() {
+    const url = `${this.baseUrl}/auth/front/login/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnFrontLoginVerify(message: string, signature: string, address: string) {
+    const url = `${this.baseUrl}/auth/front/login/verify`;
+    const res = await axios.post(url, JSON.stringify({
+      message, signature,
+      username: address,
+      password: address
+    }), {
+      headers: { 'content-type': 'application/json' },
+      withCredentials: true
+    });
+
+    return this._fnDealSessionResponse(res, url);
   }
 }
 

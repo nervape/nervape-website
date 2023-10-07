@@ -19,6 +19,12 @@ export type WALLET_CONNECT = {
     expiredAt?: number;
 };
 
+export type WALLET_FRONT_TOKEN = {
+    address: string;
+    access_token: string;
+    expiresIn: number;
+}
+
 export const IconMap = new Map<string, string>();
 IconMap.set('Unipass', UnipassIcon);
 IconMap.set('WalletConnect', WalletConnectIcon);

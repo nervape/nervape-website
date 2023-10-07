@@ -3,6 +3,18 @@ import './index.less';
 import { NacpPhase, NacpSetting } from "../../../../nervape/nacp";
 import { updateBodyOverflow } from "../../../../utils/utils";
 import useIntervalAsync from "../../../../hooks/useIntervalAsync";
+import BInactiveIcon from '../../../../assets/wallet/nacp/icon/b_inactive.svg';
+import BActivite from '../../../../assets/wallet/nacp/icon/b_active.svg';
+import PActivite from '../../../../assets/wallet/nacp/icon/p_active.svg';
+import PInactivite from '../../../../assets/wallet/nacp/icon/p_inactive.svg';
+import Phase1Active from '../../../../assets/wallet/nacp/icon/phase1_active.svg';
+import Phase1Inactive from '../../../../assets/wallet/nacp/icon/phase1_inactive.svg';
+import Phase2Active from '../../../../assets/wallet/nacp/icon/phase2_active.svg';
+import Phase2Inactive from '../../../../assets/wallet/nacp/icon/phase2_inactive.svg';
+import Phase3Active from '../../../../assets/wallet/nacp/icon/phase3_active.svg';
+import Phase3Inactive from '../../../../assets/wallet/nacp/icon/phase3_inactive.svg';
+import WhatIcon from '../../../../assets/wallet/nacp/icon/what.svg';
+import EndActive from '../../../../assets/wallet/nacp/icon/end_active.svg';
 
 export class MintButtobObj {
     title: string = '';
@@ -56,6 +68,8 @@ export default function MintButton(props: {
                     }
                 } else if (now >= nacpSetting.public_start_time && now <= nacpSetting.public_end_time) {
                     setCountdown(now - nacpSetting.public_end_time);
+                } else if (now < nacpSetting.bonelist_start_time && now > nacpSetting.bonelist_start_time - 14 * 24 * 60 * 60 * 1000) {
+                    setCountdown(now - nacpSetting.bonelist_start_time);
                 } else {
                     setCountdown(now - nacpSetting.bonelist_start_time);
                     setMintButtonObj({ ...mintButtonObj, countdownStr: '', countdown: '' });
@@ -103,10 +117,12 @@ export default function MintButton(props: {
             setCountdownColor('#3BD46F');
             setMintButtonObj({ ...mintButtonObj, countdown: mintButtonObj.countdownStr?.replace('{countdown}', `${Math.ceil(abs / (24 * 60 * 60 * 1000))} Days`) });
         }
-
+        console.log(Math.floor(abs / 1000));
         if (Math.floor(abs / 1000) == 0) {
+            console.log('-------ape-------000', updateText);
             setTimeout(() => {
                 setUpdateText(updateText + 1);
+                console.log('-------ape-------000', updateText);
 
                 if (isNeedUpdate) {
                     initUnMintApes && initUnMintApes();
@@ -134,18 +150,12 @@ export default function MintButton(props: {
         if (now < nacpSetting.bonelist_start_time) {
             // mint 未开始
             setMintButtonObj({
-                title: '',
-                desc: (
-                    <div>
-                        <strong style={{fontWeight: 800}}>Bonelist Mint</strong> will start {new Date(nacpSetting.bonelist_start_time).toLocaleString("en-US")}!
-                        <br />
-                        <strong style={{fontWeight: 800}}>Public Mint</strong> will start {new Date(nacpSetting.public_start_time).toLocaleString("en-US")}!
-                        <br />
-                        Don’t miss out!
-                    </div>
-                ),
+                title: 'BONELIST MINT STARTING SOON',
+                desc:'Bonelist mint starting soon',
                 showMintButton: false,
                 hide: false,
+                countdownStr: `Bonelist mint starts in {countdown}`,
+                icon: BInactiveIcon
             });
         } else if (now >= nacpSetting.bonelist_start_time && now <= nacpSetting.bonelist_end_time) {
             if (isBonelist) {
@@ -158,7 +168,8 @@ export default function MintButton(props: {
                     showMintButton: true,
                     hide: false,
                     buttonText: isMinting ? 'MINTING...' : 'MINT',
-                    countdownStr: `{countdown} Left`
+                    countdownStr: `{countdown} Left`,
+                    icon: BActivite
                 });
             } else {
                 setMintButtonObj({
@@ -167,6 +178,7 @@ export default function MintButton(props: {
                     countdownStr: 'Public Mint Starts in {countdown}',
                     showMintButton: false,
                     hide: false,
+                    icon: PInactivite
                 });
             }
         } else if (now >= nacpSetting.public_start_time && now <= nacpSetting.public_end_time) {
@@ -178,7 +190,8 @@ export default function MintButton(props: {
                 showMintButton: true,
                 hide: false,
                 buttonText: isMinting ? 'MINTING...' : 'MINT',
-                countdownStr: '{countdown} Left'
+                countdownStr: '{countdown} Left',
+                icon: PActivite
             });
         } else {
             setMintButtonObj({ ...mintButtonObj, hide: true });
@@ -195,32 +208,38 @@ export default function MintButton(props: {
         const phase2 = phasesSetting[1];
         const phase3 = phasesSetting[2];
 
+        console.log('-------ape-------', updateText)
         if (now < phase1.start_date) {
             setMintButtonObj({
                 title: 'YOU CAN’T EDIT YOUR NACPs JUST YET!',
                 desc: `Phase 1 (Dress Up Your Ape) starts ${new Date(phase1.start_date).toLocaleString("en-US")}. Once phase 1 starts, you will be able to start editing your NACPs.`,
                 showMintButton: false,
                 hide: false,
-                countdownStr: 'Phase 1 Starts in {countdown}'
+                countdownStr: 'Phase 1 Starts in {countdown}',
+                icon: Phase1Inactive
             });
         } else {
-            let title: string, desc: string = '', countdownStr = '';
+            let title: string, desc: string = '', countdownStr = '', icon: string = '';
 
             if (now > phase1.start_date && now < phase1.end_date) {
-                title = `PHASE 1 - “DRESS UP YOUR APE” HAS STARTED!`
-                desc = `Phase 1 - Dress Up Your Ape, ends ${new Date(phase1.end_date).toLocaleString("en-US")}. During this phase you will be able to select your ape’s base skin, tattoo, upper and lower body wear, suit/costume. Get your ape all dressed up!`
+                title = `PHASE 1 - “DRESS UP YOUR APE” HAS STARTED!`;
+                desc = `Phase 1 - Dress Up Your Ape, ends ${new Date(phase1.end_date).toLocaleString("en-US")}. During this phase you will be able to select your ape’s base skin, tattoo, upper and lower body wear, suit/costume. Get your ape all dressed up!`;
                 countdownStr = `{countdown} Left`;
+                icon = Phase1Active;
             } else if (now > phase2.start_date && now < phase2.end_date) {
-                title = `PHASE 2 -  “STYLE UP YOUR HEAD” HAS STARTED!`
-                desc = `Phase 2 - Style Up Your Head, ends ${new Date(phase2.end_date).toLocaleString("en-US")}. During this phase you will be able to select hats, masks, glasses, and earwear. Give your ape’s head some style!`
+                title = `PHASE 2 -  “STYLE UP YOUR HEAD” HAS STARTED!`;
+                desc = `Phase 2 - Style Up Your Head, ends ${new Date(phase2.end_date).toLocaleString("en-US")}. During this phase you will be able to select hats, masks, glasses, and earwear. Give your ape’s head some style!`;
                 countdownStr = `{countdown} Left`;
+                icon = Phase2Active;
             } else if (now > phase3.start_date && now < phase3.end_date) {
-                title = `PHASE 3 - “MAKE YOUR APE SPECIAL” HAS STARTED!`
-                desc = `Phase 3 - Make Your Ape Special, ends ${new Date(phase3.end_date).toLocaleString("en-US")}. During this phase you will be able to select companions, handheld items, neckwear, and backgrounds. This is where you can make your ape extra special!`
+                title = `PHASE 3 - “MAKE YOUR APE SPECIAL” HAS STARTED!`;
+                desc = `Phase 3 - Make Your Ape Special, ends ${new Date(phase3.end_date).toLocaleString("en-US")}. During this phase you will be able to select companions, handheld items, neckwear, and backgrounds. This is where you can make your ape extra special!`;
                 countdownStr = `{countdown} Left`;
+                icon = Phase3Active;
             } else {
-                title = ''
-                desc = 'Wow look at the awesome ape(s) you’ve created! Congratulations! All phases have ended and you won’t be able to edit until a new phase is released. Stay tuned!'
+                title = 'ALL PHASES ENDED';
+                desc = 'Wow look at the awesome ape(s) you’ve created! Congratulations! All phases have ended and you won’t be able to edit until a new phase is released. Stay tuned!';
+                icon = EndActive;
             }
             setMintButtonObj({
                 title,
@@ -228,6 +247,7 @@ export default function MintButton(props: {
                 countdownStr,
                 hide: false,
                 showMintButton: false,
+                icon
             });
         }
 
@@ -244,6 +264,7 @@ export default function MintButton(props: {
             desc: `It seems you missed the public mint. It’s ok, my fellow ape! You can still buy NACPs from Opensea and participate in the upcoming phases. Don’t worry!`,
             showMintButton: false,
             hide: false,
+            icon: WhatIcon
         });
 
     }, [type, isMintedSuccess, hasMinted, isTokenSuccess, updateText]);
@@ -259,7 +280,11 @@ export default function MintButton(props: {
     return (
         <div className={`mint-button-content ${isMinting && 'minting'}`}>
             <div className={`mint-content flex-align`}>
-                <div className="mint-icon"></div>
+                <div className="mint-icon">
+                    {mintButtonObj.icon && (
+                        <img src={mintButtonObj.icon} alt="" />
+                    )}
+                </div>
                 <div className="mint-desc">
                     {mintButtonObj.title && (
                         <div className="mint-tip-title">{mintButtonObj.title}</div>

@@ -33,7 +33,8 @@ export default defineConfig(({ mode }) => {
         os: require.resolve('os-browserify/browser'),
         process: require.resolve('process/browser'),
         stream: require.resolve('stream-browserify'),
-        vm: require.resolve('vm-browserify')
+        vm: require.resolve('vm-browserify'),
+        'react-native': 'react-native-web'
       }
     },
     build: {

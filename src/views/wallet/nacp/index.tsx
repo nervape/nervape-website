@@ -584,17 +584,32 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                                 </div>
                             )
                         }
-                        {isMintEnd && tokenIds && !(tokenIds as any).length && (
-                            <MintButton
-                                nacpSetting={nacpSetting}
-                                isBonelist={isBonelist}
-                                isMinting={isMinting}
-                                isMintedSuccess={isMintedSuccess}
-                                hasMinted={hasMinted}
-                                phasesSetting={phasesSetting}
-                                isTokenSuccess={isTokenSuccess}
-                                initUnMintApes={reloadData}
-                                type="end"></MintButton>
+                        {isMintEnd && !chainApes.length && (
+                            <>
+                                <MintButton
+                                    nacpSetting={nacpSetting}
+                                    isBonelist={isBonelist}
+                                    isMinting={isMinting}
+                                    isMintedSuccess={isMintedSuccess}
+                                    hasMinted={hasMinted}
+                                    phasesSetting={phasesSetting}
+                                    isTokenSuccess={isTokenSuccess}
+                                    initUnMintApes={reloadData}
+                                    type="end"></MintButton>
+
+                                <div className="no-assets-content flex-center">
+                                    <div className="no-result">
+                                        <div className="cover-image">
+                                            <img src={NftEmptyIcon} alt="NftEmptyIcon" />
+                                        </div>
+                                        <div className="title">YOU DON’T HAVE ANY NACP</div>
+                                        <div className="tip">
+                                            You currently don’t have any NACP.You currently don’t have any NACP.You currently don’t have any NACP.You currently don’t have any NACP.
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+
                         )}
                     </div>
                 ) : (
@@ -640,8 +655,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 }}
                 phasesSetting={phasesSetting}
                 setShowProfileImage={(id: number) => {
-                    setShowProfileImage(true);
-                    setCurrentNacpId(id);
+                    nervapeApi.fnDeleteUserProfile(state.currentAddress, 1);
+                    // setShowProfileImage(true);
+                    // setCurrentNacpId(id);
                 }}
                 nacp={selectedNacp as NacpMetadata}></NacpApeDetail>
             <NacpEdit

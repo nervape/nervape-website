@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 import { Amount } from '@lay2/pw-core';
-import { goerli, useNetwork } from 'wagmi';
-import { DataContext, getWindowScrollTop, ownerOf } from '../../utils/utils';
+import { goerli, mainnet, useNetwork, useSignMessage } from 'wagmi';
+import { DataContext, getWindowScrollTop, ownerOf, showErrorNotification } from '../../utils/utils';
 import { TransferSuccess } from '../components/nft/nft';
-import { LoginWalletType } from '../../utils/Wallet';
+import { LoginWalletType, WALLET_FRONT_TOKEN } from '../../utils/Wallet';
 
 import { PoapItem, PoapWrapper } from '../../utils/poap';
 import { getNFTNameCoverImg, getPublishedPoaps, insertTransferCkbHistory } from '../../utils/api';
@@ -31,6 +31,7 @@ import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
 import InvitationClaim from "./invitation";
 import { CONFIG } from "../../utils/config";
+import { SiweMessage } from "siwe";
 
 export class WalletNavBar {
     name: string = "";
@@ -110,6 +111,72 @@ export default function WalletNewPage() {
         setNftCoverImages(res.data);
     }
 
+    async function fnCheckAddressLogin() {
+        let frontAccessToken: WALLET_FRONT_TOKEN = localStorage.getItem('front-token') ? JSON.parse(localStorage.getItem('front-token') || '') : {};
+
+        const now = new Date().getTime();
+
+        if (frontAccessToken.address && frontAccessToken.address == state.currentAddress && now < frontAccessToken.expiresIn) {
+            fnGetUserProfile();
+        } else {
+            localStorage.removeItem('front-token');
+
+            signInWithEthereum();
+        }
+    }
+
+    const domain = window.location.host;
+    const origin = window.location.origin;
+
+    const { signMessageAsync, error } = useSignMessage();
+    
+    const createSiweMessage = async (_address: string, statement: string) => {
+        const res = await nervapeApi.fnFrontLoginNonce();
+
+        const message = new SiweMessage({
+            domain,
+            address: _address,
+            statement,
+            uri: origin,
+            version: '1',
+            chainId: mainnet.id,
+            nonce: res.nonce
+        });
+
+        return {
+            message: message.prepareMessage(),
+        };
+    }
+
+    const signInWithEthereum = async () => {
+        setLoading(true);
+
+        try {
+            const { message } = await createSiweMessage(state.currentAddress, 'Sign in to Login Nervape.');
+
+            const signature = await signMessageAsync({ message });
+            const res = await nervapeApi.fnFrontLoginVerify(message, signature, state.currentAddress);
+            console.log('signInWithEthereum', res);
+            localStorage.setItem('front-token', JSON.stringify({
+                address: state.currentAddress,
+                access_token: res.data.access_token,
+                expiresIn: new Date().getTime() + res.data.expiresIn * 1000
+            }));
+            setLoading(false);
+            fnGetUserProfile();
+        } catch (err: any) {
+            console.log(err);
+
+            showErrorNotification({
+                message: 'Request Error',
+                description: err.message
+            });
+            setLoading(false);
+
+            signInWithEthereum();
+        }
+    }
+    
     useEffect(() => {
         if (!state.currentAddress) return;
         if (nftCoverImages.length) return;
@@ -117,10 +184,10 @@ export default function WalletNewPage() {
         fnNFTNameCoverImg();
     }, [state.currentAddress]);
 
-    useEffect(() => {
-        if (!state.currentAddress) return;
-        fnGetUserProfile();
-    }, [state.currentAddress]);
+    // useEffect(() => {
+    //     if (!state.currentAddress) return;
+    //     fnGetUserProfile();
+    // }, [state.currentAddress]);
 
     useEffect(() => {
         updateUnipassCkbBalance();
@@ -196,6 +263,10 @@ export default function WalletNewPage() {
 
         document.body.style.overflow = 'auto';
         getPoaps(state.currentAddress);
+        // 检查是否登录
+        setTimeout(() => {
+            fnCheckAddressLogin();
+        }, 500);
     }, [state.loginWalletType, state.currentAddress]);
 
     const searchBonelist = () => {
@@ -429,3 +500,4 @@ export default function WalletNewPage() {
         </div>
     );
 }
+
