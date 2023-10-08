@@ -27,6 +27,8 @@ export class MintButtobObj {
     hide?: boolean;
 }
 
+let updateText = 0;
+
 export default function MintButton(props: {
     nacpSetting: NacpSetting | undefined;
     phasesSetting: NacpPhase[];
@@ -46,7 +48,6 @@ export default function MintButton(props: {
     const [isNeedUpdate, setIsNeedUpdate] = useState(false);
     const [countdown, setCountdown] = useState(0);
     const [countdownColor, setCountdownColor] = useState('');
-    const [updateText, setUpdateText] = useState(0);
 
     useIntervalAsync(updateNacpStatus, 1000);
 
@@ -98,6 +99,18 @@ export default function MintButton(props: {
         }
     }
 
+    function windowFocus() {
+        updateText++;
+    }
+
+    useEffect(() => {
+        window.addEventListener('focus', windowFocus);
+
+        return () => {
+            window.removeEventListener('focus', windowFocus)
+        }
+    }, []);
+
     useEffect(() => {
         const abs = Math.abs(countdown);
 
@@ -117,12 +130,10 @@ export default function MintButton(props: {
             setCountdownColor('#3BD46F');
             setMintButtonObj({ ...mintButtonObj, countdown: mintButtonObj.countdownStr?.replace('{countdown}', `${Math.ceil(abs / (24 * 60 * 60 * 1000))} Days`) });
         }
-        console.log(Math.floor(abs / 1000));
+
         if (Math.floor(abs / 1000) == 0) {
-            console.log('-------ape-------000', updateText);
             setTimeout(() => {
-                setUpdateText(updateText + 1);
-                console.log('-------ape-------000', updateText);
+                updateText++;
 
                 if (isNeedUpdate) {
                     initUnMintApes && initUnMintApes();
@@ -140,8 +151,6 @@ export default function MintButton(props: {
         if (!nacpSetting) return;
 
         const now = new Date().getTime();
-
-        console.log(updateText);
 
         if (now > nacpSetting.public_end_time) return;
         setMintStart(true);
@@ -203,12 +212,13 @@ export default function MintButton(props: {
         if (type != 'ape') return;
         if (!phasesSetting.length) return;
 
+        console.log(112);
+
         const now = new Date().getTime();
         const phase1 = phasesSetting[0];
         const phase2 = phasesSetting[1];
         const phase3 = phasesSetting[2];
 
-        console.log('-------ape-------', updateText)
         if (now < phase1.start_date) {
             setMintButtonObj({
                 title: 'YOU CAN’T EDIT YOUR NACPs JUST YET!',

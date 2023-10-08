@@ -260,7 +260,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             setShowSwitchChain(true);
             updateBodyOverflow(false);
         } else {
-            setLoading(false);
+            // setLoading(false);
             setShowSwitchChain(false);
             updateBodyOverflow(true);
         }
@@ -367,7 +367,6 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             // fnGetStorySpecialAsset(state.currentAddress);
             // 当前持有 Assets
             nervapeApi.fnGetUserAssets(state.currentAddress).then(res => {
-                console.log(res);
                 let _holdAssets: NacpAsset[] = [];
 
                 res.map((r: any) => {
