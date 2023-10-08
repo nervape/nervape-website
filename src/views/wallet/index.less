@@ -134,15 +134,15 @@ body {
     .wallet-home-container {
       .container {
         min-height: unset;
-        height: calc(100vh - 64px);
+        height: calc(100vh - var(--extra-padding) - var(--switch-height) - var(--padding-top));
         overflow-y: hidden;
 
         .wallet-section {
+          // padding-top: 24px;
           .wallet-navbar-content {
             // position: sticky;
             top: calc(
-              var(--header-height) + var(--wallet-padding) +
-                var(--extra-padding)
+              var(--header-height) + var(--header-top)
             );
           }
         }

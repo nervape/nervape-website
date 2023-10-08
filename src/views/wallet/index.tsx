@@ -73,8 +73,11 @@ export default function WalletNewPage() {
     }
 
     const setSwitchChain = (flag: boolean) => {
-        const _extra_padding = flag ? (state.windowWidth > 375 ? '60px' : '64px') : '0px'
+        const _extra_padding = flag ? '64px' : '0px'
         document.body.style.setProperty('--extra-padding', _extra_padding);
+        document.body.style.setProperty('--padding-top', flag ? '0px' : '64px');
+        document.body.style.setProperty('--header-top', flag ? '16px' : '0px');
+        document.body.style.setProperty('--switch-height', flag ? '44px' : '0px');
 
         dispatch({
             type: Types.SwitchChain,
