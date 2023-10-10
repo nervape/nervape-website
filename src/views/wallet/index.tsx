@@ -67,9 +67,10 @@ export default function WalletNewPage() {
     const [currNavbar, setCurrNavbar] = useState(-1);
     const [isBonelist, setIsBonelist] = useState(false);
 
-    const setLoading = (flag: boolean) => {
+    const setLoading = (flag: boolean, focus: boolean = false) => {
         dispatch({
-            type: flag ? Types.ShowLoading : Types.HideLoading
+            type: flag ? Types.ShowLoading : Types.HideLoading,
+            value: focus
         })
     }
 
@@ -162,8 +163,7 @@ export default function WalletNewPage() {
                 access_token: res.data.access_token,
                 expiresIn: new Date().getTime() + res.data.expiresIn * 1000
             }));
-            setLoading(false);
-            setLoading(false);
+            setLoading(false, true);
             fnGetUserProfile();
         } catch (err: any) {
             console.log(err);
@@ -292,6 +292,7 @@ export default function WalletNewPage() {
     async function fnGetUserProfile() {
         const res = await nervapeApi.fnGetUserProfile(state.currentAddress);
 
+        setLoading(false);
         if (res && res.nacp) {
             // 验证 tokenId 的持有者
             if (await ownerOf(res.nacp, state.currentAddress)) {

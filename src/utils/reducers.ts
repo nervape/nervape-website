@@ -101,6 +101,8 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             };
         case Types.HideLoading:
             updateBodyOverflow(true);
+            if (action.value == true) state.loadingNumber = 1;
+
             if (state.loadingNumber - 1 <= 0) {
                 return {
                     ...state,
