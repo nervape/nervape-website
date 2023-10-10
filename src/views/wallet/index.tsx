@@ -163,6 +163,7 @@ export default function WalletNewPage() {
                 expiresIn: new Date().getTime() + res.data.expiresIn * 1000
             }));
             setLoading(false);
+            setLoading(false);
             fnGetUserProfile();
         } catch (err: any) {
             console.log(err);
