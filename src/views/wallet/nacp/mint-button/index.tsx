@@ -160,7 +160,7 @@ export default function MintButton(props: {
             // mint 未开始
             setMintButtonObj({
                 title: 'BONELIST MINT STARTING SOON',
-                desc:'Bonelist mint starting soon',
+                desc:'The bonelist mint is almost here! Check back in the number of days listed above. We can’t wait to share NACP with you!',
                 showMintButton: false,
                 hide: false,
                 countdownStr: `Bonelist mint starts in {countdown}`,
@@ -248,7 +248,7 @@ export default function MintButton(props: {
                 icon = Phase3Active;
             } else {
                 title = 'ALL PHASES ENDED';
-                desc = 'Wow look at the awesome ape(s) you’ve created! Congratulations! All phases have ended and you won’t be able to edit until a new phase is released. Stay tuned!';
+                desc = 'All NACP phases have ended and you won’t be able to edit until a new phase is released. Till then, stay tuned! Thanks to all that joined us on this NACP journey.';
                 icon = EndActive;
             }
             setMintButtonObj({
