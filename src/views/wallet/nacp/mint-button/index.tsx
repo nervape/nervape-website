@@ -10,11 +10,11 @@ import PInactivite from '../../../../assets/wallet/nacp/icon/p_inactive.svg';
 import Phase1Active from '../../../../assets/wallet/nacp/icon/phase1_active.svg';
 import Phase1Inactive from '../../../../assets/wallet/nacp/icon/phase1_inactive.svg';
 import Phase2Active from '../../../../assets/wallet/nacp/icon/phase2_active.svg';
-import Phase2Inactive from '../../../../assets/wallet/nacp/icon/phase2_inactive.svg';
 import Phase3Active from '../../../../assets/wallet/nacp/icon/phase3_active.svg';
-import Phase3Inactive from '../../../../assets/wallet/nacp/icon/phase3_inactive.svg';
 import WhatIcon from '../../../../assets/wallet/nacp/icon/what.svg';
 import EndActive from '../../../../assets/wallet/nacp/icon/end_active.svg';
+import EndInactive from '../../../../assets/wallet/nacp/icon/end_inactive.svg';
+import SoonInactive from '../../../../assets/wallet/nacp/icon/soon_inactive.svg';
 
 export class MintButtobObj {
     title: string = '';
@@ -164,7 +164,7 @@ export default function MintButton(props: {
                 showMintButton: false,
                 hide: false,
                 countdownStr: `Bonelist mint starts in {countdown}`,
-                icon: BInactiveIcon
+                icon: SoonInactive
             });
         } else if (now >= nacpSetting.bonelist_start_time && now <= nacpSetting.bonelist_end_time) {
             if (isBonelist) {
@@ -274,7 +274,7 @@ export default function MintButton(props: {
             desc: `It seems you missed the public mint. It’s ok, my fellow ape! You can still buy NACPs from Opensea and participate in the upcoming phases. Don’t worry!`,
             showMintButton: false,
             hide: false,
-            icon: WhatIcon
+            icon: EndInactive
         });
 
     }, [type, isMintedSuccess, hasMinted, isTokenSuccess, updateText]);
