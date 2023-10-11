@@ -318,6 +318,7 @@ export default function MintButton(props: {
             )}
             {mintButtonObj.showMintButton && (
                 <button className="mint-btn cursor" onClick={() => {
+                    if (isMinting) return;
                     setShowMintTip && setShowMintTip(true);
                     updateBodyOverflow(false);
                 }}>{mintButtonObj.buttonText}</button>

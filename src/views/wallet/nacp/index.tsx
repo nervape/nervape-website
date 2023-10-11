@@ -654,9 +654,8 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                 }}
                 phasesSetting={phasesSetting}
                 setShowProfileImage={(id: number) => {
-                    nervapeApi.fnDeleteUserProfile(state.currentAddress, 1);
-                    // setShowProfileImage(true);
-                    // setCurrentNacpId(id);
+                    setShowProfileImage(true);
+                    setCurrentNacpId(id);
                 }}
                 nacp={selectedNacp as NacpMetadata}></NacpApeDetail>
             <NacpEdit
