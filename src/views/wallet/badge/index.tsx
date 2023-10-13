@@ -8,6 +8,7 @@ import { DataContext } from "../../../utils/utils";
 
 import OatIcon from '../../../assets/wallet/badge/oat.svg';
 import { NavTool } from "../../../route/navi-tool";
+import useDebounce from "../../../hooks/useDebounce";
 
 export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Function; isFold: boolean; }) {
     const { badges, setLoading, isFold } = props;
@@ -17,13 +18,17 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
     const [chapters, setChapters] = useState<ChapterList[]>([]);
     const [selectedStoryOat, setSelectedStoryOat] = useState<WalletStoryOat>();
 
+    const initDebounce = useDebounce(async () => {
+        setLoading(true);
+        fnGetChapters();
+    }, 100);
+
     const openGalxeUrl = (galxeCampaignId: string | undefined) => {
         if (!galxeCampaignId) return;
         window.open(`https://galxe.com/nervape/campaign/${galxeCampaignId}`);
     }
 
     async function fnGetChapters() {
-        setLoading(true);
         const res = await nervapeApi.fnGetChapters();
 
         await Promise.all(
@@ -45,11 +50,13 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
         );
 
         setChapters(res);
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
     }
 
     useEffect(() => {
-        fnGetChapters();
+        initDebounce();
     }, []);
 
     useEffect(() => {

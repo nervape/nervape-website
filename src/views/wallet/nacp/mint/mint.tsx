@@ -9,7 +9,7 @@ export default function MintTipPopup(props: any) {
         <div className={`mint-tip-popup-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
                 <div className="desc">
-                    This action will mint all 3 NACP apes according to your available spots.
+                    This action will mint all your available NACP spots.
                 </div>
                 <div className="btn-groups">
                     <button className="cancel btn" onClick={close}>

@@ -61,9 +61,15 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const { data: signer } = useSigner();
     const { chain } = useNetwork();
 
-    const debounce = useDebounce((flag: boolean) => {
-        fnGetNacpByTokenIds(flag);
+    const debounce = useDebounce(async (flag: boolean) => {
+        await fnGetNacpByTokenIds(flag);
+        setLoading(false);
     }, 1000);
+
+    const initDebounce = useDebounce(async () => {
+        fnGetNacpSetting();
+        fnPhasesSetting();
+    }, 500);
 
     const setHideHeader = (value: boolean) => {
         dispatch({
@@ -286,12 +292,10 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         }
 
         debounce(hasChange);
-
     }, [isTokenSuccess, tokenIds]);
 
     useEffect(() => {
-        fnGetNacpSetting();
-        fnPhasesSetting();
+        initDebounce();
     }, []);
 
     useEffect(() => {

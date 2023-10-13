@@ -140,9 +140,12 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
 
-  public async fnGetNonce() {
+  public async fnGetNonce(updateMetadatForm: UpdateMetadataForm, address: string) {
     const url = `${this.baseUrl}/nacp/nonce`;
-    const res = await axios.get(url, {
+    const res = await axios.post(url, JSON.stringify({ address, ...updateMetadatForm }), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
       withCredentials: true
     });
     return this._fnDealResponse(res, url);

@@ -290,6 +290,7 @@ export default function WalletNewPage() {
 
     // 获取用户设置的头像
     async function fnGetUserProfile() {
+        setLoading(true);
         const res = await nervapeApi.fnGetUserProfile(state.currentAddress);
 
         setLoading(false);
@@ -386,6 +387,7 @@ export default function WalletNewPage() {
     });
 
     useEffect(() => {
+        console.log('currNavbar', currNavbar)
         if (currNavbar > -1 && navbars.length && navbars[currNavbar]?.name == WalletNavbarTypes.NACP) {
             if (chain && chain.id == goerli.id) {
                 setLoading(true);

@@ -94,24 +94,30 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             };
         case Types.ShowLoading:
             updateBodyOverflow(false);
+            const _loadingNumber = state.loadingNumber + 1;
+
             return {
                 ...state,
-                loadingNumber: state.loadingNumber++,
+                loadingNumber: _loadingNumber,
                 loading: true
             };
         case Types.HideLoading:
             updateBodyOverflow(true);
-            if (action.value == true) state.loadingNumber = 1;
+            if (action.value == true) state.loadingNumber = 0;
 
-            if (state.loadingNumber - 1 <= 0) {
+            let loadingNumber = state.loadingNumber - 1;
+
+            if (loadingNumber <= 0) {
                 return {
                     ...state,
                     loadingNumber: 0,
                     loading: false
                 };
             }
+            
             return {
                 ...state,
+                loadingNumber: loadingNumber,
                 loading: true
             }; 
             

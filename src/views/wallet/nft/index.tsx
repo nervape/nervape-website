@@ -69,7 +69,6 @@ export default function WalletNFT3D(props: any) {
         setLoading(true);
         const res = await fetchAllTokenIds();
         setTokenIds(res);
-        setLoading(false);
     }
 
     function formatTokenId(tokenId: number) {
@@ -88,12 +87,11 @@ export default function WalletNFT3D(props: any) {
 
     async function fetchMNFTs() {
         setNfts([]);
-        setLoading(true);
         try {
             const _address = new Address(state.currentAddress, AddressType.ckb);
             const _MNFTs = await getNFTsAtAddress(_address);
             const _processedMNFTs: NFT[] = [];
-            for (const token of _MNFTs) {
+            await Promise.all(_MNFTs.map(async token => {
                 await token.getConnectedClass();
                 await token.getConnectedIssuer();
 
@@ -108,17 +106,17 @@ export default function WalletNFT3D(props: any) {
                         formatId: `#${formatTokenId(tokenId)}`
                     });
                 }
-            }
+            }));
             setNfts(_processedMNFTs);
         } catch (error) {
             console.error(error);
         }
         setLoading(false);
+        setLoading(false);
     }
 
     async function fetchERC721NFTS() {
         setNfts([]);
-        setLoading(true);
         try {
             const _processedMNFTs: NFT[] = [];
             tokenIds.forEach(tokenId => {
@@ -144,6 +142,7 @@ export default function WalletNFT3D(props: any) {
         } catch (error) {
             console.error(error);
         }
+        setLoading(false);
         setLoading(false);
     }
 

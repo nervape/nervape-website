@@ -12,12 +12,17 @@ import SuccessIcon from "../../../assets/wallet/tx/success.svg";
 import FailIcon from "../../../assets/wallet/tx/fail.svg";
 import NotComplete from "../../../assets/wallet/tx/not_complete.svg";
 import dayjs from "dayjs";
+import useDebounce from "../../../hooks/useDebounce";
 
 export default function WalletEvent(props: any) {
     const { isFold, setLoading } = props;
 
     const { state, dispatch } = useContext(DataContext);
     const [events, setEvents] = useState<Event[]>([]);
+
+    const initDebounce = useDebounce(async () => {
+        fnGetCampaignEvents();
+    }, 500);
 
     const EventItem = (props: { event: Event; }) => {
         const { event } = props;
@@ -79,7 +84,7 @@ export default function WalletEvent(props: any) {
     }
 
     useEffect(() => {
-        fnGetCampaignEvents();
+        initDebounce();
     }, [state.currentAddress]);
 
     return (

@@ -160,7 +160,7 @@ export default function MintButton(props: {
             // mint 未开始
             setMintButtonObj({
                 title: 'BONELIST MINT STARTING SOON',
-                desc:'The bonelist mint is almost here! Check back in the number of days listed above. We can’t wait to share NACP with you!',
+                desc: 'The bonelist mint is almost here! Check back in the number of days listed above. We can’t wait to share NACP with you!',
                 showMintButton: false,
                 hide: false,
                 countdownStr: `Bonelist mint starts in {countdown}`,
@@ -299,11 +299,9 @@ export default function MintButton(props: {
                     {mintButtonObj.title && (
                         <div className="mint-tip-title">{mintButtonObj.title}</div>
                     )}
-                    {mintButtonObj.countdownStr && mintButtonObj.countdown && (
-                        <div className="mint-tip-count" style={{ color: countdownColor, borderColor: countdownColor }}>
-                            {mintButtonObj.countdown}
-                        </div>
-                    )}
+                    <div className={`mint-tip-count ${mintButtonObj.countdown && mintButtonObj.countdownStr && 'active'}`} style={{ color: countdownColor, borderColor: countdownColor }}>
+                        {mintButtonObj.countdown || (!mintButtonObj.countdownStr || '1')}
+                    </div>
                     {!mintButtonObj.countdownStr && (
                         <div className={`mint-tip-desc ${!mintButtonObj.title && 'hide'}`}>
                             {mintButtonObj.desc}

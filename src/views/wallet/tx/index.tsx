@@ -7,6 +7,7 @@ import { getHistories, getUnipassCkbHistories, getUnipassHistories } from "../..
 import LoadingModal from "../../components/loading/loading";
 import { CONFIG } from "../../../utils/config";
 import HistoryDetail from "../../components/history/detail";
+import useDebounce from "../../../hooks/useDebounce";
 
 export enum TransferType {
     BRIDGE = 'BRIDGE',
@@ -229,13 +230,21 @@ const WalletTx = (
     const [showDetail, setShowDetail] = useState(false);
     const [timer, setTimer] = useState<any>();
 
-    async function fnGetHistories(_address: string, showLoading = true) {
-        if (showLoading) {
-            setLoading(true);
+    const initDebounce = useDebounce(async () => {
+        setLoading(true);
+        if (state.loginWalletType !== LoginWalletType.UNIPASS_V3) {
+            await fnGetHistories(state.currentAddress);
+        } else {
+            await fnGetUnipassHistories(state.currentAddress);
         }
 
-        getHistories(_address).then(res => {
+        setTimeout(() => {
             setLoading(false);
+        }, 500);
+    }, 100);
+
+    async function fnGetHistories(_address: string) {
+        getHistories(_address).then(res => {
             // eslint-disable-next-line array-callback-return
             res.data.map((history: HISTORY) => {
                 // eslint-disable-next-line radix
@@ -259,7 +268,7 @@ const WalletTx = (
             const progress = res.data.filter((history: { status: TxStatus; }) => history.status === TxStatus.PENDING);
             if (progress.length) {
                 const _timer = setTimeout(() => {
-                    fnGetHistories(_address, false);
+                    fnGetHistories(_address);
                 }, 10000);
                 setTimer(_timer);
             } else {
@@ -268,11 +277,7 @@ const WalletTx = (
         });
     }
 
-    async function fnGetUnipassHistories(_address: string, showLoading = true) {
-        if (showLoading) {
-            setLoading(true);
-        }
-
+    async function fnGetUnipassHistories(_address: string) {
         const res = await getUnipassHistories(_address);
         const _histories = res.data.map((history: any) => {
             const _history: HISTORY = {
@@ -311,7 +316,6 @@ const WalletTx = (
             };
             return _history;
         });
-        setLoading(false);
         const historiesArr = _histories
             .concat(_historiesCkb)
             .sort((a: { submittedAt: number }, b: { submittedAt: number }) => {
@@ -321,7 +325,7 @@ const WalletTx = (
         const progress = historiesArr.filter((history: any) => history.status === 'In Progress');
         if (progress.length) {
             const _timer = setTimeout(() => {
-                fnGetUnipassHistories(_address, false);
+                fnGetUnipassHistories(_address);
                 updateBalance();
             }, 10000);
             setTimer(_timer);
@@ -339,11 +343,7 @@ const WalletTx = (
 
     useEffect(() => {
         if (!state.currentAddress || !state.loginWalletType) return;
-        if (state.loginWalletType !== LoginWalletType.UNIPASS_V3) {
-            fnGetHistories(state.currentAddress);
-        } else {
-            fnGetUnipassHistories(state.currentAddress);
-        }
+        initDebounce();
     }, [state.currentAddress, state.loginWalletType]);
 
     useEffect(() => {

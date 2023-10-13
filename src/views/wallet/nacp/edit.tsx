@@ -610,7 +610,15 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
     const { signMessageAsync, error } = useSignMessage();
 
     const createSiweMessage = async (_address: string, statement: string) => {
-        const res = await nervapeApi.fnGetNonce();
+        const _metadata = JSON.parse(JSON.stringify(updateMetadataForm));
+
+        _metadata.attributes = selectedAssets.map(s => {
+            return {
+                asset_id: s._id
+            }
+        });
+        console.log(updateMetadataForm)
+        const res = await nervapeApi.fnGetNonce(_metadata, state.currentAddress);
 
         const filename = res.fields.key + uuidv4();
         res.fields.key = filename + '-test.png';
@@ -674,6 +682,12 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
             setIsSaveVerify(true);
         } catch {
             setLoading(false);
+
+            setTimeout(() => {
+                setShowNacpEdit(false);
+                updateBodyOverflow(true);
+                initAssetData();
+            }, 500);
         }
     }
 
@@ -1274,6 +1288,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
                 close={() => {
                     setShowNacpEdit(false);
                     setShowPhaseEndTip(false);
+                    initAssetData();
                 }}
                 confirm={() => {
                     setShowPhaseEndTip(false);
