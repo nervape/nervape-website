@@ -1,4 +1,4 @@
-.loading-modal {
+.loading-assets-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,8 +10,8 @@
     z-index: 99999;
     
     .loading-content {
-        width: 600px;
-        height: 140px;
+        width: 228px;
+        height: 170px;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -21,8 +21,8 @@
         border-radius: 16px;
         text-align: center;
         img {
-            width: 60px;
-            height: 60px;
+            width: 180px;
+            height: 10 0px;
             margin: 24px auto 8px;
         }
         .text {
@@ -34,13 +34,14 @@
         }
     }
 }
-.loading-modal.show {
+
+.loading-assets-modal.show {
     opacity: 1;
     visibility: visible;
 }
 
 @media screen and (max-width: 750px) {
-    .loading-modal {
+    .loading-assets-modal {
         .loading-content {
             width: 347px;
             height: 140px;
