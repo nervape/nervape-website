@@ -22,7 +22,7 @@ export default function WalletEvent(props: any) {
 
     const initDebounce = useDebounce(async () => {
         fnGetCampaignEvents();
-    }, 500);
+    }, 100);
 
     const EventItem = (props: { event: Event; }) => {
         const { event } = props;
