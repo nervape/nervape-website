@@ -12,7 +12,7 @@ body {
 }
 
 .wallet-new-page {
-  background-color: #17171E;
+  background-color: #17171e;
   min-height: 100vh;
 
   .wallet-home-container {
@@ -36,7 +36,7 @@ body {
       .wallet-section {
         .wallet-navbar-content {
           width: 68px;
-          background: #494D5E;
+          background: #494d5e;
           border-radius: 20px;
           align-self: flex-start;
 
@@ -133,16 +133,17 @@ body {
   .wallet-new-page {
     .wallet-home-container {
       .container {
-        .wallet-section {
-          .wallet-navbar-content {
-            position: sticky;
-            top: calc(208px + var(--wallet-padding) + var(--extra-padding));
-          }
+        min-height: unset;
+        height: calc(100vh - var(--extra-padding) - var(--switch-height) - var(--padding-top));
+        overflow-y: hidden;
 
-          &.fold {
-            .wallet-navbar-content {
-              top: calc(102px + var(--wallet-padding) + var(--extra-padding));
-            }
+        .wallet-section {
+          // padding-top: 24px;
+          .wallet-navbar-content {
+            // position: sticky;
+            top: calc(
+              var(--header-height) + var(--header-top)
+            );
           }
         }
       }
@@ -162,8 +163,8 @@ body {
         .wallet-section {
           position: relative;
           z-index: 2;
-          background: #17171E;
-          
+          background: #17171e;
+
           .wallet-navbar-content {
             width: 100%;
             position: fixed;

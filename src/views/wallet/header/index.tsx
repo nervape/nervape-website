@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 
 import DefaultAvatar from '../../../assets/wallet/default_avatar.png';
@@ -19,6 +19,11 @@ import { DataContext, updateBodyOverflow } from "../../../utils/utils";
 import { LoginWalletType } from "../../../utils/Wallet";
 import { godWoken } from "../../../utils/Chain";
 import { Types } from "../../../utils/reducers";
+import { nervapeApi } from "../../../api/nervape-api";
+import { InvitationCodeInfo } from "../../../nervape/nacp";
+import CopyIcon from '../../../assets/wallet/header/copy.svg';
+import FoldIcon from '../../../assets/wallet/header/fold.svg';
+import UnFoldIcon from '../../../assets/wallet/header/unfold.svg';
 
 const AvatarBackgroundColors = [
     "#FFE3EB",
@@ -49,6 +54,10 @@ export default function WalletHeader(props: any) {
      */
     const [open, setOpen] = useState(false);
     const [avatarBackgroundColor, setAvatarBackgroundColor] = useState('');
+    const [referrerInfo, setReferrerInfo] = useState<InvitationCodeInfo>();
+    const [openFold, setOpenFold] = useState(false);
+
+    const headerRef = useRef(null);
 
     const setShowLogout = (value: boolean) => {
         dispatch({
@@ -64,10 +73,30 @@ export default function WalletHeader(props: any) {
         })
     }
 
+    const fnGetInvitationInfo = async () => {
+        const res = await nervapeApi.fnGetInvitationInfo(state.currentAddress);
+        setReferrerInfo(res);
+    }
+
     useEffect(() => {
         if (!state.currentAddress) return;
-        setAvatarBackgroundColor(AvatarBackgroundColors[Math.floor(Math.random() * AvatarBackgroundColors.length)])
+        setAvatarBackgroundColor(AvatarBackgroundColors[Math.floor(Math.random() * AvatarBackgroundColors.length)]);
+        fnGetInvitationInfo();
     }, [state.currentAddress]);
+
+    const cameraContentResize = new ResizeObserver((entries) => {
+        let entry = entries[0];
+        let cr = entry.contentRect;
+        let target = entry.target;
+
+        document.body.style.setProperty('--header-height', cr.height + 'px');
+    })
+
+    useEffect(() => {
+        if (headerRef.current && state.windowWidth > 750) {
+            cameraContentResize.observe(headerRef.current);
+        }
+    }, [headerRef, openFold]);
 
     const CopyAddress = () => {
         return (
@@ -182,6 +211,13 @@ export default function WalletHeader(props: any) {
                         )}
                     </div>
                 </Dropdown>
+                {state.windowWidth > 375 && (
+                    <div className="fold-icon">
+                        <img onClick={() => {
+                            setOpenFold(!openFold);
+                        }} className="cursor" src={openFold ? UnFoldIcon : FoldIcon} alt="" />
+                    </div>
+                )}
             </div>
         );
     }
@@ -189,7 +225,7 @@ export default function WalletHeader(props: any) {
     const UserInfo = () => {
         if (state.loginWalletType == LoginWalletType.UNIPASS_V3) {
             return (
-                <div className={`ckb-balance transition ${isFold && 'wallet-header-hide'}`}>
+                <div className={`ckb-balance transition ${openFold && 'wallet-header-hide'}`}>
                     <div className="title flex-align">
                         CKB BALANCE
                         <div className="transfer">
@@ -209,45 +245,66 @@ export default function WalletHeader(props: any) {
 
 
         return (
-            <div className={`bone-list-points transition flex-align ${isFold && 'wallet-header-hide'}`}>
-                <div className="bone-item bone-list">
-                    <div className="title flex-align">
-                        <div className="title-left">BONELIST</div>
-                        <div className="record cursor" onClick={() => {
-                            setInviteClaim(true);
-                        }}>Claim</div>
-                    </div>
-                    <div className={`nacp flex-align ${isBonelist && 'holder'}`}>
-                        <div className="name">NACP</div>
-                        <div className="icon">
-                            <img src={isBonelist ? SuccessIcon : FailedIcon} alt="FailedIcon" />
+            <div className={`userinfo-c ${openFold && 'wallet-header-hide'} transition`}>
+                <div className={`bone-list-points transition flex-align`}>
+                    <div className="bone-item bone-list">
+                        <div className="title flex-align">
+                            <div className="title-left">BONELIST</div>
+                            <div className="record cursor" onClick={() => {
+                                setInviteClaim(true);
+                            }}>Claim</div>
+                        </div>
+                        <div className={`nacp flex-align ${isBonelist && 'holder'}`}>
+                            <div className="name">NACP</div>
+                            <div className="icon">
+                                <img src={isBonelist ? SuccessIcon : FailedIcon} alt="FailedIcon" />
+                            </div>
+                        </div>
+                        <div className="nft-3d flex-align">
+                            <div className="name">3D NFT</div>
+                            <div className="icon">
+                                <img src={FailedIcon} alt="FailedIcon" />
+                            </div>
                         </div>
                     </div>
-                    <div className="nft-3d flex-align">
-                        <div className="name">3D NFT</div>
-                        <div className="icon">
-                            <img src={FailedIcon} alt="FailedIcon" />
+                    <div className="bone-item bone-points">
+                        <div className="title flex-align">
+                            <div className="title-left">BONE POINTS</div>
+                            {/* <div className="record cursor">Record</div> */}
                         </div>
+                        {/* <div className="points">1,000,000</div>
+                            <div className="daily-add">+1,000,000 daily</div> */}
+                        <div className="coming-soon">COMING SOON</div>
                     </div>
                 </div>
-                <div className="bone-item bone-points">
-                    <div className="title flex-align">
-                        <div className="title-left">BONE POINTS</div>
-                        {/* <div className="record cursor">Record</div> */}
+                {referrerInfo && (
+                    <div className="referrer-item">
+                        <div className="title flex-align">
+                            <div className="title-left">BONELIST INVITATION CODE</div>
+                            <div className="record">{`${referrerInfo.count} of ${referrerInfo.limit} claimed`}</div>
+                        </div>
+                        <CopyToClipboard
+                            text={referrerInfo.code}
+                            onCopy={() => {
+                                message.success(`Copy Success!`);
+                            }}
+                        >
+                            <div className="code-copy cursor flex-align">
+                                {referrerInfo.code}
+                                <img src={CopyIcon} alt="CopyIcon" />
+                            </div>
+                        </CopyToClipboard>
                     </div>
-                    {/* <div className="points">1,000,000</div>
-            <div className="daily-add">+1,000,000 daily</div> */}
-                    <div className="coming-soon">COMING SOON</div>
-                </div>
+                )}
             </div>
         );
     }
 
     return (
-        <div className={`wallet-header-container transition position-sticky ${state.isVisibleHeader ? 'visible-header' : 'hide-header'} ${isFold && 'fold'} ${state.switchChain && 'extra-switch-chain'}`}>
+        <div ref={headerRef} className={`wallet-header-container transition position-sticky ${state.isVisibleHeader ? 'visible-header' : 'hide-header'} ${openFold && 'fold'} ${state.switchChain && 'extra-switch-chain'}`}>
             {state.windowWidth > 375 ? (
                 <>
-                    <div className={`visible-header-line transition`}></div>
+                    {/* <div className={`visible-header-line transition`}></div> */}
                     <div className={`user-center-content transition flex-align`}>
                         <div className="user-avatar" style={{ background: avatarBackgroundColor }}>
                             <img className="transition" src={DefaultAvatar} alt="UserAvatar" />
@@ -258,6 +315,7 @@ export default function WalletHeader(props: any) {
                             {UserInfo()}
                         </div>
                     </div>
+                    <div style={{ paddingBottom: '24px' }}></div>
                 </>
             ) : (
                 <div className="user-center-content m">

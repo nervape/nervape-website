@@ -524,29 +524,22 @@
 
 @media screen and (min-width: 750px) {
   .wallet-badge-container {
-    &.fold {
-      .wallet-badge-header {
-        top: calc(102px + var(--wallet-padding) + var(--extra-padding));
-      }
+    position: relative;
+    height: calc(100vh - 64px - var(--header-height));
+    overflow-y: scroll;
 
-      .wallet-story-reward-content {
-        .review-card-content {
-          top: calc(164px + var(--wallet-padding) + var(--extra-padding));
-        }
-      }
-    }
     .wallet-badge-header {
       position: sticky;
       background: #17171E;
       z-index: 1;
-      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
+      top: 0;
     }
 
     .wallet-story-reward-content {
       .review-card-content {
         position: sticky;
         z-index: 0;
-        top: calc(270px + var(--wallet-padding) + var(--extra-padding));
+        top: 62px;
       }
     }
   }

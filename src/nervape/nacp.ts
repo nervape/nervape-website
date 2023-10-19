@@ -31,3 +31,11 @@ export enum STORY_QUIZ_STATUS {
     IN_PROGRESS = 'in_progress',
     OVER = 'over'
 }
+
+export class InvitationCodeInfo {
+    _id: string = '';
+    address: string = '';
+    code: string = '';
+    limit: number = 0;
+    count: number = 0;
+}

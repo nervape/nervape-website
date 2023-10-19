@@ -156,7 +156,7 @@
       }
     }
     .wallet-event-header {
-      position: sticky;
+      // position: sticky;
       background: #17171e;
       z-index: 1;
       top: calc(208px + var(--wallet-padding) + var(--extra-padding));
@@ -164,10 +164,19 @@
 
     .wallet-event-content {
       .event-tabs {
-        position: sticky;
+        // position: sticky;
         z-index: 1;
         background: #17171e;
         top: calc(253px + var(--wallet-padding) + var(--extra-padding));
+      }
+
+      .event-histories {
+        height: calc(
+          100vh - var(--extra-padding) - var(--switch-height) -
+            var(--padding-top) - 45px - 31px - var(--header-height)
+        );
+        overflow-y: scroll;
+        padding-bottom: 32px;
       }
     }
   }
