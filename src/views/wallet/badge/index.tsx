@@ -71,7 +71,7 @@ export default function WalletBadge(props: { badges: PoapItem[]; setLoading: Fun
 
     return (
         <div className={`wallet-badge-container ${isFold && 'fold'}`}>
-            {badges.length && (
+            {badges.length > 0 && (
                 <>
                     <div className="wallet-badge-header transition position-sticky">
                         <div className="badge-title">BADGE</div>

@@ -41,7 +41,7 @@
     .no-assets-content {
       text-align: center;
       width: 100%;
-      
+
       .no-result {
         width: 347px;
         padding-top: 50.5px;
@@ -61,7 +61,7 @@
         font-weight: 800;
         letter-spacing: -0.8px;
         padding-bottom: 8px;
-        color: #FFFFFF;
+        color: #ffffff;
       }
 
       .tip {
@@ -78,7 +78,7 @@
     .spot-apes {
       .spot-items {
         &:last-child {
-          padding-bottom: 48px;
+          padding-bottom: 32px;
         }
 
         .item-title {
@@ -101,10 +101,16 @@
     .nacp-content-apes,
     .nacp-content-assets {
       flex-wrap: wrap;
+      // height: calc(
+      //   100vh - 64px - 55px - var(--switch-height) - var(--header-height)
+      // );
+      // overflow-y: scroll;
+      // padding-bottom: 48px;
 
       .nacp-ape-item,
       .nacp-asset-item {
         margin-right: 4px;
+        align-self: flex-start;
 
         .cover-image {
           width: calc(100% - 12px);
@@ -588,10 +594,18 @@
       }
     }
     .wallet-nacp-header {
-      position: sticky;
+      // position: sticky;
       z-index: 1;
       background-color: #17171e;
-      top: calc(208px + var(--wallet-padding) + var(--extra-padding));
+      top: calc(var(--header-height) + var(--header-top));
+    }
+
+    .wallet-nacp-content {
+      height: calc(
+        100vh - 64px - 55px - var(--switch-height) - var(--header-height)
+      );
+      overflow-y: scroll;
+      // padding-bottom: 16px;
     }
   }
 }

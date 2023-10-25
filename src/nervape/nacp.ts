@@ -146,3 +146,10 @@ export class NacpSetting {
     public_start_time: number = 0;
     public_end_time: number = 0;
 }
+export class InvitationCodeInfo {
+    _id: string = '';
+    address: string = '';
+    code: string = '';
+    limit: number = 0;
+    count: number = 0;
+}

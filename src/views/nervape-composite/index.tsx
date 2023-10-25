@@ -338,8 +338,8 @@ export default function Composite() {
                                         <div className="section-title">MINTING PHASES</div>
                                         <div className="desc">
                                             NACP PFP has 14 different types of assets you can use to assemble your Nervape PFP.
-                                            These asset classes will be released in 4 phases. Each phase will allow you to easily buy,
-                                            trade, and sell your NACP! We encourage you to stick through all 4 phases to get the full PFP experience
+                                            These asset classes will be released in 3 phases. Each phase will allow you to easily buy,
+                                            trade, and sell your NACP! We encourage you to stick through all 3 phases to get the full PFP experience
                                             that our platform has to offer and to design the ape PFP you want!
                                         </div>
                                         <div className="learn-more">More details coming soon!</div>

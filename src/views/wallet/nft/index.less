@@ -337,10 +337,16 @@
       }
     }
     .wallet-nft-3d-header {
-      position: sticky;
+      // position: sticky;
       z-index: 1;
       background-color: #17171E;
       top: calc(208px + var(--wallet-padding) + var(--extra-padding));
+    }
+
+    .wallet-nft-3d-content {
+      height: calc(100vh - var(--extra-padding) - var(--switch-height) - var(--padding-top) - 55px - var(--header-height));
+      overflow-y: scroll;
+      padding-bottom: 32px;
     }
   }
 }

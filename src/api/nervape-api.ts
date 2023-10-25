@@ -414,6 +414,11 @@ class NervapeApi {
 
     return this._fnDealSessionResponse(res, url);
   }
+  public async fnGetInvitationInfo(address: string) {
+    const url = `${this.baseUrl}/invitation/website/invitation/code/${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();
