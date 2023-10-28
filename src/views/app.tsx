@@ -31,6 +31,7 @@ import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
 import NacpNFTPage from "./nfts/nacp";
 import { CONFIG } from "../utils/config";
+import NacpCreator from "./nervape-composite/creator";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -79,11 +80,11 @@ export default function App() {
             path={`${CONFIG.PUBLIC_PATH}`}
             element={
               <PageView disableFooter={true}>
-                <HomePage />
+                <NacpCreator></NacpCreator>
               </PageView>
             }
           />
-          <Route
+          {/* <Route
             path={`${CONFIG.PUBLIC_PATH}/about`}
             element={
               <PageView activeIndex={1} disableFooter={true}>
@@ -122,7 +123,7 @@ export default function App() {
                 <CampaignPage />
               </PageView>
             }
-          />
+          /> */}
           <Route
             path={`${CONFIG.PUBLIC_PATH}/wallet`}
             element={
@@ -131,7 +132,7 @@ export default function App() {
               </PageView>
             }>
           </Route>
-          <Route
+          {/* <Route
             path={`${CONFIG.PUBLIC_PATH}/nacp`}
             element={
               <PageView activeIndex={0} disableFooter={true}>
@@ -154,7 +155,7 @@ export default function App() {
                 <NacpNFTPage></NacpNFTPage>
               </PageView>
             }>
-          </Route>
+          </Route> */}
           <Route path="*" element={<Navigate to={`${CONFIG.PUBLIC_PATH}`} />} />
         </Routes>
       </div>

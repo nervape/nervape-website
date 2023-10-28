@@ -130,7 +130,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
         console.log('fnGetPhases');
         setProgress('0');
         setLoadingAssets(true);
-        const res = await nervapeApi.fnGetPhases(state.currentAddress);
+        const res = await nervapeApi.fnGetPhases();
         // 初始化 history
         initAssetData();
 
@@ -752,6 +752,7 @@ export default function NacpEdit(props: { show: boolean; setShowNacpEdit: Functi
 
     useEffect(() => {
         if (!nacp || !show) return;
+        console.log('nacp', nacp);
         setIsLoadingEnded(false);
 
         fnGetPhases();
