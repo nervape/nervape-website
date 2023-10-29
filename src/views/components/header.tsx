@@ -156,7 +156,7 @@ const HallweenNacpItems: MenuProps = {
     {
       label: (
         <div onClick={() => {
-          console.log(123)
+          window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervape/nacp/`, '_block');
         }}>
           <img src={HallweenTitle} alt="HallweenTitle" />
         </div>
@@ -369,7 +369,7 @@ const mPages: MenuItem[] = [
     ), 'nacp'),
     getItem((
       <div onClick={() => {
-        window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervape/nacp/`, '_block')
+        window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervape/nacp/`, '_block');
       }}>
         <img src={HallweenTitle} alt="HallweenTitle" />
       </div>
