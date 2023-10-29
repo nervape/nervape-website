@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 import { nervapeApi } from "../../../api/nervape-api";
-import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, NacpPhaseConfig, PhaseLeft } from "../../../nervape/nacp";
+import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, NacpPhaseConfig, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpAssetSelected, NacpCategoryIcons, NacpPhaseLeftTime, NacpPhaseLockedIcon, NacpPhaseOpenIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
 import { DataContext, ownerOf, preloadImage, showErrorNotification, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
@@ -16,10 +16,16 @@ import SpecialIcon from '../../../assets/wallet/nacp/special.svg';
 import BodyViewScaleIcon from '../../../assets/wallet/nacp/body.svg';
 import HeadViewScaleIcon from '../../../assets/wallet/nacp/head.svg';
 import CategoryLocked from '../../../assets/wallet/nacp/locked.svg';
+import Hallween600 from '../../../assets/nacp/hallween/bg_600.svg';
+import Hallween750 from '../../../assets/nacp/hallween/bg_750.svg';
+import Hallween1000 from '../../../assets/nacp/hallween/bg_1000.svg';
+import Hallween1200 from '../../../assets/nacp/hallween/bg_1200.svg';
+import Hallween1440 from '../../../assets/nacp/hallween/bg_1440.svg';
+import IIcon from '../../../assets/nacp/hallween/i_icon.svg';
+import ShareIcon from '../../../assets/nacp/hallween/share_icon.svg';
+import DownLoadIcon from '../../../assets/nacp/hallween/download_icon.svg';
+
 import lodash from 'lodash';
-import useIntervalAsync from "../../../hooks/useIntervalAsync";
-import OperatePopup from "../../components/operate-popup";
-import RandomIcon from '../../../assets/wallet/nacp/edit/randomize.svg';
 import RedoIcon from '../../../assets/wallet/nacp/edit/redo.svg';
 import UndoIcon from '../../../assets/wallet/nacp/edit/undo.svg';
 import ResetIcon from '../../../assets/wallet/nacp/edit/reset.svg';
@@ -27,6 +33,7 @@ import ClearIcon from '../../../assets/wallet/nacp/edit/clear.svg';
 import { Tooltip } from "antd";
 import LoadingAssetsModal from "../../wallet/nacp/loading/loading";
 import useDebounce from "../../../hooks/useDebounce";
+import NacpDone from "./done";
 
 let touchYStart = 0;
 
@@ -65,6 +72,7 @@ export default function NacpCreator() {
     const [canReset, setCanReset] = useState(false);
     const [showPhaseEndTip, setShowPhaseEndTip] = useState(false);
     const [activePhase, setActivePhase] = useState(-1);
+    const [updateMetadataForm, setUpdateMetadataForm] = useState<UpdateMetadataForm>(new UpdateMetadataForm());
 
     const [viewScale, setViewScale] = useState(false);
     const [mCollectionAsset, setMCollectionAsset] = useState<NacpAsset>();
@@ -72,6 +80,9 @@ export default function NacpCreator() {
     const [loadingAssets, setLoadingAssets] = useState(false);
     const [progress, setProgress] = useState('0.00');
     const [nacp, setNacp] = useState<NacpMetadata>();
+    const [bgImage, setBgImage] = useState('');
+    const [nacpShare, setNacpShare] = useState<any>();
+    const [showNacpShareDown, setShowNacpShareDown] = useState(false);
 
     // useIntervalAsync(updateNacpStatus, 1000);
 
@@ -636,6 +647,48 @@ export default function NacpCreator() {
 
     const { signMessageAsync, error } = useSignMessage();
 
+    const createSiweMessage = async (_address: string) => {
+        const _metadata = JSON.parse(JSON.stringify(updateMetadataForm));
+
+        _metadata.attributes = selectedAssets.map(s => {
+            return {
+                asset_id: s._id
+            }
+        });
+
+        const res = await nervapeApi.fnGetNonce(_metadata, state.currentAddress);
+
+        const filename = res.fields.key + uuidv4();
+        res.fields.key = filename + '-spooky.png';
+        res.fields.success_action_status = "200";
+
+        const url = res.fields.host + res.fields.key;
+
+        await htmlToImageConvert(res, elementRef, 'key');
+
+        return {
+            url
+        };
+    }
+
+    const signInWithEthereum = async () => {
+        // nacp 持有者验证
+        setLoading(true);
+
+        const { url } = await createSiweMessage(state.currentAddress);
+
+        const res = await nervapeApi.fnSnookyNacpSave(url);
+
+        setLoading(false);
+
+        setNacpShare({
+            ...res,
+            share_link: 'https://sample.net/?connection=driving&sleet=land#blade'
+        });
+
+        setShowNacpShareDown(true);
+    }
+
     function dataURItoBlob(dataURI: string) {
         // convert base64 to raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
@@ -656,35 +709,35 @@ export default function NacpCreator() {
     }
 
     // 生成文件并上传
-    const htmlToImageConvert = async (ref: any, key: string) => {
+    const htmlToImageConvert = async (signData: { fields: any; url: string; } | null, ref: any, key: string) => {
         await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
 
         const dataUrl = await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
 
-        let link = document.createElement('a');
-        link.download = 'NACP.png';
-        link.href = dataUrl;
-        link.click();
+        if (signData) {
+            delete signData.fields.host;
 
-        // const formData = new FormData();
-        // formData.append('bucket', signData.fields.bucket);
-        // formData.append('X-Amz-Algorithm', signData.fields['X-Amz-Algorithm']);
-        // formData.append('X-Amz-Credential', signData.fields['X-Amz-Credential']);
-        // formData.append('X-Amz-Date', signData.fields['X-Amz-Date']);
-        // formData.append('X-Amz-Security-Token', signData.fields['X-Amz-Security-Token']);
-        // formData.append('Policy', signData.fields['Policy']);
-        // formData.append('X-Amz-Signature', signData.fields['X-Amz-Signature']);
-        // formData.append('key', signData.fields[key]);
-        // formData.append('success_action_status', signData.fields['success_action_status']);
-        // formData.append('file', dataURItoBlob(dataUrl));
+            const formData = new FormData();
+            formData.append('bucket', signData.fields.bucket);
+            formData.append('X-Amz-Algorithm', signData.fields['X-Amz-Algorithm']);
+            formData.append('X-Amz-Credential', signData.fields['X-Amz-Credential']);
+            formData.append('X-Amz-Date', signData.fields['X-Amz-Date']);
+            formData.append('X-Amz-Security-Token', signData.fields['X-Amz-Security-Token']);
+            formData.append('Policy', signData.fields['Policy']);
+            formData.append('X-Amz-Signature', signData.fields['X-Amz-Signature']);
+            formData.append('key', signData.fields[key]);
+            formData.append('success_action_status', signData.fields['success_action_status']);
+            formData.append('file', dataURItoBlob(dataUrl));
 
-        // nervapeApi.NacpFileUpload(signData.url, formData).then(res => {
-        //     setIsUploadCount(isUploadCount => {
-        //         return isUploadCount - 1;
-        //     });
-        // });
+            await nervapeApi.NacpFileUpload(signData.url, formData);
+        } else {
+            let link = document.createElement('a');
+            link.download = 'NACP.png';
+            link.href = dataUrl;
+            link.click();
+        }
     }
 
     useEffect(() => {
@@ -699,13 +752,13 @@ export default function NacpCreator() {
 
     useEffect(() => {
         setPhaseConfig([{
-            color: '#EFC100',
+            color: '#FF9A1A',
             extra_color: '#AF7604'
         }, {
-            color: '#11C864',
+            color: '#FF9A1A',
             extra_color: '#04843E'
         }, {
-            color: '#8F8BF7',
+            color: '#FF9A1A',
             extra_color: '#4434E2'
         }]);
 
@@ -743,6 +796,18 @@ export default function NacpCreator() {
 
     useEffect(() => {
         if (state.windowWidth <= 750) updateBodyOverflow(false);
+
+        if (state.windowWidth <= 750) {
+            setBgImage(Hallween600);
+        } else if (state.windowWidth > 750 && state.windowWidth <= 1000) {
+            setBgImage(Hallween750);
+        } else if (state.windowWidth > 1000 && state.windowWidth <= 1200) {
+            setBgImage(Hallween1000);
+        } else if (state.windowWidth > 1200 && state.windowWidth <= 1440) {
+            setBgImage(Hallween1200);
+        } else {
+            setBgImage(Hallween1440);
+        }
     }, [state.windowWidth]);
 
     const cameraContentResize = new ResizeObserver((entries) => {
@@ -763,7 +828,7 @@ export default function NacpCreator() {
 
     return (
         <>
-            <div className={`wallet-nacp-edit-container popup-container ${isLoadingEnded && 'show'}`}>
+            <div className={`wallet-nacp-hallween-edit-container popup-container ${isLoadingEnded && 'show'}`}>
                 <div
                     className={`wallet-nacp-edit-content transition ${isFold && 'fold'}`}
                     onTouchStart={e => {
@@ -779,19 +844,30 @@ export default function NacpCreator() {
                             }
                         }
                     }}>
+                    <div className="hallween-bg">
+                        <img src={bgImage} alt="" />
+                    </div>
                     <div className="edit-header flex-align">
                         <div className="title">{nacp?.name}</div>
                         <div className="btn-groups flex-align">
-                            {phases.filter(p => p.status == 1).length > 0 && (
-                                <button className="cursor btn save-btn" style={{ background: phaseConfig[selectPhase].color }} onClick={() => {
-                                }}>Share</button>
-                            )}
-                            <button className="cursor btn save-btn" style={{ background: phaseConfig[selectPhase].color }} onClick={async () => {
-                                await htmlToImageConvert(elementRef, 'key');
-                            }}>Download</button>
-                            {/* <button className="cursor btn discard-btn" onClick={() => {
+                            <button className="cursor btn info-btn" onClick={async () => {
+
                             }}>
-                                <img src={DiscardIcon} alt="DiscardIcon" />
+                                <img src={IIcon} alt="IIcon" />
+                            </button>
+                            {/* {phases.filter(p => p.status == 1).length > 0 && (
+                                <button className="cursor btn save-btn" onClick={async () => {
+                                    await signInWithEthereum();
+                                }}>
+                                    <img src={ShareIcon} alt="ShareIcon" />
+                                    {state.windowWidth > 750 && 'Share'}
+                                </button>
+                            )}
+                            <button className="cursor btn save-btn" onClick={async () => {
+                                await htmlToImageConvert(null, elementRef, 'key');
+                            }}>
+                                <img src={DownLoadIcon} alt="DownLoadIcon" />
+                                {state.windowWidth > 750 && 'Download'}
                             </button> */}
                         </div>
                     </div>
@@ -804,7 +880,6 @@ export default function NacpCreator() {
                                             <div
                                                 key={index}
                                                 className={`cursor transition phase-tab flex-center ${index == selectPhase && 'selected'} ${phase.status !== 1 && 'locked'}`}
-                                                style={{ border: `1px solid ${phaseConfig[index].color}`, boxShadow: `3px 3px 0px 0px ${phaseConfig[index].color}` }}
                                                 onTouchStart={() => {
                                                     document.body.style.setProperty('--phase-tab-color', phaseConfig[index].extra_color);
                                                 }}
@@ -817,7 +892,7 @@ export default function NacpCreator() {
                                                     setSelectCategory(phases[index].categories[0]._id);
                                                     setCurrCategory(phases[index].categories[0]);
                                                 }}>
-                                                <div className="transition name" style={{ color: phaseConfig[index].color }}>{phase.name}</div>
+                                                <div className="transition name">{phase.name}</div>
                                                 {/* {phase.status !== 1 ? (
                                                     <div className="status-tag locked-tag">Locked</div>
                                                 ) : (
@@ -831,6 +906,14 @@ export default function NacpCreator() {
                                             </div>
                                         );
                                     })}
+                                    <div
+                                        className={`cursor transition phase-tab flex-center`}
+                                        style={{ background: `rgba(191, 71, 188, 0.10)` }}
+                                        onClick={async () => {
+                                            await signInWithEthereum();
+                                        }}>
+                                        <div className="transition name" style={{ color: '#BF47BC' }}>DONE</div>
+                                    </div>
                                 </div>
 
                                 <div ref={cameraContentRef} id="nacp-camera-content" className={`nacp-camera-content transition ${isFold && 'fold'}`}>
@@ -916,7 +999,7 @@ export default function NacpCreator() {
                                         <button
                                             disabled={phases[selectPhase].status !== 1 || !canReset}
                                             className="cursor btn randomize-btn flex-center"
-                                            style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
+                                            style={{ background: phaseConfig[selectPhase].color }}
                                             onClick={() => {
                                                 fnReset();
                                             }}>
@@ -934,7 +1017,7 @@ export default function NacpCreator() {
                                         <button
                                             disabled={phases[selectPhase].status !== 1 || (assetsHistoryStack.length <= 1 || historyIndex == 0)}
                                             className={`cursor btn undo-btn flex-center`}
-                                            style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
+                                            style={{ background: phaseConfig[selectPhase].color }}
                                             onClick={() => {
                                                 fnOperateBack();
                                             }}>
@@ -943,7 +1026,7 @@ export default function NacpCreator() {
                                         <button
                                             disabled={phases[selectPhase].status !== 1 || (!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1)}
                                             className={`cursor btn redo-btn flex-center`}
-                                            style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
+                                            style={{ background: phaseConfig[selectPhase].color }}
                                             onClick={() => {
                                                 fnOperateNext();
                                             }}>
@@ -1219,6 +1302,9 @@ export default function NacpCreator() {
             <LoadingAssetsModal
                 show={loadingAssets}
                 progress={progress}></LoadingAssetsModal>
+            <NacpDone show={showNacpShareDown} nacp={nacpShare} download={async () => {
+                await htmlToImageConvert(null, elementRef, 'key');
+            }}></NacpDone>
         </>
     );
 }

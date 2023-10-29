@@ -87,7 +87,19 @@
       }
 
       .nav-area.logo {
-        width: auto;
+        width: 90px;
+        background: unset;
+
+        .hallween-item {
+          position: absolute;
+          left: 0px;
+          padding: 0px;
+          bottom: 0px;
+
+          .hallween-nacp-logo {
+            width: 90px;
+          }
+        }
 
         .nacp-logo {
           padding: 5px 8px;
@@ -223,6 +235,8 @@
     }
   }
 }
+
+.hallween-items {}
 
 .tooltip {
   width: 150px;
@@ -493,7 +507,8 @@
               margin: 0 0 32px 0;
               padding-bottom: 0;
               background: unset !important;
-              
+
+
               &.ant-menu-item-selected {
                 color: #FFFFFF;
               }
@@ -501,6 +516,7 @@
               &::after {
                 border-right: none;
               }
+
               // &.ant-menu-submenu-open {
               //   margin-bottom: 0;
               // }
@@ -543,6 +559,10 @@
                   background: unset;
                   box-shadow: none;
 
+                  &:first-child {
+                    margin-top: 8px;
+                  }
+
                   &:last-child {
                     margin-bottom: 0;
                   }
@@ -564,6 +584,26 @@
                   .ant-menu-submenu-title {
                     color: rgba(255, 255, 255, 0.5);
                   }
+                }
+              }
+            }
+          }
+
+          .mobile-menu-items {
+            .ant-menu-submenu:first-child {
+              margin-top: 12px;
+
+              .header-open {
+                margin-top: 10px;
+              }
+            }
+
+            .ant-menu-sub {
+              .ant-menu-submenu:first-child {
+                margin-top: 0;
+
+                .header-open {
+                  margin-top: 0;
                 }
               }
             }
