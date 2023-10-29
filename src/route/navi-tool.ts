@@ -9,7 +9,7 @@ export class NavTool {
   public static location: Location = { ...window.location, state: {}, key: "" };
 
   public static fnJumpToPage = (path: string) => {
-    const toPath = NavTool.fnStdNavStr(CONFIG.PUBLIC_PATH + path);
+    const toPath = NavTool.fnStdNavStr('https://www.nervape.com/' + path);
     const navigation = NavTool.navigation;
     navigation(toPath);
   };

@@ -124,14 +124,14 @@ export default function App() {
               </PageView>
             }
           /> */}
-          <Route
+          {/* <Route
             path={`${CONFIG.PUBLIC_PATH}/wallet`}
             element={
               <PageView activeIndex={7} disableFooter={true}>
                 <WalletPage></WalletPage>
               </PageView>
             }>
-          </Route>
+          </Route> */}
           {/* <Route
             path={`${CONFIG.PUBLIC_PATH}/nacp`}
             element={
