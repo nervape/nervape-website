@@ -8,12 +8,15 @@ import instegram from "../../assets/icons/instegram.svg";
 import NacpLogo from '../../assets/logo/logo_nacp.svg';
 import MNacpLogo from '../../assets/logo/m_nacp_logo.svg';
 import HeaderOpenIcon from '../../assets/icons/header-open.svg';
+import HallweenNacpLogo from '../../assets/nacp/hallween/hallween_nacp_logo.svg';
+import HallweenTitle from '../../assets/nacp/hallween/hallween_title.svg';
 
 import { NavTool } from "../../route/navi-tool";
 import { DataContext, getWindowScrollTop, scrollToTop, updateBodyOverflow } from "../../utils/utils";
 import WalletConnect from "./wallet-connect";
 import { Types } from "../../utils/reducers";
 import { Dropdown, Menu, MenuProps, Tooltip } from 'antd';
+import { CONFIG } from "../../utils/config";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -138,6 +141,31 @@ const BuyChildrenItems: MenuItem[] = [
   ])
 ];
 
+const HallweenNacpItems: MenuProps = {
+  items: [
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('nacp');
+        }}>
+          <img src={NacpLogo} alt="NacpLogo" />
+        </div>
+      ),
+      key: '-1'
+    },
+    {
+      label: (
+        <div onClick={() => {
+          console.log(123)
+        }}>
+          <img src={HallweenTitle} alt="HallweenTitle" />
+        </div>
+      ),
+      key: '0'
+    }
+  ]
+};
+
 const BuyItems: MenuProps = {
   items: [
     {
@@ -178,7 +206,23 @@ const pages: NavPageInfo[] = [
     key: "nacp",
     type: "logo",
     image: NacpLogo,
-    mImage: MNacpLogo
+    mImage: MNacpLogo,
+    eleItem: () => {
+      return (
+        <Dropdown
+          menu={HallweenNacpItems}
+          // @ts-ignore
+          getPopupContainer={() => document.getElementById('header-container')}
+          overlayClassName="hallween-items gallery-items"
+          onOpenChange={open => {
+            updateBodyOverflow(!open);
+          }}>
+          <div className="hallween-item title-text">
+            <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
+          </div>
+        </Dropdown>
+      )
+    }
   },
   {
     title: "ABOUT",
@@ -313,6 +357,24 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
 };
 
 const mPages: MenuItem[] = [
+  getItem((
+    <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
+  ), 'nacp', null, [
+    getItem((
+      <div onClick={() => {
+        handleHeaderClick('nacp');
+      }}>
+        <img src={NacpLogo} alt="NacpLogo" />
+      </div>
+    ), 'nacp'),
+    getItem((
+      <div onClick={() => {
+        window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervape/nacp/`)
+      }}>
+        <img src={HallweenTitle} alt="HallweenTitle" />
+      </div>
+    ), 'hallween-nacp')
+  ]),
   getItem('ABOUT', 'about'),
   getItem('STORY', 'story'),
   getItem('GALLERY', 'gallery', null, [
@@ -332,12 +394,12 @@ const mPages: MenuItem[] = [
   getItem('BRIDGE', 'bridge')
 ];
 
-const rootSubmenuKeys = ['gallery', 'buy'];
+const rootSubmenuKeys = ['nacp', 'gallery', 'buy'];
 
 export default function NavHeader(props: any) {
   const { activeIndex } = props;
   const [disableList, setDisableList] = useState(true);
-  const [openKeys, setOpenKeys] = useState(['gallery']);
+  const [openKeys, setOpenKeys] = useState(['nacp']);
 
   const { state, dispatch } = useContext(DataContext);
 
@@ -375,7 +437,7 @@ export default function NavHeader(props: any) {
             setHideHeader(true);
           }
         }
-        
+
         lastTop = currTop;
       }, 0);
     }
@@ -452,23 +514,19 @@ export default function NavHeader(props: any) {
                       dispatch({
                         type: Types.HideLoginModal
                       })
-                      handleHeaderClick(v.key);
+                      v.type == HeaderType.Navbar && handleHeaderClick(v.key);
                       window.scrollTo(0, 0);
                     }}
                   >
                     {v.type === 'logo'
-                      ? (
-                        <div className="nacp-logo">
-                          <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
-                        </div>
-                      )
+                      ? (v.eleItem && v.eleItem())
                       : v.type === 'hover' ? (v.eleItem && v.eleItem()) : (<div className="title-text">{v.title}</div>)}
                   </div>
                 );
               })
             ) : (
               <>
-                <div
+                {/* <div
                   className="nav-area logo"
                   onClick={() => {
                     setDisableList(true);
@@ -477,7 +535,7 @@ export default function NavHeader(props: any) {
                   <div className="nacp-logo">
                     <img className="icon-image" src={state.windowWidth <= 750 ? MNacpLogo : NacpLogo} alt="" />
                   </div>
-                </div>
+                </div> */}
                 <Menu
                   className="mobile-menu-items"
                   expandIcon={() => {
