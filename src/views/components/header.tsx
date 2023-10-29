@@ -369,7 +369,7 @@ const mPages: MenuItem[] = [
     ), 'nacp'),
     getItem((
       <div onClick={() => {
-        window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervape/nacp/`)
+        window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervape/nacp/`, '_block')
       }}>
         <img src={HallweenTitle} alt="HallweenTitle" />
       </div>
