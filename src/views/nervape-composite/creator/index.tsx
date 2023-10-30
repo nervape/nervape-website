@@ -918,11 +918,10 @@ export default function NacpCreator() {
                                     })}
                                     <div
                                         className={`cursor transition phase-tab done flex-center`}
-                                        style={{ background: `rgba(191, 71, 188, 0.10)` }}
                                         onClick={async () => {
                                             setShowDoneOperate(true);
                                         }}>
-                                        <div className="transition name" style={{ color: '#BF47BC' }}>DONE</div>
+                                        <div className="transition name">DONE</div>
                                     </div>
                                 </div>
 
