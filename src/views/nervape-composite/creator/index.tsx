@@ -258,6 +258,7 @@ export default function NacpCreator() {
         if (currLength == totalLength) {
             setIsLoadingEnded(true);
             setLoadingAssets(false);
+            setShowHalloweenInfo(true);
         }
 
         urls.forEach(url => {
@@ -267,6 +268,7 @@ export default function NacpCreator() {
                 if (currLength == totalLength) {
                     setIsLoadingEnded(true);
                     setLoadingAssets(false);
+                    setShowHalloweenInfo(true);
                 }
             })
         })
@@ -690,8 +692,7 @@ export default function NacpCreator() {
 
         setNacpShare({
             ...res,
-            share_link: `https://twitter.com/share?text=Happy Halloween 🎃! Check out my Spooky Nervape made with @Nervapes SpookyNervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→
-               &url=${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}&hashtags=Halloween,SpookyNervapes`
+            share_link: `https://twitter.com/share?text=Happy Halloween 🎃! Check out my Spooky Nervape made with @Nervapes SpookyNervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→ &url=${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}&hashtags=Halloween,SpookyNervapes`
         });
 
         setShowNacpShareDown(true);
@@ -838,7 +839,7 @@ export default function NacpCreator() {
 
     return (
         <>
-            <div className={`wallet-nacp-hallween-edit-container popup-container ${isLoadingEnded && 'show'}`}>
+            <div className={`wallet-nacp-hallween-edit-container popup-container ${isLoadingEnded && 'show'} ${showNacpShareDown && 'hide'}`}>
                 <div
                     className={`wallet-nacp-edit-content transition ${isFold && 'fold'}`}
                     onTouchStart={e => {
@@ -956,7 +957,7 @@ export default function NacpCreator() {
                                         </div>
                                     )}
                                     {selectedAssets.length > 0 ? (
-                                        <div className={`nacp-assets-save transition`} style={{ width: '1000px', height: '1000px' }} ref={elementRef}>
+                                        <div className={`nacp-assets-save transition`} style={{ width: '500px', height: '500px' }} ref={elementRef}>
                                             {selectedAssets.map((asset, index) => {
                                                 return (
                                                     <div

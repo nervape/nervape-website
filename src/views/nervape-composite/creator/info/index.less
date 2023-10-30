@@ -9,14 +9,15 @@
     transition: all 0.3s;
     z-index: 9999;
     background: rgba(0, 0, 0, 0.85);
+    overflow-y: scroll;
+    display: flex;
 
     .halloween-info-content {        
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        position: relative;
+        margin: 32px auto;
 
         img {
+            display: block;
             user-select: none;
             -webkit-user-drag: none;
         }

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import './index.less';
 import Halloween750 from '../../../../assets/nacp/hallween/halloween_750.svg';
 import Halloween375 from '../../../../assets/nacp/hallween/halloween_375.svg';

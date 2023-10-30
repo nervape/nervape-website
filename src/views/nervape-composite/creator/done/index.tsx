@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import './index.less';
 import SpookyTitle from '../../../../assets/nacp/hallween/hallween_title.svg';
 import ShareIcon from '../../../../assets/nacp/hallween/share_icon.svg';
@@ -6,9 +6,11 @@ import DownLoadIcon from '../../../../assets/nacp/hallween/download_icon.svg';
 import CopyIcon from '../../../../assets/nacp/hallween/copy.svg';
 import CopyToClipboard from "react-copy-to-clipboard";
 import { message } from "antd";
+import { DataContext } from "../../../../utils/utils";
 
 export default function NacpDone(props: any) {
     const { show, nacp, download } = props;
+    const { state, dispatch } = useContext(DataContext);
 
     return (
         <div className={`nacp-done-container ${show && 'show'}`}>
@@ -20,7 +22,7 @@ export default function NacpDone(props: any) {
                     <img src={nacp?.url} alt="" />
                 </div>
                 <div className="nacp-id">Spooky Nervape #{nacp?.nacp_id}</div>
-                <div className="desc">Congrats trick-or-treater ! You’ve created your own Spooky Nervape! Share the spookiness by following this link or clicking the SHARE button below.</div>
+                <div className="desc">Congrats trick-or-treater! You’ve created your own Spooky Nervape! Share the spookiness by following this link or clicking the SHARE button below.</div>
 
                 <CopyToClipboard
                     text={nacp?.share_link}
@@ -43,17 +45,19 @@ export default function NacpDone(props: any) {
                             <img src={ShareIcon} alt="DownLoadIcon" />
                             Share on X(Twiiter)
                         </div>
-                        <div className="download-btn cursor" onClick={() => {
-                            download && download(`Spooky Nervape #${nacp?.nacp_id}`);
-                        }}>
-                            <img src={DownLoadIcon} alt="DownLoadIcon" />
-                            Download IMG
-                        </div>
+                        {state.windowWidth > 750 && (
+                            <div className="download-btn cursor" onClick={() => {
+                                download && download(`Spooky Nervape #${nacp?.nacp_id}`);
+                            }}>
+                                <img src={DownLoadIcon} alt="DownLoadIcon" />
+                                Download IMG
+                            </div>
+                        )}
                     </div>
 
                     <div className="create-btn cursor" onClick={() => {
                         // Create Another Spooky Nervape
-                        window.location.reload();
+                        window.open(window.location.href, '_block');
                     }}>
                         Create Another Spooky Nervape
                     </div>
