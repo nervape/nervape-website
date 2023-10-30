@@ -126,15 +126,15 @@ const GalleryItems: MenuProps = {
       key: '-1'
     },
     {
-      // label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
-      label: (
-        <div onClick={() => {
-          handleHeaderClick('galleryCollection');
-          updateBodyOverflow(true);
-          document.getElementById('gallery-open-icon')?.setAttribute('class', 'header-open');
-          NavTool.fnJumpToPage('/nacp/nft');
-        }}>NACP</div>
-      ),
+      label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
+      // label: (
+      //   <div onClick={() => {
+      //     handleHeaderClick('galleryCollection');
+      //     updateBodyOverflow(true);
+      //     document.getElementById('gallery-open-icon')?.setAttribute('class', 'header-open');
+      //     NavTool.fnJumpToPage('/nacp/nft');
+      //   }}>NACP</div>
+      // ),
       key: '0'
     }
   ]
@@ -202,11 +202,12 @@ const BuyItems: MenuProps = {
       key: '-1'
     },
     {
-      label: (
-        <div onClick={() => {
-          window.open(CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS)
-        }}>NACP</div>
-      ),
+      label: NacpTooltip('buy-open-icon', 'buyNacp'),
+      // label: (
+      //   <div onClick={() => {
+      //     window.open(CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS)
+      //   }}>NACP</div>
+      // ),
       key: '0'
     }
   ]
@@ -336,7 +337,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
   },
   galleryNacp: {
     url: '/nacp/nft',
-    type: HeaderType.Navbar
+    type: HeaderType.Coming
   },
   buyCollectionCharacter: {
     url: 'https://nft.yokaiswap.com/nfts/collections/0xabD318eEc719a1b38d4eAfDa0b7465AB16EB1641',
@@ -356,7 +357,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
   },
   buyNacp: {
     url: CONFIG.NACP_OPENSEA_URL + CONFIG.NACP_ADDRESS,
-    type: HeaderType.Open
+    type: HeaderType.Coming
   },
   campaign: {
     url: '/campaign',
@@ -391,8 +392,8 @@ const mPages = [
   getItem('STORY', 'story'),
   getItem('GALLERY', 'gallery', null, [
     getItem('3D COLLECTION', 'galleryCollection'),
-    // getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp')
-    getItem('NACP', 'galleryNacp')
+    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp')
+    // getItem('NACP', 'galleryNacp')
   ]),
   getItem('BUY', 'buy', null, [
     getItem('3D COLLECTION', 'buyCollection', null, [
@@ -401,7 +402,8 @@ const mPages = [
       getItem('SCENE', 'buyCollectionScene'),
       getItem('SPECIAL', 'buyCollectionSpecial'),
     ]),
-    getItem('NACP', 'buyNacp')
+    // getItem('NACP', 'buyNacp')
+    getItem(MNacpTooltip('buyNacp', 'right'), 'buyNacp')
   ]),
   getItem('CAMPAIGN', 'campaign'),
   getItem('BRIDGE', 'bridge')

@@ -7,7 +7,7 @@
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s;
-    z-index: 9999;
+    z-index: 999;
     background: linear-gradient(180deg, #642468 0%, #190623 13.54%);
     overflow-y: scroll;
 
@@ -27,7 +27,7 @@
                 min-height: 347px;
                 aspect-ratio: 1;
                 max-height: 600px;
-                height: calc(100vh - 337.2px);
+                height: calc(100vh - 397.7px);
             }
         }
 
@@ -48,39 +48,85 @@
             font-style: normal;
             font-weight: 500;
             line-height: normal;
+            letter-spacing: 0;
         }
 
         .link-url {
             margin: 0 auto;
             width: 347px;
+            height: 31px;
+            line-height: 31px;
             border-radius: 12px;
             background: rgba(180, 188, 208, 0.10);
             color: rgba(255, 255, 255, 0.50);
             font-size: 12px;
             font-weight: 500;
-            padding: 8px 10px;
+            padding: 0 10px;
+
+            .text {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .copy {}
         }
 
-        .download-btn {
-            width: fit-content;
-            height: 30px;
-            line-height: 30px;
-            border-radius: 12px;
-            background: #BF47BC;
-            padding: 0 10px;
-            color: #FFFFFF;
-            font-size: 12px;
-            font-weight: 700;
+        .btn-groups {
+            width: 600px;
             margin: 32px auto;
 
-            img {
-                margin-right: 4px;
+            .download-btn,
+            .create-btn {
+                width: fit-content;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 12px;
+                background: #BF47BC;
+                padding: 0 10px;
+                color: #FFFFFF;
+                font-size: 12px;
+                font-weight: 700;
+
+                img {
+                    margin-right: 4px;
+                }
+            }
+
+            .download-btn {
+                &:last-child {
+                    margin-left: 8px;
+                }
+            }
+
+            .create-btn {
+                margin: 16px auto 0;
+                background: #E89900;
             }
         }
+
     }
 
     &.show {
         visibility: visible;
         opacity: 1;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .nacp-done-container {
+        .nacp-done-content { 
+            .nacp-url {
+                img {
+                    width: 347px;
+                    height: 347px;
+                }
+            }
+
+            .btn-groups {
+                width: 347px;
+            }
+        }
     }
 }

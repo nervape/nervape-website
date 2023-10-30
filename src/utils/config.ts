@@ -59,4 +59,6 @@ export const CONFIG = {
 
     // public path
     PUBLIC_PATH: import.meta.env.VITE_PUBLIC_PATH,
+
+    SPOOKY_SHARE_PATH: import.meta.env.VITE_SPOOKY_SHARE_PATH,
 }

@@ -2,15 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import './index.less';
 import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, NacpPhaseConfig, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
-import { NacpAssetSelected, NacpCategoryIcons, NacpPhaseLeftTime, NacpPhaseLockedIcon, NacpPhaseOpenIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
-import { DataContext, ownerOf, preloadImage, showErrorNotification, updateBodyOverflow } from "../../../utils/utils";
+import { NacpAssetSelected, NacpCategoryIcons, NacpPhaseLockedIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
+import { DataContext, preloadImage, updateBodyOverflow } from "../../../utils/utils";
 import { toPng } from 'html-to-image';
 import { Types } from "../../../utils/reducers";
-import { SiweMessage } from "siwe";
 import { useSignMessage } from "wagmi";
-import { godWoken } from "../../../utils/Chain";
 import { v4 as uuidv4 } from 'uuid';
-import DiscardIcon from '../../../assets/wallet/nacp/edit/discard.svg';
 import FoldIcon from '../../../assets/wallet/nacp/fold_icon.svg';
 import SpecialIcon from '../../../assets/wallet/nacp/special.svg';
 import BodyViewScaleIcon from '../../../assets/wallet/nacp/body.svg';
@@ -22,8 +19,6 @@ import Hallween1000 from '../../../assets/nacp/hallween/bg_1000.svg';
 import Hallween1200 from '../../../assets/nacp/hallween/bg_1200.svg';
 import Hallween1440 from '../../../assets/nacp/hallween/bg_1440.svg';
 import IIcon from '../../../assets/nacp/hallween/i_icon.svg';
-import ShareIcon from '../../../assets/nacp/hallween/share_icon.svg';
-import DownLoadIcon from '../../../assets/nacp/hallween/download_icon.svg';
 
 import lodash from 'lodash';
 import RedoIcon from '../../../assets/wallet/nacp/edit/redo.svg';
@@ -34,6 +29,9 @@ import { Tooltip } from "antd";
 import LoadingAssetsModal from "../../wallet/nacp/loading/loading";
 import useDebounce from "../../../hooks/useDebounce";
 import NacpDone from "./done";
+import OperatePopup from "../../components/operate-popup";
+import { CONFIG } from "../../../utils/config";
+import HalloweenInfoPopup from "./info";
 
 let touchYStart = 0;
 
@@ -43,6 +41,13 @@ export default function NacpCreator() {
     const setLoading = (flag: boolean) => {
         dispatch({
             type: flag ? Types.ShowLoading : Types.HideLoading
+        })
+    }
+
+    const setHideHeader = (value: boolean) => {
+        dispatch({
+            type: Types.IsVisibleHeader,
+            value: value
         })
     }
 
@@ -83,6 +88,8 @@ export default function NacpCreator() {
     const [bgImage, setBgImage] = useState('');
     const [nacpShare, setNacpShare] = useState<any>();
     const [showNacpShareDown, setShowNacpShareDown] = useState(false);
+    const [showDoneOperate, setShowDoneOperate] = useState(false);
+    const [showHalloweenInfo, setShowHalloweenInfo] = useState(false);
 
     // useIntervalAsync(updateNacpStatus, 1000);
 
@@ -683,7 +690,8 @@ export default function NacpCreator() {
 
         setNacpShare({
             ...res,
-            share_link: 'https://sample.net/?connection=driving&sleet=land#blade'
+            share_link: `https://twitter.com/share?text=Happy Halloween 🎃! Check out my Spooky Nervape made with @Nervapes SpookyNervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→
+               &url=${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}&hashtags=Halloween,SpookyNervapes`
         });
 
         setShowNacpShareDown(true);
@@ -709,7 +717,7 @@ export default function NacpCreator() {
     }
 
     // 生成文件并上传
-    const htmlToImageConvert = async (signData: { fields: any; url: string; } | null, ref: any, key: string) => {
+    const htmlToImageConvert = async (signData: { fields: any; url: string; } | null, ref: any, key: string, filename: string = '') => {
         await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
@@ -734,7 +742,7 @@ export default function NacpCreator() {
             await nervapeApi.NacpFileUpload(signData.url, formData);
         } else {
             let link = document.createElement('a');
-            link.download = 'NACP.png';
+            link.download = `${filename}.png`;
             link.href = dataUrl;
             link.click();
         }
@@ -821,6 +829,8 @@ export default function NacpCreator() {
     useEffect(() => {
         if (cameraContentRef.current && state.windowWidth <= 750) {
             cameraContentResize.observe(cameraContentRef.current);
+
+            setHideHeader(!isFold);
         }
     }, [cameraContentRef, isFold]);
 
@@ -851,7 +861,7 @@ export default function NacpCreator() {
                         <div className="title">{nacp?.name}</div>
                         <div className="btn-groups flex-align">
                             <button className="cursor btn info-btn" onClick={async () => {
-
+                                setShowHalloweenInfo(true);
                             }}>
                                 <img src={IIcon} alt="IIcon" />
                             </button>
@@ -907,10 +917,10 @@ export default function NacpCreator() {
                                         );
                                     })}
                                     <div
-                                        className={`cursor transition phase-tab flex-center`}
+                                        className={`cursor transition phase-tab done flex-center`}
                                         style={{ background: `rgba(191, 71, 188, 0.10)` }}
                                         onClick={async () => {
-                                            await signInWithEthereum();
+                                            setShowDoneOperate(true);
                                         }}>
                                         <div className="transition name" style={{ color: '#BF47BC' }}>DONE</div>
                                     </div>
@@ -1302,9 +1312,26 @@ export default function NacpCreator() {
             <LoadingAssetsModal
                 show={loadingAssets}
                 progress={progress}></LoadingAssetsModal>
-            <NacpDone show={showNacpShareDown} nacp={nacpShare} download={async () => {
-                await htmlToImageConvert(null, elementRef, 'key');
+            <NacpDone show={showNacpShareDown} nacp={nacpShare} download={async (filename: string) => {
+                await htmlToImageConvert(null, elementRef, 'key', filename);
             }}></NacpDone>
+            <OperatePopup
+                show={showDoneOperate}
+                cancelColor="#E89900"
+                confirmColor="#BF47BC"
+                closeText="BACK TO SPOOKINESS"
+                confirmText="DEADLY CERTAIN"
+                content="Wait my fellow ghoul 👻! You won’t be able to edit your Spooky Nervape after this. Are you deadly certain 💀? If so PROCEED🦇. If not, go BACK TO EDITOR 🪓."
+                close={() => {
+                    setShowDoneOperate(false);
+                }}
+                confirm={async () => {
+                    await signInWithEthereum();
+                    setShowDoneOperate(false);
+                }}></OperatePopup>
+            <HalloweenInfoPopup show={showHalloweenInfo} close={() => {
+                setShowHalloweenInfo(false);
+            }}></HalloweenInfoPopup>
         </>
     );
 }
