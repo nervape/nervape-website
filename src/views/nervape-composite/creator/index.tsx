@@ -1323,7 +1323,7 @@ export default function NacpCreator() {
                 confirmColor="#BF47BC"
                 closeText="BACK TO SPOOKINESS"
                 confirmText="DEADLY CERTAIN"
-                content="Wait my fellow ghoul 👻! You won’t be able to edit your Spooky Nervape after this. Are you deadly certain? If so click DEADLY CERTAIN💀. If not, go BACK TO SPOOKINESS to edit 🪓."
+                content="Wait my fellow ghoul 👻! You won’t be able to edit your Spooky Nervape after this. Are you deadly certain? If so click DEADLY CERTAIN 💀. If not, go BACK TO SPOOKINESS to edit 🪓."
                 close={() => {
                     setShowDoneOperate(false);
                 }}
