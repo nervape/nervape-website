@@ -22,7 +22,7 @@ export default function NacpDone(props: any) {
                     <img src={nacp?.url} alt="" />
                 </div>
                 <div className="nacp-id">Spooky Nervape #{nacp?.nacp_id}</div>
-                <div className="desc">Congrats trick-or-treater! You’ve created your own Spooky Nervape! Share the spookiness by following this link or clicking the SHARE button below.</div>
+                <div className="desc">What a boo-tiful Spooky Nervape! Share the spookiness by copying this link or clicking the SHARE button below.</div>
 
                 <CopyToClipboard
                     text={nacp?.share_link}
