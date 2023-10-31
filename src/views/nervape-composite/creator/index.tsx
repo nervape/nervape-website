@@ -693,7 +693,7 @@ export default function NacpCreator() {
 
         setNacpShare({
             ...res,
-            share_link: `https://twitter.com/share?text=Happy Halloween 🎃! Check out my Spooky Nervape made with @Nervapes SpookyNervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→ &url=${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}&hashtags=Halloween,SpookyNervapes`
+            share_link: `https://twitter.com/share?text=Happy Halloween🎃! Check out my Spooky Nervape made with @Nervapes Spooky Nervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→ &url=${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}&hashtags=Halloween,SpookyNervapes`
         });
 
         axios(`${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}`);

@@ -57,7 +57,7 @@ export default function NacpDone(props: any) {
 
                     <div className="create-btn cursor" onClick={() => {
                         // Create Another Spooky Nervape
-                        window.open(window.location.href, '_block');
+                        window.open(window.location.href, '_blank');
                     }}>
                         Create Another Spooky Nervape
                     </div>
