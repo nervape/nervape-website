@@ -156,7 +156,7 @@ const HallweenNacpItems: MenuProps = {
     {
       label: (
         <div onClick={() => {
-          window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervape/nacp/`, '_block');
+          window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervapes/nacp/`, '_block');
         }}>
           <img src={HallweenTitle} alt="HallweenTitle" />
         </div>
