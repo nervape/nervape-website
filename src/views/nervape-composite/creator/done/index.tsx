@@ -60,12 +60,12 @@ export default function NacpDone(props: any) {
                                 Create Another Spooky Nervape
                             </div>
                         )}
-                        {isMobile() && (
-                            <div className="m-tip">
-                                Press down on your Spooky Nervape to save the spookiness.
-                            </div>
-                        )}
                     </div>
+                    {isMobile() && (
+                        <div className="m-tip">
+                            Press down on your Spooky Nervape to save the spookiness.
+                        </div>
+                    )}
 
                     {!isMobile() && (
                         <div className="create-btn cursor" onClick={() => {
