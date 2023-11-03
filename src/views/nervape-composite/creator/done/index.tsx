@@ -6,7 +6,7 @@ import DownLoadIcon from '../../../../assets/nacp/hallween/download_icon.svg';
 import CopyIcon from '../../../../assets/nacp/hallween/copy.svg';
 import CopyToClipboard from "react-copy-to-clipboard";
 import { message } from "antd";
-import { DataContext } from "../../../../utils/utils";
+import { DataContext, isMobile } from "../../../../utils/utils";
 
 export default function NacpDone(props: any) {
     const { show, nacp, download } = props;
@@ -45,7 +45,7 @@ export default function NacpDone(props: any) {
                             <img src={ShareIcon} alt="DownLoadIcon" />
                             Share on X(Twiiter)
                         </div>
-                        {state.windowWidth > 750 && (
+                        {!isMobile() && (
                             <div className="download-btn cursor" onClick={() => {
                                 download && download(`Spooky Nervape #${nacp?.nacp_id}`);
                             }}>
