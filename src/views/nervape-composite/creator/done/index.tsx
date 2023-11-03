@@ -22,7 +22,7 @@ export default function NacpDone(props: any) {
                     <img src={nacp?.url} alt="" />
                 </div>
                 <div className="nacp-id">Spooky Nervape #{nacp?.nacp_id}</div>
-                <div className="desc">What a boo-tiful Spooky Nervape! Share the spookiness by copying this link or clicking the SHARE button below.</div>
+                <div className="desc">Congrats trick-or-treater 🎃! You’ve created your own Spooky Nervape! Share the spookiness by following this link or clicking the SHARE button below.</div>
 
                 <CopyToClipboard
                     text={nacp?.share_link}
@@ -45,22 +45,36 @@ export default function NacpDone(props: any) {
                             <img src={ShareIcon} alt="DownLoadIcon" />
                             Share on X(Twiiter)
                         </div>
-                        {!isMobile() && (
+                        {!isMobile() ? (
                             <div className="download-btn cursor" onClick={() => {
                                 download && download(`Spooky Nervape #${nacp?.nacp_id}`);
                             }}>
                                 <img src={DownLoadIcon} alt="DownLoadIcon" />
                                 Download IMG
                             </div>
+                        ) : (
+                            <div className="create-btn cursor" onClick={() => {
+                                // Create Another Spooky Nervape
+                                window.open(window.location.href, '_blank');
+                            }}>
+                                Create Another Spooky Nervape
+                            </div>
+                        )}
+                        {isMobile() && (
+                            <div className="m-tip">
+                                Press down on your Spooky Nervape to save the spookiness.
+                            </div>
                         )}
                     </div>
 
-                    <div className="create-btn cursor" onClick={() => {
-                        // Create Another Spooky Nervape
-                        window.open(window.location.href, '_blank');
-                    }}>
-                        Create Another Spooky Nervape
-                    </div>
+                    {!isMobile() && (
+                        <div className="create-btn cursor" onClick={() => {
+                            // Create Another Spooky Nervape
+                            window.open(window.location.href, '_blank');
+                        }}>
+                            Create Another Spooky Nervape
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
