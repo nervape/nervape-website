@@ -745,7 +745,7 @@ export default function NacpCreator() {
             await nervapeApi.NacpFileUpload(signData.url, formData);
         } else {
             let link = document.createElement('a');
-            link.download = `${filename}.png`;
+            link.download = `${filename}.jpeg`;
             link.href = dataUrl;
             link.click();
         }
