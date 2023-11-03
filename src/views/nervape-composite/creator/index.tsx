@@ -4,7 +4,7 @@ import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, NacpPhaseConfig, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpAssetSelected, NacpCategoryIcons, NacpPhaseLockedIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
 import { DataContext, preloadImage, updateBodyOverflow } from "../../../utils/utils";
-import { toPng } from 'html-to-image';
+import { toJpeg, toPng } from 'html-to-image';
 import { Types } from "../../../utils/reducers";
 import { useSignMessage } from "wagmi";
 import { v4 as uuidv4 } from 'uuid';
@@ -669,7 +669,7 @@ export default function NacpCreator() {
         const res = await nervapeApi.fnGetNonce(_metadata, state.currentAddress);
 
         const filename = res.fields.key + uuidv4();
-        res.fields.key = filename + '-spooky.png';
+        res.fields.key = filename + '-spooky.jpeg';
         res.fields.success_action_status = "200";
 
         const url = res.fields.host + res.fields.key;
@@ -721,11 +721,11 @@ export default function NacpCreator() {
 
     // 生成文件并上传
     const htmlToImageConvert = async (signData: { fields: any; url: string; } | null, ref: any, key: string, filename: string = '') => {
-        await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
-        await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
-        await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
+        // await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
+        // await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
+        // await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
 
-        const dataUrl = await toPng(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
+        const dataUrl = await toJpeg(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
 
         if (signData) {
             delete signData.fields.host;
