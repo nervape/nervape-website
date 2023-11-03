@@ -10,6 +10,7 @@
     z-index: 999;
     background: linear-gradient(180deg, #642468 0%, #190623 13.54%);
     overflow-y: scroll;
+    font-family: 'hoss-round' !important;
 
     .nacp-done-content {
         text-align: center;
@@ -89,6 +90,7 @@
                 font-weight: 300;
                 line-height: normal;
                 padding-top: 16px;
+                letter-spacing: 0px;
             }
 
             .download-btn,
@@ -102,7 +104,8 @@
                 color: #FFFFFF;
                 font-size: 12px;
                 font-weight: 700;
-
+                letter-spacing: 0px;
+                
                 img {
                     margin-right: 4px;
                 }
@@ -130,7 +133,7 @@
 
 @media screen and (max-width: 750px) {
     .nacp-done-container {
-        .nacp-done-content { 
+        .nacp-done-content {
             .nacp-url {
                 img {
                     width: 347px;
@@ -140,6 +143,25 @@
 
             .btn-groups {
                 width: 347px;
+
+                .download-btn {
+                    img {
+                        display: none;
+                    }
+                }
+
+                .download-btn,
+                .create-btn {
+                    padding: 0 8px;
+                }
+
+                .create-btn {
+                    margin-top: 0;
+                    margin-left: 8px;
+                    padding: 0 8px;
+                    flex: 1;
+                    font-family: 'hoss-round';
+                }
             }
         }
     }

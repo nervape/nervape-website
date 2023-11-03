@@ -43,7 +43,7 @@ export default function NacpDone(props: any) {
                             window.open(nacp?.share_link);
                         }}>
                             <img src={ShareIcon} alt="DownLoadIcon" />
-                            Share on X(Twiiter)
+                            Share On X(Twitter)
                         </div>
                         {!isMobile() ? (
                             <div className="download-btn cursor" onClick={() => {
