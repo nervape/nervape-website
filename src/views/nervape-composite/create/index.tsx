@@ -31,7 +31,14 @@ import NacpLogin from "../../components/nacp-login";
 import { SwitchChainSpan } from "../../components/switchChain";
 import { providers } from 'ethers';
 import { publicProvider } from 'wagmi/providers/public'
+import { initConfig, connect } from "@joyid/ckb";
 
+initConfig({
+  name: "Nervape",
+  network: "mainnet",
+  joyidAppURL: "https://app.joy.id",
+  logo: "https://www.nervape.com/assets/logo_nervape-6fc05221.svg"
+});
 
 export default function Nacp() {
 
@@ -191,6 +198,16 @@ export default function Nacp() {
         }
     }
 
+
+    const onConnect = async() => {
+        try {
+            const authData = await connect()
+            console.log(`JoyID user info:`, authData)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className="nacp-container main-container">
             {
@@ -214,6 +231,9 @@ export default function Nacp() {
                 tokenIds && (tokenIds as any).map(id => id.toNumber()).join(",")
             }
             </div>
+
+            <button onClick={onConnect}>Connect JoyID</button>
+
             {/*<NacpLogin show={showWalletError} logout={disconnectReload}></NacpLogin>*/}
         </div>
     );

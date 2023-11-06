@@ -84,6 +84,14 @@ export default function App() {
               </PageView>
             }
           />
+          <Route
+            path={`${CONFIG.PUBLIC_PATH}/nacp/create`}
+            element={
+              <PageView activeIndex={0} disableFooter={true}>
+                <Nacp></Nacp>
+              </PageView>
+            }>
+          </Route>
           {/* <Route
             path={`${CONFIG.PUBLIC_PATH}/about`}
             element={
