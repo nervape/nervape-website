@@ -18,6 +18,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     const [currNacpTab, setCurrNacpTab] = useState('ape');
     const [nacpApes, setNacpApes] = useState<NACP_APE[]>([]);
     const [nacpAssets, setNacpAssets] = useState<NACP_SPECIAL_ASSET[]>([]);
+    const [activityAssets, setActivityAssets] = useState<any[]>([]);
 
     useEffect(() => {
         let _apes: NACP_APE[] = [];
@@ -41,6 +42,7 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
     useEffect(() => {
         if (currNacpTab == 'asset') {
             fnGetStorySpecialAsset(state.currentAddress);
+            fnGetUserAsseta(state.currentAddress);
         }
     }, [currNacpTab]);
 
@@ -48,6 +50,17 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
         setLoading(true);
         const assets = await nervapeApi.fnGetStorySpecialAsset(address);
         setNacpAssets(assets);
+        setLoading(false);
+    }
+
+    async function fnGetUserAsseta(address: string) {
+        setLoading(true);
+        const assets = await nervapeApi.fnGetUserAsseta(address);
+        const _assets: NACP_SPECIAL_ASSET[] = assets.map((asset: any) => {
+            asset.asset.isObtain = true;
+            return asset.asset;
+        })
+        setActivityAssets(_assets);
         setLoading(false);
     }
 
@@ -121,6 +134,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
                     </div>
                 ) : (
                     <div className="nacp-content-assets flex-align">
+                        {activityAssets.map((asset, index) => {
+                            return <AssetItem asset={asset} key={index} ></AssetItem>
+                        })}
                         {nacpAssets.map((asset, index) => {
                             return <AssetItem asset={asset} key={index} ></AssetItem>
                         })}

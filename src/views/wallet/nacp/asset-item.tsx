@@ -57,7 +57,7 @@ export default function AssetItem(props: { asset: NACP_SPECIAL_ASSET; }) {
         setStatus(_status);
     }, [asset]);
 
-    if (!asset.isObtain && status == STORY_QUIZ_STATUS.OVER) return <></>;
+    if (asset.task_type != 'Activity' && !asset.isObtain && status == STORY_QUIZ_STATUS.OVER) return <></>;
 
     return (
         <div className="nacp-asset-item">

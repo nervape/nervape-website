@@ -203,6 +203,12 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
 
+  public async fnGetUserAsseta(address: string) {
+    const url = `${this.baseUrl}/pfp-asset/website/user/assets/${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+
   public async fnGetStorySpecialAsset(address: string) {
     const url = `${this.baseUrl}/story/website/story/special?address=${address}`;
     const res = await axios.get(url);
