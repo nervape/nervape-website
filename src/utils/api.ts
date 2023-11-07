@@ -185,3 +185,22 @@ export async function queryOatPoapInfo(campaignId: string) {
     const result = await response.json();
     return result.data;
 }
+
+/* 
+    having target epoch is 8760.
+    see details on https://explorer.nervos.org/halving
+*/
+export async function getCKBCurrentEpoch() {
+    const response = await fetch(CONFIG.CKB_NODE_RPC_URL as string, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: 1,
+            jsonrpc: '2.0',
+            method: 'get_current_epoch',
+            params: []
+        })
+    }).then(resp => resp.json());
+
+    return parseInt(response.result.number)
+}
