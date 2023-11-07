@@ -398,6 +398,12 @@ class NervapeApi {
     const res = await axios.post(url, { url: link });
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnSnookyNacpList() {
+    const url = `${this.baseUrl}/nacp/spooky/nacp/list`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnFrontLoginNonce() {
     const url = `${this.baseUrl}/auth/front/login/nonce`;
