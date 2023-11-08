@@ -29,6 +29,11 @@ class NervapeApi {
         });
       }
 
+      showErrorNotification({
+        message: 'Request Error',
+        description: data.message,
+        icon: '',
+      });
       throw `request failed:${data.message} from  ${url} `;
     }
     return data.data;

@@ -262,15 +262,8 @@ export default function ClaimPointMap(props: any) {
                 confirm={async () => {
                     // 确认选择坐标
                     const res = await nervapeApi.fnSnookyNacpUpdate({ ...apeInfo, point_x: selectPoint?.x, point_y: selectPoint?.y });
-                    if (res.code != 0) {
-                        showErrorNotification({
-                            message: 'Request Error',
-                            description: res.message
-                        });
-                    } else {
-                        await updateApe();
-                        setShowClaimPointMap(false);
-                    }
+                    await updateApe();
+                    setShowClaimPointMap(false);
                 }}
                 disabled={!selectPoint}></ClaimOperate>
         </div>
