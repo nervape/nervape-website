@@ -32,6 +32,7 @@ import { SwitchChainSpan } from "../../components/switchChain";
 import { providers } from 'ethers';
 import { publicProvider } from 'wagmi/providers/public'
 import { initConfig, connect } from "@joyid/ckb";
+import { getCKBCurrentEpoch } from "../../../utils/api";
 
 initConfig({
   name: "Nervape",
@@ -50,12 +51,17 @@ export default function Nacp() {
     })
 
     useEffect(() => {
-        const fetchOwner = async() => {
-            const owner = await contractReader?.ownerOf(1)
-            console.log("owner = ", owner)
+        // const fetchOwner = async() => {
+        //     const owner = await contractReader?.ownerOf(1)
+        //     console.log("owner = ", owner)
+        // }
+        // fetchOwner()
+
+        const fetchEpoch = async() => {
+            const epoch = await getCKBCurrentEpoch()
+            console.log("epoch = ", epoch)
         }
-        
-        fetchOwner()
+        fetchEpoch()
     }, [])
 
 
