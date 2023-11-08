@@ -93,7 +93,7 @@ export default function App() {
               </PageView>
             }
           />
-          {/* <Route
+          <Route
             path={`${CONFIG.PUBLIC_PATH}/about`}
             element={
               <PageView activeIndex={1} disableFooter={true}>
@@ -132,16 +132,16 @@ export default function App() {
                 <CampaignPage />
               </PageView>
             }
-          /> */}
-          {/* <Route
+          />
+          <Route
             path={`${CONFIG.PUBLIC_PATH}/wallet`}
             element={
               <PageView activeIndex={7} disableFooter={true}>
                 <WalletPage></WalletPage>
               </PageView>
             }>
-          </Route> */}
-          {/* <Route
+          </Route>
+          <Route
             path={`${CONFIG.PUBLIC_PATH}/nacp`}
             element={
               <PageView activeIndex={0} disableFooter={true}>
@@ -150,7 +150,7 @@ export default function App() {
             }>
           </Route>
           <Route
-            path={`${CONFIG.PUBLIC_PATH}/nacp/create`}
+            path={`${CONFIG.PUBLIC_PATH}create`}
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Nacp></Nacp>
@@ -164,7 +164,7 @@ export default function App() {
                 <NacpNFTPage></NacpNFTPage>
               </PageView>
             }>
-          </Route> */}
+          </Route>
           <Route path="*" element={<Navigate to={`${CONFIG.PUBLIC_PATH}`} />} />
         </Routes>
       </div>

@@ -31,7 +31,14 @@ import NacpLogin from "../../components/nacp-login";
 import { SwitchChainSpan } from "../../components/switchChain";
 import { providers } from 'ethers';
 import { publicProvider } from 'wagmi/providers/public'
+import { initConfig, connect } from "@joyid/ckb";
 
+initConfig({
+  name: "Nervape",
+  network: "mainnet",
+  joyidAppURL: "https://app.joy.id",
+  logo: "https://www.nervape.com/assets/logo_nervape-6fc05221.svg"
+});
 
 export default function Nacp() {
 
@@ -97,32 +104,32 @@ export default function Nacp() {
 
     const { data, isError, isLoading, isSuccess, signMessageAsync } = useSignMessage();
 
-    const createSiweMessage = async (_address: string, statement: string) => {
-        const res = await nervapeApi.fnGetNonce();
+    // const createSiweMessage = async (_address: string, statement: string) => {
+    //     const res = await nervapeApi.fnGetNonce('', '');
 
-        const message = new SiweMessage({
-            domain,
-            address: _address,
-            statement,
-            uri: origin,
-            version: '1',
-            chainId: godWokenTestnet.id,
-            nonce: res
-        });
+    //     const message = new SiweMessage({
+    //         domain,
+    //         address: _address,
+    //         statement,
+    //         uri: origin,
+    //         version: '1',
+    //         chainId: godWokenTestnet.id,
+    //         nonce: res
+    //     });
 
-        return message.prepareMessage();
-    }
+    //     return message.prepareMessage();
+    // }
 
-    const signInWithEthereum = async () => {
-        if (!address) return false;
+    // const signInWithEthereum = async () => {
+    //     if (!address) return false;
 
-        const message = await createSiweMessage(address, 'Sign in with Ethereum to the app.');
+    //     const message = await createSiweMessage(address, 'Sign in with Ethereum to the app.');
 
-        const signature = await signMessageAsync({ message });
+    //     const signature = await signMessageAsync({ message });
 
-        // const res = await nervapeApi.fnSendForVerify(message, signature);
-        // return res;
-    }
+    //     // const res = await nervapeApi.fnSendForVerify(message, signature);
+    //     // return res;
+    // }
 
     useEffect(() => {
         console.log(state);
@@ -191,6 +198,16 @@ export default function Nacp() {
         }
     }
 
+
+    const onConnect = async() => {
+        try {
+            const authData = await connect()
+            console.log(`JoyID user info:`, authData)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className="nacp-container main-container">
             {
@@ -214,6 +231,9 @@ export default function Nacp() {
                 tokenIds && (tokenIds as any).map(id => id.toNumber()).join(",")
             }
             </div>
+
+            <button onClick={onConnect}>Connect JoyID</button>
+
             {/*<NacpLogin show={showWalletError} logout={disconnectReload}></NacpLogin>*/}
         </div>
     );
