@@ -91,6 +91,7 @@ export default function NacpCreator() {
     const [showNacpShareDown, setShowNacpShareDown] = useState(false);
     const [showDoneOperate, setShowDoneOperate] = useState(false);
     const [showHalloweenInfo, setShowHalloweenInfo] = useState(false);
+    const [activityEnd, setActivityEnd] = useState(false);
 
     // useIntervalAsync(updateNacpStatus, 1000);
 
@@ -775,7 +776,7 @@ export default function NacpCreator() {
 
         // setIsLoadingEnded(false);
 
-        initDebounce();
+        !activityEnd && initDebounce();
     }, []);
 
     useEffect(() => {
@@ -837,38 +838,39 @@ export default function NacpCreator() {
         }
     }, [cameraContentRef, isFold]);
 
-    if (!phases || !phases.length) return <></>;
+    if ((!phases || !phases.length) && !activityEnd) return <></>;
 
     return (
         <>
-            <div className={`wallet-nacp-hallween-edit-container popup-container ${isLoadingEnded && 'show'} ${showNacpShareDown && 'hide'}`}>
-                <div
-                    className={`wallet-nacp-edit-content transition ${isFold && 'fold'}`}
-                    onTouchStart={e => {
-                        if (state.windowWidth <= 750) {
-                            touchYStart = e.changedTouches[0].clientY;
-                        }
-                    }}
-                    onTouchEnd={e => {
-                        if (state.windowWidth <= 750) {
-                            const end = e.changedTouches[0].clientY;
-                            if (end - touchYStart > 100) {
-                                setIsFold(false);
+            <div className={`wallet-nacp-hallween-edit-container popup-container ${(isLoadingEnded || activityEnd) && 'show'} ${showNacpShareDown && 'hide'}`}>
+                {!activityEnd ? (
+                    <div
+                        className={`wallet-nacp-edit-content transition ${isFold && 'fold'}`}
+                        onTouchStart={e => {
+                            if (state.windowWidth <= 750) {
+                                touchYStart = e.changedTouches[0].clientY;
                             }
-                        }
-                    }}>
-                    <div className="hallween-bg">
-                        <img src={bgImage} alt="" />
-                    </div>
-                    <div className="edit-header flex-align">
-                        <div className="title">{nacp?.name}</div>
-                        <div className="btn-groups flex-align">
-                            <button className="cursor btn info-btn" onClick={async () => {
-                                setShowHalloweenInfo(true);
-                            }}>
-                                <img src={IIcon} alt="IIcon" />
-                            </button>
-                            {/* {phases.filter(p => p.status == 1).length > 0 && (
+                        }}
+                        onTouchEnd={e => {
+                            if (state.windowWidth <= 750) {
+                                const end = e.changedTouches[0].clientY;
+                                if (end - touchYStart > 100) {
+                                    setIsFold(false);
+                                }
+                            }
+                        }}>
+                        <div className="hallween-bg">
+                            <img src={bgImage} alt="" />
+                        </div>
+                        <div className="edit-header flex-align">
+                            <div className="title">{nacp?.name}</div>
+                            <div className="btn-groups flex-align">
+                                <button className="cursor btn info-btn" onClick={async () => {
+                                    setShowHalloweenInfo(true);
+                                }}>
+                                    <img src={IIcon} alt="IIcon" />
+                                </button>
+                                {/* {phases.filter(p => p.status == 1).length > 0 && (
                                 <button className="cursor btn save-btn" onClick={async () => {
                                     await signInWithEthereum();
                                 }}>
@@ -882,31 +884,31 @@ export default function NacpCreator() {
                                 <img src={DownLoadIcon} alt="DownLoadIcon" />
                                 {state.windowWidth > 750 && 'Download'}
                             </button> */}
+                            </div>
                         </div>
-                    </div>
-                    <div className={`edit-content ${state.windowWidth > 750 && 'flex-align'}`}>
-                        <div className="left-content">
-                            <div className="content-container">
-                                <div className="phases-tabs flex-align">
-                                    {phases.map((phase, index) => {
-                                        return (
-                                            <div
-                                                key={index}
-                                                className={`cursor transition phase-tab flex-center ${index == selectPhase && 'selected'} ${phase.status !== 1 && 'locked'}`}
-                                                onTouchStart={() => {
-                                                    document.body.style.setProperty('--phase-tab-color', phaseConfig[index].extra_color);
-                                                }}
-                                                onMouseDown={() => {
-                                                    document.body.style.setProperty('--phase-tab-color', phaseConfig[index].extra_color);
-                                                }}
-                                                onClick={() => {
-                                                    if (index == selectPhase) return;
-                                                    setSelectPhase(index);
-                                                    setSelectCategory(phases[index].categories[0]._id);
-                                                    setCurrCategory(phases[index].categories[0]);
-                                                }}>
-                                                <div className="transition name">{phase.name}</div>
-                                                {/* {phase.status !== 1 ? (
+                        <div className={`edit-content ${state.windowWidth > 750 && 'flex-align'}`}>
+                            <div className="left-content">
+                                <div className="content-container">
+                                    <div className="phases-tabs flex-align">
+                                        {phases.map((phase, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className={`cursor transition phase-tab flex-center ${index == selectPhase && 'selected'} ${phase.status !== 1 && 'locked'}`}
+                                                    onTouchStart={() => {
+                                                        document.body.style.setProperty('--phase-tab-color', phaseConfig[index].extra_color);
+                                                    }}
+                                                    onMouseDown={() => {
+                                                        document.body.style.setProperty('--phase-tab-color', phaseConfig[index].extra_color);
+                                                    }}
+                                                    onClick={() => {
+                                                        if (index == selectPhase) return;
+                                                        setSelectPhase(index);
+                                                        setSelectCategory(phases[index].categories[0]._id);
+                                                        setCurrCategory(phases[index].categories[0]);
+                                                    }}>
+                                                    <div className="transition name">{phase.name}</div>
+                                                    {/* {phase.status !== 1 ? (
                                                     <div className="status-tag locked-tag">Locked</div>
                                                 ) : (
                                                     <div
@@ -916,108 +918,108 @@ export default function NacpCreator() {
                                                         {phaseLefts[index]?.countdownStr}
                                                     </div>
                                                 )} */}
-                                            </div>
-                                        );
-                                    })}
-                                    <div
-                                        className={`cursor transition phase-tab done flex-center`}
-                                        onClick={async () => {
-                                            setShowDoneOperate(true);
-                                        }}>
-                                        <div className="transition name">DONE</div>
-                                    </div>
-                                </div>
-
-                                <div ref={cameraContentRef} id="nacp-camera-content" className={`nacp-camera-content transition ${isFold && 'fold'}`}>
-                                    {selectedAssets.length > 0 ? (
-                                        <div className={`nacp-assets transition ${(selectPhase == 1 && viewScale) && 'scale'}`}>
-                                            {selectedAssets.map((asset, index) => {
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className="nacp-asset"
-                                                        style={{
-                                                            zIndex: asset.level
-                                                                ? asset.level
-                                                                : (asset.is_headwear_back
-                                                                    ? asset.category?.headwear_back_level
-                                                                    : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
-                                                        }}>
-                                                        <img src={`${asset.url}?v=3`} alt="" />
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    ) : (
-                                        <></>
-                                    )}
-                                    {selectPhase == 1 && (
-                                        <div className="view-scale cursor" onClick={() => {
-                                            setViewScale(!viewScale);
-                                        }}>
-                                            <img className="transition" src={viewScale ? BodyViewScaleIcon : HeadViewScaleIcon} alt="" />
-                                        </div>
-                                    )}
-                                    {selectedAssets.length > 0 ? (
-                                        <div className={`nacp-assets-save transition`} style={{ width: '500px', height: '500px' }} ref={elementRef}>
-                                            {selectedAssets.map((asset, index) => {
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className="nacp-asset"
-                                                        style={{
-                                                            zIndex: asset.level
-                                                                ? asset.level
-                                                                : (asset.is_headwear_back
-                                                                    ? asset.category?.headwear_back_level
-                                                                    : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
-                                                        }}>
-                                                        <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    ) : (
-                                        <></>
-                                    )}
-
-                                    {selectedAssets.length > 0 ? (
-                                        <div className={`nacp-assets-save scale transition`} ref={coverElementRef}>
-                                            {selectedAssets.map((asset, index) => {
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className="nacp-asset"
-                                                        style={{
-                                                            zIndex: asset.level
-                                                                ? asset.level
-                                                                : (asset.is_headwear_back
-                                                                    ? asset.category?.headwear_back_level
-                                                                    : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
-                                                        }}>
-                                                        <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    ) : (
-                                        <></>
-                                    )}
-                                </div>
-
-                                <div className="phase-name-operate flex-align">
-                                    <div className="name">{phases[selectPhase]?.name}</div>
-                                    <div className="btn-groups flex-align">
-                                        <button
-                                            disabled={phases[selectPhase].status !== 1 || !canReset}
-                                            className="cursor btn randomize-btn flex-center"
-                                            style={{ background: phaseConfig[selectPhase].color }}
-                                            onClick={() => {
-                                                fnReset();
+                                                </div>
+                                            );
+                                        })}
+                                        <div
+                                            className={`cursor transition phase-tab done flex-center`}
+                                            onClick={async () => {
+                                                setShowDoneOperate(true);
                                             }}>
-                                            <img src={ResetIcon} alt="ResetIcon" />
-                                        </button>
-                                        {/* <button
+                                            <div className="transition name">DONE</div>
+                                        </div>
+                                    </div>
+
+                                    <div ref={cameraContentRef} id="nacp-camera-content" className={`nacp-camera-content transition ${isFold && 'fold'}`}>
+                                        {selectedAssets.length > 0 ? (
+                                            <div className={`nacp-assets transition ${(selectPhase == 1 && viewScale) && 'scale'}`}>
+                                                {selectedAssets.map((asset, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="nacp-asset"
+                                                            style={{
+                                                                zIndex: asset.level
+                                                                    ? asset.level
+                                                                    : (asset.is_headwear_back
+                                                                        ? asset.category?.headwear_back_level
+                                                                        : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
+                                                            }}>
+                                                            <img src={`${asset.url}?v=3`} alt="" />
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {selectPhase == 1 && (
+                                            <div className="view-scale cursor" onClick={() => {
+                                                setViewScale(!viewScale);
+                                            }}>
+                                                <img className="transition" src={viewScale ? BodyViewScaleIcon : HeadViewScaleIcon} alt="" />
+                                            </div>
+                                        )}
+                                        {selectedAssets.length > 0 ? (
+                                            <div className={`nacp-assets-save transition`} style={{ width: '500px', height: '500px' }} ref={elementRef}>
+                                                {selectedAssets.map((asset, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="nacp-asset"
+                                                            style={{
+                                                                zIndex: asset.level
+                                                                    ? asset.level
+                                                                    : (asset.is_headwear_back
+                                                                        ? asset.category?.headwear_back_level
+                                                                        : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
+                                                            }}>
+                                                            <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <></>
+                                        )}
+
+                                        {selectedAssets.length > 0 ? (
+                                            <div className={`nacp-assets-save scale transition`} ref={coverElementRef}>
+                                                {selectedAssets.map((asset, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="nacp-asset"
+                                                            style={{
+                                                                zIndex: asset.level
+                                                                    ? asset.level
+                                                                    : (asset.is_headwear_back
+                                                                        ? asset.category?.headwear_back_level
+                                                                        : (asset.is_eyewear_back ? asset.category?.eyewear_back_level : asset.category?.level))
+                                                            }}>
+                                                            <img crossOrigin="anonymous" src={`${asset.url}?v=4`} alt="" />
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </div>
+
+                                    <div className="phase-name-operate flex-align">
+                                        <div className="name">{phases[selectPhase]?.name}</div>
+                                        <div className="btn-groups flex-align">
+                                            <button
+                                                disabled={phases[selectPhase].status !== 1 || !canReset}
+                                                className="cursor btn randomize-btn flex-center"
+                                                style={{ background: phaseConfig[selectPhase].color }}
+                                                onClick={() => {
+                                                    fnReset();
+                                                }}>
+                                                <img src={ResetIcon} alt="ResetIcon" />
+                                            </button>
+                                            {/* <button
                                             disabled={phases[selectPhase].status !== 1}
                                             className="cursor btn randomize-btn flex-center"
                                             style={{ background: phaseConfig[selectPhase].color, boxShadow: `3px 3px 0 ${phaseConfig[selectPhase].extra_color}` }}
@@ -1026,90 +1028,53 @@ export default function NacpCreator() {
                                             }}>
                                             <img src={RandomIcon} alt="RandomIcon" />
                                         </button> */}
-                                        <button
-                                            disabled={phases[selectPhase].status !== 1 || (assetsHistoryStack.length <= 1 || historyIndex == 0)}
-                                            className={`cursor btn undo-btn flex-center`}
-                                            style={{ background: phaseConfig[selectPhase].color }}
-                                            onClick={() => {
-                                                fnOperateBack();
-                                            }}>
-                                            <img src={UndoIcon} alt="UndoIcon" />
-                                        </button>
-                                        <button
-                                            disabled={phases[selectPhase].status !== 1 || (!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1)}
-                                            className={`cursor btn redo-btn flex-center`}
-                                            style={{ background: phaseConfig[selectPhase].color }}
-                                            onClick={() => {
-                                                fnOperateNext();
-                                            }}>
-                                            <img src={RedoIcon} alt="RedoIcon" />
-                                        </button>
+                                            <button
+                                                disabled={phases[selectPhase].status !== 1 || (assetsHistoryStack.length <= 1 || historyIndex == 0)}
+                                                className={`cursor btn undo-btn flex-center`}
+                                                style={{ background: phaseConfig[selectPhase].color }}
+                                                onClick={() => {
+                                                    fnOperateBack();
+                                                }}>
+                                                <img src={UndoIcon} alt="UndoIcon" />
+                                            </button>
+                                            <button
+                                                disabled={phases[selectPhase].status !== 1 || (!assetsHistoryStack.length || historyIndex == assetsHistoryStack.length - 1)}
+                                                className={`cursor btn redo-btn flex-center`}
+                                                style={{ background: phaseConfig[selectPhase].color }}
+                                                onClick={() => {
+                                                    fnOperateNext();
+                                                }}>
+                                                <img src={RedoIcon} alt="RedoIcon" />
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className={`phase-categories ${isFold && 'fold'}`}>
-                                    <div className="flex-align phase-category-c">
-                                        {phases[selectPhase]?.categories.map((category, index) => {
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className={`cursor transition phase-category ${selectCategory == category._id && 'selected'}`}
-                                                    onClick={() => {
-                                                        setSelectCategory(category._id);
-                                                        setCurrCategory(category);
-                                                        if (!isFold) setIsFold(true);
-                                                    }}>
-                                                    {NacpCategoryIcons.get(category.name)}
-                                                    <div className="select-asset-img">
-                                                        {phases[selectPhase].status != 1 && (
-                                                            <img className="category-locked" src={CategoryLocked} alt="" />
-                                                        )}
-                                                        {phases[selectPhase].status == 1 && category.selected && (
-                                                            <img className="category-selected" src={category.selected.thumb_url} />
-                                                        )}
+                                    <div className={`phase-categories ${isFold && 'fold'}`}>
+                                        <div className="flex-align phase-category-c">
+                                            {phases[selectPhase]?.categories.map((category, index) => {
+                                                return (
+                                                    <div
+                                                        key={index}
+                                                        className={`cursor transition phase-category ${selectCategory == category._id && 'selected'}`}
+                                                        onClick={() => {
+                                                            setSelectCategory(category._id);
+                                                            setCurrCategory(category);
+                                                            if (!isFold) setIsFold(true);
+                                                        }}>
+                                                        {NacpCategoryIcons.get(category.name)}
+                                                        <div className="select-asset-img">
+                                                            {phases[selectPhase].status != 1 && (
+                                                                <img className="category-locked" src={CategoryLocked} alt="" />
+                                                            )}
+                                                            {phases[selectPhase].status == 1 && category.selected && (
+                                                                <img className="category-selected" src={category.selected.thumb_url} />
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                    {state.windowWidth <= 750 && isFold && (
-                                        (currCategory.name == 'Mask' || currCategory.name == 'Suit') && (
-                                            <div className="mask-suit-tip flex-align">
-                                                {NacpCategoryIcons.get(currCategory?.name)}
-                                                <div className="text">
-                                                    {currCategory.name == 'Mask'
-                                                        ? 'Some masks may cover the whole head. When selected, all head assets except for the mask will be removed.'
-                                                        : 'Suits and costumes will replace both upper body and lower body assets.'}
-                                                </div>
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            className={`right-content ${!isFold && 'hide'} ${phases[selectPhase].status !== 1 && 'locked'}`}
-                            ref={rightRef}
-                            onTouchStart={e => e.stopPropagation()}
-                            onTouchEnd={e => e.stopPropagation()}>
-                            {phases[selectPhase].status !== 1 ? (
-                                <div className="locked-content">
-                                    <NacpPhaseLockedIcon></NacpPhaseLockedIcon>
-                                    <div className="locked">Locked!</div>
-                                    <div className="locked-tip">
-                                        {phases[selectPhase].status == 0
-                                            ? 'Sorry my fellow ape, the phase for this asset type has not started yet.'
-                                            : 'Sorry my fellow ape, the phase for this asset type is expired.'}
-                                    </div>
-                                </div>
-                            ) : (
-                                <>
-                                    {state.windowWidth > 750 && (
-                                        <div className={`curr-category-top ${!(state.windowWidth == 1000 || state.windowWidth == 1440) && 'flex-align'}`}>
-                                            <div className="curr-category flex-align">
-                                                {NacpCategoryIcons.get(currCategory?.name)}
-                                                <div className="category-name">{currCategory?.name}</div>
-                                            </div>
-                                            {(currCategory.name == 'Mask' || currCategory.name == 'Suit') && (
+                                                );
+                                            })}
+                                        </div>
+                                        {state.windowWidth <= 750 && isFold && (
+                                            (currCategory.name == 'Mask' || currCategory.name == 'Suit') && (
                                                 <div className="mask-suit-tip flex-align">
                                                     {NacpCategoryIcons.get(currCategory?.name)}
                                                     <div className="text">
@@ -1118,101 +1083,111 @@ export default function NacpCreator() {
                                                             : 'Suits and costumes will replace both upper body and lower body assets.'}
                                                     </div>
                                                 </div>
-                                            )}
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className={`right-content ${!isFold && 'hide'} ${phases[selectPhase].status !== 1 && 'locked'}`}
+                                ref={rightRef}
+                                onTouchStart={e => e.stopPropagation()}
+                                onTouchEnd={e => e.stopPropagation()}>
+                                {phases[selectPhase].status !== 1 ? (
+                                    <div className="locked-content">
+                                        <NacpPhaseLockedIcon></NacpPhaseLockedIcon>
+                                        <div className="locked">Locked!</div>
+                                        <div className="locked-tip">
+                                            {phases[selectPhase].status == 0
+                                                ? 'Sorry my fellow ape, the phase for this asset type has not started yet.'
+                                                : 'Sorry my fellow ape, the phase for this asset type is expired.'}
                                         </div>
-                                    )}
-
-                                    <div className="assets flex-align" ref={assetsRef}>
-                                        {currCategory.name !== 'Skin' && (
-                                            <div
-                                                className={`asset-item cursor flex-center ${isCollectionOpen && 'opacity'}`}
-                                                onClick={() => {
-                                                    if (isCollectionOpen) {
-                                                        mCollectionAsset && openOrCloseCollection(mCollectionAsset);
-                                                        return;
-                                                    }
-                                                    // 取消当前选择
-                                                    chooseAsset(undefined);
-                                                }}>
-                                                <img src={ClearIcon} alt="ClearIcon" />
+                                    </div>
+                                ) : (
+                                    <>
+                                        {state.windowWidth > 750 && (
+                                            <div className={`curr-category-top ${!(state.windowWidth == 1000 || state.windowWidth == 1440) && 'flex-align'}`}>
+                                                <div className="curr-category flex-align">
+                                                    {NacpCategoryIcons.get(currCategory?.name)}
+                                                    <div className="category-name">{currCategory?.name}</div>
+                                                </div>
+                                                {(currCategory.name == 'Mask' || currCategory.name == 'Suit') && (
+                                                    <div className="mask-suit-tip flex-align">
+                                                        {NacpCategoryIcons.get(currCategory?.name)}
+                                                        <div className="text">
+                                                            {currCategory.name == 'Mask'
+                                                                ? 'Some masks may cover the whole head. When selected, all head assets except for the mask will be removed.'
+                                                                : 'Suits and costumes will replace both upper body and lower body assets.'}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
-                                        {assets.map((asset, index) => {
-                                            let devStyle = {}
-                                            let filters: NacpAsset[] = [];
-                                            let selected: boolean = asset._id == currCategory.selected?._id;
-                                            let preNumber = 4;
 
-                                            if (state.windowWidth == 1000 || state.windowWidth == 1440) {
-                                                preNumber = 3;
-                                            }
-
-                                            if (!assetsRef.current) return <></>;
-
-                                            const assetsWidth = (assetsRef.current as unknown as HTMLElement).offsetWidth;
-                                            const preWidth = (assetsWidth - (preNumber - 1) * 10) / preNumber;
-
-                                            if (asset.is_collection) {
-                                                // 是否选中集合中的asset
-                                                filters = asset.includes?.filter(a => a._id == currCategory.selected?._id) || [];
-                                                selected = selected || filters.length > 0;
-
-                                                const j = Math.floor((index + 1) / preNumber) + 1;
-                                                const offsetTopPx = 10;
-
-                                                devStyle = { width: assetsWidth + 'px', top: ((preWidth + offsetTopPx) * j + 16) + 'px' };
-                                            }
-                                            return (
+                                        <div className="assets flex-align" ref={assetsRef}>
+                                            {currCategory.name !== 'Skin' && (
                                                 <div
-                                                    key={index}
-                                                    className={`cursor asset-item ${selected && 'selected'} ${!asset.can_use && 'cant-use'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
+                                                    className={`asset-item cursor flex-center ${isCollectionOpen && 'opacity'}`}
                                                     onClick={() => {
-                                                        if (isCollectionOpen && !asset.show_collection) {
+                                                        if (isCollectionOpen) {
                                                             mCollectionAsset && openOrCloseCollection(mCollectionAsset);
                                                             return;
                                                         }
-
-                                                        // 使用 asset 逻辑
-                                                        if (!asset.is_collection) {
-                                                            if (!asset.can_use) return;
-                                                            if (selected) return;
-                                                            chooseAsset(asset);
-                                                        }
-
-                                                        openOrCloseCollection(asset);
+                                                        // 取消当前选择
+                                                        chooseAsset(undefined);
                                                     }}>
+                                                    <img src={ClearIcon} alt="ClearIcon" />
+                                                </div>
+                                            )}
+                                            {assets.map((asset, index) => {
+                                                let devStyle = {}
+                                                let filters: NacpAsset[] = [];
+                                                let selected: boolean = asset._id == currCategory.selected?._id;
+                                                let preNumber = 4;
 
-                                                    {asset.can_use ? (
-                                                        // <NacpCategoryAssetItem filters={filters} asset={asset} selected={selected}></NacpCategoryAssetItem>
-                                                        <div className="asset-img-cover">
-                                                            <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img transition" />
-                                                            {selected && (
-                                                                <div className="equip-selected">
-                                                                    {NacpAssetSelected(phaseConfig[selectPhase].color)}
-                                                                </div>
-                                                            )}
-                                                            {asset.access_type == 'Special' && (
-                                                                <div className="special-asset-count flex-align" style={{ color: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
-                                                                    {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
-                                                                    {state.windowWidth > 1000 && (
-                                                                        <div className="special-text">{`${NacpSpecialAssetIcons.get(asset.task_type || '')?.text}`}</div>
-                                                                    )}
-                                                                    <div className="text">{`x${selected ? (asset.count || 0) - 1 : asset.count}`}</div>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    ) : (
-                                                        <Tooltip
-                                                            overlayClassName="nacp-category-asset-tooltip"
-                                                            color="#506077"
-                                                            placement="top"
-                                                            title="You don’t have this SagaOnly asset, or all of this SagaOnly asset are being used by other NACPs"
-                                                            mouseLeaveDelay={3}
-                                                            trigger={['hover', 'click']}
-                                                        >
-                                                            {/* <NacpCategoryAssetItem filters={filters} asset={asset} selected={selected}></NacpCategoryAssetItem> */}
+                                                if (state.windowWidth == 1000 || state.windowWidth == 1440) {
+                                                    preNumber = 3;
+                                                }
+
+                                                if (!assetsRef.current) return <></>;
+
+                                                const assetsWidth = (assetsRef.current as unknown as HTMLElement).offsetWidth;
+                                                const preWidth = (assetsWidth - (preNumber - 1) * 10) / preNumber;
+
+                                                if (asset.is_collection) {
+                                                    // 是否选中集合中的asset
+                                                    filters = asset.includes?.filter(a => a._id == currCategory.selected?._id) || [];
+                                                    selected = selected || filters.length > 0;
+
+                                                    const j = Math.floor((index + 1) / preNumber) + 1;
+                                                    const offsetTopPx = 10;
+
+                                                    devStyle = { width: assetsWidth + 'px', top: ((preWidth + offsetTopPx) * j + 16) + 'px' };
+                                                }
+                                                return (
+                                                    <div
+                                                        key={index}
+                                                        className={`cursor asset-item ${selected && 'selected'} ${!asset.can_use && 'cant-use'} ${(isCollectionOpen && !asset.show_collection) && 'opacity'}`}
+                                                        onClick={() => {
+                                                            if (isCollectionOpen && !asset.show_collection) {
+                                                                mCollectionAsset && openOrCloseCollection(mCollectionAsset);
+                                                                return;
+                                                            }
+
+                                                            // 使用 asset 逻辑
+                                                            if (!asset.is_collection) {
+                                                                if (!asset.can_use) return;
+                                                                if (selected) return;
+                                                                chooseAsset(asset);
+                                                            }
+
+                                                            openOrCloseCollection(asset);
+                                                        }}>
+
+                                                        {asset.can_use ? (
+                                                            // <NacpCategoryAssetItem filters={filters} asset={asset} selected={selected}></NacpCategoryAssetItem>
                                                             <div className="asset-img-cover">
-                                                                <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
+                                                                <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img transition" />
                                                                 {selected && (
                                                                     <div className="equip-selected">
                                                                         {NacpAssetSelected(phaseConfig[selectPhase].color)}
@@ -1228,55 +1203,87 @@ export default function NacpCreator() {
                                                                     </div>
                                                                 )}
                                                             </div>
-                                                        </Tooltip>
-                                                    )}
-
-                                                    {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (
-                                                        <div
-                                                            className={`asset-collection ${selected && 'selected'}`}
-                                                            style={devStyle}
-                                                            onClick={() => {
-                                                                openOrCloseCollection(asset);
-                                                            }}>
-                                                            <div className="collection-imgs flex-align">
-                                                                {asset.includes?.map((_asset, _index) => {
-                                                                    return (
-                                                                        <div
-                                                                            className={`cursor collection-item ${!_asset.can_use && 'cant-use'} ${_asset._id == currCategory.selected?._id && 'selected'}`}
-                                                                            key={_index}
-                                                                            onClick={e => {
-                                                                                if (!_asset.can_use) return;
-                                                                                if (_asset._id == currCategory.selected?._id) return;
-                                                                                chooseAsset(_asset);
-                                                                                e.stopPropagation();
-                                                                            }}>
-                                                                            <div className="collection-img-cover">
-                                                                                <img src={_asset.thumb_url} alt="CollectionImg" className="collection-img transition" />
-                                                                                {_asset._id == currCategory.selected?._id && (
-                                                                                    <div className="equip-selected">
-                                                                                        {NacpAssetSelected(phaseConfig[selectPhase].color)}
-                                                                                    </div>
-                                                                                )}
-                                                                                {_asset.access_type == 'Special' && (
-                                                                                    <img src={SpecialIcon} className="special-icon" alt="SpecialIcon" />
-                                                                                )}
-                                                                            </div>
-
+                                                        ) : (
+                                                            <Tooltip
+                                                                overlayClassName="nacp-category-asset-tooltip"
+                                                                color="#506077"
+                                                                placement="top"
+                                                                title="You don’t have this SagaOnly asset, or all of this SagaOnly asset are being used by other NACPs"
+                                                                mouseLeaveDelay={3}
+                                                                trigger={['hover', 'click']}
+                                                            >
+                                                                {/* <NacpCategoryAssetItem filters={filters} asset={asset} selected={selected}></NacpCategoryAssetItem> */}
+                                                                <div className="asset-img-cover">
+                                                                    <img src={filters.length ? filters[0].thumb_url : asset.thumb_url} alt="AssetImg" className="asset-img" />
+                                                                    {selected && (
+                                                                        <div className="equip-selected">
+                                                                            {NacpAssetSelected(phaseConfig[selectPhase].color)}
                                                                         </div>
-                                                                    );
-                                                                })}
+                                                                    )}
+                                                                    {asset.access_type == 'Special' && (
+                                                                        <div className="special-asset-count flex-align" style={{ color: `${NacpSpecialAssetIcons.get(asset.task_type || '')?.backgroundColor}` }}>
+                                                                            {NacpSpecialAssetIcons.get(asset.task_type || '')?.url}
+                                                                            {state.windowWidth > 1000 && (
+                                                                                <div className="special-text">{`${NacpSpecialAssetIcons.get(asset.task_type || '')?.text}`}</div>
+                                                                            )}
+                                                                            <div className="text">{`x${selected ? (asset.count || 0) - 1 : asset.count}`}</div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            </Tooltip>
+                                                        )}
+
+                                                        {asset.is_collection && asset.show_collection && state.windowWidth > 750 && (
+                                                            <div
+                                                                className={`asset-collection ${selected && 'selected'}`}
+                                                                style={devStyle}
+                                                                onClick={() => {
+                                                                    openOrCloseCollection(asset);
+                                                                }}>
+                                                                <div className="collection-imgs flex-align">
+                                                                    {asset.includes?.map((_asset, _index) => {
+                                                                        return (
+                                                                            <div
+                                                                                className={`cursor collection-item ${!_asset.can_use && 'cant-use'} ${_asset._id == currCategory.selected?._id && 'selected'}`}
+                                                                                key={_index}
+                                                                                onClick={e => {
+                                                                                    if (!_asset.can_use) return;
+                                                                                    if (_asset._id == currCategory.selected?._id) return;
+                                                                                    chooseAsset(_asset);
+                                                                                    e.stopPropagation();
+                                                                                }}>
+                                                                                <div className="collection-img-cover">
+                                                                                    <img src={_asset.thumb_url} alt="CollectionImg" className="collection-img transition" />
+                                                                                    {_asset._id == currCategory.selected?._id && (
+                                                                                        <div className="equip-selected">
+                                                                                            {NacpAssetSelected(phaseConfig[selectPhase].color)}
+                                                                                        </div>
+                                                                                    )}
+                                                                                    {_asset.access_type == 'Special' && (
+                                                                                        <img src={SpecialIcon} className="special-icon" alt="SpecialIcon" />
+                                                                                    )}
+                                                                                </div>
+
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </>
-                            )}
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="activity-end-container">
+                        
+                    </div>
+                )}
 
                 <div className={`popup-container m-collection-assets-content ${state.windowWidth <= 750 && isCollectionOpen && 'show'}`} onClick={() => {
                     if (mCollectionAsset)
