@@ -1,0 +1,122 @@
+.user-info-container {
+    position: fixed;
+    top: 32px;
+    left: 32px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.80);
+    width: 240px;
+    font-family: 'hoss-round';
+    letter-spacing: 0;
+    font-size: 12px;
+
+    .login-btn,
+    .disconnect-btn {
+        padding: 0 10px;
+        height: 22px;
+        line-height: 22px;
+        font-weight: 700;
+        border-radius: 12px;
+        border: 1px solid #FFFFFF;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .not-logged-in {
+        font-weight: 300;
+        color: #FFFFFF;
+
+        .text {
+            flex: 1;
+        }
+    }
+
+    .has-logged {
+        color: #FFFFFF;
+
+        .wallet-info-content {
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+
+            .joyid-address {
+                flex: 1;
+                padding-left: 4px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .ape-info-content {
+            padding-top: 16px;
+
+            .my-ape {
+                padding-top: 4px;
+
+                .title {
+                    flex: 1;
+                }
+            }
+
+            .ape-image {
+                margin-top: 12px;
+                border-radius: 8px;
+                background: #838383;
+                width: 100%;
+                aspect-ratio: 1;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .btn-groups {
+                margin-top: 16px;
+
+                .btn {
+                    width: 100%;
+                    text-align: center;
+                    height: 30px;
+                    line-height: 30px;
+                    border-radius: 12px;
+                    background: #BF47BC;
+                    padding: 0 10px;
+                    color: #FFFFFF;
+                    font-size: 12px;
+                    font-weight: 700;
+                    letter-spacing: 0px;
+
+                    &:first-child {
+                        margin-bottom: 8px;
+                    }
+
+                    img {
+                        margin-right: 4px;
+                    }
+                }
+
+                .claim-btn {
+                    background: #F44D37;
+                }
+
+                .tip {
+                    margin-top: 16px;
+                    padding: 0 11px;
+                    position: relative;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        top: 7px;
+                        left: 0px;
+                        width: 5px;
+                        height: 5px;
+                        background: #3CC68A;
+                        border-radius: 50%;
+                        
+                    }
+                }
+            }
+        }
+    }
+}

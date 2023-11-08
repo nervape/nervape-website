@@ -8,7 +8,8 @@ import CoinbaseIcon from '../assets/images/icons/coinbase.svg';
 export enum LoginWalletType {
     UNIPASS_V3 = 'UNIPASS_V3',
     METAMASK = 'METAMASK',
-    WALLET_CONNECT = 'WALLETCONNECT'
+    WALLET_CONNECT = 'WALLETCONNECT',
+    JOYID = 'JOYID'
 }
 
 export type WALLET_CONNECT = {
@@ -33,9 +34,14 @@ IconMap.set('Coinbase Wallet', CoinbaseIcon);
 
 const WalletStorageKey = 'Wallet_Connect_Info';
 const WalletLoginTypeKey = 'Wallet_Connect_Type';
+const WalletJoyID = 'Wallet_JOYID';
 
 export function getStorage() {
     return localStorage.getItem(WalletStorageKey);
+}
+
+export function getJoyIDStorage() {
+    return localStorage.getItem(WalletJoyID);
 }
 
 export function setStorage(info: WALLET_CONNECT) {
@@ -43,8 +49,17 @@ export function setStorage(info: WALLET_CONNECT) {
     localStorage.setItem(WalletStorageKey, JSON.stringify(_info));
 }
 
+export function setJoyIDStorage(info: WALLET_CONNECT) {
+    const _info: WALLET_CONNECT = { ...info, expiredAt: new Date().getTime() + 30 * 60 * 1000 };
+    localStorage.setItem(WalletJoyID, JSON.stringify(_info));
+}
+
 export function clearStorage() {
     localStorage.removeItem(WalletStorageKey);
+}
+
+export function clearJoyIDStorage() {
+    localStorage.removeItem(WalletJoyID);
 }
 
 export function getLoginType() {

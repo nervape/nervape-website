@@ -14,6 +14,8 @@
 
     .nacp-done-content {
         text-align: center;
+        width: 600px;
+        margin: 0 auto;
 
         .spooky-title {
             margin-top: 32px;
@@ -43,6 +45,12 @@
             font-style: normal;
             font-weight: 700;
             line-height: normal;
+        }
+
+        .epoch {
+            color: rgba(255, 255, 255, 0.50);
+            font-size: 16px;
+            padding-top: 8px;
         }
 
         .desc {
@@ -78,9 +86,29 @@
             .copy {}
         }
 
+        .download-btn,
+        .create-btn,
+        .claim-btn {
+            width: fit-content;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 12px;
+            background: #BF47BC;
+            padding: 0 10px;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0px;
+
+            img {
+                margin-right: 4px;
+            }
+        }
+
         .btn-groups {
             width: 600px;
-            margin: 32px auto;
+            margin: 0 auto 32px;
+            padding-top: 8px;
 
             .m-tip {
                 color: rgba(255, 255, 255, 0.60);
@@ -93,24 +121,6 @@
                 letter-spacing: 0px;
             }
 
-            .download-btn,
-            .create-btn {
-                width: fit-content;
-                height: 30px;
-                line-height: 30px;
-                border-radius: 12px;
-                background: #BF47BC;
-                padding: 0 10px;
-                color: #FFFFFF;
-                font-size: 12px;
-                font-weight: 700;
-                letter-spacing: 0px;
-                
-                img {
-                    margin-right: 4px;
-                }
-            }
-
             .download-btn {
                 &:last-child {
                     margin-left: 8px;
@@ -120,6 +130,31 @@
             .create-btn {
                 margin: 16px auto 0;
                 background: #E89900;
+            }
+        }
+
+        .what-next {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+
+            .title {
+                color: #FFF;
+                font-size: 20px;
+                font-weight: 700;
+                margin-bottom: 16px;
+            }
+
+            .claim-btn {
+                background: #F44D37;
+                margin: 0 auto;
+            }
+
+            .skip-tip {
+                padding-top: 16px;
+                color: rgba(255, 255, 255, 0.50);
+                font-size: 12px;
+                font-weight: 500;
+                padding-bottom: 32px;
             }
         }
 

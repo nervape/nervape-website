@@ -5,6 +5,21 @@ import { Tooltip } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
 import PointMapDetail from "./detail";
 import useDebounce from "../../../hooks/useDebounce";
+import UserInfo from "./user-info";
+import { LoginWalletType, WALLET_CONNECT, clearJoyIDStorage, getJoyIDStorage, setJoyIDStorage } from "../../../utils/Wallet";
+import { initConfig, connect } from "@joyid/ckb";
+import NacpCreator from "../creator";
+import HalloweenInfoPopup from "../creator/info";
+import { getCKBCurrentEpoch } from "../../../utils/api";
+import EpochHeader from "./epoch-header";
+import ClaimPointMap from "./claim";
+
+initConfig({
+    name: "Nervape",
+    network: "mainnet",
+    joyidAppURL: "https://app.joy.id",
+    logo: "https://www.nervape.com/assets/logo_nervape-6fc05221.svg"
+});
 
 export class PointMapItem {
     point_x: number = 0;
@@ -13,6 +28,7 @@ export class PointMapItem {
     url?: string;
     epoch?: number;
     open?: boolean = false;
+    nacp_id?: number;
 }
 const width = 3464;
 const height = 3464;
@@ -27,13 +43,20 @@ export default function PointMap(_props: any) {
     const [lastPointermove, setLastPointermove] = useState({ x: 0, y: 0 });
     const [minScale, setMinScale] = useState(1);
     const [maxScale, setMaxScale] = useState(1);
+    const [epoch, setEpoch] = useState(0);
     const [mobile, setIsMobile] = useState(false);
     const [isMove, setIsMove] = useState(false);
+    const [showNacpCreator, setShowNacpCreator] = useState(false);
     const [showPointDetail, setShowPointDetail] = useState(false);
+    const [showHalloweenInfo, setShowHalloweenInfo] = useState(false);
     const [pointDetail, setPointDetail] = useState<PointMapItem>(new PointMapItem());
+    const [loginInfo, setLoginInfo] = useState<WALLET_CONNECT | null>();
+    const [apeInfo, setApeInfo] = useState<PointMapItem>();
+    const [showClaimPointMap, setShowClaimPointMap] = useState(false);
 
     const initDebounce = useDebounce(async () => {
         initData();
+        fetchEpoch();
     }, 100);
 
     const initData = async () => {
@@ -80,6 +103,12 @@ export default function PointMap(_props: any) {
         setIsMobile(isMobile());
     }
 
+    const fetchEpoch = async() => {
+        const _epoch = await getCKBCurrentEpoch();
+        console.log("epoch = ", _epoch);
+        setEpoch(_epoch);
+    }
+    
     const fnSnookyNacpList = async () => {
         let res = await nervapeApi.fnSnookyNacpList();
         setNacps(res);
@@ -87,9 +116,55 @@ export default function PointMap(_props: any) {
         return res;
     }
 
+    const fnGetAddressApe = async (address: string) => {
+        const res = await nervapeApi.fnSnookyNacpByAddress(address);
+        setApeInfo(res);
+    }
+
+    const onConnect = async () => {
+        try {
+            const authData = await connect();
+            console.log(`JoyID user info:`, authData);
+
+            setJoyIDStorage({
+                type: LoginWalletType.JOYID,
+                address: authData.address
+            });
+            initLogin();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const disconnect = () => {
+        setLoginInfo(null);
+        clearJoyIDStorage();
+    }
+
+    async function initLogin() {
+        const _storage = getJoyIDStorage();
+        if (!_storage) {
+            return;
+        }
+
+        const _storageJson: WALLET_CONNECT = JSON.parse(_storage);
+        setLoginInfo({
+            type: LoginWalletType.JOYID,
+            address: _storageJson.address
+        });
+    }
+
     useEffect(() => {
+        initLogin();
         initDebounce();
+        setShowHalloweenInfo(true);
     }, []);
+
+    useEffect(() => {
+        if (!loginInfo?.address) return;
+
+        fnGetAddressApe(loginInfo?.address);
+    }, [loginInfo]);
 
     const handleScroll = (e: any) => {
         if (mobile) return;
@@ -212,8 +287,8 @@ export default function PointMap(_props: any) {
                                                         <div className="hover-right">
                                                             <div className="position-text">{`(${_p.point_x}, ${_p.point_y})`}</div>
                                                             <div className="status" style={{
-                                                                background: state.currentAddress.toLocaleLowerCase() == _p.address ? '#6FBA80' : '#C6A83D'
-                                                            }}>{state.currentAddress.toLocaleLowerCase() == _p.address ? 'owned by me' : 'occupied'}</div>
+                                                                background: loginInfo?.address == _p.address ? '#6FBA80' : '#C6A83D'
+                                                            }}>{loginInfo?.address == _p.address ? 'owned by me' : 'occupied'}</div>
 
                                                             <div className="epoch-title">Epoch</div>
                                                             <div className="epoch">{_p.epoch}</div>
@@ -272,13 +347,56 @@ export default function PointMap(_props: any) {
                     })}
                 </div>
             </div>
-
+            <UserInfo
+                onConnect={onConnect}
+                loginInfo={loginInfo as WALLET_CONNECT}
+                createApe={() => { 
+                    setShowNacpCreator(true);
+                }}
+                apeInfo={apeInfo as PointMapItem}
+                disconnect={disconnect}
+                claimBlock={() => {
+                    setShowClaimPointMap(true);
+                }}></UserInfo>
             <PointMapDetail
                 show={showPointDetail}
                 point={pointDetail}
+                loginInfo={loginInfo as WALLET_CONNECT}
                 close={() => {
                     setShowPointDetail(false);
+                }}
+                updateApe={() => {
+                    setShowPointDetail(false);
+                    setShowNacpCreator(true);
                 }}></PointMapDetail>
+            <NacpCreator 
+                show={showNacpCreator} 
+                loginInfo={loginInfo}
+                skipStep={async () => {
+                    loginInfo?.address && await fnGetAddressApe(loginInfo?.address);
+                    setShowNacpCreator(false);
+                }}
+                setShowClaimPointMap={(_nacp: PointMapItem) => {
+                    setApeInfo(_nacp);
+                    setShowNacpCreator(false);
+                    setShowClaimPointMap(true);
+                }}
+                epoch={epoch}
+                setShowHalloweenInfo={setShowHalloweenInfo}></NacpCreator>
+            <HalloweenInfoPopup show={showHalloweenInfo} close={() => {
+                setShowHalloweenInfo(false);
+            }}></HalloweenInfoPopup>
+
+            <EpochHeader epoch={epoch}></EpochHeader>
+            <ClaimPointMap 
+                show={showClaimPointMap} 
+                setShowClaimPointMap={setShowClaimPointMap} 
+                apeInfo={apeInfo}
+                updateApe={async () => {
+                    loginInfo?.address && await fnGetAddressApe(loginInfo?.address);
+                }}
+                loginInfo={loginInfo}></ClaimPointMap>
         </div>
     );
 }
+

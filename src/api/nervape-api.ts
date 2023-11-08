@@ -6,6 +6,7 @@ import { CONFIG } from "../utils/config";
 import htmr from "htmr";
 import { getWindowWidthRange, showErrorNotification } from "../utils/utils";
 import AssetTypeIcon from '../assets/icons/asset_type_icon.svg';
+import { PointMapItem } from "../views/nervape-composite/point-map";
 
 class NervapeApi {
   //@ts-ignore
@@ -393,14 +394,26 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
   
-  public async fnSnookyNacpSave(link: string) {
+  public async fnSnookyNacpSave(link: string, address: string, epoch: number) {
     const url = `${this.baseUrl}/nacp/snooky/save`;
-    const res = await axios.post(url, { url: link });
+    const res = await axios.post(url, { url: link, address, epoch });
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnSnookyNacpUpdate(ape: PointMapItem) {
+    const url = `${this.baseUrl}/nacp/spooky/update/${ape.nacp_id}`;
+    const res = await axios.post(url, { ...ape });
     return this._fnDealResponse(res, url);
   }
   
   public async fnSnookyNacpList() {
     const url = `${this.baseUrl}/nacp/spooky/nacp/list`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnSnookyNacpByAddress(address: string) {
+    const url = `${this.baseUrl}/nacp/spooky/nacp/info/${address}`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }

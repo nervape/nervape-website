@@ -1,0 +1,68 @@
+.claim-operate-container {
+    position: fixed;
+    width: 347px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 16px 16px 0px 0px;
+    background: rgba(0, 0, 0, 0.80);
+    z-index: 1001;
+    padding: 16px;
+    color: #FFFFFF;
+
+    .confirm-content {
+        text-align: center;
+        letter-spacing: 0;
+
+        .title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: normal;
+        }
+
+        .desc {
+            font-size: 12px;
+            line-height: 24px;
+            padding-bottom: 20px;
+        }
+
+        .btn-groups {
+            display: flex;
+            justify-content: center;
+
+            .btn {
+                width: fit-content;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 12px;
+                padding: 0 10px;
+                color: #ffffff;
+                font-size: 12px;
+                font-weight: 700;
+                cursor: pointer;
+            }
+
+            .cancel {
+                background: #378EF4;
+                margin-right: 8px;
+            }
+
+            .confirm {
+                background: #f44d37;
+            }
+
+            .confirm:hover {
+                background: #e45c4a;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .claim-operate-container {
+        .confirm-content {
+            width: 347px;
+        }
+    }
+}

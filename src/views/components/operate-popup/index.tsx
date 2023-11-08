@@ -21,14 +21,14 @@ export default function OperatePopup(props: any) {
                 </div>
                 <div className="btn-groups">
                     {!hideClose && (
-                        <button className="cancel btn" style={{background: cancelColor}} onClick={close}>
+                        <div className="cursor cancel btn" style={{background: cancelColor}} onClick={close}>
                             {closeText || 'NO'}
-                        </button>
+                        </div>
                     )}
                     {!hideConfirm && (
-                        <button className="confirm btn" style={{background: confirmColor}} onClick={confirm}>
+                        <div className="cursor confirm btn" style={{background: confirmColor}} onClick={confirm}>
                             {confirmText || 'YES'}
-                        </button>
+                        </div>
                     )}
                 </div>
             </div>

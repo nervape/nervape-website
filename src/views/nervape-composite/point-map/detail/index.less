@@ -50,7 +50,8 @@
                 margin-left: 16px;
             }
 
-            .epoch, .owner {
+            .epoch,
+            .owner {
                 margin-top: 16px;
                 font-size: 16px;
                 font-weight: 500;
@@ -58,6 +59,28 @@
 
             .owner {
                 margin-top: 8px;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .btn-groups {
+                padding-top: 32px;
+                flex-direction: row-reverse;
+                
+                .update-btn {
+                    height: 30px;
+                    line-height: 30px;
+                    padding: 0 10px;
+                    border-radius: 12px;
+                    background: var(--Orange, #F44D37);
+                    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12);
+                    color: #FFFFFF;
+                    font-size: 12px;
+                    line-height: normal;
+                    font-weight: 700;
+                }
             }
         }
     }
