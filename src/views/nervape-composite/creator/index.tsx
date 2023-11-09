@@ -91,7 +91,7 @@ export default function NacpCreator() {
     const [showNacpShareDown, setShowNacpShareDown] = useState(false);
     const [showDoneOperate, setShowDoneOperate] = useState(false);
     const [showHalloweenInfo, setShowHalloweenInfo] = useState(false);
-    const [activityEnd, setActivityEnd] = useState(false);
+    const [activityEnd, setActivityEnd] = useState(true);
 
     // useIntervalAsync(updateNacpStatus, 1000);
 
@@ -1281,7 +1281,10 @@ export default function NacpCreator() {
                     </div>
                 ) : (
                     <div className="activity-end-container">
-                        
+                        <img className="activity-end-image" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e322f946-7a0e-4faa-aafe-8d1b1f6f215d.png" alt="" />
+                        <div className="title">Spooky Nervapes has met its frightening end.</div>
+                        <div className="desc">Hello fellow ghoul, goblin, zombie, Nervape…the Spooky Nervapes Halloween event is over. Don’t despair! We will be holding upcoming events that will let you build your own Nervape in even more terrifying, beautiful, and amazing ways.</div>
+                        <div>Please follow us on X <a href="https://twitter.com/nervapes" target="_blank">@Nervapes</a> to keep up to date. </div>
                     </div>
                 )}
 
