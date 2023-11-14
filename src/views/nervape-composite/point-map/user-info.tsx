@@ -93,7 +93,7 @@ export default function UserInfo(props: {
                                                     Download IMG
                                                 </div>
                                                 <div className="share-btn btn cursor" onClick={() => {
-                                                    const share_link = `https://twitter.com/share?text=Happy Halloween🎃! Check out my Spooky Nervape made with @Nervapes Spooky Nervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→ &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo.nacp_id}&hashtags=Halloween,SpookyNervapes`;
+                                                    const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Halloween,SpookyNervapes`;
                                                     window.open(share_link);
                                                 }}>
                                                     <img src={ShareIcon} alt="DownLoadIcon" />
@@ -167,14 +167,14 @@ export default function UserInfo(props: {
                                         ) : (
                                             (apeInfo.point_x || apeInfo.point_x == 0) ? (
                                                 <>
-                                                    <div className="download-btn btn cursor" onClick={() => {
+                                                    {/* <div className="download-btn btn cursor" onClick={() => {
                                                         apeInfo?.url && download(`Spooky Nervape #${apeInfo?.nacp_id}`, apeInfo?.url);
                                                     }}>
                                                         <img src={DownLoadIcon} alt="DownLoadIcon" />
                                                         Download IMG
-                                                    </div>
+                                                    </div> */}
                                                     <div className="share-btn btn cursor" onClick={() => {
-                                                        const share_link = `https://twitter.com/share?text=Happy Halloween🎃! Check out my Spooky Nervape made with @Nervapes Spooky Nervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→ &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo.nacp_id}&hashtags=Halloween,SpookyNervapes`;
+                                                        const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Halloween,SpookyNervapes`;
                                                         window.open(share_link);
                                                     }}>
                                                         <img src={ShareIcon} alt="DownLoadIcon" />
@@ -187,12 +187,12 @@ export default function UserInfo(props: {
                                                 </>
                                             ) : (
                                                 <>
-                                                    <div className="download-btn btn cursor" onClick={() => {
+                                                    {/* <div className="download-btn btn cursor" onClick={() => {
                                                         apeInfo?.url && download(`Spooky Nervape #${apeInfo?.nacp_id}`, apeInfo?.url);
                                                     }}>
                                                         <img src={DownLoadIcon} alt="DownLoadIcon" />
                                                         Download IMG
-                                                    </div>
+                                                    </div> */}
                                                     <div className="update-btn btn cursor" onClick={() => {
                                                         updateApe();
                                                     }}>Update My Ape</div>
@@ -205,15 +205,15 @@ export default function UserInfo(props: {
                                     </div>
                                 </div>
 
-                                {apeInfo ? ((apeInfo.point_x || apeInfo.point_x == 0) ? (
+                                {!apeInfo ? (
                                     <div className="tip">
                                         You have not created your ape
                                     </div>
-                                ) : (
+                                ) : ((apeInfo.point_x || apeInfo.point_x == 0) ? '' : (
                                     <div className="tip">
                                         Claim a block for your ape to participate in the event
                                     </div>
-                                )) : ''}
+                                ))}
 
                                 <div className="wallet-info-content flex-align">
                                     <div className="joyid-logo">

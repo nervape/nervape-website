@@ -1,9 +1,11 @@
 .point-map-detail-container {
     z-index: 1001;
-    
+
     .point-map-detail-content {
         width: 600px;
         position: relative;
+        overflow: scroll;
+        max-height: 100vh;
 
         .image-cover {
             width: 100%;
@@ -42,6 +44,10 @@
             .position {
                 font-size: 32px;
                 font-weight: 500;
+
+                span {
+                    font-weight: 700;
+                }
             }
 
             .status {
@@ -49,8 +55,9 @@
                 font-size: 12px;
                 font-weight: 500;
                 padding: 0 4px;
+                margin-top: 16px;
                 height: 18px;
-                margin-left: 16px;
+                width: fit-content;
             }
 
             .epoch,
@@ -83,6 +90,26 @@
                     font-size: 12px;
                     line-height: normal;
                     font-weight: 700;
+                }
+            }
+        }
+    }
+}
+
+@media screen and(max-width: 750px) {
+    .point-map-detail-container {
+        .point-map-detail-content {
+            width: 100%;
+
+            .detail-info {
+                .position {
+                    font-size: 24px;
+                }
+                
+                .btn-groups {
+                    .update-btn {
+                        width: 100%;
+                    }
                 }
             }
         }

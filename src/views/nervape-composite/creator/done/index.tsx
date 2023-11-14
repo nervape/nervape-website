@@ -26,7 +26,7 @@ export default function NacpDone(props: any) {
                         flex: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 1 : '',
 
                     }}>
-                        <div className="nacp-id">Spooky Nervape #{nacp?.nacp_id}</div>
+                        <div className="nacp-id">Halve Nervape #{nacp?.nacp_id}</div>
                         <div className="epoch">Epoch: {nacp?.epoch}</div>
                         <div className="desc">Congrats trick-or-treater 🎃! You’ve created your own Spooky Nervape! Share the spookiness by following this link or clicking the SHARE button below.</div>
 

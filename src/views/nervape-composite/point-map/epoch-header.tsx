@@ -19,7 +19,9 @@ export default function EpochHeader(props: any) {
                 </div>
             )}
 
-            <div className="ckb-epoch flex-align">
+            <div className="ckb-epoch cursor flex-align" onClick={() => {
+                window.open('https://explorer.nervos.org/halving', '_blank');
+            }}>
                 <div className="epoch-item item">
                     <div className="title">Current CKB Epoch</div>
                     <div className="value">{`${epoch}/8760`}</div>

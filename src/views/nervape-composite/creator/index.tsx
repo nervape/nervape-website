@@ -93,6 +93,7 @@ export default function NacpCreator(props: any) {
     const [nacpShare, setNacpShare] = useState<any>();
     const [showNacpShareDown, setShowNacpShareDown] = useState(false);
     const [showDoneOperate, setShowDoneOperate] = useState(false);
+    const [showDiscardOperate, setShowDiscardOperate] = useState(false);
 
     // useIntervalAsync(updateNacpStatus, 1000);
 
@@ -876,8 +877,7 @@ export default function NacpCreator(props: any) {
                                     <img src={IIcon} alt="IIcon" />
                                 </button>
                                 <button className="cursor btn discard-btn" onClick={() => {
-                                    setShowNacpCreator(false);
-                                    setIsLoadingEnded(false);
+                                    setShowDiscardOperate(true);
                                 }}>
                                     <img src={DiscardIcon} alt="DiscardIcon" />
                                 </button>
@@ -1356,6 +1356,22 @@ export default function NacpCreator(props: any) {
                 confirm={async () => {
                     await signInWithEthereum();
                     setShowDoneOperate(false);
+                }}></OperatePopup>
+
+            <OperatePopup
+                show={showDiscardOperate}
+                cancelColor="#AB98F4"
+                confirmColor="#00C080"
+                closeText="CANCEL"
+                confirmText="Proceed"
+                content="This will exit the editor. You can update your ape later."
+                close={() => {
+                    setShowDiscardOperate(false);
+                }}
+                confirm={async () => {
+                    setShowDiscardOperate(false);
+                    setShowNacpCreator(false);
+                    setIsLoadingEnded(false);
                 }}></OperatePopup>
         </>
     );

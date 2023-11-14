@@ -111,7 +111,8 @@ export default function PointMap(_props: any) {
                     point_y: j,
                     epoch: filters.length ? filters[0].epoch : 0,
                     address: filters.length ? filters[0].address : '',
-                    url: filters.length ? filters[0].url : ''
+                    url: filters.length ? filters[0].url : '',
+                    nacp_id: filters.length ? filters[0].nacp_id : 0
                 }
             }
         }
@@ -420,57 +421,45 @@ export default function PointMap(_props: any) {
                 <div className="point-items flex-align">
                     {points.map((point, index) => {
                         return point.map((_p, _i) => {
-                            if (_p.address && !mobile) {
-                                return (
-                                    <Tooltip
-                                        overlayClassName="hover-tooltip"
-                                        key={`${index}-${_i}`}
-                                        placement={'right'}
-                                        open={_p.open && !isMove}
-                                        showArrow={false}
-                                        title={() => {
-                                            return (
-                                                <div className="hover-popup transition">
-                                                    <div className="flex-align">
-                                                        <div>
-                                                            <img src={_p.url} className="hover-image" alt="" />
-                                                        </div>
+                            if (_p.address) {
+                                if (!mobile) {
+                                    return (
+                                        <Tooltip
+                                            overlayClassName="hover-tooltip"
+                                            key={`${index}-${_i}`}
+                                            placement={'right'}
+                                            open={_p.open && !isMove}
+                                            showArrow={false}
+                                            title={() => {
+                                                return (
+                                                    <div className="hover-popup transition">
+                                                        <div className="flex-align">
+                                                            <div>
+                                                                <img src={_p.url} className="hover-image" alt="" />
+                                                            </div>
 
-                                                        <div className="hover-right">
-                                                            <div className="position-text">{`(${_p.point_x}, ${_p.point_y})`}</div>
-                                                            <div className="status" style={{
-                                                                background: loginInfo?.address == _p.address ? '#12A7E3' : '#F2B312'
-                                                            }}>{loginInfo?.address == _p.address ? 'owned by me' : 'occupied'}</div>
+                                                            <div className="hover-right">
+                                                                <div className="position-text">{`(${_p.point_x}, ${_p.point_y})`}</div>
+                                                                <div className="status" style={{
+                                                                    background: loginInfo?.address == _p.address ? '#12A7E3' : '#F2B312'
+                                                                }}>{loginInfo?.address == _p.address ? 'owned by me' : 'occupied'}</div>
 
-                                                            <div className="epoch-title">CKB Epoch</div>
-                                                            <div className="epoch">{_p.epoch}</div>
+                                                                <div className="epoch-title">CKB Epoch</div>
+                                                                <div className="epoch">{_p.epoch}</div>
 
-                                                            <div className="owner-title">Block Owner</div>
-                                                            <div className="owner">{formatAddress(_p.address || '')}</div>
+                                                                <div className="owner-title">Block Owner</div>
+                                                                <div className="owner">{formatAddress(_p.address || '')}</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            );
-                                        }}>
-                                        <div onMouseEnter={(e: any) => {
-                                            console.log(e.target.dataset)
-                                            let _points = JSON.parse(JSON.stringify(points));
-                                            _points.map((pt, pt_i) => {
-                                                pt.map((_pt, _pt_i) => {
-                                                    _pt.open = e.target.dataset.id == `${pt_i}-${_pt_i}`;
-                                                    return _pt;
-                                                });
-
-                                                return pt;
-                                            })
-
-                                            setPoints(_points);
-                                        }}
-                                            onMouseLeave={(e: any) => {
+                                                );
+                                            }}>
+                                            <div onMouseEnter={(e: any) => {
+                                                console.log(e.target.dataset)
                                                 let _points = JSON.parse(JSON.stringify(points));
                                                 _points.map((pt, pt_i) => {
                                                     pt.map((_pt, _pt_i) => {
-                                                        _pt.open = false;
+                                                        _pt.open = e.target.dataset.id == `${pt_i}-${_pt_i}`;
                                                         return _pt;
                                                     });
 
@@ -479,14 +468,38 @@ export default function PointMap(_props: any) {
 
                                                 setPoints(_points);
                                             }}
-                                            onClick={() => {
-                                                setPointDetail(_p);
-                                                setShowPointDetail(true);
-                                            }}
-                                            className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
-                                            <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
-                                        </div>
-                                    </Tooltip>
+                                                onMouseLeave={(e: any) => {
+                                                    let _points = JSON.parse(JSON.stringify(points));
+                                                    _points.map((pt, pt_i) => {
+                                                        pt.map((_pt, _pt_i) => {
+                                                            _pt.open = false;
+                                                            return _pt;
+                                                        });
+
+                                                        return pt;
+                                                    })
+
+                                                    setPoints(_points);
+                                                }}
+                                                onClick={() => {
+                                                    setPointDetail(_p);
+                                                    setShowPointDetail(true);
+                                                }}
+                                                className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
+                                                <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
+                                            </div>
+                                        </Tooltip>
+                                    );
+                                }
+                                return (
+                                    <div
+                                        onClick={() => {
+                                            setPointDetail(_p);
+                                            setShowPointDetail(true);
+                                        }}
+                                        className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
+                                        <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
+                                    </div>
                                 );
                             }
 

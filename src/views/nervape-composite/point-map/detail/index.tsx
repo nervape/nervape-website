@@ -16,8 +16,10 @@ export default function PointMapDetail(props: {
     const { show, point, close, loginInfo, updateApe } = props;
 
     return (
-        <div className={`point-map-detail-container popup-container ${show && 'show'}`}>
-            <div className="point-map-detail-content popup-content">
+        <div className={`point-map-detail-container popup-container ${show && 'show'}`} onClick={() => { close() }}>
+            <div className="point-map-detail-content popup-content" onClick={e => {
+                e.stopPropagation();
+            }}>
                 <div className="close-btn cursor" onClick={() => { close() }}>
                     <img src={CloseIcon} alt="" />
                 </div>
@@ -27,14 +29,14 @@ export default function PointMapDetail(props: {
 
                 <div className="detail-info">
                     <div className="flex-align">
-                        <div className="position">{`(${point.point_x}, ${point.point_y})`}</div>
-                        <div className="status" style={{
-                            background: loginInfo?.address == point.address ? '#12A7E3' : '#F2B312'
-                        }}>
-                            {loginInfo?.address == point.address ? 'owned by me' : 'occupied'}
-                        </div>
+                        <div className="position"><span>{`Halving Nervape #${point.nacp_id} `}</span>{`(${point.point_x},${point.point_y})`}</div>
                     </div>
-                    <div className="epoch">Epoch: {point.epoch}</div>
+                    <div className="status" style={{
+                        background: loginInfo?.address == point.address ? '#12A7E3' : '#F2B312'
+                    }}>
+                        {loginInfo?.address == point.address ? 'owned by me' : 'occupied'}
+                    </div>
+                    <div className="epoch">CKB Epoch: {point.epoch}</div>
                     <div className="owner">Block Owner: {point.address}</div>
 
                     {loginInfo?.address == point.address && (
