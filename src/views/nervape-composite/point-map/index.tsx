@@ -15,11 +15,8 @@ import EpochHeader from "./epoch-header";
 import ClaimPointMap from "./claim";
 import { useParams } from "react-router-dom";
 import OperatePopup from "../../components/operate-popup";
-<<<<<<< HEAD
 import { useHalving } from "../../../hooks/useCkbHalving";
-=======
 import { CONFIG } from "../../../utils/config";
->>>>>>> 3f1763ab4b1b43bccb5ce8101590574a00545a66
 
 initConfig({
     name: "Nervape",
