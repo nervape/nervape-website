@@ -33,6 +33,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
     "node-fetch": "2.6.7",
+    "observable-hooks": "^4.2.3",
     "rc-queue-anim": "^2.0.0",
     "rc-scroll-anim": "^2.7.6",
     "react": "^18.1.0",

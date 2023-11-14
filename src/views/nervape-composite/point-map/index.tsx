@@ -79,6 +79,7 @@ export default function PointMap(_props: any) {
     const initDebounce = useDebounce(async () => {
         initData();
         fetchEpoch();
+        fnGetCkbHalfStatistics();
     }, 100);
 
     const setPointToCenter = (x: number, y: number) => {
@@ -91,6 +92,10 @@ export default function PointMap(_props: any) {
         setOffset([
             -(100 * y + 50 + y * preOffset) + window.innerWidth / 2,
             -(100 * x + 50 + x * preOffset) + window.innerHeight / 2]);
+    }
+
+    const fnGetCkbHalfStatistics = async () => {
+        const res = await nervapeApi.fnGetCkbHalfStatistics();
     }
 
     const initData = async () => {

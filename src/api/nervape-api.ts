@@ -449,6 +449,12 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetCkbHalfStatistics() {
+    const url = `${this.baseUrl}/nacp/website/ckb-half/statistics`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();
