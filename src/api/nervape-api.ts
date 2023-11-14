@@ -450,6 +450,12 @@ class NervapeApi {
     return this._fnDealResponse(res, url);
   }
   
+  public async fnGetSpookyProfile(id: number) {
+    const url = `${this.baseUrl}/nacp/snooky/profile/${id}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
   public async fnGetCkbHalfStatistics() {
     const url = `${this.baseUrl}/nacp/website/ckb-half/statistics`;
     const res = await axios.get(url);

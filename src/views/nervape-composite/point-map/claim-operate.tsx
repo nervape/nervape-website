@@ -18,7 +18,7 @@ export default function ClaimOperate(props: any) {
                     <div className="cursor cancel btn" onClick={close}>
                         Cancel
                     </div>
-                    <button className="cursor confirm btn" style={{ opacity: disabled ? 0.5 : 1 }} disabled={disabled} onClick={confirm}>
+                    <button className="cursor confirm btn" style={{ background: disabled ? '#9FB0A7' : '#00C080' }} disabled={disabled} onClick={confirm}>
                         Claim
                     </button>
                 </div>

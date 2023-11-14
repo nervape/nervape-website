@@ -38,8 +38,8 @@ export default function UserInfo(props: {
         <div className="user-info-container">
             {loginInfo?.type != LoginWalletType.JOYID ? (
                 <div className="not-logged-in flex-align">
-                    <div className="text">Connect JoyID to start</div>
-                    <div className="login-btn cursor" onClick={() => { onConnect(); }}>Connect</div>
+                    <div className="text">Connect to Joy ID</div>
+                    <div className="login-btn transition cursor" onClick={() => { onConnect(); }}>Connect</div>
                 </div>
             ) : (
                 <div className="has-logged">
@@ -50,7 +50,7 @@ export default function UserInfo(props: {
                                     <img src={JOYID} alt="JOYID" />
                                 </div>
                                 <div className="joyid-address">{formatAddress(loginInfo.address)}</div>
-                                <div className="disconnect-btn cursor" onClick={() => { disconnect(); }}>Disconnect</div>
+                                <div className="disconnect-btn transition cursor" onClick={() => { disconnect(); }}>Disconnect</div>
                             </div>
                             <div className="ape-info-content">
                                 <div className="my-ape flex-align">
@@ -80,7 +80,7 @@ export default function UserInfo(props: {
                                                 createApe();
                                             }}>Create My Ape</div>
                                             <div className="tip">
-                                                You have not created your ape
+                                                You have not created your ape yet.
                                             </div>
                                         </>
                                     ) : (
@@ -120,7 +120,7 @@ export default function UserInfo(props: {
                                                 }}>Claim My Block</div>
 
                                                 <div className="tip">
-                                                    Claim a block for your ape to participate in the event
+                                                    Claim your block and then share your Halve Ape on X!
                                                 </div>
                                             </>
                                         )
@@ -184,6 +184,10 @@ export default function UserInfo(props: {
                                                     <div className="update-btn btn cursor" onClick={() => {
                                                         updateApe();
                                                     }}>Update My Ape</div>
+
+                                                    <div className="download-tip">
+                                                        Press down on your Halve Nervape to save the ape to your device.
+                                                    </div>
                                                 </>
                                             ) : (
                                                 <>
@@ -199,6 +203,10 @@ export default function UserInfo(props: {
                                                     <div className="claim-btn btn cursor" onClick={() => {
                                                         claimBlock();
                                                     }}>Claim My Block</div>
+
+                                                    <div className="download-tip">
+                                                        Press down on your Halve Nervape to save the ape to your device.
+                                                    </div>
                                                 </>
                                             )
                                         )}
@@ -207,11 +215,11 @@ export default function UserInfo(props: {
 
                                 {!apeInfo ? (
                                     <div className="tip">
-                                        You have not created your ape
+                                        You have not created your ape yet.
                                     </div>
                                 ) : ((apeInfo.point_x || apeInfo.point_x == 0) ? '' : (
                                     <div className="tip">
-                                        Claim a block for your ape to participate in the event
+                                        Claim your block and then share your Halve Ape on X!
                                     </div>
                                 ))}
 
@@ -220,7 +228,7 @@ export default function UserInfo(props: {
                                         <img src={JOYID} alt="JOYID" />
                                     </div>
                                     <div className="joyid-address">{formatAddress(loginInfo.address)}</div>
-                                    <div className="disconnect-btn cursor" onClick={() => { disconnect(); }}>Disconnect</div>
+                                    <div className="disconnect-btn transition cursor" onClick={() => { disconnect(); }}>Disconnect</div>
                                 </div>
                             </div>
                         </>

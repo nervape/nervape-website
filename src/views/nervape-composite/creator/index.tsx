@@ -40,7 +40,7 @@ let touchYStart = 0;
 export default function NacpCreator(props: any) {
     const { state, dispatch } = useContext(DataContext);
 
-    const { show, setShowHalloweenInfo, loginInfo, epoch, skipStep, setShowClaimPointMap, setShowNacpCreator } = props;
+    const { show, setShowHalloweenInfo, loginInfo, epoch, skipStep, setShowClaimPointMap, setShowNacpCreator, setHideEpochHeader } = props;
 
     const setLoading = (flag: boolean) => {
         dispatch({
@@ -840,6 +840,8 @@ export default function NacpCreator(props: any) {
 
             setHideHeader(!isFold);
         }
+
+        setHideEpochHeader(isFold);
     }, [cameraContentRef, isFold]);
 
     // if (!phases || !phases.length) return <></>;
@@ -1347,9 +1349,9 @@ export default function NacpCreator(props: any) {
                 show={showDoneOperate}
                 cancelColor="#AB98F4"
                 confirmColor="#00C080"
-                closeText="CANCEL"
-                confirmText="Proceed"
-                content="This will exit the editor. You can update your ape later."
+                closeText="Back to the Party"
+                confirmText="Halve Fun Bye!"
+                content="This will exit the editor. Still want to edit?"
                 close={() => {
                     setShowDoneOperate(false);
                 }}
@@ -1362,9 +1364,9 @@ export default function NacpCreator(props: any) {
                 show={showDiscardOperate}
                 cancelColor="#AB98F4"
                 confirmColor="#00C080"
-                closeText="CANCEL"
-                confirmText="Proceed"
-                content="This will exit the editor. You can update your ape later."
+                closeText="Back to the Party"
+                confirmText="Halve Fun Bye!"
+                content="Are you sure? Your progress will be lost and your Halve Nervape naked."
                 close={() => {
                     setShowDiscardOperate(false);
                 }}
