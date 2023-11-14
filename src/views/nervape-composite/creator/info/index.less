@@ -12,7 +12,7 @@
     overflow-y: scroll;
     display: flex;
 
-    .halloween-info-content {        
+    .halloween-info-content {
         position: relative;
         margin: 32px auto;
 
@@ -27,10 +27,31 @@
             right: 12.5px;
             top: 12.5px;
         }
+
+        .cover {
+            width: 670px;
+            height: 760px;
+        }
     }
 
     &.show {
         visibility: visible;
         opacity: 1;
+    }
+}
+
+@media screen and(max-width: 750px) {
+    .halloween-info-container {
+        .halloween-info-content {
+            .cover {
+                width: 347px;
+                height: 575px;
+            }
+        }
+
+        &.show {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 }

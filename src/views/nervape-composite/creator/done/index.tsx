@@ -21,6 +21,7 @@ export default function NacpDone(props: any) {
                 <div className="flex-align" style={{ marginTop: '20px' }}>
                     <div className="left-info" style={{
                         flex: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 1 : '',
+                        paddingRight: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? '' : '20px',
                     }}>
                         <div className="nacp-id">Halve Nervape #{nacp?.nacp_id}</div>
                         <div className="epoch">Epoch: {nacp?.epoch}</div>
@@ -46,7 +47,7 @@ export default function NacpDone(props: any) {
                                 <div className="skip-btn cursor" onClick={() => {
                                     skipStep();
                                 }}>
-                                    Back To Interactive Map
+                                    Veiw On Halve Ape Blast Canvas
                                 </div>
                             )}
                         </div>
@@ -55,7 +56,6 @@ export default function NacpDone(props: any) {
                         <div className="what-next" style={{
                             borderLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '1px solid rgba(255, 255, 255, 0.10)',
                             paddingLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '20px',
-                            marginLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '20px',
                         }}>
                             <div className="title">What’s Next?</div>
                             <div className="desc">Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.</div>
@@ -80,7 +80,7 @@ export default function NacpDone(props: any) {
                     <div className="skip-btn cursor" onClick={() => {
                         skipStep();
                     }}>
-                        Back To Interactive Map
+                        Veiw On Halve Ape Blast Canvas
                     </div>
                 ) : '')}
             </div>

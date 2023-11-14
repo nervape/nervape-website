@@ -34,7 +34,7 @@ export default function PointMapDetail(props: {
                     <div className="status" style={{
                         background: loginInfo?.address == point.address ? '#12A7E3' : '#F2B312'
                     }}>
-                        {loginInfo?.address == point.address ? 'owned by me' : 'occupied'}
+                        {loginInfo?.address == point.address ? 'My Ape Lives Here' : 'occupied'}
                     </div>
                     <div className="epoch">CKB Epoch: {point.epoch}</div>
                     <div className="owner">Block Owner: {point.address}</div>

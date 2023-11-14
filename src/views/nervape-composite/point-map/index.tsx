@@ -74,6 +74,7 @@ export default function PointMap(_props: any) {
     const [hideEpochHeader, setHideEpochHeader] = useState(false);
     const [focusActive, setFocusActive] = useState(false);
     const [activityEnd, setActivityEnd] = useState(false);
+    const [startPoint, setStartPoint] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
     const [store] = useState<TouchStore>(new TouchStore());
 
@@ -285,6 +286,11 @@ export default function PointMap(_props: any) {
         setIsPointerDown(true);
         setLastPointermove({ x: e.clientX, y: e.clientY });
     }
+
+    const handlePointItemDown = (e) => {
+        setStartPoint({ x: e.clientX, y: e.clientY });
+    }
+
     const handlePointerMove = (e) => {
         if (mobile) return;
         if (isPointerDown) {
@@ -302,6 +308,13 @@ export default function PointMap(_props: any) {
         if (mobile) return;
         if (isPointerDown) {
             setIsPointerDown(false);
+        }
+    }
+
+    const handlePointItemUp = (e, item) => {
+        if (startPoint.x == e.clientX && startPoint.y == e.clientY) {
+            setPointDetail(item);
+            setShowPointDetail(true);
         }
     }
     const handlePointerCancel = (e) => {
@@ -441,7 +454,7 @@ export default function PointMap(_props: any) {
     const { estimatedDate, hasHalved } = useHalving(1);
 
     const shareContent = () => {
-        const share_link = `https://twitter.com/share?text=Halve Ape Blast creating a Halve Nervape to celebrate @NervosNetwork Halving Event! 🎊 Place it on our collaborative canvas to win an NFT of the full canvas! 🥂 → &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast`;
+        const share_link = `https://twitter.com/share?text=Halve Ape Blast creating a Halve Nervape to celebrate @NervosNetwork Halving Event! 🦧 Place it on @Nervapes collaborative canvas to win an NFT of the full canvas! 📷 → &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast,Nervape`;
         window.open(share_link);
     }
 
@@ -483,6 +496,7 @@ export default function PointMap(_props: any) {
                                             placement={'right'}
                                             open={_p.open && !isMove}
                                             showArrow={false}
+                                            open={true}
                                             title={() => {
                                                 return (
                                                     <div className="hover-popup transition">
@@ -495,7 +509,7 @@ export default function PointMap(_props: any) {
                                                                 <div className="position-text">{`(${_p.point_x}, ${_p.point_y})`}</div>
                                                                 <div className="status" style={{
                                                                     background: loginInfo?.address == _p.address ? '#12A7E3' : '#F2B312'
-                                                                }}>{loginInfo?.address == _p.address ? 'owned by me' : 'occupied'}</div>
+                                                                }}>{loginInfo?.address == _p.address ? 'My Ape Lives Here' : 'occupied'}</div>
 
                                                                 <div className="epoch-title">CKB Epoch</div>
                                                                 <div className="epoch">{_p.epoch}</div>
@@ -533,9 +547,9 @@ export default function PointMap(_props: any) {
 
                                                     setPoints(_points);
                                                 }}
-                                                onClick={() => {
-                                                    setPointDetail(_p);
-                                                    setShowPointDetail(true);
+                                                onPointerDown={handlePointItemDown}
+                                                onPointerUp={(e) => {
+                                                    handlePointItemUp(e, _p);
                                                 }}
                                                 data-id={`${index}-${_i}`}
                                                 className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>

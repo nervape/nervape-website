@@ -25,7 +25,7 @@ export default function EpochHeader(props: {
                 </div>
             )}
 
-            <div className="ckb-epoch cursor flex-align" onClick={() => {
+            <div className="ckb-epoch transition cursor flex-align" onClick={() => {
                 window.open('https://explorer.nervos.org/halving', '_blank');
             }}>
                 <div className="epoch-item item">

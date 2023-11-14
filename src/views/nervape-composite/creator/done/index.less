@@ -34,7 +34,7 @@
                 min-height: 347px;
                 aspect-ratio: 1;
                 max-height: 600px;
-                height: calc(100vh - 32px - 29.5px - 32px - 20px - 171px);
+                height: calc(100vh - 32px - 29.5px - 32px - 20px - 171px - 35px);
             }
         }
 
@@ -55,7 +55,7 @@
 
         .desc {
             margin: 8px auto;
-            width: 347px;
+            width: 100%;
             color: #FFF;
             font-size: 12px;
             font-style: normal;
@@ -108,7 +108,7 @@
 
         .skip-btn {
             background: #AB98F4;
-            margin: 20px auto 0;
+            margin: 20px auto 32px;
         }
 
         .btn-groups {
@@ -141,11 +141,12 @@
 
         .left-info {
             align-self: flex-start;
+            flex: 1;
         }
 
         .what-next {
             align-self: flex-start;
-            width: 213px;
+            flex: 1;
 
             .title {
                 color: #FFF;
