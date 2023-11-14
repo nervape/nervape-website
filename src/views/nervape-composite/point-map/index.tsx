@@ -534,6 +534,7 @@ export default function PointMap(_props: any) {
                 setShowNacpCreator={setShowNacpCreator}
                 skipStep={async () => {
                     loginInfo?.address && await fnGetAddressApe(loginInfo?.address);
+                    await initData();
                     setShowNacpCreator(false);
                 }}
                 setShowClaimPointMap={(_nacp: PointMapItem) => {
