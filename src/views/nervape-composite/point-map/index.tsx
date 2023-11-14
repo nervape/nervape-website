@@ -15,11 +15,8 @@ import EpochHeader from "./epoch-header";
 import ClaimPointMap from "./claim";
 import { useParams } from "react-router-dom";
 import OperatePopup from "../../components/operate-popup";
-<<<<<<< HEAD
 import { useHalving } from "../../../hooks/useCkbHalving";
-=======
 import { CONFIG } from "../../../utils/config";
->>>>>>> 3f1763ab4b1b43bccb5ce8101590574a00545a66
 
 initConfig({
     name: "Nervape",
@@ -440,7 +437,7 @@ export default function PointMap(_props: any) {
     const { estimatedDate, hasHalved } = useHalving(1)
 
     console.log("estimatedDate=", estimatedDate, hasHalved)
-    
+
     const shareContent = () => {
         const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast`;
         window.open(share_link);
@@ -528,10 +525,11 @@ export default function PointMap(_props: any) {
                                                     setPointDetail(_p);
                                                     setShowPointDetail(true);
                                                 }}
+                                                data-id={`${index}-${_i}`}
                                                 className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
                                                 {/* 聚焦动画蒙层 */}
                                                 {_p.address == apeInfo?.address && (
-                                                    <div className={`cover-anim ${focusActive && 'active'}`}></div>
+                                                    <div data-id={`${index}-${_i}`} className={`cover-anim ${focusActive && 'active'}`}></div>
                                                 )}
                                                 <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
                                             </div>
@@ -544,6 +542,7 @@ export default function PointMap(_props: any) {
                                             setPointDetail(_p);
                                             setShowPointDetail(true);
                                         }}
+                                        data-id={`${index}-${_i}`}
                                         className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
                                         <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
                                     </div>
@@ -551,8 +550,8 @@ export default function PointMap(_props: any) {
                             }
 
                             return (
-                                <div className={`point-item ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
-                                    {_p.url && <img src={_p.url} className="cover-image" alt="" />}
+                                <div className={`point-item ${(index + _i) % 2 == 0 && 'dark'}`} data-id={`${index}-${_i}`} key={`${index}-${_i}`}>
+                                    {_p.url && <img src={_p.url} data-id={`${index}-${_i}`} className="cover-image" alt="" />}
                                 </div>
                             );
                         })
@@ -611,7 +610,11 @@ export default function PointMap(_props: any) {
             }}></HalloweenInfoPopup>
 
             {!hideEpochHeader && (
-                <EpochHeader showNacpCreator={showNacpCreator} epoch={epoch} setShowHalloweenInfo={setShowHalloweenInfo}></EpochHeader>
+                <EpochHeader
+                    showNacpCreator={showNacpCreator}
+                    epoch={epoch}
+                    estimatedDate={estimatedDate as Date}
+                    setShowHalloweenInfo={setShowHalloweenInfo}></EpochHeader>
             )}
             <ClaimPointMap
                 show={showClaimPointMap}

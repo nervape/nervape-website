@@ -416,7 +416,7 @@ export default function ClaimPointMap(props: any) {
                 </div>
             </div>
 
-            <EpochHeader epoch={epoch}></EpochHeader>
+            {/* <EpochHeader epoch={epoch}></EpochHeader> */}
             <ClaimOperate
                 close={() => {
                     setShowClaimPointMap(false);

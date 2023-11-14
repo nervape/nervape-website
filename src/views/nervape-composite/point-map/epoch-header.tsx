@@ -2,9 +2,15 @@ import React from "react";
 import './epoch-header.less';
 import HalveLogo from '../../../assets/halve/halve_logo.svg';
 import IIcon from '../../../assets/nacp/hallween/i_icon.svg';
+import dayjs from "dayjs";
 
-export default function EpochHeader(props: any) {
-    const { epoch, setShowHalloweenInfo, showNacpCreator } = props;
+export default function EpochHeader(props: {
+    epoch: number;
+    setShowHalloweenInfo: Function;
+    estimatedDate: Date;
+    showNacpCreator: boolean;
+}) {
+    const { epoch, setShowHalloweenInfo, showNacpCreator, estimatedDate } = props;
 
     return (
         <div className="epoch-header-container">
@@ -28,7 +34,7 @@ export default function EpochHeader(props: any) {
                 </div>
                 <div className="time-item item">
                     <div className="title">Est. Half Time</div>
-                    <div className="value">hh:rr,dd/mm/yy</div>
+                    <div className="value">{dayjs(estimatedDate).format('HH:mm:ss, DD/MM/YYYY')}</div>
                 </div>
             </div>
         </div>
