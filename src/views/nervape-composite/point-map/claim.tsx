@@ -5,7 +5,7 @@ import { Tooltip, message } from "antd";
 import { nervapeApi } from "../../../api/nervape-api";
 import useDebounce from "../../../hooks/useDebounce";
 import { LoginWalletType, WALLET_CONNECT, getJoyIDStorage, setJoyIDStorage } from "../../../utils/Wallet";
-import { getCKBCurrentEpoch } from "../../../utils/api";
+import { getCKBCurrentEpochAndTipBlockNumber } from "../../../utils/api";
 import EpochHeader from "./epoch-header";
 import ClaimOperate from "./claim-operate";
 import OperatePopup from "../../components/operate-popup";
@@ -100,9 +100,9 @@ export default function ClaimPointMap(props: any) {
     }, [show]);
 
     const fetchEpoch = async () => {
-        const _epoch = await getCKBCurrentEpoch();
-        console.log("epoch = ", _epoch);
-        setEpoch(_epoch);
+        const { currentEpoch } = await getCKBCurrentEpochAndTipBlockNumber();
+        console.log("epoch = ", currentEpoch);
+        setEpoch(currentEpoch);
     }
 
     const fnSnookyNacpList = async () => {

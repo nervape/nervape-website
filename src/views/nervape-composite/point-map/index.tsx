@@ -10,11 +10,12 @@ import { LoginWalletType, WALLET_CONNECT, clearJoyIDStorage, getJoyIDStorage, se
 import { initConfig, connect } from "@joyid/ckb";
 import NacpCreator from "../creator";
 import HalloweenInfoPopup from "../creator/info";
-import { getCKBCurrentEpoch } from "../../../utils/api";
+import { getCKBCurrentEpochAndTipBlockNumber } from "../../../utils/api";
 import EpochHeader from "./epoch-header";
 import ClaimPointMap from "./claim";
 import { useParams } from "react-router-dom";
 import OperatePopup from "../../components/operate-popup";
+import { useHalving } from "../../../hooks/useCkbHalving";
 
 initConfig({
     name: "Nervape",
@@ -147,9 +148,9 @@ export default function PointMap(_props: any) {
     }
 
     const fetchEpoch = async () => {
-        const _epoch = await getCKBCurrentEpoch();
-        console.log("epoch = ", _epoch);
-        setEpoch(_epoch);
+        const { currentEpoch } = await getCKBCurrentEpochAndTipBlockNumber();
+        console.log("epoch = ", currentEpoch);
+        setEpoch(currentEpoch);
     }
 
     const fnSnookyNacpList = async () => {
@@ -406,6 +407,10 @@ export default function PointMap(_props: any) {
             setIsPointerDown(false);
         }
     }
+
+    const { estimatedDate, hasHalved } = useHalving(1)
+
+    console.log("estimatedDate=", estimatedDate, hasHalved)
 
     return (
         <div className="point-map-container">

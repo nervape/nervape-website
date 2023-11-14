@@ -190,17 +190,37 @@ export async function queryOatPoapInfo(campaignId: string) {
     having target epoch is 8760.
     see details on https://explorer.nervos.org/halving
 */
-export async function getCKBCurrentEpoch() {
-    const response = await fetch(CONFIG.CKB_NODE_RPC_URL as string, {
+export async function getCKBCurrentEpochAndTipBlockNumber() {
+    const [ epoch, tip ] = await fetch(CONFIG.CKB_NODE_RPC_URL as string, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            id: 1,
-            jsonrpc: '2.0',
-            method: 'get_current_epoch',
-            params: []
-        })
+        body: JSON.stringify([
+            {
+                id: 1,
+                jsonrpc: '2.0',
+                method: 'get_current_epoch',
+                params: []
+            },
+            {
+                id: 2,
+                jsonrpc: '2.0',
+                method: 'get_tip_block_number',
+                params: []
+            }
+        ])
     }).then(resp => resp.json());
 
-    return parseInt(response.result.number)
+    const currentEpoch = parseInt(epoch.result.number)
+    const epochLength = parseInt(epoch.result.length)
+    const startNumber = parseInt(epoch.result.start_number)
+    const tipBlockNumber = parseInt(tip.result)
+    const epochIndex = tipBlockNumber - startNumber
+    return {
+        currentEpoch,
+        epochLength,
+        epochIndex,
+        startNumber,
+        tipBlockNumber,
+    }
 }
+
