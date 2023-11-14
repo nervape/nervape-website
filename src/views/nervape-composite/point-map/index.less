@@ -1,6 +1,6 @@
 .point-map-container {
     overflow: hidden;
-    background: #797979;
+    background: #0F1416;
     width: 100vw;
     height: 100vh;
     font-family: 'hoss-round';
@@ -9,7 +9,7 @@
     letter-spacing: 0;
 
     .point-map-content {
-        width: calc(100px * 30 + 16px * 29);
+        width: calc(100px * 30 + 1px * 29);
         aspect-ratio: 1;
 
         position: relative;
@@ -20,9 +20,9 @@
             .point-item {
                 width: 100px;
                 aspect-ratio: 1;
-                background: #D0CFCF;
-                margin-right: 16px;
-                margin-top: 16px;
+                background: #535B5A;
+                margin-right: 1px;
+                margin-top: 1px;
 
                 &:nth-child(30n) {
                     margin-right: 0;
@@ -30,6 +30,10 @@
 
                 &:nth-child(-n + 30) {
                     margin-top: 0;
+                }
+
+                &.dark {
+                    background: #787C7C;
                 }
 
                 .cover-image {
@@ -82,7 +86,7 @@
             height: 18px;
             font-weight: 700;
             padding: 0 4px;
-            border-radius: 8px;
+            border-radius: 2px;
             background: #C6A83D;
             margin-bottom: 16px;
         }
@@ -105,4 +109,8 @@
             white-space: nowrap;
         }
     }
+}
+
+.claim-hover-tooltip {
+    border-radius: 16px;
 }

@@ -13,6 +13,8 @@ import HalloweenInfoPopup from "../creator/info";
 import { getCKBCurrentEpoch } from "../../../utils/api";
 import EpochHeader from "./epoch-header";
 import ClaimPointMap from "./claim";
+import { useParams } from "react-router-dom";
+import OperatePopup from "../../components/operate-popup";
 
 initConfig({
     name: "Nervape",
@@ -30,8 +32,19 @@ export class PointMapItem {
     open?: boolean = false;
     nacp_id?: number;
 }
-const width = 3464;
-const height = 3464;
+
+export class TouchStore {
+    pageX: any;
+    pageY: any;
+    pageX2: any;
+    pageY2: any;
+    originScale: any;
+    scale: any;
+}
+
+const width = 3029;
+const height = 3029;
+const preOffset = 1; // 每个格子的间距
 
 export default function PointMap(_props: any) {
     const { state, dispatch } = useContext(DataContext);
@@ -53,11 +66,32 @@ export default function PointMap(_props: any) {
     const [loginInfo, setLoginInfo] = useState<WALLET_CONNECT | null>();
     const [apeInfo, setApeInfo] = useState<PointMapItem>();
     const [showClaimPointMap, setShowClaimPointMap] = useState(false);
+    const [transitionActive, setTransitionActive] = useState(false);
+    const [centerPoint, setCenterPoint] = useState<{ x: number, y: number }>({ x: 1, y: 1 });
+    const [originPoint, setOriginPoint] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+    const [showUpdateOperate, setShowUpdateOperate] = useState(false);
+
+    const [store] = useState<TouchStore>(new TouchStore());
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const nacp_id = queryParams.get("nacp_id");
 
     const initDebounce = useDebounce(async () => {
         initData();
         fetchEpoch();
     }, 100);
+
+    const setPointToCenter = (x: number, y: number) => {
+        setTransitionActive(true);
+        setTimeout(() => {
+            setTransitionActive(false);
+        }, 300);
+        setDeltaY(1);
+
+        setOffset([
+            -(100 * y + 50 + y * preOffset) + window.innerWidth / 2,
+            -(100 * x + 50 + x * preOffset) + window.innerHeight / 2]);
+    }
 
     const initData = async () => {
         let _points: PointMapItem[][] = [];
@@ -93,22 +127,25 @@ export default function PointMap(_props: any) {
         }
 
         setMinScale(_scale);
-
-        setDeltaY(_scale);
-        setOffset([
-            -(width - width * _scale) / 2 + (window.innerWidth - width * _scale) / 2,
-            -(height - height * _scale) / 2 + (window.innerHeight - height * _scale) / 2]);
-
         updateBodyOverflow(false);
         setIsMobile(isMobile());
+
+        if (nacp_id) {
+            setPointToCenter(centerPoint.x, centerPoint.y);
+        } else {
+            setDeltaY(_scale);
+            setOffset([
+                -(width - width * _scale) / 2 + (window.innerWidth - width * _scale) / 2,
+                -(height - height * _scale) / 2 + (window.innerHeight - height * _scale) / 2]);
+        }
     }
 
-    const fetchEpoch = async() => {
+    const fetchEpoch = async () => {
         const _epoch = await getCKBCurrentEpoch();
         console.log("epoch = ", _epoch);
         setEpoch(_epoch);
     }
-    
+
     const fnSnookyNacpList = async () => {
         let res = await nervapeApi.fnSnookyNacpList();
         setNacps(res);
@@ -165,6 +202,17 @@ export default function PointMap(_props: any) {
 
         fnGetAddressApe(loginInfo?.address);
     }, [loginInfo]);
+
+    const formatAddress = (address: string) => {
+        const subLength = 5;
+        const dotStr = '...';
+        return `${address.substr(0, subLength)}${dotStr}${address.substr(address.length - subLength, subLength)}`;
+    }
+    useEffect(() => {
+        if (!loginInfo?.address) return;
+
+
+    }, [loginInfo?.address]);
 
     const handleScroll = (e: any) => {
         if (mobile) return;
@@ -230,28 +278,132 @@ export default function PointMap(_props: any) {
     const handleTouchStart = (e) => {
         if (!mobile) return;
 
+        const events1 = e.touches[0];
+        const events2 = e.touches[1];
+
         if (e.touches.length == 2) {
+            setIsPointerDown(true);
+            store.pageX = events1.pageX;
+            store.pageY = events1.pageY;
 
+            if (events2) {
+                store.pageX2 = events2.pageX;
+                store.pageY2 = events2.pageY;
+            }
+
+            store.originScale = store.scale || 1;
+
+            const pointOrigin = getOrigin(events1, events2);
+            setOriginPoint(pointOrigin);
         } else if (e.touches.length == 1) {
-
+            setIsPointerDown(true);
+            setLastPointermove({ x: events1.pageX, y: events1.pageY });
         }
     }
 
     const handleTouchMove = (e) => {
         if (!mobile) return;
+
+        const events1 = e.touches[0];
+        const events2 = e.touches[1];
+
+        console.log(events1, events2);
+
+        if (e.touches.length == 2) {
+            if (events2) {
+                if (!store.pageX2) {
+                    store.pageX2 = events2.pageX;
+                }
+                if (!store.pageY2) {
+                    store.pageY2 = events2.pageY;
+                }
+
+                // 获取坐标之间的距离
+                let getDistance = function (start, stop) {
+                    //用到三角函数
+                    return Math.hypot(stop.x - start.x,
+                        stop.y - start.y);
+                };
+                // 双指缩放比例计算
+                let zoom = getDistance({
+                    x: events1.pageX,
+                    y: events1.pageY
+                }, {
+                    x: events2.pageX,
+                    y: events2.pageY
+                }) / getDistance({
+                    x: store.pageX,
+                    y: store.pageY
+                }, {
+                    x: store.pageX2,
+                    y: store.pageY2
+                });
+                // 应用在元素上的缩放比例
+                let newScale = store.originScale * zoom;
+                // 最大缩放比例限制
+                if (newScale > 15) {
+                    newScale = 15;
+                } else if (newScale < minScale) {
+                    newScale = minScale;
+                }
+                let ratio = 0.001;
+                const _scale = newScale * ratio + newScale;
+
+                // 记住使用的缩放值
+                store.scale = _scale;
+
+                setDeltaY(_scale);
+
+                const origin = {
+                    x: ratio * width * 0.5,
+                    y: ratio * height * 0.5
+                };
+
+                const pX = originPoint.x - offset[0];
+                const pY = originPoint.y - offset[1];
+
+                const ratioX = ratio * pX;
+                const ratioY = ratio * pY;
+
+                setOffset([offset[0] - ratioX + origin.x, offset[1] - ratioY + origin.y]);
+            }
+        } else if (e.touches.length == 1) {
+            if (isPointerDown) {
+                const current1 = { x: events1.pageX, y: events1.pageY };
+                let diff = { x: 0, y: 0 };
+                diff.x = current1.x - lastPointermove.x;
+                diff.y = current1.y - lastPointermove.y;
+                setLastPointermove({ x: current1.x, y: current1.y });
+
+                setOffset([offset[0] + diff.x, offset[1] + diff.y]);
+            }
+        }
+    }
+
+    const getOrigin = (first, second) => {
+        return {
+            x: (first.pageX + second.pageX) / 2,
+            y: (first.pageY + second.pageY) / 2
+        };
     }
 
     const handleTouchEnd = (e) => {
         if (!mobile) return;
+        if (isPointerDown) {
+            setIsPointerDown(false);
+        }
     }
 
     const handleTouchCancel = (e) => {
         if (!mobile) return;
+        if (isPointerDown) {
+            setIsPointerDown(false);
+        }
     }
 
     return (
         <div className="point-map-container">
-            <div className="point-map-content"
+            <div className={`point-map-content ${transitionActive && 'transition'}`}
                 onWheel={(e) => handleScroll(e)}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
@@ -287,14 +439,14 @@ export default function PointMap(_props: any) {
                                                         <div className="hover-right">
                                                             <div className="position-text">{`(${_p.point_x}, ${_p.point_y})`}</div>
                                                             <div className="status" style={{
-                                                                background: loginInfo?.address == _p.address ? '#6FBA80' : '#C6A83D'
+                                                                background: loginInfo?.address == _p.address ? '#12A7E3' : '#F2B312'
                                                             }}>{loginInfo?.address == _p.address ? 'owned by me' : 'occupied'}</div>
 
-                                                            <div className="epoch-title">Epoch</div>
+                                                            <div className="epoch-title">CKB Epoch</div>
                                                             <div className="epoch">{_p.epoch}</div>
 
                                                             <div className="owner-title">Block Owner</div>
-                                                            <div className="owner">{_p.address}</div>
+                                                            <div className="owner">{formatAddress(_p.address || '')}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -331,7 +483,7 @@ export default function PointMap(_props: any) {
                                                 setPointDetail(_p);
                                                 setShowPointDetail(true);
                                             }}
-                                            className="point-item set transition" key={`${index}-${_i}`}>
+                                            className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
                                             <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
                                         </div>
                                     </Tooltip>
@@ -339,7 +491,7 @@ export default function PointMap(_props: any) {
                             }
 
                             return (
-                                <div className="point-item" key={`${index}-${_i}`}>
+                                <div className={`point-item ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
                                     {_p.url && <img src={_p.url} className="cover-image" alt="" />}
                                 </div>
                             );
@@ -350,11 +502,18 @@ export default function PointMap(_props: any) {
             <UserInfo
                 onConnect={onConnect}
                 loginInfo={loginInfo as WALLET_CONNECT}
-                createApe={() => { 
+                createApe={() => {
                     setShowNacpCreator(true);
                 }}
+                formatAddress={formatAddress}
                 apeInfo={apeInfo as PointMapItem}
                 disconnect={disconnect}
+                setPointToCenter={(x: number, y: number) => {
+                    setPointToCenter(x, y);
+                }}
+                updateApe={() => {
+                    setShowUpdateOperate(true);
+                }}
                 claimBlock={() => {
                     setShowClaimPointMap(true);
                 }}></UserInfo>
@@ -367,11 +526,12 @@ export default function PointMap(_props: any) {
                 }}
                 updateApe={() => {
                     setShowPointDetail(false);
-                    setShowNacpCreator(true);
+                    setShowUpdateOperate(true);
                 }}></PointMapDetail>
-            <NacpCreator 
-                show={showNacpCreator} 
+            <NacpCreator
+                show={showNacpCreator}
                 loginInfo={loginInfo}
+                setShowNacpCreator={setShowNacpCreator}
                 skipStep={async () => {
                     loginInfo?.address && await fnGetAddressApe(loginInfo?.address);
                     setShowNacpCreator(false);
@@ -387,15 +547,31 @@ export default function PointMap(_props: any) {
                 setShowHalloweenInfo(false);
             }}></HalloweenInfoPopup>
 
-            <EpochHeader epoch={epoch}></EpochHeader>
-            <ClaimPointMap 
-                show={showClaimPointMap} 
-                setShowClaimPointMap={setShowClaimPointMap} 
+            <EpochHeader showNacpCreator={showNacpCreator} epoch={epoch} setShowHalloweenInfo={setShowHalloweenInfo}></EpochHeader>
+            <ClaimPointMap
+                show={showClaimPointMap}
+                setShowClaimPointMap={setShowClaimPointMap}
                 apeInfo={apeInfo}
                 updateApe={async () => {
                     loginInfo?.address && await fnGetAddressApe(loginInfo?.address);
+                    await initData();
                 }}
                 loginInfo={loginInfo}></ClaimPointMap>
+            <OperatePopup
+                show={showUpdateOperate}
+                title="Updating Your Ape"
+                cancelColor="#AB98F4"
+                confirmColor="#00C080"
+                closeText="CANCEL"
+                confirmText="Proceed"
+                content="Updating your ape will generate a brand new ape that replaces your current ape. However, this won’t change the serial number and block location of your ape."
+                close={() => {
+                    setShowUpdateOperate(false);
+                }}
+                confirm={async () => {
+                    setShowUpdateOperate(false);
+                    setShowNacpCreator(true);
+                }}></OperatePopup>
         </div>
     );
 }

@@ -18,7 +18,7 @@ export default function PointMapDetail(props: {
     return (
         <div className={`point-map-detail-container popup-container ${show && 'show'}`}>
             <div className="point-map-detail-content popup-content">
-                <div className="close-btn" onClick={() => { close() }}>
+                <div className="close-btn cursor" onClick={() => { close() }}>
                     <img src={CloseIcon} alt="" />
                 </div>
                 <div className="image-cover">
@@ -29,7 +29,7 @@ export default function PointMapDetail(props: {
                     <div className="flex-align">
                         <div className="position">{`(${point.point_x}, ${point.point_y})`}</div>
                         <div className="status" style={{
-                            background: loginInfo?.address == point.address ? '#6FBA80' : '#C6A83D'
+                            background: loginInfo?.address == point.address ? '#12A7E3' : '#F2B312'
                         }}>
                             {loginInfo?.address == point.address ? 'owned by me' : 'occupied'}
                         </div>

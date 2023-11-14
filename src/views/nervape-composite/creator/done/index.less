@@ -7,8 +7,8 @@
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s;
-    z-index: 999;
-    background: linear-gradient(180deg, #642468 0%, #190623 13.54%);
+    z-index: 1000;
+    background: linear-gradient(180deg, #00C080 0%, #0F1416 13.54%);
     overflow-y: scroll;
     font-family: 'hoss-round' !important;
 
@@ -40,7 +40,6 @@
 
         .nacp-id {
             color: #FFF;
-            margin-top: 20px;
             font-size: 20px;
             font-style: normal;
             font-weight: 700;
@@ -51,6 +50,7 @@
             color: rgba(255, 255, 255, 0.50);
             font-size: 16px;
             padding-top: 8px;
+            line-height: normal;
         }
 
         .desc {
@@ -60,7 +60,7 @@
             font-size: 12px;
             font-style: normal;
             font-weight: 500;
-            line-height: normal;
+            line-height: 18px;
             letter-spacing: 0;
         }
 
@@ -88,12 +88,13 @@
 
         .download-btn,
         .create-btn,
-        .claim-btn {
+        .claim-btn, 
+        .skip-btn {
             width: fit-content;
             height: 30px;
             line-height: 30px;
             border-radius: 12px;
-            background: #BF47BC;
+            background: #5700FF;
             padding: 0 10px;
             color: #FFFFFF;
             font-size: 12px;
@@ -105,9 +106,14 @@
             }
         }
 
+        .skip-btn {
+            background: #AB98F4;
+            margin: 20px auto 0;
+        }
+
         .btn-groups {
-            width: 600px;
-            margin: 0 auto 32px;
+            width: 100%;
+            margin: 0 auto;
             padding-top: 8px;
 
             .m-tip {
@@ -129,23 +135,29 @@
 
             .create-btn {
                 margin: 16px auto 0;
-                background: #E89900;
+                background: #00C080;
             }
         }
 
+        .left-info {
+            padding-right: 20px;
+            margin-right: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
         .what-next {
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.10);
+            align-self: flex-start;
 
             .title {
                 color: #FFF;
                 font-size: 20px;
                 font-weight: 700;
                 margin-bottom: 16px;
+                line-height: 18px;
             }
 
             .claim-btn {
-                background: #F44D37;
+                background: #00C080;
                 margin: 0 auto;
             }
 
@@ -154,7 +166,7 @@
                 color: rgba(255, 255, 255, 0.50);
                 font-size: 12px;
                 font-weight: 500;
-                padding-bottom: 32px;
+                line-height: normal;
             }
         }
 
@@ -169,6 +181,8 @@
 @media screen and (max-width: 750px) {
     .nacp-done-container {
         .nacp-done-content {
+            width: 347px;
+
             .nacp-url {
                 img {
                     width: 347px;
@@ -197,6 +211,10 @@
                     flex: 1;
                     font-family: 'hoss-round';
                 }
+            }
+
+            .what-next {
+                padding-bottom: 128px;
             }
         }
     }

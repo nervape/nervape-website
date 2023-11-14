@@ -5,13 +5,14 @@ export default function ClaimOperate(props: any) {
     const {
         close,
         confirm,
+        point,
         disabled } = props;
     return (
         <div className={`claim-operate-container`}>
-            <div className="confirm-content">
-                <div className="title">Claiming Your Block</div>
-                <div className="desc">
-                    This is the preview of your ape on the map. You won’t be able to change your block after claiming.
+            <div className="confirm-content flex-align">
+                <div className="left-point">
+                    <div className="selected-block">Selected Block:</div>
+                    <div className="value">{`(${point?.x || '-'}, ${point?.y || '-'})`}</div>
                 </div>
                 <div className="btn-groups">
                     <div className="cursor cancel btn" onClick={close}>

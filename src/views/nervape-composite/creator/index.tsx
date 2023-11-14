@@ -19,6 +19,8 @@ import Hallween1000 from '../../../assets/nacp/hallween/bg_1000.svg';
 import Hallween1200 from '../../../assets/nacp/hallween/bg_1200.svg';
 import Hallween1440 from '../../../assets/nacp/hallween/bg_1440.svg';
 import IIcon from '../../../assets/nacp/hallween/i_icon.svg';
+import HalveLogo from '../../../assets/halve/halve_logo.svg';
+import DiscardIcon from '../../../assets/wallet/nacp/edit/discard.svg';
 
 import lodash from 'lodash';
 import RedoIcon from '../../../assets/wallet/nacp/edit/redo.svg';
@@ -38,7 +40,7 @@ let touchYStart = 0;
 export default function NacpCreator(props: any) {
     const { state, dispatch } = useContext(DataContext);
 
-    const { show, setShowHalloweenInfo, loginInfo, epoch, skipStep, setShowClaimPointMap } = props;
+    const { show, setShowHalloweenInfo, loginInfo, epoch, skipStep, setShowClaimPointMap, setShowNacpCreator } = props;
 
     const setLoading = (flag: boolean) => {
         dispatch({
@@ -761,13 +763,13 @@ export default function NacpCreator(props: any) {
 
     useEffect(() => {
         setPhaseConfig([{
-            color: '#FF9A1A',
+            color: '#00C78A',
             extra_color: '#AF7604'
         }, {
-            color: '#FF9A1A',
+            color: '#00C78A',
             extra_color: '#04843E'
         }, {
-            color: '#FF9A1A',
+            color: '#00C78A',
             extra_color: '#4434E2'
         }]);
 
@@ -860,16 +862,24 @@ export default function NacpCreator(props: any) {
                                 }
                             }
                         }}>
-                        <div className="hallween-bg">
+                        {/* <div className="hallween-bg">
                             <img src={bgImage} alt="" />
-                        </div>
+                        </div> */}
                         <div className="edit-header flex-align">
-                            <div className="title">{nacp?.name}</div>
+                            <div className="title">
+                                <img src={HalveLogo} alt="HalveLogo" />
+                            </div>
                             <div className="btn-groups flex-align">
                                 <button className="cursor btn info-btn" onClick={async () => {
                                     setShowHalloweenInfo(true);
                                 }}>
                                     <img src={IIcon} alt="IIcon" />
+                                </button>
+                                <button className="cursor btn discard-btn" onClick={() => {
+                                    setShowNacpCreator(false);
+                                    setIsLoadingEnded(false);
+                                }}>
+                                    <img src={DiscardIcon} alt="DiscardIcon" />
                                 </button>
                                 {/* {phases.filter(p => p.status == 1).length > 0 && (
                                 <button className="cursor btn save-btn" onClick={async () => {
@@ -1323,6 +1333,7 @@ export default function NacpCreator(props: any) {
                 nacp={nacpShare}
                 skipStep={() => {
                     setShowNacpShareDown(false);
+                    setIsLoadingEnded(false);
                     skipStep();
                 }}
                 setShowClaimPointMap={(_nacp: any) => {
@@ -1334,10 +1345,10 @@ export default function NacpCreator(props: any) {
                 }}></NacpDone>
             <OperatePopup
                 show={showDoneOperate}
-                cancelColor="#E89900"
-                confirmColor="#BF47BC"
+                cancelColor="#AB98F4"
+                confirmColor="#00C080"
                 closeText="CANCEL"
-                confirmText="DPROCEED"
+                confirmText="Proceed"
                 content="This will exit the editor. You can update your ape later."
                 close={() => {
                     setShowDoneOperate(false);

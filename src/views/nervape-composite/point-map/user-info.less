@@ -4,7 +4,9 @@
     left: 32px;
     padding: 16px;
     border-radius: 16px;
-    background: rgba(0, 0, 0, 0.80);
+    border: 1px solid rgba(136, 136, 136, 0.10);
+    background: rgba(54, 86, 81, 0.75);
+    backdrop-filter: blur(2px);
     width: 240px;
     font-family: 'hoss-round';
     letter-spacing: 0;
@@ -16,8 +18,9 @@
         height: 22px;
         line-height: 22px;
         font-weight: 700;
+        color: #D2FF02;
         border-radius: 12px;
-        border: 1px solid #FFFFFF;
+        border: 1px solid #D2FF02;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12);
     }
 
@@ -46,20 +49,22 @@
             }
         }
 
+        .my-ape {
+            padding-top: 4px;
+            font-weight: 600;
+
+            .title {
+                flex: 1;
+            }
+        }
+
         .ape-info-content {
             padding-top: 16px;
-
-            .my-ape {
-                padding-top: 4px;
-
-                .title {
-                    flex: 1;
-                }
-            }
 
             .ape-image {
                 margin-top: 12px;
                 border-radius: 8px;
+                overflow: hidden;
                 background: #838383;
                 width: 100%;
                 aspect-ratio: 1;
@@ -67,6 +72,25 @@
                 img {
                     width: 100%;
                     height: 100%;
+                    border-radius: 8px;
+                }
+            }
+
+            .tip {
+                margin-top: 16px;
+                padding: 0 11px;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 7px;
+                    left: 0px;
+                    width: 5px;
+                    height: 5px;
+                    background: #3CC68A;
+                    border-radius: 50%;
+
                 }
             }
 
@@ -79,15 +103,16 @@
                     height: 30px;
                     line-height: 30px;
                     border-radius: 12px;
-                    background: #BF47BC;
+                    background: #00C080;
                     padding: 0 10px;
                     color: #FFFFFF;
                     font-size: 12px;
                     font-weight: 700;
                     letter-spacing: 0px;
+                    margin-bottom: 8px;
 
-                    &:first-child {
-                        margin-bottom: 8px;
+                    &:last-child {
+                        margin-bottom: 0;
                     }
 
                     img {
@@ -95,28 +120,100 @@
                     }
                 }
 
-                .claim-btn {
-                    background: #F44D37;
-                }
-
-                .tip {
-                    margin-top: 16px;
-                    padding: 0 11px;
-                    position: relative;
-
-                    &::before {
-                        content: '';
-                        position: absolute;
-                        top: 7px;
-                        left: 0px;
-                        width: 5px;
-                        height: 5px;
-                        background: #3CC68A;
-                        border-radius: 50%;
-                        
-                    }
+                .download-btn,
+                .share-btn {
+                    background: #5700FF;
                 }
             }
         }
+    }
+}
+
+@media screen and(max-width: 1200px) {
+    .user-info-container {
+        width: 347px;
+        bottom: 0;
+        top: unset;
+        height: fit-content;
+        border-radius: 16px 16px 0px 0px;
+        overflow: hidden;
+        padding: 0;
+        background: unset;
+        left: 50%;
+        transform: translateX(-50%);
+
+        .not-logged-in {
+            padding: 16px;
+            background: rgba(54, 86, 81, 0.75);
+        }
+
+        .has-logged {
+            .folder {
+                width: 100%;
+                border: 1px solid rgba(136, 136, 136, 0.10);
+                background: rgba(34, 34, 34, 0.80);
+                height: 30px;
+
+                img {
+                    width: 6px;
+                    display: block;
+                }
+
+                &.open {
+                    img {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            .my-ape {
+                height: 54px;
+                padding: 16px;
+                background: rgba(54, 86, 81, 0.75);
+            }
+            
+            .ape-info-content {
+                height: 0;
+                background: rgba(54, 86, 81, 0.75);
+                padding: 0 16px;
+
+                &.open {
+                    height: auto;
+                }
+
+                .ape-info {
+                    overflow: hidden;
+                    padding-bottom: 16px;
+
+                    .ape-image {
+                        width: 160px;
+                        margin-right: 16px;
+                        margin-top: 0;
+                    }
+
+                    .btn-groups {
+                        flex: 1;
+                        margin-top: 0;
+                    }
+                }
+
+                .tip {
+                    margin-top: 0;
+                    padding-bottom: 16px;
+                }
+
+                .wallet-info-content {
+                    padding: 16px 0;
+                    border-top: 1px solid rgba(255, 255, 255, 0.10);
+                }
+            }
+        }
+
+    }
+}
+
+@media screen and(min-width: 750px) and(max-width: 1200px)  {
+    .user-info-container {
+        width: 600px;
     }
 }

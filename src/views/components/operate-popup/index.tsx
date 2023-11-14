@@ -12,10 +12,14 @@ export default function OperatePopup(props: any) {
         confirmText,
         cancelColor,
         confirmColor,
+        title,
         hideConfirm } = props;
     return (
         <div className={`operate-popup-container popup-container ${show && 'show'}`}>
             <div className="confirm-content">
+                {title && (
+                    <div className="title">{title}</div>
+                )}
                 <div className="desc">
                     {content}
                 </div>

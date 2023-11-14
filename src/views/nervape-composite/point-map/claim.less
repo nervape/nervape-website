@@ -1,6 +1,6 @@
 .claim-point-map-container {
     overflow: hidden;
-    background: #797979;
+    background: #0F1416;
     width: 100vw;
     height: 100vh;
     font-family: 'hoss-round';
@@ -29,7 +29,8 @@
             .point-item {
                 width: 100px;
                 aspect-ratio: 1;
-                background: #D0CFCF;
+                // background: #535B5A;
+                background: #D0CFCF !important;
                 margin-right: 1px;
                 margin-top: 1px;
 
@@ -40,6 +41,10 @@
                 &:nth-child(-n + 30) {
                     margin-top: 0;
                 }
+
+                // &.dark {
+                //     background: #787C7C;
+                // }
 
                 .cover-image {
                     width: 100%;
@@ -52,7 +57,7 @@
                     opacity: 0.5;
                 }
                 
-                &.set:hover {
+                &:hover {
                     transform: scale(1.1);
                 }
             }

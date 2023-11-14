@@ -5,8 +5,10 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 16px 16px 0px 0px;
-    background: rgba(0, 0, 0, 0.80);
-    z-index: 1001;
+    border: 1px solid rgba(136, 136, 136, 0.10);
+    background: rgba(29, 48, 47, 0.75);
+    backdrop-filter: blur(2px);
+    z-index: 999;
     padding: 16px;
     color: #FFFFFF;
 
@@ -14,17 +16,20 @@
         text-align: center;
         letter-spacing: 0;
 
-        .title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            line-height: normal;
-        }
+        .left-point {
+            margin-right: 20px;
+            flex: 1;
+            
+            .selected-block {
+                font-size: 12px;
+                font-weight: 700;
+                line-height: normal;
+            }
 
-        .desc {
-            font-size: 12px;
-            line-height: 24px;
-            padding-bottom: 20px;
+            .value {
+                font-size: 20px;
+                line-height: normal;
+            }
         }
 
         .btn-groups {
@@ -44,16 +49,12 @@
             }
 
             .cancel {
-                background: #378EF4;
+                background: #AB98F4;
                 margin-right: 8px;
             }
 
             .confirm {
-                background: #f44d37;
-            }
-
-            .confirm:hover {
-                background: #e45c4a;
+                background: #00C080;
             }
         }
     }
@@ -62,7 +63,6 @@
 @media screen and (max-width: 750px) {
     .claim-operate-container {
         .confirm-content {
-            width: 347px;
         }
     }
 }
