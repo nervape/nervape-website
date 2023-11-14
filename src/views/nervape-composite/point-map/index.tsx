@@ -15,7 +15,11 @@ import EpochHeader from "./epoch-header";
 import ClaimPointMap from "./claim";
 import { useParams } from "react-router-dom";
 import OperatePopup from "../../components/operate-popup";
+<<<<<<< HEAD
 import { useHalving } from "../../../hooks/useCkbHalving";
+=======
+import { CONFIG } from "../../../utils/config";
+>>>>>>> 3f1763ab4b1b43bccb5ce8101590574a00545a66
 
 initConfig({
     name: "Nervape",
@@ -68,9 +72,10 @@ export default function PointMap(_props: any) {
     const [apeInfo, setApeInfo] = useState<PointMapItem>();
     const [showClaimPointMap, setShowClaimPointMap] = useState(false);
     const [transitionActive, setTransitionActive] = useState(false);
-    const [centerPoint, setCenterPoint] = useState<{ x: number, y: number }>({ x: 1, y: 1 });
     const [originPoint, setOriginPoint] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
     const [showUpdateOperate, setShowUpdateOperate] = useState(false);
+    const [hideEpochHeader, setHideEpochHeader] = useState(false);
+    const [focusActive, setFocusActive] = useState(false);
 
     const [store] = useState<TouchStore>(new TouchStore());
 
@@ -84,10 +89,15 @@ export default function PointMap(_props: any) {
     }, 100);
 
     const setPointToCenter = (x: number, y: number) => {
+        setFocusActive(true);
         setTransitionActive(true);
         setTimeout(() => {
             setTransitionActive(false);
         }, 300);
+
+        setTimeout(() => {
+            setFocusActive(false);
+        }, 4500);
         setDeltaY(1);
 
         setOffset([
@@ -138,7 +148,16 @@ export default function PointMap(_props: any) {
         setIsMobile(isMobile());
 
         if (nacp_id) {
-            setPointToCenter(centerPoint.x, centerPoint.y);
+            // 查询猴子信息
+            const res = await nervapeApi.fnGetSpookyProfile(nacp_id as unknown as number);
+            if (res && (res.point_x || res.point_x == 0)) {
+                setPointToCenter(res.point_x, res.point_y);
+            } else {
+                setDeltaY(_scale);
+                setOffset([
+                    -(width - width * _scale) / 2 + (window.innerWidth - width * _scale) / 2,
+                    -(height - height * _scale) / 2 + (window.innerHeight - height * _scale) / 2]);
+            }
         } else {
             setDeltaY(_scale);
             setOffset([
@@ -202,6 +221,16 @@ export default function PointMap(_props: any) {
         initLogin();
         initDebounce();
         setShowHalloweenInfo(true);
+
+        document.addEventListener('gesturestart', function (event) {
+            event.preventDefault();
+        });
+
+        return () => {
+            document.removeEventListener('gesturestart', function (event) {
+                event.preventDefault();
+            });
+        }
     }, []);
 
     useEffect(() => {
@@ -411,14 +440,18 @@ export default function PointMap(_props: any) {
     const { estimatedDate, hasHalved } = useHalving(1)
 
     console.log("estimatedDate=", estimatedDate, hasHalved)
+    
+    const shareContent = () => {
+        const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast`;
+        window.open(share_link);
+    }
 
     return (
-        <div className="point-map-container">
+        <div className="point-map-container" onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}>
             <div className={`point-map-content ${transitionActive && 'transition'}`}
                 onWheel={(e) => handleScroll(e)}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
                 onPointerCancel={handlePointerCancel}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
@@ -496,6 +529,10 @@ export default function PointMap(_props: any) {
                                                     setShowPointDetail(true);
                                                 }}
                                                 className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
+                                                {/* 聚焦动画蒙层 */}
+                                                {_p.address == apeInfo?.address && (
+                                                    <div className={`cover-anim ${focusActive && 'active'}`}></div>
+                                                )}
                                                 <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
                                             </div>
                                         </Tooltip>
@@ -537,6 +574,7 @@ export default function PointMap(_props: any) {
                 updateApe={() => {
                     setShowUpdateOperate(true);
                 }}
+                shareContent={shareContent}
                 claimBlock={() => {
                     setShowClaimPointMap(true);
                 }}></UserInfo>
@@ -566,12 +604,15 @@ export default function PointMap(_props: any) {
                     setShowClaimPointMap(true);
                 }}
                 epoch={epoch}
+                setHideEpochHeader={setHideEpochHeader}
                 setShowHalloweenInfo={setShowHalloweenInfo}></NacpCreator>
             <HalloweenInfoPopup show={showHalloweenInfo} close={() => {
                 setShowHalloweenInfo(false);
             }}></HalloweenInfoPopup>
 
-            <EpochHeader showNacpCreator={showNacpCreator} epoch={epoch} setShowHalloweenInfo={setShowHalloweenInfo}></EpochHeader>
+            {!hideEpochHeader && (
+                <EpochHeader showNacpCreator={showNacpCreator} epoch={epoch} setShowHalloweenInfo={setShowHalloweenInfo}></EpochHeader>
+            )}
             <ClaimPointMap
                 show={showClaimPointMap}
                 setShowClaimPointMap={setShowClaimPointMap}
@@ -580,15 +621,16 @@ export default function PointMap(_props: any) {
                     loginInfo?.address && await fnGetAddressApe(loginInfo?.address);
                     await initData();
                 }}
+                shareContent={shareContent}
                 loginInfo={loginInfo}></ClaimPointMap>
             <OperatePopup
                 show={showUpdateOperate}
                 title="Updating Your Ape"
                 cancelColor="#AB98F4"
                 confirmColor="#00C080"
-                closeText="CANCEL"
-                confirmText="Proceed"
-                content="Updating your ape will generate a brand new ape that replaces your current ape. However, this won’t change the serial number and block location of your ape."
+                closeText="Cancel"
+                confirmText="New Halve Ape!"
+                content="Updating your ape clears the designs of your current ape. Your serial number and block location remain unchanged."
                 close={() => {
                     setShowUpdateOperate(false);
                 }}

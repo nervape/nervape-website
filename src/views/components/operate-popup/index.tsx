@@ -1,5 +1,6 @@
 import React from "react";
 import './index.less';
+import ShareIcon from '../../../assets/nacp/hallween/share_icon.svg';
 
 export default function OperatePopup(props: any) {
     const { 
@@ -13,6 +14,7 @@ export default function OperatePopup(props: any) {
         cancelColor,
         confirmColor,
         title,
+        type,
         hideConfirm } = props;
     return (
         <div className={`operate-popup-container popup-container ${show && 'show'}`}>
@@ -31,6 +33,9 @@ export default function OperatePopup(props: any) {
                     )}
                     {!hideConfirm && (
                         <div className="cursor confirm btn" style={{background: confirmColor}} onClick={confirm}>
+                            {type == 'share' && (
+                                <img src={ShareIcon} alt="ShareIcon" />
+                            )}
                             {confirmText || 'YES'}
                         </div>
                     )}

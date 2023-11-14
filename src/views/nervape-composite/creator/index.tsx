@@ -3,7 +3,7 @@ import './index.less';
 import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, NacpPhaseConfig, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpAssetSelected, NacpCategoryIcons, NacpPhaseLockedIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
-import { DataContext, preloadImage, updateBodyOverflow } from "../../../utils/utils";
+import { DataContext, isMobile, preloadImage, updateBodyOverflow } from "../../../utils/utils";
 import { toJpeg, toPng } from 'html-to-image';
 import { Types } from "../../../utils/reducers";
 import { useSignMessage } from "wagmi";
@@ -40,7 +40,7 @@ let touchYStart = 0;
 export default function NacpCreator(props: any) {
     const { state, dispatch } = useContext(DataContext);
 
-    const { show, setShowHalloweenInfo, loginInfo, epoch, skipStep, setShowClaimPointMap, setShowNacpCreator } = props;
+    const { show, setShowHalloweenInfo, loginInfo, epoch, skipStep, setShowClaimPointMap, setShowNacpCreator, setHideEpochHeader } = props;
 
     const setLoading = (flag: boolean) => {
         dispatch({
@@ -840,6 +840,8 @@ export default function NacpCreator(props: any) {
 
             setHideHeader(!isFold);
         }
+
+        setHideEpochHeader(isFold);
     }, [cameraContentRef, isFold]);
 
     // if (!phases || !phases.length) return <></>;
@@ -1069,7 +1071,7 @@ export default function NacpCreator(props: any) {
                                                         onClick={() => {
                                                             setSelectCategory(category._id);
                                                             setCurrCategory(category);
-                                                            if (!isFold) setIsFold(true);
+                                                            if (!isFold && isMobile()) setIsFold(true);
                                                         }}>
                                                         {NacpCategoryIcons.get(category.name)}
                                                         <div className="select-asset-img">
@@ -1347,9 +1349,9 @@ export default function NacpCreator(props: any) {
                 show={showDoneOperate}
                 cancelColor="#AB98F4"
                 confirmColor="#00C080"
-                closeText="CANCEL"
-                confirmText="Proceed"
-                content="This will exit the editor. You can update your ape later."
+                closeText="Back to the Party"
+                confirmText="Halve Fun Bye!"
+                content="This will exit the editor. Still want to edit?"
                 close={() => {
                     setShowDoneOperate(false);
                 }}
@@ -1362,9 +1364,9 @@ export default function NacpCreator(props: any) {
                 show={showDiscardOperate}
                 cancelColor="#AB98F4"
                 confirmColor="#00C080"
-                closeText="CANCEL"
-                confirmText="Proceed"
-                content="This will exit the editor. You can update your ape later."
+                closeText="Back to the Party"
+                confirmText="Halve Fun Bye!"
+                content="Are you sure? Your progress will be lost and your Halve Nervape naked."
                 close={() => {
                     setShowDiscardOperate(false);
                 }}

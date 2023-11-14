@@ -10,6 +10,7 @@ import EpochHeader from "./epoch-header";
 import ClaimOperate from "./claim-operate";
 import OperatePopup from "../../components/operate-popup";
 import { TouchStore } from ".";
+import { CONFIG } from "../../../utils/config";
 
 export class PointMapItem {
     point_x: number = 0;
@@ -24,13 +25,15 @@ const width = 3029;
 const height = 3029;
 
 export default function ClaimPointMap(props: any) {
-    const { show, updateApe, apeInfo, setShowClaimPointMap } = props;
+    const { show, updateApe, apeInfo, setShowClaimPointMap, shareContent } = props;
 
     const [points, setPoints] = useState<PointMapItem[][]>([]);
     const [deltaY, setDeltaY] = useState(1);
     const [offset, setOffset] = useState([0, 0]);
     const [isPointerDown, setIsPointerDown] = useState(false);
     const [showClaimOperate, setShowClaimOperate] = useState(false);
+    const [showShareOperate, setShowShareOperate] = useState(false);
+    const [showClaimConfirm, setShowClaimConfirm] = useState(false);
     const [lastPointermove, setLastPointermove] = useState({ x: 0, y: 0 });
     const [minScale, setMinScale] = useState(1);
     const [maxScale, setMaxScale] = useState(1);
@@ -303,12 +306,11 @@ export default function ClaimPointMap(props: any) {
     }
 
     return (
-        <div className={`claim-point-map-container ${show && 'show'}`}>
+        <div className={`claim-point-map-container ${show && 'show'}`} onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}>
             <div className="point-map-content"
                 onWheel={(e) => handleScroll(e)}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
                 onPointerCancel={handlePointerCancel}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
@@ -420,10 +422,7 @@ export default function ClaimPointMap(props: any) {
                     setShowClaimPointMap(false);
                 }}
                 confirm={async () => {
-                    // 确认选择坐标
-                    const res = await nervapeApi.fnSnookyNacpUpdate({ ...apeInfo, point_x: selectPoint?.x, point_y: selectPoint?.y });
-                    await updateApe();
-                    setShowClaimPointMap(false);
+                    setShowClaimConfirm(true);
                 }}
                 point={selectPoint}
                 disabled={!selectPoint}></ClaimOperate>
@@ -435,9 +434,45 @@ export default function ClaimPointMap(props: any) {
                 confirmColor="#00C080"
                 closeText="Got it!"
                 confirmText="Proceed"
-                content="This is the preview of your ape on the map. To claim your block, click on an unoccupied block to select, then click on the Claim button below.  Please notice that you won’t be able to change your block after claiming."
+                content="This is the preview of your ape on the map. To claim your block, click on an unoccupied block to select, then click on the Claim button below. "
                 close={() => {
                     setShowClaimOperate(false);
+                }}
+            ></OperatePopup>
+
+            <OperatePopup
+                show={showShareOperate}
+                cancelColor="#AB98F4"
+                confirmColor="#5700FF"
+                closeText="Close"
+                type="share"
+                confirmText="Share On X"
+                content="Congrats on claiming your block! You can now see your ape on Halve Ape Blast canvas! Don’t forget to share your achievement on X!"
+                close={() => {
+                    setShowShareOperate(false);
+                    setShowClaimPointMap(false);
+                }}
+                confirm={() => {
+                    shareContent();
+                }}
+            ></OperatePopup>
+
+            <OperatePopup
+                show={showClaimConfirm}
+                cancelColor="#AB98F4"
+                confirmColor="#00C080"
+                closeText="Cancel"
+                confirmText="Claim!"
+                content="Are you sure? Once you claim a block, you won’t be able to change it. So pick your spot wisely!"
+                close={() => {
+                    setShowClaimConfirm(false);
+                }}
+                confirm={async () => {
+                    setShowClaimConfirm(false);
+                    // 确认选择坐标
+                    const res = await nervapeApi.fnSnookyNacpUpdate({ ...apeInfo, point_x: selectPoint?.x, point_y: selectPoint?.y });
+                    await updateApe();
+                    setShowShareOperate(true);
                 }}
             ></OperatePopup>
         </div>

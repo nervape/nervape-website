@@ -22,6 +22,13 @@
         border-radius: 12px;
         border: 1px solid #D2FF02;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12);
+
+        &:hover {
+            border: 1px solid #D2FF02;
+            background: #D2FF02;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12);
+            color: #2D4643;
+        }
     }
 
     .not-logged-in {
@@ -171,7 +178,7 @@
                 padding: 16px;
                 background: rgba(54, 86, 81, 0.75);
             }
-            
+
             .ape-info-content {
                 height: 0;
                 background: rgba(54, 86, 81, 0.75);
@@ -194,6 +201,14 @@
                     .btn-groups {
                         flex: 1;
                         margin-top: 0;
+
+                        .download-tip {
+                            color: rgba(255, 255, 255, 0.60);
+                            text-align: center;
+                            font-size: 12px;
+                            font-weight: 300;
+                            line-height: normal;
+                        }
                     }
                 }
 
@@ -212,7 +227,7 @@
     }
 }
 
-@media screen and(min-width: 750px) and(max-width: 1200px)  {
+@media screen and(min-width: 750px) and(max-width: 1200px) {
     .user-info-container {
         width: 600px;
     }
