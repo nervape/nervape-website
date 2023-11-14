@@ -20,11 +20,7 @@ export default function NacpDone(props: any) {
                 </div>
                 <div className="flex-align" style={{ marginTop: '20px' }}>
                     <div className="left-info" style={{
-                        borderRight: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '1px solid rgba(255, 255, 255, 0.10)',
-                        paddingRight: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '20px',
-                        marginRight: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '20px',
                         flex: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 1 : '',
-
                     }}>
                         <div className="nacp-id">Halve Nervape #{nacp?.nacp_id}</div>
                         <div className="epoch">Epoch: {nacp?.epoch}</div>
@@ -56,7 +52,11 @@ export default function NacpDone(props: any) {
                         </div>
                     </div>
                     {(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) && (
-                        <div className="what-next">
+                        <div className="what-next" style={{
+                            borderLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '1px solid rgba(255, 255, 255, 0.10)',
+                            paddingLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '20px',
+                            marginLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '20px',
+                        }}>
                             <div className="title">What’s Next?</div>
                             <div className="desc">Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.</div>
                             <div className="claim-btn cursor" onClick={() => {

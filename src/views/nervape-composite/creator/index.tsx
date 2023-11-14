@@ -3,7 +3,7 @@ import './index.less';
 import { nervapeApi } from "../../../api/nervape-api";
 import { NacpAsset, NacpCategory, NacpMetadata, NacpPhase, NacpPhaseConfig, PhaseLeft, UpdateMetadataForm } from "../../../nervape/nacp";
 import { NacpAssetSelected, NacpCategoryIcons, NacpPhaseLockedIcon, NacpSpecialAssetIcons } from "../../../nervape/svg";
-import { DataContext, preloadImage, updateBodyOverflow } from "../../../utils/utils";
+import { DataContext, isMobile, preloadImage, updateBodyOverflow } from "../../../utils/utils";
 import { toJpeg, toPng } from 'html-to-image';
 import { Types } from "../../../utils/reducers";
 import { useSignMessage } from "wagmi";
@@ -1071,7 +1071,7 @@ export default function NacpCreator(props: any) {
                                                         onClick={() => {
                                                             setSelectCategory(category._id);
                                                             setCurrCategory(category);
-                                                            if (!isFold) setIsFold(true);
+                                                            if (!isFold && isMobile()) setIsFold(true);
                                                         }}>
                                                         {NacpCategoryIcons.get(category.name)}
                                                         <div className="select-asset-img">
