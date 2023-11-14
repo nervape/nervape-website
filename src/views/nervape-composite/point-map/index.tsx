@@ -496,7 +496,6 @@ export default function PointMap(_props: any) {
                                             placement={'right'}
                                             open={_p.open && !isMove}
                                             showArrow={false}
-                                            open={true}
                                             title={() => {
                                                 return (
                                                     <div className="hover-popup transition">
