@@ -37,7 +37,7 @@ export default function NacpDone(props: any) {
                                         <div className="download-btn cursor"
                                             style={{ marginLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '8px' }}
                                             onClick={() => {
-                                                download && download(`Spooky Nervape #${nacp?.nacp_id}`);
+                                                download && download(`Halve Nervape #${nacp?.nacp_id}`);
                                             }}>
                                             <img src={DownLoadIcon} alt="DownLoadIcon" />
                                             Download IMG

@@ -15,6 +15,7 @@ import EpochHeader from "./epoch-header";
 import ClaimPointMap from "./claim";
 import { useParams } from "react-router-dom";
 import OperatePopup from "../../components/operate-popup";
+import { CONFIG } from "../../../utils/config";
 
 initConfig({
     name: "Nervape",
@@ -432,6 +433,11 @@ export default function PointMap(_props: any) {
         }
     }
 
+    const shareContent = () => {
+        const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast`;
+        window.open(share_link);
+    }
+
     return (
         <div className="point-map-container" onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
@@ -560,6 +566,7 @@ export default function PointMap(_props: any) {
                 updateApe={() => {
                     setShowUpdateOperate(true);
                 }}
+                shareContent={shareContent}
                 claimBlock={() => {
                     setShowClaimPointMap(true);
                 }}></UserInfo>
@@ -606,6 +613,7 @@ export default function PointMap(_props: any) {
                     loginInfo?.address && await fnGetAddressApe(loginInfo?.address);
                     await initData();
                 }}
+                shareContent={shareContent}
                 loginInfo={loginInfo}></ClaimPointMap>
             <OperatePopup
                 show={showUpdateOperate}

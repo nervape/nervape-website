@@ -25,7 +25,7 @@ const width = 3029;
 const height = 3029;
 
 export default function ClaimPointMap(props: any) {
-    const { show, updateApe, apeInfo, setShowClaimPointMap } = props;
+    const { show, updateApe, apeInfo, setShowClaimPointMap, shareContent } = props;
 
     const [points, setPoints] = useState<PointMapItem[][]>([]);
     const [deltaY, setDeltaY] = useState(1);
@@ -453,8 +453,7 @@ export default function ClaimPointMap(props: any) {
                     setShowClaimPointMap(false);
                 }}
                 confirm={() => {
-                    const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Halloween,SpookyNervapes`;
-                    window.open(share_link);
+                    shareContent();
                 }}
             ></OperatePopup>
 

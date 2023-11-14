@@ -19,11 +19,12 @@ export default function UserInfo(props: {
     disconnect: Function;
     updateApe: Function;
     setPointToCenter: Function;
+    shareContent: Function;
     apeInfo: PointMapItem;
 }) {
     const { state, dispatch } = useContext(DataContext);
 
-    const { onConnect, formatAddress, loginInfo, createApe, claimBlock, apeInfo, disconnect, setPointToCenter, updateApe } = props;
+    const { onConnect, formatAddress, loginInfo, createApe, claimBlock, apeInfo, disconnect, setPointToCenter, updateApe, shareContent } = props;
 
     const download = (filename: string, url: string) => {
         const link = document.createElement('a');
@@ -87,14 +88,13 @@ export default function UserInfo(props: {
                                         (apeInfo.point_x || apeInfo.point_x == 0) ? (
                                             <>
                                                 <div className="download-btn btn cursor" onClick={() => {
-                                                    apeInfo?.url && download(`Spooky Nervape #${apeInfo?.nacp_id}`, apeInfo?.url);
+                                                    apeInfo?.url && download(`Halve Nervape #${apeInfo?.nacp_id}`, apeInfo?.url);
                                                 }}>
                                                     <img src={DownLoadIcon} alt="DownLoadIcon" />
                                                     Download IMG
                                                 </div>
                                                 <div className="share-btn btn cursor" onClick={() => {
-                                                    const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Halloween,SpookyNervapes`;
-                                                    window.open(share_link);
+                                                    shareContent();
                                                 }}>
                                                     <img src={ShareIcon} alt="DownLoadIcon" />
                                                     Share On X
@@ -107,7 +107,7 @@ export default function UserInfo(props: {
                                         ) : (
                                             <>
                                                 <div className="download-btn btn cursor" onClick={() => {
-                                                    apeInfo?.url && download(`Spooky Nervape #${apeInfo?.nacp_id}`, apeInfo?.url);
+                                                    apeInfo?.url && download(`Halve Nervape #${apeInfo?.nacp_id}`, apeInfo?.url);
                                                 }}>
                                                     <img src={DownLoadIcon} alt="DownLoadIcon" />
                                                     Download IMG
@@ -174,8 +174,7 @@ export default function UserInfo(props: {
                                                         Download IMG
                                                     </div> */}
                                                     <div className="share-btn btn cursor" onClick={() => {
-                                                        const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Halloween,SpookyNervapes`;
-                                                        window.open(share_link);
+                                                        shareContent();
                                                     }}>
                                                         <img src={ShareIcon} alt="DownLoadIcon" />
                                                         Share On X
