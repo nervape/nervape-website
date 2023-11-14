@@ -98,10 +98,20 @@
 
 @media screen and(max-width: 750px) {
     .point-map-detail-container {
+        &.show {
+            .point-map-detail-content {
+                top: 0;
+                transform: translate(-50%, 0%) scale(1);
+                max-height: unset;
+            }
+        }
         .point-map-detail-content {
             width: 100%;
 
             .detail-info {
+                height: calc(100vh - 100vw);
+                padding-bottom: 0;
+
                 .position {
                     font-size: 24px;
                 }
