@@ -73,6 +73,7 @@ export default function PointMap(_props: any) {
     const [showUpdateOperate, setShowUpdateOperate] = useState(false);
     const [hideEpochHeader, setHideEpochHeader] = useState(false);
     const [focusActive, setFocusActive] = useState(false);
+    const [activityEnd, setActivityEnd] = useState(false);
 
     const [store] = useState<TouchStore>(new TouchStore());
 
@@ -129,7 +130,6 @@ export default function PointMap(_props: any) {
                 }
             }
         }
-        console.log(_points);
         setPoints(_points);
 
         let _scale = 1;
@@ -165,14 +165,12 @@ export default function PointMap(_props: any) {
 
     const fetchEpoch = async () => {
         const { currentEpoch } = await getCKBCurrentEpochAndTipBlockNumber();
-        console.log("epoch = ", currentEpoch);
         setEpoch(currentEpoch);
     }
 
     const fnSnookyNacpList = async () => {
         let res = await nervapeApi.fnSnookyNacpList();
         setNacps(res);
-        console.log(res);
         return res;
     }
 
@@ -184,7 +182,6 @@ export default function PointMap(_props: any) {
     const onConnect = async () => {
         try {
             const authData = await connect();
-            console.log(`JoyID user info:`, authData);
 
             setJoyIDStorage({
                 type: LoginWalletType.JOYID,
@@ -235,6 +232,13 @@ export default function PointMap(_props: any) {
 
         fnGetAddressApe(loginInfo?.address);
     }, [loginInfo]);
+
+    useEffect(() => {
+        if (epoch >= 8760) {
+            // 活动结束
+            setActivityEnd(true);
+        }
+    }, [epoch]);
 
     const formatAddress = (address: string) => {
         const subLength = 5;
@@ -434,14 +438,23 @@ export default function PointMap(_props: any) {
         }
     }
 
-    const { estimatedDate, hasHalved } = useHalving(1)
-
-    console.log("estimatedDate=", estimatedDate, hasHalved)
+    const { estimatedDate, hasHalved } = useHalving(1);
 
     const shareContent = () => {
-        const share_link = `https://twitter.com/share?text=I Halve Ape Blast making this Epoch Ape for CKB’s Halving Event. Create one and place it on our canvas here →&url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast`;
+        const share_link = `https://twitter.com/share?text=Halve Ape Blast creating a Halve Nervape to celebrate @NervosNetwork Halving Event! 🎊 Place it on our collaborative canvas to win an NFT of the full canvas! 🥂 → &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast`;
         window.open(share_link);
     }
+
+    if (activityEnd) return (
+        <div className="point-map-container activity-end">
+            <div className="activity-end-container">
+                <img className="activity-end-image" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e322f946-7a0e-4faa-aafe-8d1b1f6f215d.png" alt="" />
+                <div className="title">💀 Spooky Nervapes has met its frightening end.</div>
+                <div className="desc">🎃 Hello fellow ghoul, goblin, zombie, Nervape…the Spooky Nervapes Halloween event is over. Don’t despair! We will be holding upcoming events that will let you build your own Nervape in even more terrifying, beautiful, and amazing ways.</div>
+                <div>🌕 Please follow us on X <a href="https://twitter.com/nervapes" target="_blank">@Nervapes</a> to keep up to date. </div>
+            </div>
+        </div>
+    )
 
     return (
         <div className="point-map-container" onPointerDown={handlePointerDown}
@@ -495,7 +508,6 @@ export default function PointMap(_props: any) {
                                                 );
                                             }}>
                                             <div onMouseEnter={(e: any) => {
-                                                console.log(e.target.dataset)
                                                 let _points = JSON.parse(JSON.stringify(points));
                                                 _points.map((pt, pt_i) => {
                                                     pt.map((_pt, _pt_i) => {
