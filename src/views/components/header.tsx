@@ -207,22 +207,22 @@ const pages: NavPageInfo[] = [
     type: "logo",
     image: NacpLogo,
     mImage: MNacpLogo,
-    // eleItem: () => {
-    //   return (
-    //     <Dropdown
-    //       menu={HallweenNacpItems}
-    //       // @ts-ignore
-    //       getPopupContainer={() => document.getElementById('header-container')}
-    //       overlayClassName="hallween-items gallery-items"
-    //       onOpenChange={open => {
-    //         updateBodyOverflow(!open);
-    //       }}>
-    //       <div className="hallween-item title-text">
-    //         <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
-    //       </div>
-    //     </Dropdown>
-    //   )
-    // }
+    eleItem: () => {
+      return (
+        <Dropdown
+          menu={HallweenNacpItems}
+          // @ts-ignore
+          getPopupContainer={() => document.getElementById('header-container')}
+          overlayClassName="hallween-items gallery-items"
+          onOpenChange={open => {
+            updateBodyOverflow(!open);
+          }}>
+          <div className="hallween-item title-text">
+            <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
+          </div>
+        </Dropdown>
+      )
+    }
   },
   {
     title: "ABOUT",
@@ -519,19 +519,19 @@ export default function NavHeader(props: any) {
                     }}
                   >
                     {v.type === 'logo'
-                      ? (
-                        <div className="nacp-logo">
-                          <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
-                        </div>
-                      )
-                      // ? (v.eleItem && v.eleItem())
+                      // ? (
+                      //   <div className="nacp-logo">
+                      //     <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
+                      //   </div>
+                      // )
+                      ? (v.eleItem && v.eleItem())
                       : v.type === 'hover' ? (v.eleItem && v.eleItem()) : (<div className="title-text">{v.title}</div>)}
                   </div>
                 );
               })
             ) : (
               <>
-                <div
+                {/* <div
                   className="nav-area logo"
                   onClick={() => {
                     setDisableList(true);
@@ -540,7 +540,7 @@ export default function NavHeader(props: any) {
                   <div className="nacp-logo">
                     <img className="icon-image" src={state.windowWidth <= 750 ? MNacpLogo : NacpLogo} alt="" />
                   </div>
-                </div>
+                </div> */}
                 <Menu
                   className="mobile-menu-items"
                   expandIcon={() => {
