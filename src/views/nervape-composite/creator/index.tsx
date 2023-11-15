@@ -40,7 +40,18 @@ let touchYStart = 0;
 export default function NacpCreator(props: any) {
     const { state, dispatch } = useContext(DataContext);
 
-    const { show, setShowHalloweenInfo, loginInfo, epoch, skipStep, setShowClaimPointMap, setShowNacpCreator, setHideEpochHeader } = props;
+    const {
+        show,
+        setShowHalloweenInfo,
+        loginInfo,
+        epoch,
+        skipStep,
+        setShowClaimPointMap,
+        setShowNacpCreator,
+        fnGetCkbHalfCount,
+        usedCount,
+        shareContent,
+        setHideEpochHeader } = props;
 
     const setLoading = (flag: boolean) => {
         dispatch({
@@ -670,7 +681,7 @@ export default function NacpCreator(props: any) {
         const res = await nervapeApi.fnGetNonce(_metadata, state.currentAddress);
 
         const filename = res.fields.key + uuidv4();
-        res.fields.key = filename + '-spooky.jpeg';
+        res.fields.key = filename + '.jpeg';
         res.fields.success_action_status = "200";
 
         const url = res.fields.host + res.fields.key;
@@ -693,7 +704,7 @@ export default function NacpCreator(props: any) {
         setLoading(false);
 
         setNacpShare(res);
-
+        await fnGetCkbHalfCount();
         axios(`${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}?v=${res.v}`);
         setShowNacpShareDown(true);
     }
@@ -1332,6 +1343,8 @@ export default function NacpCreator(props: any) {
             <NacpDone
                 show={showNacpShareDown}
                 nacp={nacpShare}
+                usedCount={usedCount}
+                shareContent={shareContent}
                 skipStep={() => {
                     setShowNacpShareDown(false);
                     setIsLoadingEnded(false);

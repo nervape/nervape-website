@@ -1,70 +1,108 @@
-.epoch-header-container {
+.epoch-ape-container {
     position: fixed;
-    width: 600px;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    border-radius: 0px 0px 16px 16px;
-    background: rgba(29, 48, 47, 0.75);
-    backdrop-filter: blur(2px);
-    color: #FFFFFF;
     z-index: 999;
 
-    .epoch-logo {
-        height: 40px;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        border-bottom: 2px solid rgba(136, 136, 136, 0.10);
+    .epoch-header-container {
+        width: 600px;
+        border-radius: 0px 0px 16px 16px;
+        background: rgba(29, 48, 47, 0.75);
+        backdrop-filter: blur(2px);
+        color: #FFFFFF;
 
-        .logo {
-            display: block;
+        .epoch-logo {
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-bottom: 2px solid rgba(136, 136, 136, 0.10);
+
+            .logo {
+                display: block;
+            }
+
+            .info-icon {
+                position: absolute;
+                right: 16px;
+                width: 24px;
+                height: 24px;
+                border-radius: 8px;
+                background: rgba(180, 188, 208, 0.10);
+
+                img {}
+            }
         }
 
-        .info-icon {
-            position: absolute;
-            right: 16px;
-            width: 24px;
-            height: 24px;
-            border-radius: 8px;
-            background: rgba(180, 188, 208, 0.10);
+        .ckb-epoch {
+            padding: 6px 0;
+            margin: 6px 16px;
 
-            img {}
+            &.hide {
+                margin: 0 16px 6px;
+            }
+
+            &:hover {
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .item {
+                flex: 1;
+                text-align: center;
+                line-height: normal;
+
+                .title {
+                    font-size: 12px;
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                }
+
+                .value {
+                    font-size: 16px;
+                    font-weight: 700;
+                }
+            }
         }
     }
 
-    .ckb-epoch {
-        padding: 6px 0;
-        margin: 6px 16px;
+    .current-ape-info {
+        width: 347px;
+        height: 32px;
+        margin: 0 auto;
+        border-radius: 8px;
+        border: 1px solid rgba(136, 136, 136, 0.10);
+        background: rgba(29, 48, 47, 0.75);
+        backdrop-filter: blur(2px);
 
-        &:hover {
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .item {
+        .halve-ape-created,
+        .halve-ape-claimed {
+            height: 24px;
+            line-height: 24px;
+            color: #FFF;
+            font-weight: 300;
+            font-size: 12px;
             flex: 1;
             text-align: center;
-            line-height: normal;
 
-            .title {
-                font-size: 12px;
-                font-weight: 600;
-                margin-bottom: 4px;
+            span {
+                font-weight: 500;
             }
+        }
 
-            .value {
-                font-size: 16px;
-                font-weight: 700;
-            }
+        .halve-ape-created {
+            border-right: 1px solid rgba(255, 255, 255, 0.10);
         }
     }
 }
 
 @media screen and(max-width: 750px) {
-    .epoch-header-container {
-        width: 347px;
+    .epoch-ape-container {
+        .epoch-header-container {
+            width: 347px;
 
-        .item {}
+            .item {}
+        }
     }
 }

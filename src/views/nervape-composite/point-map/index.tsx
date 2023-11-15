@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import OperatePopup from "../../components/operate-popup";
 import { useHalving } from "../../../hooks/useCkbHalving";
 import { CONFIG } from "../../../utils/config";
+import useIntervalAsync from "../../../hooks/useIntervalAsync";
 
 initConfig({
     name: "Nervape",
@@ -45,9 +46,14 @@ export class TouchStore {
     scale: any;
 }
 
+export class UsedCount {
+    block: number = 0;
+    create: number = 0;
+}
 const width = 3029;
 const height = 3029;
 const preOffset = 1; // 每个格子的间距
+export const MaxBlockCount = 900;
 
 export default function PointMap(_props: any) {
     const { state, dispatch } = useContext(DataContext);
@@ -76,16 +82,20 @@ export default function PointMap(_props: any) {
     const [focusActive, setFocusActive] = useState(false);
     const [activityEnd, setActivityEnd] = useState(false);
     const [startPoint, setStartPoint] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+    const [usedCount, setUsedCount] = useState<UsedCount>({ block: 0, create: 0 });
 
     const [store] = useState<TouchStore>(new TouchStore());
 
     const queryParams = new URLSearchParams(window.location.search);
     const nacp_id = queryParams.get("nacp_id");
 
+    useIntervalAsync(fnGetCkbHalfCount, 10000);
+
     const initDebounce = useDebounce(async () => {
         initData();
         fetchEpoch();
         fnGetCkbHalfStatistics();
+        fnGetCkbHalfCount();
     }, 100);
 
     const setPointToCenter = (x: number, y: number) => {
@@ -107,6 +117,12 @@ export default function PointMap(_props: any) {
 
     const fnGetCkbHalfStatistics = async () => {
         const res = await nervapeApi.fnGetCkbHalfStatistics();
+    }
+
+    async function fnGetCkbHalfCount() {
+        const res = await nervapeApi.fnGetCkbHalfCount();
+        setUsedCount(res);
+        return res;
     }
 
     const initData = async () => {
@@ -600,6 +616,7 @@ export default function PointMap(_props: any) {
                     setShowUpdateOperate(true);
                 }}
                 shareContent={shareContent}
+                usedCount={usedCount}
                 claimBlock={() => {
                     setShowClaimPointMap(true);
                 }}></UserInfo>
@@ -630,6 +647,9 @@ export default function PointMap(_props: any) {
                 }}
                 epoch={epoch}
                 setHideEpochHeader={setHideEpochHeader}
+                fnGetCkbHalfCount={fnGetCkbHalfCount}
+                shareContent={shareContent}
+                usedCount={usedCount}
                 setShowHalloweenInfo={setShowHalloweenInfo}></NacpCreator>
             <HalloweenInfoPopup show={showHalloweenInfo} close={() => {
                 setShowHalloweenInfo(false);
@@ -640,7 +660,8 @@ export default function PointMap(_props: any) {
                     showNacpCreator={showNacpCreator}
                     epoch={epoch}
                     estimatedDate={estimatedDate as Date}
-                    setShowHalloweenInfo={setShowHalloweenInfo}></EpochHeader>
+                    setShowHalloweenInfo={setShowHalloweenInfo}
+                    usedCount={usedCount}></EpochHeader>
             )}
             <ClaimPointMap
                 show={showClaimPointMap}

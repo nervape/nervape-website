@@ -4,9 +4,10 @@ import HalveLogo from '../../../../assets/halve/halve_logo.svg';
 import ShareIcon from '../../../../assets/nacp/hallween/share_icon.svg';
 import DownLoadIcon from '../../../../assets/nacp/hallween/download_icon.svg';
 import { DataContext, isMobile } from "../../../../utils/utils";
+import { MaxBlockCount } from "../../point-map";
 
 export default function NacpDone(props: any) {
-    const { show, nacp, download, skipStep, setShowClaimPointMap } = props;
+    const { show, nacp, download, skipStep, setShowClaimPointMap, usedCount, shareContent } = props;
     const { state, dispatch } = useContext(DataContext);
 
     return (
@@ -47,7 +48,7 @@ export default function NacpDone(props: any) {
                                 <div className="skip-btn cursor" onClick={() => {
                                     skipStep();
                                 }}>
-                                    Veiw On Halve Ape Blast Canvas
+                                    {usedCount.block >= MaxBlockCount ? 'Back to Halve Ape Blast Canvas' : 'Veiw On Halve Ape Blast Canvas'}
                                 </div>
                             )}
                         </div>
@@ -58,11 +59,30 @@ export default function NacpDone(props: any) {
                             paddingLeft: !(!isMobile() && !nacp?.point_x && nacp?.point_x != 0) ? 'unset' : '20px',
                         }}>
                             <div className="title">What’s Next?</div>
-                            <div className="desc">Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.</div>
-                            <div className="claim-btn cursor" onClick={() => {
-                                setShowClaimPointMap(nacp);
-                            }}>Claim Your Block!</div>
-                            <div className="skip-tip cursor" onClick={skipStep}>Want to claim your block later? Skip for now.</div>
+                            <div className="desc">
+                                {usedCount.block >= MaxBlockCount
+                                    ? 'It seems all blocks have been claimed by our fellow Halve Nervapes 😲. You can still halve fun editing and sharing your ape, but you won’t be eligible for the canvas NFT prize.'
+                                    : 'Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.'}
+                            </div>
+                            {usedCount.block >= MaxBlockCount ? (
+                                <div className="download-btn btn cursor" onClick={() => {
+                                    shareContent();
+                                }}>
+                                    <img src={ShareIcon} alt="DownLoadIcon" />
+                                    Share On X
+                                </div>
+                            ) : (
+                                <div className="claim-btn cursor" onClick={
+                                    () => {
+                                        setShowClaimPointMap(nacp);
+                                    }
+                                }>Claim Your Block!</div>
+                            )}
+                            <div className="skip-tip cursor" onClick={skipStep}>
+                                {usedCount.block >= MaxBlockCount
+                                    ? 'Want to share later? Skip for now.'
+                                    : 'Want to claim your block later? Skip for now.'}
+                            </div>
                         </div>
                     )}
                 </div>
@@ -70,20 +90,40 @@ export default function NacpDone(props: any) {
                 {(isMobile() ? (!nacp?.point_x && nacp?.point_x != 0) ? (
                     <div className="what-next">
                         <div className="title">What's Next?</div>
-                        <div className="desc">Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.</div>
-                        <div className="claim-btn cursor" onClick={() => {
-                            setShowClaimPointMap(nacp);
-                        }}>Claim Your Block!</div>
-                        <div className="skip-tip cursor" onClick={skipStep}>Want to claim your block later? Skip for now.</div>
+                        <div className="desc">
+                            {usedCount.block >= MaxBlockCount
+                                ? 'It seems all blocks have been claimed by our fellow Halve Nervapes 😲. You can still halve fun editing and sharing your ape, but you won’t be eligible for the canvas NFT prize.'
+                                : 'Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.'}
+                        </div>
+                        {usedCount.block >= MaxBlockCount ? (
+                            <div className="download-btn btn cursor" onClick={() => {
+                                shareContent();
+                            }}>
+                                <img src={ShareIcon} alt="DownLoadIcon" />
+                                Share On X
+                            </div>
+                        ) : (
+                            <div className="claim-btn cursor" onClick={
+                                () => {
+                                    setShowClaimPointMap(nacp);
+                                }
+                            }>Claim Your Block!</div>
+                        )}
+
+                        <div className="skip-tip cursor" onClick={skipStep}>
+                            {usedCount.block >= MaxBlockCount
+                                ? 'Want to share later? Skip for now.'
+                                : 'Want to claim your block later? Skip for now.'}
+                        </div>
                     </div>
                 ) : (
                     <div className="skip-btn cursor" onClick={() => {
                         skipStep();
                     }}>
-                        Veiw On Halve Ape Blast Canvas
+                        {usedCount.block >= MaxBlockCount ? 'Back to Halve Ape Blast Canvas' : 'Veiw On Halve Ape Blast Canvas'}
                     </div>
                 ) : '')}
             </div>
-        </div>
+        </div >
     );
 }

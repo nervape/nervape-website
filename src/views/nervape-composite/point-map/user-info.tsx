@@ -5,7 +5,7 @@ import { nervapeApi } from "../../../api/nervape-api";
 import JOYID from '../../../assets/logo/joyid.svg';
 import ShareIcon from '../../../assets/nacp/hallween/share_icon.svg';
 import DownLoadIcon from '../../../assets/nacp/hallween/download_icon.svg';
-import { PointMapItem } from ".";
+import { MaxBlockCount, PointMapItem, UsedCount } from ".";
 import { CONFIG } from "../../../utils/config";
 import { DataContext } from "../../../utils/utils";
 import FolderIcon from '../../../assets/halve/folder.svg';
@@ -21,10 +21,11 @@ export default function UserInfo(props: {
     setPointToCenter: Function;
     shareContent: Function;
     apeInfo: PointMapItem;
+    usedCount: UsedCount;
 }) {
     const { state, dispatch } = useContext(DataContext);
 
-    const { onConnect, formatAddress, loginInfo, createApe, claimBlock, apeInfo, disconnect, setPointToCenter, updateApe, shareContent } = props;
+    const { onConnect, formatAddress, loginInfo, createApe, claimBlock, apeInfo, disconnect, setPointToCenter, updateApe, shareContent, usedCount } = props;
 
     const download = (filename: string, url: string) => {
         const link = document.createElement('a');
@@ -56,7 +57,7 @@ export default function UserInfo(props: {
                             <div className="ape-info-content">
                                 <div className="my-ape flex-align">
                                     <div className="title">My Ape</div>
-                                    <div className="point cursor" style={{
+                                    <div className={`point ${(apeInfo.point_x || apeInfo.point_x == 0) && 'active cursor'}`} style={{
                                         opacity: apeInfo && (apeInfo.point_x || apeInfo.point_x == 0)
                                             ? 1 : 0.5
                                     }} onClick={() => {
@@ -112,12 +113,23 @@ export default function UserInfo(props: {
                                                     <img src={DownLoadIcon} alt="DownLoadIcon" />
                                                     Download IMG
                                                 </div>
+
+                                                {usedCount.block >= MaxBlockCount ? (
+                                                    <div className="share-btn btn cursor" onClick={() => {
+                                                        shareContent();
+                                                    }}>
+                                                        <img src={ShareIcon} alt="DownLoadIcon" />
+                                                        Share On X
+                                                    </div>
+                                                ) : (
+                                                    <div className="claim-btn btn cursor" onClick={() => {
+                                                        claimBlock();
+                                                    }}>Claim My Block</div>
+                                                )}
+
                                                 <div className="update-btn btn cursor" onClick={() => {
                                                     updateApe();
                                                 }}>Update My Ape</div>
-                                                <div className="claim-btn btn cursor" onClick={() => {
-                                                    claimBlock();
-                                                }}>Claim My Block</div>
 
                                                 <div className="tip">
                                                     Claim your block and then share your Halve Ape on X!
@@ -137,7 +149,7 @@ export default function UserInfo(props: {
                             </div>
                             <div className="my-ape flex-align">
                                 <div className="title">My Ape</div>
-                                <div className="point cursor" style={{
+                                <div className={`point ${(apeInfo.point_x || apeInfo.point_x == 0) && 'active cursor'}`} style={{
                                     opacity: apeInfo && (apeInfo.point_x || apeInfo.point_x == 0)
                                         ? 1 : 0.5
                                 }} onClick={() => {
@@ -196,13 +208,21 @@ export default function UserInfo(props: {
                                                         <img src={DownLoadIcon} alt="DownLoadIcon" />
                                                         Download IMG
                                                     </div> */}
+                                                    {usedCount.block >= MaxBlockCount ? (
+                                                        <div className="share-btn btn cursor" onClick={() => {
+                                                            shareContent();
+                                                        }}>
+                                                            <img src={ShareIcon} alt="DownLoadIcon" />
+                                                            Share On X
+                                                        </div>
+                                                    ) : (
+                                                        <div className="claim-btn btn cursor" onClick={() => {
+                                                            claimBlock();
+                                                        }}>Claim My Block</div>
+                                                    )}
                                                     <div className="update-btn btn cursor" onClick={() => {
                                                         updateApe();
                                                     }}>Update My Ape</div>
-                                                    <div className="claim-btn btn cursor" onClick={() => {
-                                                        claimBlock();
-                                                    }}>Claim My Block</div>
-
                                                     <div className="download-tip">
                                                         Press down on your Halve Nervape to save the ape to your device.
                                                     </div>
