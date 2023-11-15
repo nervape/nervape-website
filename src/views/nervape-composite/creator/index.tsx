@@ -1366,7 +1366,7 @@ export default function NacpCreator(props: any) {
                 confirmColor="#00C080"
                 closeText="Back to the Party"
                 confirmText="Halve Fun Bye!"
-                content="Are you sure? Your progress will be lost and your Halve Nervape naked."
+                content="Are you sure? Your progress will be lost and nothing saved."
                 close={() => {
                     setShowDiscardOperate(false);
                 }}
