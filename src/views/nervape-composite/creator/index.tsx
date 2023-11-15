@@ -692,12 +692,9 @@ export default function NacpCreator(props: any) {
 
         setLoading(false);
 
-        setNacpShare({
-            ...res,
-            share_link: `https://twitter.com/share?text=Happy Halloween🎃! Check out my Spooky Nervape made with @Nervapes Spooky Nervapes creator. Make your own and share to win scary prizes (10/31 to 11/8) 👻→ &url=${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}&hashtags=Halloween,SpookyNervapes`
-        });
+        setNacpShare(res);
 
-        axios(`${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}`);
+        axios(`${CONFIG.SPOOKY_SHARE_PATH}${res.nacp_id}?v=${res.v}`);
         setShowNacpShareDown(true);
     }
 
@@ -722,6 +719,8 @@ export default function NacpCreator(props: any) {
 
     // 生成文件并上传
     const htmlToImageConvert = async (signData: { fields: any; url: string; } | null, ref: any, key: string, filename: string = '') => {
+        await toJpeg(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
+        await toJpeg(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         await toJpeg(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         await toJpeg(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });
         await toJpeg(ref.current as unknown as HTMLElement, { cacheBust: false, fontEmbedCSS: '', style: { top: '0px' } });

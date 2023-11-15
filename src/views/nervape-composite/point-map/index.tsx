@@ -33,6 +33,7 @@ export class PointMapItem {
     epoch?: number;
     open?: boolean = false;
     nacp_id?: number;
+    v?: number;
 }
 
 export class TouchStore {
@@ -454,7 +455,7 @@ export default function PointMap(_props: any) {
     const { estimatedDate, hasHalved } = useHalving(1);
 
     const shareContent = () => {
-        const share_link = `https://twitter.com/share?text=Halve Ape Blast creating a Halve Nervape to celebrate @NervosNetwork Halving Event! 🦧 Place it on @Nervapes collaborative canvas to win an NFT of the full canvas! 🥂 → &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + new Date().getTime())}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast,Nervape`;
+        const share_link = `https://twitter.com/share?text=Halve Ape Blast creating a Halve Nervape to celebrate @NervosNetwork Halving Event! 🦧 Place it on @Nervapes collaborative canvas to win an NFT of the full canvas! 🥂 → &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + apeInfo?.v)}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast,Nervape`;
         window.open(share_link);
     }
 

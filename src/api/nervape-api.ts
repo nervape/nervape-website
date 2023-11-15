@@ -401,7 +401,7 @@ class NervapeApi {
   
   public async fnSnookyNacpSave(link: string, address: string, epoch: number) {
     const url = `${this.baseUrl}/nacp/snooky/save`;
-    const res = await axios.post(url, { url: link, address, epoch });
+    const res = await axios.post(url, { url: link, address, epoch, v: new Date().getTime() });
     return this._fnDealResponse(res, url);
   }
   
