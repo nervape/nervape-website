@@ -8,15 +8,15 @@ import instegram from "../../assets/icons/instegram.svg";
 import NacpLogo from '../../assets/logo/logo_nacp.svg';
 import MNacpLogo from '../../assets/logo/m_nacp_logo.svg';
 import HeaderOpenIcon from '../../assets/icons/header-open.svg';
-// import HallweenNacpLogo from '../../assets/nacp/hallween/hallween_nacp_logo.svg';
-// import HallweenTitle from '../../assets/nacp/hallween/hallween_title.svg';
+import HallweenNacpLogo from '../../assets/nacp/hallween/hallween_nacp_logo.svg';
+import HallweenTitle from '../../assets/nacp/hallween/hallween_title.svg';
 
 import { NavTool } from "../../route/navi-tool";
 import { DataContext, getWindowScrollTop, scrollToTop, updateBodyOverflow } from "../../utils/utils";
 import WalletConnect from "./wallet-connect";
 import { Types } from "../../utils/reducers";
 import { Dropdown, Menu, MenuProps, Tooltip } from 'antd';
-// import { CONFIG } from "../../utils/config";
+import { CONFIG } from "../../utils/config";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -141,30 +141,30 @@ const BuyChildrenItems: MenuItem[] = [
   ])
 ];
 
-// const HallweenNacpItems: MenuProps = {
-//   items: [
-//     {
-//       label: (
-//         <div onClick={() => {
-//           handleHeaderClick('nacp');
-//         }}>
-//           <img src={NacpLogo} alt="NacpLogo" />
-//         </div>
-//       ),
-//       key: '-1'
-//     },
-//     {
-//       label: (
-//         <div onClick={() => {
-//           window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervapes/nacp/`, '_block');
-//         }}>
-//           <img src={HallweenTitle} alt="HallweenTitle" />
-//         </div>
-//       ),
-//       key: '0'
-//     }
-//   ]
-// };
+const HallweenNacpItems: MenuProps = {
+  items: [
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('nacp');
+        }}>
+          <img src={NacpLogo} alt="NacpLogo" />
+        </div>
+      ),
+      key: '-1'
+    },
+    {
+      label: (
+        <div onClick={() => {
+          window.open(`${CONFIG.WEBSITE_HOST}/halve-ape-blast/nacp/`, '_block');
+        }}>
+          <img src={HallweenTitle} alt="HallweenTitle" />
+        </div>
+      ),
+      key: '0'
+    }
+  ]
+};
 
 const BuyItems: MenuProps = {
   items: [
@@ -357,24 +357,24 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
 };
 
 const mPages: MenuItem[] = [
-  // getItem((
-  //   <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
-  // ), 'nacp', null, [
-  //   getItem((
-  //     <div onClick={() => {
-  //       handleHeaderClick('nacp');
-  //     }}>
-  //       <img src={NacpLogo} alt="NacpLogo" />
-  //     </div>
-  //   ), 'nacp'),
-  //   getItem((
-  //     <div onClick={() => {
-  //       window.open(`${CONFIG.WEBSITE_HOST}/spooky-nervapes/nacp/`, '_block');
-  //     }}>
-  //       <img src={HallweenTitle} alt="HallweenTitle" />
-  //     </div>
-  //   ), 'hallween-nacp')
-  // ]),
+  getItem((
+    <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
+  ), 'nacp', null, [
+    getItem((
+      <div onClick={() => {
+        handleHeaderClick('nacp');
+      }}>
+        <img src={NacpLogo} alt="NacpLogo" />
+      </div>
+    ), 'nacp'),
+    getItem((
+      <div onClick={() => {
+        window.open(`${CONFIG.WEBSITE_HOST}/halve-ape-blast/nacp/`, '_block');
+      }}>
+        <img src={HallweenTitle} alt="HallweenTitle" />
+      </div>
+    ), 'hallween-nacp')
+  ]),
   getItem('ABOUT', 'about'),
   getItem('STORY', 'story'),
   getItem('GALLERY', 'gallery', null, [
