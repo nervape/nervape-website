@@ -12,7 +12,7 @@ export default function ClaimOperate(props: any) {
             <div className="confirm-content flex-align">
                 <div className="left-point">
                     <div className="selected-block">Selected Block:</div>
-                    <div className="value">{`(${point?.x || '-'}, ${point?.y || '-'})`}</div>
+                    <div className="value">{`(${(point?.x || point?.x == 0) ? point?.x : '-'}, ${(point?.y || point?.y == 0) ? point?.x : '-'})`}</div>
                 </div>
                 <div className="btn-groups">
                     <div className="cursor cancel btn" onClick={close}>
