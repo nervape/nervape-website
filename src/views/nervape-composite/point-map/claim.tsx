@@ -324,27 +324,81 @@ export default function ClaimPointMap(props: any) {
                     {points.map((point, index) => {
                         return point.map((_p, _i) => {
                             if (_p.address) {
+                                if (!mobile) {
+                                    return (
+                                        <Tooltip
+                                            overlayClassName="claim-hover-tooltip"
+                                            key={`${index}-${_i}`}
+                                            placement={'right'}
+                                            open={_p.open && !isMove}
+                                            title={`(${index}, ${_i})`}>
+                                            <div onMouseEnter={(e: any) => {
+                                                console.log(e.target.dataset)
+                                                let _points = JSON.parse(JSON.stringify(points));
+                                                _points.map((pt, pt_i) => {
+                                                    pt.map((_pt, _pt_i) => {
+                                                        _pt.open = e.target.dataset.id == `${pt_i}-${_pt_i}`;
+                                                        return _pt;
+                                                    });
+
+                                                    return pt;
+                                                })
+
+                                                setPoints(_points);
+                                            }}
+                                                onMouseLeave={(e: any) => {
+                                                    let _points = JSON.parse(JSON.stringify(points));
+                                                    _points.map((pt, pt_i) => {
+                                                        pt.map((_pt, _pt_i) => {
+                                                            _pt.open = false;
+                                                            return _pt;
+                                                        });
+
+                                                        return pt;
+                                                    })
+
+                                                    setPoints(_points);
+                                                }}
+                                                onClick={() => {
+                                                }}
+                                                className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
+                                                <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
+                                            </div>
+                                        </Tooltip>
+                                    );
+                                }
+
+                                return (
+                                    <div className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
+                                        <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
+                                    </div>
+                                );
+                            }
+
+                            if (!mobile) {
                                 return (
                                     <Tooltip
                                         overlayClassName="claim-hover-tooltip"
                                         key={`${index}-${_i}`}
                                         placement={'right'}
                                         open={_p.open && !isMove}
+
                                         title={`(${index}, ${_i})`}>
-                                        <div onMouseEnter={(e: any) => {
-                                            console.log(e.target.dataset)
-                                            let _points = JSON.parse(JSON.stringify(points));
-                                            _points.map((pt, pt_i) => {
-                                                pt.map((_pt, _pt_i) => {
-                                                    _pt.open = e.target.dataset.id == `${pt_i}-${_pt_i}`;
-                                                    return _pt;
-                                                });
+                                        <div
+                                            onMouseEnter={(e: any) => {
+                                                console.log(e.target.dataset)
+                                                let _points = JSON.parse(JSON.stringify(points));
+                                                _points.map((pt, pt_i) => {
+                                                    pt.map((_pt, _pt_i) => {
+                                                        _pt.open = e.target.dataset.id == `${pt_i}-${_pt_i}`;
+                                                        return _pt;
+                                                    });
 
-                                                return pt;
-                                            })
+                                                    return pt;
+                                                })
 
-                                            setPoints(_points);
-                                        }}
+                                                setPoints(_points);
+                                            }}
                                             onMouseLeave={(e: any) => {
                                                 let _points = JSON.parse(JSON.stringify(points));
                                                 _points.map((pt, pt_i) => {
@@ -358,58 +412,27 @@ export default function ClaimPointMap(props: any) {
 
                                                 setPoints(_points);
                                             }}
-                                            onClick={() => {
-                                            }}
-                                            className={`point-item set transition ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`}>
-                                            <img src={_p.url} className="cover-image" alt="" data-id={`${index}-${_i}`} />
+                                            className={`point-item ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`} onClick={() => {
+                                                // 选择空白坐标
+                                                console.log(`(${index}, ${_i})`);
+                                                setSelectPoint({ x: index, y: _i });
+                                            }} data-id={`${index}-${_i}`}>
+                                            {(selectPoint?.x == index && selectPoint.y == _i) && <img data-id={`${index}-${_i}`} src={apeInfo.url} className="cover-image" alt="" />}
                                         </div>
                                     </Tooltip>
                                 );
                             }
 
                             return (
-                                <Tooltip
-                                    overlayClassName="claim-hover-tooltip"
+                                <div className={`point-item ${(index + _i) % 2 == 0 && 'dark'}`}
                                     key={`${index}-${_i}`}
-                                    placement={'right'}
-                                    open={_p.open && !isMove}
-                                    title={`(${index}, ${_i})`}>
-                                    <div
-                                        onMouseEnter={(e: any) => {
-                                            console.log(e.target.dataset)
-                                            let _points = JSON.parse(JSON.stringify(points));
-                                            _points.map((pt, pt_i) => {
-                                                pt.map((_pt, _pt_i) => {
-                                                    _pt.open = e.target.dataset.id == `${pt_i}-${_pt_i}`;
-                                                    return _pt;
-                                                });
-
-                                                return pt;
-                                            })
-
-                                            setPoints(_points);
-                                        }}
-                                        onMouseLeave={(e: any) => {
-                                            let _points = JSON.parse(JSON.stringify(points));
-                                            _points.map((pt, pt_i) => {
-                                                pt.map((_pt, _pt_i) => {
-                                                    _pt.open = false;
-                                                    return _pt;
-                                                });
-
-                                                return pt;
-                                            })
-
-                                            setPoints(_points);
-                                        }}
-                                        className={`point-item ${(index + _i) % 2 == 0 && 'dark'}`} key={`${index}-${_i}`} onClick={() => {
-                                            // 选择空白坐标
-                                            console.log(`(${index}, ${_i})`);
-                                            setSelectPoint({ x: index, y: _i });
-                                        }} data-id={`${index}-${_i}`}>
-                                        {(selectPoint?.x == index && selectPoint.y == _i) && <img data-id={`${index}-${_i}`} src={apeInfo.url} className="cover-image" alt="" />}
-                                    </div>
-                                </Tooltip>
+                                    onClick={() => {
+                                        // 选择空白坐标
+                                        console.log(`(${index}, ${_i})`);
+                                        setSelectPoint({ x: index, y: _i });
+                                    }} data-id={`${index}-${_i}`}>
+                                    {(selectPoint?.x == index && selectPoint.y == _i) && <img data-id={`${index}-${_i}`} src={apeInfo.url} className="cover-image" alt="" />}
+                                </div>
                             );
                         })
                     })}
