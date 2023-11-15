@@ -57,7 +57,7 @@ export default function UserInfo(props: {
                             <div className="ape-info-content">
                                 <div className="my-ape flex-align">
                                     <div className="title">My Ape</div>
-                                    <div className={`point ${(apeInfo.point_x || apeInfo.point_x == 0) && 'active cursor'}`} style={{
+                                    <div className={`point ${(apeInfo?.point_x || apeInfo?.point_x == 0) && 'active cursor'}`} style={{
                                         opacity: apeInfo && (apeInfo.point_x || apeInfo.point_x == 0)
                                             ? 1 : 0.5
                                     }} onClick={() => {
@@ -149,7 +149,7 @@ export default function UserInfo(props: {
                             </div>
                             <div className="my-ape flex-align">
                                 <div className="title">My Ape</div>
-                                <div className={`point ${(apeInfo.point_x || apeInfo.point_x == 0) && 'active cursor'}`} style={{
+                                <div className={`point ${(apeInfo?.point_x || apeInfo?.point_x == 0) && 'active cursor'}`} style={{
                                     opacity: apeInfo && (apeInfo.point_x || apeInfo.point_x == 0)
                                         ? 1 : 0.5
                                 }} onClick={() => {
