@@ -48,7 +48,7 @@ export default function NacpDone(props: any) {
                                 <div className="skip-btn cursor" onClick={() => {
                                     skipStep();
                                 }}>
-                                    {usedCount.block >= MaxBlockCount ? 'Back to Halve Ape Blast Canvas' : 'Veiw On Halve Ape Blast Canvas'}
+                                    {usedCount.block >= MaxBlockCount ? 'Back to Halve Ape Blast Canvas' : 'View On Halve Ape Blast Canvas'}
                                 </div>
                             )}
                         </div>
@@ -120,7 +120,7 @@ export default function NacpDone(props: any) {
                     <div className="skip-btn cursor" onClick={() => {
                         skipStep();
                     }}>
-                        {usedCount.block >= MaxBlockCount ? 'Back to Halve Ape Blast Canvas' : 'Veiw On Halve Ape Blast Canvas'}
+                        {usedCount.block >= MaxBlockCount ? 'Back to Halve Ape Blast Canvas' : 'View On Halve Ape Blast Canvas'}
                     </div>
                 ) : '')}
             </div>
