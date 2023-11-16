@@ -471,8 +471,9 @@ export default function PointMap(_props: any) {
 
     const { estimatedDate, hasHalved } = useHalving(1);
 
-    const shareContent = () => {
-        const share_link = `https://twitter.com/intent/tweet?text=Halve Ape Blast creating a Halve Nervape to celebrate @NervosNetwork Halving Event! 🦧 Place it on @Nervapes collaborative canvas to win an NFT of the full canvas! 🥂 → &url=${CONFIG.SPOOKY_SHARE_PATH}${apeInfo?.nacp_id}${encodeURIComponent('?v=' + (apeInfo?.v || 1))}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast,Nervape`;
+    const shareContent = (nacp: PointMapItem) => {
+        const _nacp = nacp || apeInfo;
+        const share_link = `https://twitter.com/intent/tweet?text=Halve Ape Blast creating a Halve Nervape to celebrate @NervosNetwork Halving Event! 🦧 Place it on @Nervapes collaborative canvas to win an NFT of the full canvas! 🥂 → &url=${CONFIG.SPOOKY_SHARE_PATH}${_nacp?.nacp_id}${encodeURIComponent('?v=' + (_nacp?.v || 1))}&hashtags=Nervos,NervosHalving,CKB,blockchain,HalveApeBlast,Nervape`;
         window.open(share_link);
     }
 

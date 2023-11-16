@@ -65,8 +65,8 @@ export default function NacpDone(props: any) {
                                     : 'Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.'}
                             </div>
                             {usedCount.block >= MaxBlockCount ? (
-                                <div className="download-btn btn cursor" onClick={() => {
-                                    shareContent();
+                                <div className="download-btn share-btn btn cursor" onClick={() => {
+                                    shareContent(nacp);
                                 }}>
                                     <img src={ShareIcon} alt="DownLoadIcon" />
                                     Share On X
@@ -96,8 +96,8 @@ export default function NacpDone(props: any) {
                                 : 'Claim a block for your ape to live on our collaborative Halve Ape Blast canvas.'}
                         </div>
                         {usedCount.block >= MaxBlockCount ? (
-                            <div className="download-btn btn cursor" onClick={() => {
-                                shareContent();
+                            <div className="download-btn share-btn btn cursor" onClick={() => {
+                                shareContent(nacp);
                             }}>
                                 <img src={ShareIcon} alt="DownLoadIcon" />
                                 Share On X
