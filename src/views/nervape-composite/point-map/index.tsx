@@ -481,9 +481,9 @@ export default function PointMap(_props: any) {
         <div className="point-map-container activity-end">
             <div className="activity-end-container">
                 <img className="activity-end-image" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e322f946-7a0e-4faa-aafe-8d1b1f6f215d.png" alt="" />
-                <div className="title">💀 Spooky Nervapes has met its frightening end.</div>
-                <div className="desc">🎃 Hello fellow ghoul, goblin, zombie, Nervape…the Spooky Nervapes Halloween event is over. Don’t despair! We will be holding upcoming events that will let you build your own Nervape in even more terrifying, beautiful, and amazing ways.</div>
-                <div>🌕 Please follow us on X <a href="https://twitter.com/nervapes" target="_blank">@Nervapes</a> to keep up to date. </div>
+                <div className="title">Halve Ape Blast event is over! </div>
+                <div className="desc">Hope you halved ape blast. 🐒  If you missed it, you can still view all the Halve Nervapes on our Halve Ape Blast canvas. We halve more fun events planned in the future.</div>
+                <div>follow us on <a href="https://twitter.com/nervapes" target="_blank">X (Twittter)</a> and join our <a href="https://discord.com/invite/7br6nvuNHP" target="_blank">Discord</a>to keep up to date! 🦾</div>
             </div>
         </div>
     )

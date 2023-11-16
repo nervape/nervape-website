@@ -131,9 +131,11 @@ export default function UserInfo(props: {
                                                     updateApe();
                                                 }}>Update My Ape</div>
 
-                                                <div className="tip">
-                                                    Claim your block and then share your Halve Ape on X!
-                                                </div>
+                                                {usedCount.block < MaxBlockCount && (
+                                                    <div className="tip">
+                                                        Claim your block and then share your Halve Ape on X!
+                                                    </div>
+                                                )}
                                             </>
                                         )
                                     )}
@@ -237,9 +239,11 @@ export default function UserInfo(props: {
                                         You have not created your ape yet.
                                     </div>
                                 ) : ((apeInfo.point_x || apeInfo.point_x == 0) ? '' : (
-                                    <div className="tip">
-                                        Claim your block and then share your Halve Ape on X!
-                                    </div>
+                                    usedCount.block < MaxBlockCount && (
+                                        <div className="tip">
+                                            Claim your block and then share your Halve Ape on X!
+                                        </div>
+                                    )
                                 ))}
 
                                 <div className="wallet-info-content flex-align">
