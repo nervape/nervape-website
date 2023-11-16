@@ -46,7 +46,9 @@ export default function EpochHeader(props: {
             {(!showNacpCreator || !isMobile()) && (
                 <div className="current-ape-info flex-align">
                     <div className="halve-ape-created">Halve Ape Created: <span>{usedCount.create}</span></div>
-                    <div className="halve-ape-claimed">Block Claimed: <span>{usedCount.block}/{MaxBlockCount}</span></div>
+                    <div className={`halve-ape-claimed ${usedCount.block >= MaxBlockCount && 'green'} ${((MaxBlockCount - usedCount.block > 0) && (MaxBlockCount - usedCount.block <= 50)) && 'yellow'}`}>
+                        Block Claimed: <span>{usedCount.block}/{MaxBlockCount}</span>
+                    </div>
                 </div>
             )}
         </div>
