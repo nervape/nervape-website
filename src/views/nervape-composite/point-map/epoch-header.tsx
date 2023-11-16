@@ -30,6 +30,7 @@ export default function EpochHeader(props: {
                 )}
 
                 <div className={`ckb-epoch transition cursor flex-align ${showNacpCreator && 'hide'}`} onClick={() => {
+                    if (isMobile()) return;
                     window.open('https://explorer.nervos.org/halving', '_blank');
                 }}>
                     <div className="epoch-item item">

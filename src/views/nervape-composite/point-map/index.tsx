@@ -122,6 +122,7 @@ export default function PointMap(_props: any) {
     async function fnGetCkbHalfCount() {
         const res = await nervapeApi.fnGetCkbHalfCount();
         setUsedCount(res);
+        await fnSnookyNacpList();
         return res;
     }
 
