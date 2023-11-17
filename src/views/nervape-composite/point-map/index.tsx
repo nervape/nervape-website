@@ -254,13 +254,6 @@ export default function PointMap(_props: any) {
         fnGetAddressApe(loginInfo?.address);
     }, [loginInfo]);
 
-    useEffect(() => {
-        if (epoch >= 8760) {
-            // 活动结束
-            setActivityEnd(true);
-        }
-    }, [epoch]);
-
     const formatAddress = (address: string) => {
         const subLength = 5;
         const dotStr = '...';
