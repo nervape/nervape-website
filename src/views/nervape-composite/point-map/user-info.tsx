@@ -89,27 +89,31 @@ export default function UserInfo(props: {
                                     <div className="joyid-address">{formatAddress(loginInfo.address)}</div>
                                     <div className="disconnect-btn transition cursor" onClick={() => { disconnect(); }}>Disconnect</div>
                                 </div>
-                                <div className="ape-info-content">
-                                    <div className="my-ape flex-align">
-                                        <div className="title">My Ape</div>
-                                        <div className={`point transition ${(apeInfo?.point_x || apeInfo?.point_x == 0) && 'active cursor'}`} style={{
-                                            opacity: apeInfo && (apeInfo.point_x || apeInfo.point_x == 0)
-                                                ? 1 : 0.5
-                                        }} onClick={() => {
-                                            if (apeInfo.point_x || apeInfo.point_x == 0) {
-                                                setPointToCenter(apeInfo.point_x, apeInfo.point_y);
-                                            }
-                                        }}>
-                                            {apeInfo && (apeInfo.point_x || apeInfo.point_x == 0) ?
-                                                `(${apeInfo.point_x}, ${apeInfo.point_y})`
-                                                : '(-, -)'}
-                                        </div>
-                                    </div>
-                                    <div className="ape-image">
-                                        {apeInfo && (
-                                            <img src={apeInfo.url} alt="" />
-                                        )}
-                                    </div>
+                                <div className="ape-info-content" style={{paddingTop: !apeInfo && epoch >= MaxEpochValue ? '0' : '16px'}}>
+                                    {!(!apeInfo && epoch >= MaxEpochValue) && (
+                                        <>
+                                            <div className="my-ape flex-align">
+                                                <div className="title">My Ape</div>
+                                                <div className={`point transition ${(apeInfo?.point_x || apeInfo?.point_x == 0) && 'active cursor'}`} style={{
+                                                    opacity: apeInfo && (apeInfo.point_x || apeInfo.point_x == 0)
+                                                        ? 1 : 0.5
+                                                }} onClick={() => {
+                                                    if (apeInfo.point_x || apeInfo.point_x == 0) {
+                                                        setPointToCenter(apeInfo.point_x, apeInfo.point_y);
+                                                    }
+                                                }}>
+                                                    {apeInfo && (apeInfo.point_x || apeInfo.point_x == 0) ?
+                                                        `(${apeInfo.point_x}, ${apeInfo.point_y})`
+                                                        : '(-, -)'}
+                                                </div>
+                                            </div>
+                                            <div className="ape-image">
+                                                {apeInfo && (
+                                                    <img src={apeInfo.url} alt="" />
+                                                )}
+                                            </div>
+                                        </>
+                                    )}
                                     <div className="btn-groups">
                                         {!apeInfo ? (
                                             epoch >= MaxEpochValue ? (
