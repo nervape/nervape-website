@@ -2,15 +2,12 @@
     position: fixed;
     top: 32px;
     left: 32px;
-    padding: 16px;
     border-radius: 16px;
-    border: 1px solid rgba(136, 136, 136, 0.10);
-    background: rgba(54, 86, 81, 0.75);
-    backdrop-filter: blur(2px);
     width: 240px;
     font-family: 'hoss-round';
     letter-spacing: 0;
     font-size: 12px;
+    overflow: hidden;
 
     .login-btn,
     .disconnect-btn {
@@ -34,14 +31,32 @@
     .not-logged-in {
         font-weight: 300;
         color: #FFFFFF;
+        border: 1px solid rgba(136, 136, 136, 0.10);
+        background: rgba(54, 86, 81, 0.75);
+        backdrop-filter: blur(2px);
+        padding: 16px;
 
         .text {
             flex: 1;
         }
     }
 
+    .end-in-time {
+        color: #00C080;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: normal;
+        padding: 8px 0;
+        background: rgba(34, 34, 34, 0.80);
+    }
+
     .has-logged {
         color: #FFFFFF;
+        border: 1px solid rgba(136, 136, 136, 0.10);
+        background: rgba(54, 86, 81, 0.75);
+        backdrop-filter: blur(2px);
+        padding: 16px;
 
         .wallet-info-content {
             padding-bottom: 16px;
@@ -110,7 +125,14 @@
                     height: 5px;
                     background: #3CC68A;
                     border-radius: 50%;
+                }
 
+                &.error::before {
+                    background: #FF6B6B;
+                }
+
+                &.warning::before {
+                    background: #FFF036;
                 }
             }
 
@@ -168,11 +190,15 @@
         }
 
         .has-logged {
+            padding: 0;
+            border: unset;
+
             .folder {
                 width: 100%;
                 border: 1px solid rgba(136, 136, 136, 0.10);
                 background: rgba(34, 34, 34, 0.80);
                 height: 30px;
+                position: relative;
 
                 img {
                     width: 6px;
@@ -184,6 +210,15 @@
                         transform: rotate(180deg);
                     }
                 }
+            }
+
+            .end-time {
+                color: #00C080;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: normal;
+                position: absolute;
+                right: 16px;
             }
 
             .my-ape {
@@ -199,6 +234,11 @@
 
                 &.open {
                     height: auto;
+                }
+
+                .tip-missed {
+                    margin: 0 auto;
+                    width: fit-content;
                 }
 
                 .ape-info {

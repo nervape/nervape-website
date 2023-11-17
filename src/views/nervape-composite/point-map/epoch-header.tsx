@@ -3,7 +3,7 @@ import './epoch-header.less';
 import HalveLogo from '../../../assets/halve/halve_logo.svg';
 import IIcon from '../../../assets/nacp/hallween/i_icon.svg';
 import dayjs from "dayjs";
-import { MaxBlockCount, UsedCount } from ".";
+import { MaxBlockCount, MaxEpochValue, UsedCount } from ".";
 import { isMobile } from "../../../utils/utils";
 
 export default function EpochHeader(props: {
@@ -35,22 +35,29 @@ export default function EpochHeader(props: {
                 }}>
                     <div className="epoch-item item">
                         <div className="title">Current CKB Epoch</div>
-                        <div className="value">{`${epoch}/8760`}</div>
+                        <div className="value" style={{ color: epoch >= MaxEpochValue ? '#00C080' : '#FFFFFF' }}>{`${epoch}/8760`}</div>
                     </div>
                     <div className="time-item item">
                         <div className="title">Est. Half Time</div>
-                        <div className="value">{dayjs(estimatedDate).format('HH:mm:ss, DD/MM/YYYY')}</div>
+                        {epoch >= MaxEpochValue ? (
+                            <div className="value" style={{color: '#00C080'}}>Halving Complete!</div>
+                        ) : (
+                            <div className="value">{dayjs(estimatedDate).format('HH:mm:ss, DD/MM/YYYY')}</div>
+                        )}
+
                     </div>
                 </div>
             </div>
-            {(!showNacpCreator || !isMobile()) && (
-                <div className="current-ape-info flex-align">
-                    <div className="halve-ape-created">Halve Ape Created: <span>{usedCount.create}</span></div>
-                    <div className={`halve-ape-claimed ${usedCount.block >= MaxBlockCount && 'green'} ${((MaxBlockCount - usedCount.block > 0) && (MaxBlockCount - usedCount.block <= 50)) && 'yellow'}`}>
-                        Block Claimed: <span>{usedCount.block}/{MaxBlockCount}</span>
+            {
+                (!showNacpCreator || !isMobile()) && (
+                    <div className="current-ape-info flex-align">
+                        <div className="halve-ape-created">Halve Ape Created: <span>{usedCount.create}</span></div>
+                        <div className={`halve-ape-claimed ${usedCount.block >= MaxBlockCount && 'green'} ${((MaxBlockCount - usedCount.block > 0) && (MaxBlockCount - usedCount.block <= 50)) && 'yellow'}`}>
+                            Block Claimed: <span>{usedCount.block}/{MaxBlockCount}</span>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 }
