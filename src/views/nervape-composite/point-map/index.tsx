@@ -53,9 +53,9 @@ export class UsedCount {
 const width = 3029;
 const height = 3029;
 const preOffset = 1; // 每个格子的间距
-export const MaxBlockCount = 100;
-export const MaxEpochValue = 8660;
-export const EndAtDate = new Date('2023/11/27 18:30:00').getTime();
+export const MaxBlockCount = 900;
+export const MaxEpochValue = 8760;
+export const EndAtDate = new Date('2023/11/27 01:00:00').getTime();
 
 export default function PointMap(_props: any) {
     const { state, dispatch } = useContext(DataContext);
