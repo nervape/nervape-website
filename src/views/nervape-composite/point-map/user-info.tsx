@@ -200,7 +200,7 @@ export default function UserInfo(props: {
                                     }}>
                                         <img className="transition" src={FolderIcon} alt="FolderIcon" />
 
-                                        {(state.windowWidth > 1200 && epoch >= MaxEpochValue && apeInfo) && (
+                                        {(epoch >= MaxEpochValue && apeInfo) && (
                                             <div className="end-time">{endTimeStr}</div>
                                         )}
                                     </div>
