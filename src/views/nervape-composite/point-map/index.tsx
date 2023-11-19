@@ -649,7 +649,7 @@ export default function PointMap(_props: any) {
                 shareContent={shareContent}
                 usedCount={usedCount}
                 setShowHalloweenInfo={setShowHalloweenInfo}></NacpCreator>
-            <HalloweenInfoPopup show={showHalloweenInfo} close={() => {
+            <HalloweenInfoPopup epoch={epoch} show={showHalloweenInfo} close={() => {
                 setShowHalloweenInfo(false);
             }}></HalloweenInfoPopup>
 
