@@ -14,10 +14,12 @@ export default function HalloweenInfoPopup(props: any) {
     const [infoImages, setInfoImages] = useState({w: '', m: ''});
 
     useEffect(() => {
+        if (!epoch) return;
+
         if (epoch >= MaxEpochValue) {
             setInfoImages({
-                w: HalloweenOver750,
-                m: HalloweenOver375
+                w: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/1addac20-7471-4c60-8fd9-de538d6b6e11.png',
+                m: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/7cd24bf5-3f12-4e5c-aea0-38d07efe954c.png'
             });
         } else {
             setInfoImages({
@@ -29,7 +31,8 @@ export default function HalloweenInfoPopup(props: any) {
     return (
         <div className={`halloween-info-container ${show && 'show'}`}>
             <div className="halloween-info-content">
-                <img className="cover" src={state.windowWidth > 600 ? infoImages.w : infoImages.m } alt="" />
+                {epoch && <img className="cover" src={state.windowWidth > 600 ? infoImages.w : infoImages.m } alt="" />}
+                
                 <img onClick={() => {
                     close && close();
                 }} src={CloseIcon} className="close-btn cursor" alt="" />

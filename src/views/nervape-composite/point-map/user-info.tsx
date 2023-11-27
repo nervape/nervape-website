@@ -155,9 +155,9 @@ export default function UserInfo(props: {
                                                         Share On X
                                                     </div>
 
-                                                    <div className="update-btn btn cursor" onClick={() => {
+                                                    {/* <div className="update-btn btn cursor" onClick={() => {
                                                         updateApe();
-                                                    }}>Update My Ape</div>
+                                                    }}>Update My Ape</div> */}
                                                 </>
                                             ) : (
                                                 <>
@@ -181,9 +181,9 @@ export default function UserInfo(props: {
                                                         }}>Claim My Block</div>
                                                     )}
 
-                                                    <div className="update-btn btn cursor" onClick={() => {
+                                                    {/* <div className="update-btn btn cursor" onClick={() => {
                                                         updateApe();
-                                                    }}>Update My Ape</div>
+                                                    }}>Update My Ape</div> */}
 
                                                     {usedCount.block < MaxBlockCount && (
                                                         <div className="tip">
@@ -264,9 +264,9 @@ export default function UserInfo(props: {
                                                                     Share On X
                                                                 </div>
 
-                                                                <div className="update-btn btn cursor" onClick={() => {
+                                                                {/* <div className="update-btn btn cursor" onClick={() => {
                                                                     updateApe();
-                                                                }}>Update My Ape</div>
+                                                                }}>Update My Ape</div> */}
 
                                                                 <div className="download-tip">
                                                                     Press down on your Halve Nervape to save the ape to your device.
@@ -292,9 +292,9 @@ export default function UserInfo(props: {
                                                                         claimBlock();
                                                                     }}>Claim My Block</div>
                                                                 )}
-                                                                <div className="update-btn btn cursor" onClick={() => {
+                                                                {/* <div className="update-btn btn cursor" onClick={() => {
                                                                     updateApe();
-                                                                }}>Update My Ape</div>
+                                                                }}>Update My Ape</div> */}
                                                                 <div className="download-tip">
                                                                     Press down on your Halve Nervape to save the ape to your device.
                                                                 </div>
