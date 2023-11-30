@@ -98,6 +98,12 @@ export default function WalletHeader(props: any) {
         }
     }, [headerRef, openFold]);
 
+    useEffect(() => {
+        if (state.loginWalletType == LoginWalletType.JOYID) {
+            setOpenFold(true);
+        }
+    }, [state.loginWalletType]);
+
     const CopyAddress = () => {
         return (
             <CopyToClipboard
@@ -211,7 +217,7 @@ export default function WalletHeader(props: any) {
                         )}
                     </div>
                 </Dropdown>
-                {state.windowWidth > 375 && (
+                {(state.windowWidth > 375 && state.loginWalletType != LoginWalletType.JOYID) && (
                     <div className="fold-icon">
                         <img onClick={() => {
                             setOpenFold(!openFold);

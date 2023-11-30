@@ -104,6 +104,9 @@ export default function WallectConnect(props: any) {
                 setLayerOneWrapper(wrapper);
                 await wrapper.init();
                 await wrapper.getBalance();
+            } else if (_storageJson.type === LoginWalletType.JOYID) {
+                setCurrentAddress(_storageJson.address || '');
+                setLoginWalletType(LoginWalletType.JOYID);
             }
         } else {
             clearStorage();

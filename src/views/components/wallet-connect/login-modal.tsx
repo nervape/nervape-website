@@ -7,6 +7,14 @@ import { Types } from "../../../utils/reducers";
 import { UnipassV3Wrapper } from "../../../utils/UnipassV3Wrapper";
 import { DataContext, isMetaMaskMobile, isMobile } from "../../../utils/utils";
 import { IconMap, LoginWalletType, setStorage } from "../../../utils/Wallet";
+import { initConfig, connect } from "@joyid/ckb";
+
+initConfig({
+    name: "Nervape",
+    network: "mainnet",
+    joyidAppURL: "https://app.joy.id",
+    logo: "https://www.nervape.com/assets/logo_nervape-6fc05221.svg"
+});
 
 export default function LoginModal(props: any) {
     const { state, dispatch } = useContext(DataContext);
@@ -63,6 +71,24 @@ export default function LoginModal(props: any) {
                 setLoading(false);
             }
         })();
+    }
+
+    async function connectJoyId() {
+        setLoading(true);
+        try {
+            const authData = await connect();
+
+            setStorage({
+                type: LoginWalletType.JOYID,
+                address: authData.address,
+                username: ''
+            });
+            setLoading(false);
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
     }
 
     if (!state.isInit) return <></>;
@@ -129,6 +155,14 @@ export default function LoginModal(props: any) {
                                     alt=""
                                 />
                                 UNIPASS V3
+                            </button>
+                            <button className="btn unipass cursor" onClick={connectJoyId}>
+                                <img
+                                    className="wallet-icon"
+                                    src={IconMap.get('JOYID')}
+                                    alt=""
+                                />
+                                JOYID
                             </button>
                         </div>
                     </div>

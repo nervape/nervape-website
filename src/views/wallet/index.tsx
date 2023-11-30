@@ -31,7 +31,9 @@ import NftIcon from "../../assets/wallet/navbar/nft.svg";
 import EventIcon from "../../assets/wallet/navbar/event.svg";
 import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
+import CoCreatedIcon from "../../assets/wallet/navbar/co-created.svg";
 import InvitationClaim from "./invitation";
+import WalletCoCreatedNFT from "./co-created";
 
 export class WalletNavBar {
     name: string = "";
@@ -43,7 +45,8 @@ export enum WalletNavbarTypes {
     NFT = '3DNFT',
     EVENT = 'EVENT',
     BADGE = 'BADGE',
-    TX = 'TX'
+    TX = 'TX',
+    CoCreatedNFT = 'Co-CreatedNFT',
 }
 
 export default function WalletNewPage() {
@@ -165,6 +168,13 @@ export default function WalletNewPage() {
                 }
             ]);
             return
+        } else if (state.loginWalletType === LoginWalletType.JOYID) {
+            setNavbars([
+                {
+                    name: 'Co-CreatedNFT',
+                    icon: CoCreatedIcon
+                }
+            ]);
         } else {
             // 设置 navbars
             setNavbars([
@@ -339,7 +349,11 @@ export default function WalletNewPage() {
                                                 navbars[currNavbar]?.name == WalletNavbarTypes.EVENT ? (
                                                     <WalletEvent isFold={isFold} setLoading={setLoading}></WalletEvent>
                                                 ) : (
-                                                    <></>
+                                                    navbars[currNavbar]?.name == WalletNavbarTypes.CoCreatedNFT ? (
+                                                        <WalletCoCreatedNFT isFold={isFold} setLoading={setLoading}></WalletCoCreatedNFT>
+                                                    ) : (
+                                                        <></>
+                                                    )
                                                 )
                                             )
                                         )

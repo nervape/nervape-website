@@ -4,11 +4,13 @@ import UnipassIcon from '../assets/images/icons/unipass.svg';
 import WalletConnectIcon from '../assets/images/icons/walletconnect.svg';
 import MetamaskIcon from '../assets/images/icons/metamask.svg';
 import CoinbaseIcon from '../assets/images/icons/coinbase.svg';
+import JOYIDIcon from '../assets/images/icons/joyid.svg';
 
 export enum LoginWalletType {
     UNIPASS_V3 = 'UNIPASS_V3',
     METAMASK = 'METAMASK',
-    WALLET_CONNECT = 'WALLETCONNECT'
+    WALLET_CONNECT = 'WALLETCONNECT',
+    JOYID = 'JOYID'
 }
 
 export type WALLET_CONNECT = {
@@ -24,6 +26,7 @@ IconMap.set('Unipass', UnipassIcon);
 IconMap.set('WalletConnect', WalletConnectIcon);
 IconMap.set('MetaMask', MetamaskIcon);
 IconMap.set('Coinbase Wallet', CoinbaseIcon);
+IconMap.set('JOYID', JOYIDIcon);
 
 const WalletStorageKey = 'Wallet_Connect_Info';
 const WalletLoginTypeKey = 'Wallet_Connect_Type';
