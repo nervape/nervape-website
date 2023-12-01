@@ -176,7 +176,7 @@ export default function WalletHeader(props: any) {
      */
 
     const walletIcon = () => {
-        if (state.loginWalletType === LoginWalletType.UNIPASS_V3) return NervosLogo;
+        if (state.loginWalletType === LoginWalletType.UNIPASS_V3 || state.loginWalletType === LoginWalletType.JOYID) return NervosLogo;
         // 检查是否支持当前网络
         if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {
             return InfoIcon;

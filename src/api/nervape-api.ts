@@ -255,6 +255,12 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+
+  public async fnGetJoyIdNfts(address: string) {
+    const url = `https://api.joy.id/api/v1/wallet/held_tokens/${address}?cursor=0&count=10`;
+    const res = await axios.get(url);
+    return res.data;
+  }
 }
 
 export const nervapeApi = new NervapeApi();
