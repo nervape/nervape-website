@@ -3,8 +3,13 @@ import { helpers } from '@ckb-lumos/lumos';
 import axios from "axios";
 
 export default async function JoyIdNfts(address: string) {
-    const script = helpers.addressToScript(address);
-    const rawLockScript = serializeScript(script as any);
+    const { code_hash, hash_type, args } = helpers.addressToScript(address);
+    const rawLockScript = serializeScript({
+        codeHash: code_hash,
+        hashType: hash_type,
+        args
+    });
+    // cotaId of Halve Ape Blast Canvas 
     const cotaId = "0xb4f2b7a80b382c07f62e4b78e38e21abcad4da30";
     const payload = {
         "id": 1,
