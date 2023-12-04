@@ -92,6 +92,7 @@ export default function NftCardDetail(props: {
                                 <button
                                     className="btn cursor"
                                     onClick={() => {
+                                        window.open('https://app.joy.id/?asset=Collectible', '_blank')
                                     }}
                                 >
                                     VIEW ON NFT BOX
