@@ -1,24 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import './index.less';
-import { DataContext, updateBodyOverflow } from "../../../utils/utils";
+import { DataContext, parseBalance, updateBodyOverflow } from "../../../utils/utils";
 import { nervapeApi } from "../../../api/nervape-api";
-import JoyIdNfts from "../../../utils/joyid-nfts";
+import JoyIdNfts, { cotaId } from "../../../utils/joyid-nfts";
 import NftEmptyIcon from '../../../assets/wallet/nft/nft_empty.png';
 import DetailCloseIcon from '../../../assets/images/nft/close_detail.svg';
 import NftCardDetail from "./detail";
 import { Types } from "../../../utils/reducers";
 
 export class JOYID_NFT {
-    class_cover_image_url: string = '';
-    class_description: string = '';
-    class_name: string = '';
-    issuer_avatar_url: string = '';
-    issuer_name: string = '';
-    n_token_id: number = 0;
-    on_chain_at_timestamp: number = 0;
-    renderer_type: string = '';
-    script_type: string = '';
-    token_key: string = '';
+    audio: string = "";
+    audios: any[] = [];
+    characteristic: string = "";
+    configure: string = "";
+    cota_id: string = "";
+    description: string = "";
+    image: string = "";
+    meta_characteristic: string = "";
+    model: string = "";
+    name: string = "";
+    properties: string = "";
+    state: string = "";
+    symbol: string = "";
+    token_index: string = "";
+    video: string = "";
 }
 
 // 全屏预览
@@ -51,11 +56,10 @@ export default function WalletCoCreatedNFT(props: any) {
     const [nftDetail, setNftDetail] = useState<JOYID_NFT>();
 
     async function fnGetJoyIdNfts() {
-        JoyIdNfts(state.currentAddress);
         setLoading(true);
-        const res = await nervapeApi.fnGetJoyIdNfts(state.currentAddress);
-        console.log('fnGetJoyIdNfts', res);
-        const filters = res.tokens.filter((t: JOYID_NFT) => t.issuer_name == 'Nervape')
+        const result = await JoyIdNfts(state.currentAddress);
+        console.log('fnGetJoyIdNfts', result);
+        const filters = result.nfts.filter((t: JOYID_NFT) => t.cota_id == cotaId)
 
         setCreatedNfts(filters);
         setLoading(false);
@@ -73,14 +77,14 @@ export default function WalletCoCreatedNFT(props: any) {
             <div className="nft-item cursor" onClick={() => { showDetail() }}>
                 <div className="cover-image">
                     <img
-                        src={`${nft.class_cover_image_url}?x-oss-process=image/resize,h_100,m_lfit`}
+                        src={`${nft.image}?x-oss-process=image/resize,h_100,m_lfit`}
                         alt=""
                     />
                 </div>
-                <div className="name" title={nft.class_name}>
-                    {nft.class_name}
+                <div className="name" title={nft.name}>
+                    {nft.name}
                 </div>
-                <div className="id">{`#${nft.n_token_id}`}</div>
+                <div className="id">{`#${parseBalance(nft.token_index, 0)}`}</div>
             </div>
         );
     }

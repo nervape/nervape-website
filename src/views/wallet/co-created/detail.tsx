@@ -2,7 +2,7 @@ import { BigNumberish } from 'ethers';
 import React, { useContext, useEffect, useState } from 'react';
 import { writeContract } from '@wagmi/core';
 import { ContractMap, NFT } from '../../../utils/nft-utils';
-import { DataContext } from '../../../utils/utils';
+import { DataContext, parseBalance } from '../../../utils/utils';
 import { LoginWalletType } from '../../../utils/Wallet';
 import Nervape_ABI from '../../../contracts/Nervape.json';
 
@@ -43,7 +43,7 @@ export default function NftCardDetail(props: {
             <div className={`wallet-nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
                 <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                     <div className="preview-model">
-                        <img className='cover-image-url' src={nft.class_cover_image_url} alt="" />
+                        <img className='cover-image-url' src={nft.image} alt="" />
                         {state.windowWidth !== 1200 && (
                             <div className="close-detail-c">
                                 <img
@@ -67,12 +67,12 @@ export default function NftCardDetail(props: {
                     </div>
                     <div className="detail-info m">
                         <div className="info-content">
-                            <div className="name">{nft.class_name}</div>
+                            <div className="name">{nft.name}</div>
 
                             <div className="attributes attributes-1 flex">
                                 <div className="range flex-1">
                                     <div className="text">ID</div>
-                                    <div className="value">{nft.n_token_id}</div>
+                                    <div className="value">{parseBalance(nft.token_index, 0)}</div>
                                 </div>
                                 <div className="origin flex-1">
                                     <div className="text">Number of Participant</div>
@@ -86,7 +86,7 @@ export default function NftCardDetail(props: {
                                 </div>
                             </div>
                             <div className={`description`}>
-                                {nft.class_description}
+                                {nft.description}
                             </div>
                             <div className="btn-groups">
                                 <button

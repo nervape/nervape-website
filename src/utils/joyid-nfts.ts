@@ -1,6 +1,7 @@
 import { serializeScript } from '@nervosnetwork/ckb-sdk-utils';
 import { helpers } from '@ckb-lumos/lumos';
-import axios from "axios";
+
+export const cotaId = "0xb4f2b7a80b382c07f62e4b78e38e21abcad4da30";
 
 export default async function JoyIdNfts(address: string) {
     const { code_hash, hash_type, args } = helpers.addressToScript(address);
@@ -10,7 +11,6 @@ export default async function JoyIdNfts(address: string) {
         args
     });
     // cotaId of Halve Ape Blast Canvas 
-    const cotaId = "0xb4f2b7a80b382c07f62e4b78e38e21abcad4da30";
     const payload = {
         "id": 1,
         "jsonrpc": "2.0",
@@ -30,4 +30,6 @@ export default async function JoyIdNfts(address: string) {
     });
     const result = await response.json();
     console.log(result);
+
+    return result.result;
 }
