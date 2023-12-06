@@ -33,6 +33,10 @@ export function FullscreenPreview(props: { nft?: JOYID_NFT; close: any; show: bo
 
     return (
         <div className={`fullscreen-container transition mask-cover ${show && 'show'}`}>
+            <div className="fullscreen-image-cover">
+                <img className="fullscreen-image" src={nft?.image} alt="fullscreen-image" />
+            </div>
+            
             <div className="close-c cursor" onClick={close}>
                 <img
                     loading="lazy"
@@ -123,8 +127,8 @@ export default function WalletCoCreatedNFT(props: any) {
                                 <img src={NftEmptyIcon} alt="NftEmptyIcon" />
                             </div>
                             <div className="tip">
-                                <p>You currently don’t have any Co-Created NFT</p>
-                                <p>Stay tuned and participate in co-creative events!</p>
+                                <p>It’s empty…you currently don’t have any Collab NFTs.</p>
+                                <p>Stay tuned and participate in co-creative events to add them here!</p>
                             </div>
                         </div>
                     </div>

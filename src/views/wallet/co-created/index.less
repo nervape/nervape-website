@@ -1,289 +1,305 @@
 .wallet-co-created-nft-container {
-    letter-spacing: -0.05em;
+  letter-spacing: -0.05em;
 
-    .wallet-co-created-nft-header {
-        background: #17171e;
-        padding-bottom: 16px;
-        border-bottom: 1px solid rgba(180, 188, 208, 0.5);
+  .wallet-co-created-nft-header {
+    background: #17171e;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(180, 188, 208, 0.5);
 
-        .co-created-title {
-            font-weight: 800;
-            font-size: 24px;
-            line-height: 29px;
-            color: #ffffff;
-        }
+    .co-created-title {
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 29px;
+      color: #ffffff;
     }
+  }
 
-    .wallet-co-created-nft-content {
-        .wallet-nft-3ds {
-            margin-top: 16px;
-            flex-wrap: wrap;
+  .wallet-co-created-nft-content {
+    .wallet-nft-3ds {
+      margin-top: 16px;
+      flex-wrap: wrap;
 
-            .nft-item {
-                width: 201.33px;
-                margin-right: 4px;
-                margin-bottom: 16px;
+      .nft-item {
+        width: 201.33px;
+        margin-right: 4px;
+        margin-bottom: 16px;
 
-                &:nth-child(6n) {
-                    margin-right: 0;
-                }
-
-                .cover-image {
-                    margin: 6px auto 2px;
-                    width: 189.33px;
-                    height: 189.33px;
-                    overflow: hidden;
-                    border-radius: 16px;
-
-                    img {
-                        transition: all 0.3s;
-                        border-radius: 16px;
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }
-                }
-
-                .cover-image:hover {
-                    img {
-                        transform: scale(1.1);
-                    }
-                }
-
-                .name {
-                    color: #FFFFFF;
-                    font-weight: 700;
-                    font-size: 12px;
-                    line-height: 14px;
-                    padding: 2px 6px;
-                }
-
-                .id {
-                    font-weight: 500;
-                    font-size: 10px;
-                    line-height: 12px;
-                    letter-spacing: -0.05em;
-                    color: rgba(180, 188, 208, 0.5);
-                    padding: 0 6px;
-                }
-            }
+        &:nth-child(6n) {
+          margin-right: 0;
         }
 
-        .no-result {
-            margin-top: 16px;
-            width: 100%;
-            height: 254px;
+        .cover-image {
+          margin: 6px auto 2px;
+          width: 189.33px;
+          height: 189.33px;
+          overflow: hidden;
+          border-radius: 16px;
 
-            .no-result-content {
-                text-align: center;
-
-                .cover-image {
-                    padding-bottom: 16px;
-
-                    img {
-                        width: 100px;
-                        height: 100px;
-                    }
-                }
-
-                .tip {
-                    width: 342px;
-                    font-size: 12px;
-                    line-height: 14px;
-                    text-align: center;
-                    color: rgba(180, 188, 208, 0.75);
-                    padding-bottom: 16px;
-
-                    p {
-                        padding: 0;
-                        margin: 0;
-                    }
-                }
-            }
-        }
-    }
-
-    .fullscreen-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(232, 232, 232, 0.9);
-        z-index: 999;
-        visibility: hidden;
-        opacity: 0;
-
-        &.show {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .close-c {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            right: 40px;
-            top: 40px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 6px;
-        }
-
-        .close-icon {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 25px;
-            height: 25px;
-        }
-
-        .model-viewer-class {
+          img {
+            transition: all 0.3s;
+            border-radius: 16px;
             width: 100%;
             height: 100%;
-            position: relative;
-
-            .model-loading {
-                width: 100%;
-                height: 100%;
-                position: relative;
-
-                .model-loading-gif {
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                }
-            }
+            object-fit: cover;
+          }
         }
+
+        .cover-image:hover {
+          img {
+            transform: scale(1.1);
+          }
+        }
+
+        .name {
+          color: #FFFFFF;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 14px;
+          padding: 2px 6px;
+        }
+
+        .id {
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 12px;
+          letter-spacing: -0.05em;
+          color: rgba(180, 188, 208, 0.5);
+          padding: 0 6px;
+        }
+      }
     }
+
+    .no-result {
+      margin-top: 16px;
+      width: 100%;
+      height: 254px;
+
+      .no-result-content {
+        text-align: center;
+
+        .cover-image {
+          padding-bottom: 16px;
+
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+
+        .tip {
+          width: 342px;
+          font-size: 12px;
+          line-height: 14px;
+          text-align: center;
+          color: rgba(180, 188, 208, 0.75);
+          padding-bottom: 16px;
+
+          p {
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(232, 232, 232, 0.9);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+
+    &.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .close-c {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      right: 40px;
+      top: 40px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 6px;
+    }
+
+    .close-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 25px;
+      height: 25px;
+    }
+
+    .fullscreen-image-cover {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .fullscreen-image {
+        aspect-ratio: 1;
+        max-height: calc(100vh - 64px);
+        max-width: calc(100vw - 64px);
+        margin: 32px auto;
+        display: block;
+      }
+    }
+
+    .model-viewer-class {
+      width: 100%;
+      height: 100%;
+      position: relative;
+
+      .model-loading {
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        .model-loading-gif {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 750px) {
-    .wallet-co-created-nft-container {
-        .wallet-co-created-nft-header {
-            padding-top: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(180, 188, 208, 0.5);
-            top: var(--extra-padding);
-        }
-
-        .wallet-co-created-nft-content {
-            padding-bottom: 68px;
-
-            .wallet-nft-3ds {
-                .nft-item {
-                    width: calc(50% - 4px);
-                    height: fit-content;
-
-                    .cover-image {
-                        width: calc(100% - 8px);
-                        height: fit-content;
-                    }
-
-                    &:nth-child(2n) {
-                        margin-right: 0;
-                    }
-                }
-            }
-        }
+  .wallet-co-created-nft-container {
+    .wallet-co-created-nft-header {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(180, 188, 208, 0.5);
+      top: var(--extra-padding);
     }
+
+    .wallet-co-created-nft-content {
+      padding-bottom: 68px;
+
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc(50% - 4px);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
+            height: fit-content;
+          }
+
+          &:nth-child(2n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 750px) and (max-width: 1000px) {
-    .wallet-co-created-container {
-      .wallet-co-created-content {
-        .wallet-nft-3ds {
-          .nft-item {
-            width: calc((100% - 8px) / 3);
+  .wallet-co-created-container {
+    .wallet-co-created-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 8px) / 3);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
             height: fit-content;
-  
-            .cover-image {
-              width: calc(100% - 8px);
-              height: fit-content;
-            }
-  
-            &:nth-child(3n) {
-              margin-right: 0;
-            }
+          }
+
+          &:nth-child(3n) {
+            margin-right: 0;
           }
         }
       }
     }
   }
-  
-  @media screen and (min-width: 1000px) and (max-width: 1200px) {
-    .wallet-co-created-container {
-      .wallet-co-created-content {
-        .wallet-nft-3ds {
-          .nft-item {
-            width: calc((100% - 12px) / 4);
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
+  .wallet-co-created-container {
+    .wallet-co-created-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 12px) / 4);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
             height: fit-content;
-  
-            .cover-image {
-              width: calc(100% - 8px);
-              height: fit-content;
-            }
-  
-            &:nth-child(4n) {
-              margin-right: 0;
-            }
+          }
+
+          &:nth-child(4n) {
+            margin-right: 0;
           }
         }
       }
     }
   }
-  
-  @media screen and (min-width: 1200px) and (max-width: 1440px) {
-    .wallet-co-created-container {
-      .wallet-co-created-content {
-        .wallet-nft-3ds {
-          .nft-item {
-            width: calc((100% - 16px) / 5);
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1440px) {
+  .wallet-co-created-container {
+    .wallet-co-created-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 16px) / 5);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
             height: fit-content;
-  
-            .cover-image {
-              width: calc(100% - 8px);
-              height: fit-content;
-            }
-  
-            &:nth-child(5n) {
-              margin-right: 0;
-            }
+          }
+
+          &:nth-child(5n) {
+            margin-right: 0;
           }
         }
       }
     }
   }
-  
-  @media screen and (min-width: 1440px) {
-    .wallet-co-created-container {
-      .wallet-co-created-content {
-        .wallet-nft-3ds {
-          .nft-item {
-            width: calc((100% - 20px) / 6);
+}
+
+@media screen and (min-width: 1440px) {
+  .wallet-co-created-container {
+    .wallet-co-created-content {
+      .wallet-nft-3ds {
+        .nft-item {
+          width: calc((100% - 20px) / 6);
+          height: fit-content;
+
+          .cover-image {
+            width: calc(100% - 8px);
             height: fit-content;
-  
-            .cover-image {
-              width: calc(100% - 8px);
-              height: fit-content;
-            }
-  
-            &:nth-child(6n) {
-              margin-right: 0;
-            }
+          }
+
+          &:nth-child(6n) {
+            margin-right: 0;
           }
         }
       }
     }
   }
+}
 
 @media screen and (min-width: 750px) {
-    .wallet-co-created-nft-container {
-        .wallet-co-created-nft-header {
-            top: calc(var(--header-height) + var(--wallet-padding) + var(--extra-padding));
-        }
-
-        .wallet-co-created-nft-content {}
+  .wallet-co-created-nft-container {
+    .wallet-co-created-nft-header {
+      top: calc(var(--header-height) + var(--wallet-padding) + var(--extra-padding));
     }
+
+    .wallet-co-created-nft-content {}
+  }
 }

@@ -37,13 +37,13 @@ export default function LoginModal(props: any) {
             type: flag ? Types.ShowLoading : Types.HideLoading
         })
     }
-    
+
     const setLoginModal = (flag: boolean) => {
         dispatch({
             type: flag ? Types.ShowLoginModal : Types.HideLoginModal
         })
     }
-    
+
     useEffect(() => {
         if (layerOneAddress) {
             const _address = layerOneAddress.toCKBAddress(NervosAddressVersion.latest);
@@ -148,14 +148,6 @@ export default function LoginModal(props: any) {
                     <div className="nervos-l1-content">
                         <div className="title">NERVOS L1</div>
                         <div className="btn-groups">
-                            <button className="btn unipass cursor" onClick={connectUnipass}>
-                                <img
-                                    className="wallet-icon"
-                                    src={IconMap.get('Unipass')}
-                                    alt=""
-                                />
-                                UNIPASS V3
-                            </button>
                             <button className="btn unipass cursor" onClick={connectJoyId}>
                                 <img
                                     className="wallet-icon"
@@ -163,6 +155,15 @@ export default function LoginModal(props: any) {
                                     alt=""
                                 />
                                 JOYID
+                            </button>
+
+                            <button className="btn unipass cursor" onClick={connectUnipass}>
+                                <img
+                                    className="wallet-icon"
+                                    src={IconMap.get('Unipass')}
+                                    alt=""
+                                />
+                                UNIPASS V3
                             </button>
                         </div>
                     </div>

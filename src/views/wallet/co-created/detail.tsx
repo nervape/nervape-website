@@ -55,7 +55,7 @@ export default function NftCardDetail(props: {
                                 />
                             </div>
                         )}
-                        {/* <div className="fullscreen-c">
+                        <div className="fullscreen-c">
                             <img
                                 loading="lazy"
                                 onClick={fullscreen}
@@ -63,7 +63,7 @@ export default function NftCardDetail(props: {
                                 src={FullscrenIcon}
                                 alt="FullscrenIcon"
                             />
-                        </div> */}
+                        </div>
                     </div>
                     <div className="detail-info m">
                         <div className="info-content">
