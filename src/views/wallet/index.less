@@ -50,6 +50,32 @@ body {
               border-radius: 16px;
               transition: all 0.3s;
 
+              .ant-menu-root {
+                background: transparent;
+                border-right: unset;
+
+                .ant-menu-submenu {
+                  width: 60px;
+                  height: 60px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+
+                  &.ant-menu-submenu-selected {
+                    border-radius: 16px;
+                    background: rgba(180, 188, 208, 0.25);
+                  }
+
+                  .ant-menu-submenu-title {
+                    background-color: unset !important;
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  }
+                }
+              }
+
               &.active {
                 background: rgba(180, 188, 208, 0.25);
               }
@@ -119,6 +145,32 @@ body {
   }
 }
 
+.ant-menu-submenu-popup.collab-nft-item {
+  .ant-menu-sub {
+    width: 68px;
+    min-width: unset;
+    border-radius: 20px;
+    background: #5E637A;
+    padding: 4px;
+    margin-left: 18px;
+    margin-top: -14px;
+
+    .ant-menu-item {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &.ant-menu-item-selected {
+        border-radius: 16px;
+        background: rgba(180, 188, 208, 0.25);
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 750px) and (max-width: 1440px) {
   .wallet-new-page {
     .wallet-home-container {
@@ -138,12 +190,11 @@ body {
         overflow-y: hidden;
 
         .wallet-section {
+
           // padding-top: 24px;
           .wallet-navbar-content {
             // position: sticky;
-            top: calc(
-              var(--header-height) + var(--header-top)
-            );
+            top: calc(var(--header-height) + var(--header-top));
           }
         }
       }
@@ -176,12 +227,53 @@ body {
 
             .navbar-items {
               display: flex;
+
+              .navbar-item {
+                &.JOYID {
+                  width: 100vw;
+
+                  .ant-menu-root {
+                    background: transparent;
+                    border-bottom: unset;
+                    width: 100%;
+
+                    .ant-menu-submenu-horizontal {
+                      width: 100%;
+                      
+                      &::after {
+                        border-bottom: unset;
+                      }
+                    }
+
+                    .ant-menu-submenu {
+                      width: 100%;
+                    }
+                  }
+                }
+              }
             }
           }
 
           .wallet-content {
             margin-left: 0;
           }
+        }
+      }
+    }
+  }
+
+  .ant-menu-submenu-popup.collab-nft-item {
+    .ant-menu-sub {
+      width: 100vw;
+      margin-left: 0;
+      margin-bottom: 8px;
+
+      .ant-menu-item {
+        width: 100%;
+
+        &.ant-menu-item-selected {
+          border-radius: 16px;
+          background: rgba(180, 188, 208, 0.25);
         }
       }
     }

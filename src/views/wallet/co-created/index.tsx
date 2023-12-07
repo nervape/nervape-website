@@ -97,7 +97,7 @@ export default function WalletCoCreatedNFT(props: any) {
     return (
         <div className="wallet-co-created-nft-container">
             <div className="wallet-co-created-nft-header transition position-sticky flex-align">
-                <div className="co-created-title">Co-Created NFT</div>
+                <div className="co-created-title">Collab NFTs</div>
             </div>
 
             <div className="wallet-co-created-nft-content">

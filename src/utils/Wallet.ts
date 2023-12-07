@@ -36,7 +36,7 @@ export function getStorage() {
 }
 
 export function setStorage(info: WALLET_CONNECT) {
-    const _info: WALLET_CONNECT = { ...info, expiredAt: new Date().getTime() + 30 * 60 * 1000 };
+    const _info: WALLET_CONNECT = { ...info, expiredAt: new Date().getTime() + 24 * 60 * 60 * 1000 };
     localStorage.setItem(WalletStorageKey, JSON.stringify(_info));
 }
 
