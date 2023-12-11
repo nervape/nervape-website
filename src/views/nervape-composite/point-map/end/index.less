@@ -1,6 +1,7 @@
 .point-map-end-container {
     background: linear-gradient(180deg, #00C080 0%, #0F1416 12.5%);
     font-family: 'input-sans';
+    letter-spacing: unset;
 
     .point-map-end-content {
         width: 800px;
@@ -59,6 +60,7 @@
 
         .video {
             width: 100%;
+            padding-bottom: 32px;
 
             iframe {
                 width: 100%;
@@ -90,5 +92,36 @@
             }
         }
     }
+}
 
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+    .point-map-end-container {
+        .point-map-end-content {
+            width: 670px;
+
+            .video {
+                iframe {
+                    height: 385px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .point-map-end-container {
+        .point-map-end-content {
+            width: 347px;
+
+            .title {
+                height: 30px;
+            }
+
+            .video {
+                iframe {
+                    height: 200px;
+                }
+            }
+        }
+    }
 }
