@@ -33,6 +33,7 @@ import NacpNFTPage from "./nfts/nacp";
 import { CONFIG } from "../utils/config";
 import NacpCreator from "./nervape-composite/creator";
 import PointMap from "./nervape-composite/point-map";
+import PointMapEnd from "./nervape-composite/point-map/end";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -81,7 +82,7 @@ export default function App() {
             path={`${CONFIG.PUBLIC_PATH}`}
             element={
               <PageView disableFooter={true}>
-                <PointMap></PointMap>
+                <PointMapEnd></PointMapEnd>
               </PageView>
             }
           />
