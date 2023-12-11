@@ -25,7 +25,7 @@ export default function PointMapEnd() {
 
                 <div className="video-title">Canvas Timelapse</div>
                 <div className="video">
-                    <iframe src="https://youtu.be/VYPUmRpTxQA?si=1qfg8Mc5a9FzXgqJ" frameBorder="0"></iframe>
+                    <iframe src="https://www.youtube.com/embed/VYPUmRpTxQA?si=-23rKGPV-l0gtIsQ" frameBorder="0"></iframe>
                 </div>
 
                 <div className="links">
