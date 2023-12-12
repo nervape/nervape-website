@@ -249,9 +249,10 @@ export default function WalletNewPage() {
         } else if (state.loginWalletType === LoginWalletType.JOYID) {
             setNavbars([
                 {
-                    name: WalletNavbarTypes.JOYID,
+                    // name: WalletNavbarTypes.JOYID,
+                    name: WalletNavbarTypes.CoCreatedNFT,
                     icon: JoyIdNFTIcon,
-                    menu_name: WalletNavbarTypes.CoCreatedNFT 
+                    // menu_name: WalletNavbarTypes.CoCreatedNFT 
                 }
             ]);
         } else {
