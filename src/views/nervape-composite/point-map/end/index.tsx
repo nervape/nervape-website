@@ -17,11 +17,14 @@ export default function PointMapEnd() {
                 </div>
 
                 <div className="description">
-                    November 2023, we halved ape blast! Nervos’ CKB was halving and we celebrated the four year milestone with our own *Halve Ape Blast* event (links below)!
+                    November 2023, we halved ape blast! Nervos’ CKB was halving and we celebrated the four year milestone with our own Halve Ape Blast event (links below)!
                     <br />
-                    We Nervos’d up our apes with new design assets so that everyone could make their own *Halve Nervapes.* They then claimed a block on our collaborative ****************Halve Ape Blast Canvas**************** to place their ape. 🦍 Every participant that claimed a block was airdropped an **NFT of the full canvas** (above) to their Joy ID account (https://joy.id/). 🖼️
+                    <br />
+                    We Nervos’d up our apes with new design assets so that everyone could make their own *Halve Nervapes.* They then claimed a block on our collaborative Halve Ape Blast Canvas to place their ape. 🦍 Every participant that claimed a block was airdropped an NFT of the full canvas (above) to their Joy ID account (<a href="https://joy.id/" target="_blank">https://joy.id/</a> ). 🖼️
+                    <br />
                     <br />
                     Below we have a timelapse video of the canvas from start to finish. Watch a week of creating compressed into less than 43 seconds. What shapes do you see forming on our canvas? 🤔
+                    <br />
                     <br />
                     Thanks to all the creators!
                 </div>
