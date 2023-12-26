@@ -1,45 +1,23 @@
-import React, { MouseEventHandler, useCallback, useContext, useEffect, useState } from "react";
-import { nervapeApi } from "../../api/nervape-api";
-import { IconMap, NFT, NFT_BANNER, NFT_FILTER, NFT_FILTER_ITEM, NFT_QUERY } from "../../nervape/nft";
-import "./index.less";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import './index.less';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Pagination } from "swiper";
-import "swiper/css";
-import 'swiper/css/pagination';
 
-import PlayIcon from '../../assets/icons/play_icon.svg';
-import FilterArrowIcon from '../../assets/icons/filter_arrow_icon.png';
-import FilterIcon from '../../assets/icons/filter_icon.png';
-import CloseIcon from '../../assets/icons/close_icon.png';
-import FullscrenIcon from '../../assets/nft/fullscreen.svg';
-import DetailCloseIcon from '../../assets/nft/close_detail.svg';
-import LoadingGif from "../../assets/gallery/loading.gif";
-import { DataContext } from "../../utils/utils";
+import PlayIcon from '../../../assets/icons/play_icon.svg';
+import FilterIcon from '../../../assets/icons/filter_icon.png';
+import CloseIcon from '../../../assets/icons/close_icon.png';
+import LoadingGif from "../../../assets/gallery/loading.gif";
+import FullscrenIcon from '../../../assets/nft/fullscreen.svg';
+import FilterArrowIcon from '../../../assets/icons/filter_arrow_icon.png';
+import DetailCloseIcon from '../../../assets/nft/close_detail.svg';
 
 import { Parallax } from 'rc-scroll-anim';
-
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            "model-viewer": React.DetailedHTMLProps<any, any>;
-        }
-    }
-}
-
-export interface BannerVideoProp {
-    promoVideoUrl: string;
-    resetUrl: MouseEventHandler;
-}
-
-export const NftBannerVideo = (props: BannerVideoProp) => {
-    const { promoVideoUrl, resetUrl } = props;
-    return (
-        <div className="video-container mask-cover" onClick={resetUrl}>
-            <iframe src={promoVideoUrl} frameBorder="0"></iframe>
-        </div>
-    );
-}
+import { Co_Created_NFT, NFT_BANNER, NFT_FILTER, NFT_FILTER_ITEM, NFT_QUERY } from "../../../nervape/co-created-nft";
+import { DataContext } from "../../../utils/utils";
+import { IconMap } from "../../../nervape/nft";
+import { nervapeApi } from "../../../api/nervape-api";
+import { NftBannerVideo } from "..";
 
 // 预览 3D 模型
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -84,7 +62,7 @@ function PreviewModel(props: any) {
     );
 }
 
-function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boolean; }) {
+function NftCardDetail(props: { nft: Co_Created_NFT; close: any; fullscreen: any; show: boolean; }) {
     const { nft, close, fullscreen, show } = props;
 
     const { state } = useContext(DataContext);
@@ -93,7 +71,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
         <div className={`nft-card-detail-container popup-container mask-cover ${show && 'show'}`} onClick={close}>
             <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
-                    <PreviewModel enableModuleUrl={nft?.renderer} id="card"></PreviewModel>
+                    <PreviewModel enableModuleUrl={nft?.image} id="card"></PreviewModel>
                     {state.windowWidth !== 1200 && (
                         <div className="close-detail-c">
                             <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
@@ -103,7 +81,7 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
                         <img loading="lazy" onClick={fullscreen} className="full-screen cursor" src={FullscrenIcon} alt="FullscrenIcon" />
                     </div>
                 </div>
-                <div className="detail-info" style={{ background: nft?.card_background }}>
+                {/* <div className="detail-info">
                     <div className="info-content">
                         <div className="name">{nft?.name}</div>
                         {!nft?.coming_soon && (
@@ -160,17 +138,17 @@ function NftCardDetail(props: { nft: NFT; close: any; fullscreen: any; show: boo
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
 }
 
-function FullscreenPreview(props: { nft?: NFT; close: any; show: boolean; }) {
+function FullscreenPreview(props: { nft?: Co_Created_NFT; close: any; show: boolean; }) {
     const { nft, close, show } = props;
     return (
         <div className={`fullscreen-container mask-cover ${show && 'show'}`}>
-            <PreviewModel enableModuleUrl={nft?.renderer} id="fullscreen"></PreviewModel>
+            <PreviewModel enableModuleUrl={nft?.image} id="fullscreen"></PreviewModel>
             <div className="close-c cursor">
                 <img loading="lazy" className="close-icon transform-center" onClick={close} src={DetailCloseIcon} alt="IconPreviewClose" />
             </div>
@@ -178,18 +156,18 @@ function FullscreenPreview(props: { nft?: NFT; close: any; show: boolean; }) {
     );
 }
 
-export default function NFTPage() {
+export default function NFTCoCreation() {
     const [banners, setBanners] = useState<NFT_BANNER[]>();
-    const [filters, setFilters] = useState<NFT_FILTER[]>();
-    const [nfts, setNfts] = useState<NFT[]>();
-    const [query, setQuery] = useState<NFT_QUERY>({});
-    const [filterSelectCount, setFilterSelectCount] = useState(0);
-    const [showMFilter, setShowMFilter] = useState(true);
     const [promoVideoUrl, setPromoVideoUrl] = useState("");
+    const [showMFilter, setShowMFilter] = useState(true);
+    const [filterSelectCount, setFilterSelectCount] = useState(0);
+    const [query, setQuery] = useState<NFT_QUERY>({});
+    const [nfts, setNfts] = useState<Co_Created_NFT[]>();
+    const [filters, setFilters] = useState<NFT_FILTER[]>();
 
     const [showNftCard, setShowNftCard] = useState(false);
     const [showFullscreen, setShowFullscreen] = useState(false);
-    const [nftDetail, setNftDetail] = useState<NFT>();
+    const [nftDetail, setNftDetail] = useState<Co_Created_NFT>();
 
     const { state } = useContext(DataContext);
 
@@ -204,7 +182,7 @@ export default function NFTPage() {
                 clearTimeout(timer);
             }
             timer = setTimeout(() => {
-                nervapeApi.fnGetNfts(_query).then(res => {
+                nervapeApi.fnGetCoCreatedNfts(_query).then(res => {
                     setNfts(res);
                 })
             }, 1000);
@@ -224,10 +202,10 @@ export default function NFTPage() {
     }
 
     useEffect(() => {
-        nervapeApi.fnGetNFTBanners().then(res => {
+        nervapeApi.fnGetCoCreatedNFTBanners().then(res => {
             setBanners(res);
         })
-        nervapeApi.fnGetNftFilterList().then(res => {
+        nervapeApi.fnGetCoCreatedNftFilterList().then(res => {
             const _filters: NFT_FILTER[] = [];
             Object.keys(res).forEach((item: string) => {
                 const _item: NFT_FILTER_ITEM[] = [];
@@ -250,7 +228,7 @@ export default function NFTPage() {
 
     useEffect(() => {
         fnFilter(query);
-        setFilterSelectCount((query.origin?.length || 0) + (query.type?.length || 0))
+        setFilterSelectCount(query.event?.length || 0)
     }, [query]);
 
     useEffect(() => {
@@ -267,8 +245,9 @@ export default function NFTPage() {
     useEffect(() => {
         if (state.windowWidth == 1200) setShowMFilter(true);
     }, [state.windowWidth]);
+
     return (
-        <div className="nft-container main-container">
+        <div className="nft-co-creation-container main-container">
             <Parallax
                 animation={{ translateY: '-100vh', playScale: [1, 2.5] }}
                 style={{ transform: 'translateY(0)' }}
@@ -289,11 +268,11 @@ export default function NFTPage() {
                                         <div className="banner-image">
                                             <img loading="lazy" src={state.windowWidth !== 375 ? banner.imageUrl4k : banner.imageUrlsmail} alt="imageUrl4k" />
                                         </div>
-                                        {/* <div className="cover-mask"></div> */}
+                                        <div className="cover-mask"></div>
                                         <div className={`banner-info ${isActive ? 'active' : 'notActive'}`}>
                                             <div className="info-item">
                                                 <div className="name">{banner.name}</div>
-                                                <div className="job">{banner.job.toUpperCase()}</div>
+                                                <div className="job">{banner.desc}</div>
                                                 <div className="type-video">
                                                     <div className="type-c">
                                                         <embed src={IconMap.get(banner.type)} className="icon" type="" />
@@ -403,7 +382,7 @@ export default function NFTPage() {
                         )}
                         {!showMFilter && filterSelectCount > 0 && (
                             <div className="filter-selected-items">
-                                {query.origin?.map(origin => {
+                                {query.event?.map(origin => {
                                     return (
                                         <div
                                             className="filter-selected cursor"
@@ -412,19 +391,6 @@ export default function NFTPage() {
                                             }}
                                             key={origin}>
                                             <span>{origin}</span>
-                                            <img loading="lazy" src={CloseIcon} alt="CloseIcon" />
-                                        </div>
-                                    )
-                                })}
-                                {query.type?.map(type => {
-                                    return (
-                                        <div
-                                            className="filter-selected cursor"
-                                            onClick={() => {
-                                                delSelectedFilter(type);
-                                            }}
-                                            key={type}>
-                                            <span>{type}</span>
                                             <img loading="lazy" src={CloseIcon} alt="CloseIcon" />
                                         </div>
                                     )
@@ -445,7 +411,7 @@ export default function NFTPage() {
                                                 setNftDetail(nft);
                                             }}
                                         >
-                                            <img loading="lazy" src={nft.cover_image_url || nft.image} alt="cover-image" />
+                                            <img loading="lazy" src={nft.image} alt="cover-image" />
                                         </div>
                                         <div className="nft-info">
                                             <div className="nervape">NERVAPE</div>
@@ -473,7 +439,7 @@ export default function NFTPage() {
             )}
             <NftCardDetail
                 show={showNftCard}
-                nft={nftDetail as NFT}
+                nft={nftDetail as Co_Created_NFT}
                 close={() => {
                     document.body.style.overflow = 'auto';
                     setShowNftCard(false)

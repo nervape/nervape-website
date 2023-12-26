@@ -128,6 +128,15 @@ const GalleryItems: MenuProps = {
     {
       label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
       key: '0'
+    },
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('galleryCoCreation');
+          updateBodyOverflow(true);
+        }}>CO-CREATION</div>
+      ),
+      key: '1'
     }
   ]
 };
@@ -322,6 +331,10 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     url: '/3dnft',
     type: HeaderType.Navbar
   },
+  galleryCoCreation: {
+    url: '/nft-co-creation',
+    type: HeaderType.Navbar
+  },
   galleryNacp: {
     url: '',
     type: HeaderType.Coming
@@ -379,7 +392,8 @@ const mPages: MenuItem[] = [
   getItem('STORY', 'story'),
   getItem('GALLERY', 'gallery', null, [
     getItem('3D COLLECTION', 'galleryCollection'),
-    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp')
+    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp'),
+    getItem('CO-CREATION', 'galleryCoCreation')
   ]),
   getItem('BUY', 'buy', null, [
     getItem('3D COLLECTION', 'buyCollection', null, [

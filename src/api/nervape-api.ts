@@ -68,15 +68,35 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetCoCreatedNFTBanners() {
+    const url = `${this.baseUrl}/co-created-nft/website/banners`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnGetNftFilterList() {
     const url = `${this.baseUrl}/nft/filter`;
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetCoCreatedNftFilterList() {
+    const url = `${this.baseUrl}/co-created-nft/website/filter`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnGetNfts(query?: NFT_QUERY) {
     const url = `${this.baseUrl}/nft`;
+    const res = await axios.get(url, {
+      params: query
+    });
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetCoCreatedNfts(query?: NFT_QUERY) {
+    const url = `${this.baseUrl}/co-created-nft/website`;
     const res = await axios.get(url, {
       params: query
     });

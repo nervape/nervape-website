@@ -29,6 +29,7 @@ import { godWoken, godWokenTestnet } from "../utils/Chain";
 import WalletPage from "./wallet";
 import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
+import NFTCoCreation from "./nfts/co-creation";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -94,6 +95,14 @@ export default function App() {
             element={
               <PageView activeIndex={3}>
                 <NFTPage />
+              </PageView>
+            }
+          />
+          <Route
+            path="/nft-co-creation"
+            element={
+              <PageView activeIndex={3}>
+                <NFTCoCreation />
               </PageView>
             }
           />
