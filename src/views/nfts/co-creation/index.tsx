@@ -320,6 +320,10 @@ export default function NFTCoCreation() {
             </Parallax>
             <div className="home-slider" id="home-slider"></div>
             <div className="nfts-content">
+                <div className="content-title">
+                    <div className="title">Co-Created</div>
+                    <div className="desc">A short description of this category</div>
+                </div>
                 <div className="content">
                     <div className="filter-items">
                         <div className="input-c">
