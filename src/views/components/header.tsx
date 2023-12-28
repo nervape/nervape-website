@@ -137,6 +137,15 @@ const GalleryItems: MenuProps = {
         }}>CO-CREATION</div>
       ),
       key: '1'
+    },
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('galleryPhysicalApe');
+          updateBodyOverflow(true);
+        }}>PHYSICAL APE</div>
+      ),
+      key: '1'
     }
   ]
 };
@@ -335,6 +344,10 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     url: '/nft-co-creation',
     type: HeaderType.Navbar
   },
+  galleryPhysicalApe: {
+    url: '/physical-ape',
+    type: HeaderType.Navbar
+  },
   galleryNacp: {
     url: '',
     type: HeaderType.Coming
@@ -393,7 +406,8 @@ const mPages: MenuItem[] = [
   getItem('GALLERY', 'gallery', null, [
     getItem('3D COLLECTION', 'galleryCollection'),
     getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp'),
-    getItem('CO-CREATION', 'galleryCoCreation')
+    getItem('CO-CREATION', 'galleryCoCreation'),
+    getItem('PHYSICAL APE', 'galleryPhysicalApe')
   ]),
   getItem('BUY', 'buy', null, [
     getItem('3D COLLECTION', 'buyCollection', null, [

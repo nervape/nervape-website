@@ -43,5 +43,8 @@ export const CONFIG = {
     YOKAI_URL: import.meta.env.VITE_YOKAI_URL,
 
     // metamask app url
-    METAMASK_APP_URL: import.meta.env.VITE_METAMASK_URL
+    METAMASK_APP_URL: import.meta.env.VITE_METAMASK_URL,
+
+    // google map api key
+    GOOGLE_MAP_API_KEY: import.meta.env.VITE_GOOGLE_MAP_API_KEY
 }

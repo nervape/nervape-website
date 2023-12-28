@@ -30,6 +30,7 @@ import WalletPage from "./wallet";
 import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
 import NFTCoCreation from "./nfts/co-creation";
+import PhysicalApe from "./nfts/physical-ape";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -103,6 +104,14 @@ export default function App() {
             element={
               <PageView activeIndex={3}>
                 <NFTCoCreation />
+              </PageView>
+            }
+          />
+          <Route
+            path="/physical-ape"
+            element={
+              <PageView activeIndex={3}>
+                <PhysicalApe />
               </PageView>
             }
           />
