@@ -72,7 +72,7 @@ function NftCardDetail(props: { nft: Co_Created_NFT; close: any; fullscreen: any
         <div className={`wallet-nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
             <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
-                    <img className='cover-image-url' src={nft.image} alt="" />
+                    <img className='cover-image-url' src={nft?.image} alt="" />
                     {state.windowWidth !== 1200 && (
                         <div className="close-detail-c">
                             <img
@@ -96,7 +96,7 @@ function NftCardDetail(props: { nft: Co_Created_NFT; close: any; fullscreen: any
                 </div>
                 <div className="detail-info m">
                     <div className="info-content">
-                        <div className="name">{nft.name}</div>
+                        <div className="name">{nft?.name}</div>
 
                         <div className="attributes attributes-1 flex">
                             <div className="range flex-1">
@@ -115,7 +115,7 @@ function NftCardDetail(props: { nft: Co_Created_NFT; close: any; fullscreen: any
                             </div>
                         </div>
                         <div className={`description`}>
-                            {nft.description}
+                            {nft?.description}
                         </div>
                         <div className="btn-groups">
                             <button
