@@ -1,81 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import './index.less';
 import { DataContext, parseBalance, updateBodyOverflow } from "../../../utils/utils";
-import { nervapeApi } from "../../../api/nervape-api";
-import JoyIdNfts, { cotaId } from "../../../utils/joyid-nfts";
+import { Physical_NFT } from "../../../nervape/physical-nft";
 import NftEmptyIcon from '../../../assets/wallet/nft/nft_empty.png';
-import DetailCloseIcon from '../../../assets/images/nft/close_detail.svg';
+import { FullscreenPreview } from "../co-created";
 import NftCardDetail from "./detail";
 import { Types } from "../../../utils/reducers";
-import { Physical_NFT } from "../../../nervape/physical-nft";
+import PhysicalNftClaim from "./claim";
 
-export class JOYID_NFT {
-    audio: string = "";
-    audios: any[] = [];
-    characteristic: string = "";
-    configure: string = "";
-    cota_id: string = "";
-    description: string = "";
-    image: string = "";
-    meta_characteristic: string = "";
-    model: string = "";
-    name: string = "";
-    properties: string = "";
-    state: string = "";
-    symbol: string = "";
-    token_index: string = "";
-    video: string = "";
-}
-
-// 全屏预览
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function FullscreenPreview(props: { nft?: JOYID_NFT | Physical_NFT; close: any; show: boolean; }) {
-    const { nft, close, show } = props;
-
-    return (
-        <div className={`fullscreen-container transition mask-cover ${show && 'show'}`}>
-            <div className="fullscreen-image-cover">
-                <img className="fullscreen-image" src={nft?.image} alt="fullscreen-image" />
-            </div>
-            
-            <div className="close-c cursor" onClick={close}>
-                <img
-                    loading="lazy"
-                    className="close-icon transform-center"
-                    src={DetailCloseIcon}
-                    alt="IconPreviewClose"
-                />
-            </div>
-        </div>
-    );
-}
-
-export default function WalletCoCreatedNFT(props: any) {
+export default function WalletPhysicalNft(props: any) {
     const { state, dispatch } = useContext(DataContext);
     const { isFold, setLoading } = props;
 
-    const [createdNfts, setCreatedNfts] = useState<JOYID_NFT[]>([]);
     const [isInit, setIsInit] = useState(false);
     const [showNftCard, setShowNftCard] = useState(false);
     const [showFullscreen, setShowFullscreen] = useState(false);
-    const [nftDetail, setNftDetail] = useState<JOYID_NFT>();
+    const [showPhysicalClaim, setShowPhysicalClaim] = useState(false);
+    const [physicalNfts, setPhysicalNfts] = useState<Physical_NFT[]>([]);
+    const [nftDetail, setNftDetail] = useState<Physical_NFT>();
 
-    async function fnGetJoyIdNfts() {
-        setLoading(true);
-        const result = await JoyIdNfts(state.currentAddress);
-        console.log('fnGetJoyIdNfts', result);
-        const filters = result.nfts.filter((t: JOYID_NFT) => t.cota_id == cotaId)
-
-        setCreatedNfts(filters);
-        setLoading(false);
-        setIsInit(true);
-    }
-
-    useEffect(() => {
-        fnGetJoyIdNfts();
-    }, []);
-
-    const NFTItem = (props: { nft: JOYID_NFT; showDetail: Function; }) => {
+    const NFTItem = (props: { nft: Physical_NFT; showDetail: Function; }) => {
         const { nft, showDetail } = props;
 
         return (
@@ -94,17 +38,23 @@ export default function WalletCoCreatedNFT(props: any) {
         );
     }
 
+    useEffect(() => {
+        setIsInit(true);
+    }, []);
+
     if (!isInit) return <></>;
+
     return (
-        <div className="wallet-co-created-nft-container">
-            <div className="wallet-co-created-nft-header transition position-sticky flex-align">
-                <div className="co-created-title">Collab NFTs</div>
+        <div className="wallet-physical-nft-container">
+            <div className="wallet-physical-nft-header transition position-sticky flex-align">
+                <div className="co-created-title">Physical NFT</div>
+                <div className="claim-btn cursor" onClick={() => { setShowPhysicalClaim(true); }}>CLAIM</div>
             </div>
 
-            <div className="wallet-co-created-nft-content">
-                {createdNfts.length ? (
+            <div className="wallet-physical-nft-content">
+                {physicalNfts.length ? (
                     <div className="wallet-nft-3ds flex-align">
-                        {createdNfts.map((filter, index) => {
+                        {physicalNfts.map((filter, index) => {
                             return <NFTItem
                                 showDetail={() => {
                                     setShowNftCard(true);
@@ -128,9 +78,11 @@ export default function WalletCoCreatedNFT(props: any) {
                                 <img src={NftEmptyIcon} alt="NftEmptyIcon" />
                             </div>
                             <div className="tip">
-                                <p>It’s empty…you currently don’t have any Collab NFTs.</p>
-                                <p>Stay tuned and participate in co-creative events to add them here!</p>
+                                <p>You currently don’t have any Physical NFT.</p>
+                                <p>Obtain a claim codes by winning physical Nervapes through events!</p>
                             </div>
+
+                            <div className="claim-btn cursor" onClick={() => { setShowPhysicalClaim(true); }}>I HAVE A CLAIM CODE</div>
                         </div>
                     </div>
                 )}
@@ -138,7 +90,7 @@ export default function WalletCoCreatedNFT(props: any) {
 
             <NftCardDetail
                 show={showNftCard}
-                nft={nftDetail as JOYID_NFT}
+                nft={nftDetail as Physical_NFT}
                 close={() => {
                     setShowNftCard(false);
                     updateBodyOverflow(true);
@@ -148,6 +100,7 @@ export default function WalletCoCreatedNFT(props: any) {
                     setShowFullscreen(true);
                 }}
             ></NftCardDetail>
+
             <FullscreenPreview
                 show={showFullscreen}
                 nft={nftDetail}
@@ -156,6 +109,12 @@ export default function WalletCoCreatedNFT(props: any) {
                     updateBodyOverflow(true);
                 }}
             ></FullscreenPreview>
+
+            <PhysicalNftClaim
+                show={showPhysicalClaim}
+                setLoading={setLoading}
+                setPhysicalClaim={setShowPhysicalClaim}
+            ></PhysicalNftClaim>
         </div>
     );
 }

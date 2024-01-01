@@ -28,6 +28,7 @@ import { useLocation } from "react-router";
 
 import NacpIcon from "../../assets/wallet/navbar/nacp.svg";
 import NftIcon from "../../assets/wallet/navbar/nft.svg";
+import PhysicalNftIcon from "../../assets/wallet/navbar/physical_nft.svg";
 import EventIcon from "../../assets/wallet/navbar/event.svg";
 import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
 import TxIcon from "../../assets/wallet/navbar/tx.svg";
@@ -36,12 +37,14 @@ import JoyIdNFTIcon from "../../assets/wallet/navbar/joyid_nft.svg";
 import InvitationClaim from "./invitation";
 import WalletCoCreatedNFT from "./co-created";
 import { Menu, MenuProps } from "antd";
+import WalletPhysicalNft from "./physical-nft";
 
 type MenuItem = Required<MenuProps>['items'][number];
 export class WalletNavBar {
     name: WalletNavbarTypes = WalletNavbarTypes.NACP;
     icon: string = "";
     menu_name?: WalletNavbarTypes;
+    children?: WalletNavBar[];
 }
 
 export enum WalletNavbarTypes {
@@ -52,6 +55,8 @@ export enum WalletNavbarTypes {
     TX = 'TX',
     JOYID = 'JOYID',
     CoCreatedNFT = 'Co-CreatedNFT',
+    L2NFT = 'L2NFT',
+    PHYSICALNFT = 'PHYSICAL-NFT'
 }
 
 const getItem = (
@@ -70,7 +75,6 @@ const getItem = (
     } as MenuItem;
 }
 
-
 const JoyIdItems: MenuItem[] = [
     getItem((<img className="icon" src={JoyIdNFTIcon} alt="" />), WalletNavbarTypes.JOYID, null, [
         getItem((
@@ -78,6 +82,26 @@ const JoyIdItems: MenuItem[] = [
                 <img className="icon" src={CollabNFTIcon} alt="" />
             </div>
         ), WalletNavbarTypes.CoCreatedNFT)
+    ])
+];
+
+const L2NFTItems: MenuItem[] = [
+    getItem((<img className="icon" src={JoyIdNFTIcon} alt="" />), WalletNavbarTypes.JOYID, null, [
+        getItem((
+            <div className="navbar-icon" onClick={() => { }}>
+                <img className="icon" src={NacpIcon} alt="" />
+            </div>
+        ), WalletNavbarTypes.NACP),
+        getItem((
+            <div className="navbar-icon" onClick={() => { }}>
+                <img className="icon" src={NftIcon} alt="" />
+            </div>
+        ), WalletNavbarTypes.NFT),
+        getItem((
+            <div className="navbar-icon" onClick={() => { }}>
+                <img className="icon" src={PhysicalNftIcon} alt="" />
+            </div>
+        ), WalletNavbarTypes.PHYSICALNFT)
     ])
 ];
 
@@ -100,6 +124,7 @@ export default function WalletNewPage() {
     const [navbars, setNavbars] = useState<WalletNavBar[]>([]);
     const [currNavbarName, setCurrNavbarName] = useState<WalletNavbarTypes>();
     const [isBonelist, setIsBonelist] = useState(false);
+    const [isInit, setIsInit] = useState(false);
     const [current, setCurrent] = useState('');
 
     const setLoading = (flag: boolean) => {
@@ -163,39 +188,49 @@ export default function WalletNewPage() {
         updateUnipassCkbBalance();
     }, [state.layerOneWrapper]);
 
-    const fnGetNavbarName = (arr: WalletNavBar[]) => {
+    const fnGetNavbarName = (arr: WalletNavBar[], hash?: string) => {
         if (arr[0].menu_name) {
             setCurrNavbarName(arr[0].menu_name);
             setCurrent(arr[0].menu_name);
+
+            window.location.hash = arr[0].menu_name.toLocaleLowerCase() as string;
         } else {
             setCurrNavbarName(arr[0].name);
+
+            window.location.hash = arr[0].name.toLocaleLowerCase() as string;
         }
     }
 
     useEffect(() => {
-        if (!navbars.length) return;
+        if (!navbars.length || isInit) return;
         console.log('history', history);
         const { hash } = history;
+        let _filters : WalletNavBar[] = [];
 
         if (!hash) {
             fnGetNavbarName(navbars);
         } else {
             const filters = navbars.filter(n => {
+                if (n.children) {
+                    _filters = n.children.filter(f => '#' + f.menu_name?.toLocaleLowerCase() == hash)
+                    return _filters.length > 0;
+                }
+
                 if (n.menu_name) {
                     return '#' + n.menu_name.toLocaleLowerCase() == hash;
                 }
-                
+
                 return '#' + n.name.toLocaleLowerCase() == hash;
             });
+
             if (filters.length) {
-                fnGetNavbarName(filters);
+                fnGetNavbarName(_filters.length ? _filters : filters, hash);
             } else {
                 fnGetNavbarName(navbars);
-
-                window.location.hash = currNavbarName?.toLocaleLowerCase() as string;
             }
         }
 
+        setIsInit(true);
     }, [history, navbars]);
 
     useEffect(() => {
@@ -232,6 +267,33 @@ export default function WalletNewPage() {
     }
 
     useEffect(() => {
+        console.log('currNavbarName', currNavbarName)
+        if ([WalletNavbarTypes.EVENT, WalletNavbarTypes.BADGE, WalletNavbarTypes.TX].includes(currNavbarName as WalletNavbarTypes)) {
+            setCurrent('');
+        }
+    }, [currNavbarName]);
+
+    const L2NFTMenu = () => {
+        return <Menu mode={state.windowWidth > 750 ? 'vertical' : 'horizontal'}
+            onClick={(e) => {
+                const key = e.key as WalletNavbarTypes
+                setCurrent(key);
+                console.log('setCurrNavbarName', key)
+                setCurrNavbarName(key);
+                window.location.hash = key.toLocaleLowerCase();
+            }}
+            rootClassName="collab-nft-item"
+            // openKeys={['joyid-nfts']}
+            // defaultSelectedKeys={['collab-nfts']}
+            selectedKeys={[current]}
+            expandIcon={() => {
+                return <></>;
+            }}
+            items={L2NFTItems}
+            triggerSubMenuAction="click" />
+    }
+
+    useEffect(() => {
         if (!state.loginWalletType || !state.currentAddress) return;
         if (state.loginWalletType === LoginWalletType.UNIPASS_V3) {
             // 设置 navbars
@@ -259,12 +321,25 @@ export default function WalletNewPage() {
             // 设置 navbars
             setNavbars([
                 {
-                    name: WalletNavbarTypes.NACP,
-                    icon: NacpIcon
-                },
-                {
-                    name: WalletNavbarTypes.NFT,
-                    icon: NftIcon
+                    name: WalletNavbarTypes.L2NFT,
+                    icon: JoyIdNFTIcon,
+                    children: [
+                        {
+                            name: WalletNavbarTypes.NACP,
+                            icon: '',
+                            menu_name: WalletNavbarTypes.NACP
+                        },
+                        {
+                            name: WalletNavbarTypes.NFT,
+                            icon: '',
+                            menu_name: WalletNavbarTypes.NFT
+                        },
+                        {
+                            name: WalletNavbarTypes.PHYSICALNFT,
+                            icon: '',
+                            menu_name: WalletNavbarTypes.PHYSICALNFT
+                        }
+                    ]
                 },
                 {
                     name: WalletNavbarTypes.EVENT,
@@ -313,6 +388,10 @@ export default function WalletNewPage() {
                     if (navbar.name == WalletNavbarTypes.JOYID) {
                         return <div key={index} className={`navbar-item flex-center cursor ${navbar.name}`}>
                             {CollabNFTMenu()}
+                        </div>
+                    } else if (navbar.name == WalletNavbarTypes.L2NFT) {
+                        return <div key={index} className={`navbar-item flex-center cursor ${navbar.name}`}>
+                            {L2NFTMenu()}
                         </div>
                     }
 
@@ -438,7 +517,11 @@ export default function WalletNewPage() {
                                                     currNavbarName == WalletNavbarTypes.CoCreatedNFT ? (
                                                         <WalletCoCreatedNFT isFold={isFold} setLoading={setLoading}></WalletCoCreatedNFT>
                                                     ) : (
-                                                        <></>
+                                                        currNavbarName == WalletNavbarTypes.PHYSICALNFT ? (
+                                                            <WalletPhysicalNft isFold={isFold} setLoading={setLoading}></WalletPhysicalNft>
+                                                        ) : (
+                                                            <></>
+                                                        )
                                                     )
                                                 )
                                             )

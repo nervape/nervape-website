@@ -1,0 +1,233 @@
+.physical-nft-claim-container {
+    z-index: 999;
+
+    .physical-nft-claim-content {
+        background: #454F5C;
+        height: fit-content;
+        padding: 32px;
+        width: 500px;
+        color: #ffffff;
+
+        .title-what-this {
+            padding-bottom: 32px;
+
+            .title {
+                font-weight: 800;
+                font-size: 14px;
+                line-height: 24px;
+                letter-spacing: -0.7px;
+                flex: 1;
+            }
+
+            .what-this {
+                font-size: 12px;
+                line-height: normal;
+                letter-spacing: -0.6px;
+                text-decoration-line: underline;
+                align-self: flex-end;
+            }
+        }
+
+        .desc {
+            color: #FFFFFF;
+            font-size: 12px;
+            line-height: 24px;
+            letter-spacing: -0.6px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.50);
+
+            span {
+                font-size: 12px;
+                font-weight: 800;
+                line-height: 24px;
+            }
+        }
+
+        .tip,
+        .input-tip,
+        .address-tip {
+            font-size: 12px;
+            line-height: 24px;
+        }
+
+        .address-tip {
+            line-height: 16px;
+        }
+
+        .address {
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            word-break: break-all;
+            margin: 12px 0;
+        }
+
+        .claim-step-content {
+            &.step-3 {
+                .title-what-this {
+                    padding-bottom: 16px;
+                }
+            }
+
+            .input-tip {
+                padding-bottom: 4px;
+            }
+
+            input {
+                width: 100%;
+                height: 59px;
+                line-height: 59px;
+                background: rgba(255, 255, 255, 0.10);
+                border-radius: 16px;
+                border: unset;
+                padding: 0 20px;
+                font-size: 16px;
+                color: #FFF;
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.50);
+                }
+
+                &:focus {
+                    outline: none;
+                }
+
+                &::-webkit-inner-spin-button,
+                &::-webkit-outer-spin-button {
+                    -webkit-appearance: none !important;
+                    margin: 0;
+                }
+            }
+
+            .message {
+                font-weight: 700;
+                font-size: 12px;
+                line-height: normal;
+                letter-spacing: -0.6px;
+                color: #F05757;
+                margin-top: 6px;
+                text-align: right;
+            }
+
+            .physical-nft-info {
+                width: 400px;
+                margin: 0 auto;
+                border-radius: 16px;
+                background: rgba(255, 255, 255, 0.10);
+                overflow: hidden;
+                margin-bottom: 16px;
+
+                .cover-image {
+                    width: 100%;
+                    aspect-ratio: 1;
+                    border-radius: 16px;
+                    border: 1px solid rgba(62, 62, 62, 0.10);
+                }
+
+                .name {
+                    padding: 16px 0;
+                    text-align: center;
+                    font-size: 16px;
+                    font-weight: 800;
+                    line-height: normal;
+                    letter-spacing: -0.8px;
+                    color: #FFFFFF;
+                }
+            }
+
+            .physical-code {
+                width: 400px;
+                height: 30px;
+                line-height: 30px;
+                margin: 0 auto;
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.50);
+                padding: 0 16px;
+                text-align: center;
+                color: rgba(255, 255, 255, 0.50);
+                font-size: 12px;
+                letter-spacing: -0.6px;
+            }
+
+            .btn-groups {
+                margin-top: 32px;
+                flex-direction: row-reverse;
+
+                .btn {
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: normal;
+                    letter-spacing: -0.7px;
+                    padding: 12px 16px;
+                    background: #f44d37;
+                    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.10);
+                    border-radius: 12px;
+                    margin-left: 16px;
+                }
+
+                .submit-btn {
+                    &.disabled {
+                        background: #888888;
+                    }
+                }
+
+                .cancel-btn {
+                    background: #506077;
+                    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.10);
+                }
+            }
+        }
+    }
+}
+
+.what-this-tooltip {
+    width: 300px;
+
+    .ant-tooltip-content {
+        .ant-tooltip-inner {
+            padding: 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: -0.6px;
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .physical-nft-claim-container {
+        z-index: 999;
+
+        .physical-nft-claim-content {
+            width: 347px;
+            padding: 32px 16px;
+
+            .claim-step-content {
+                .physical-nft-info {
+                    width: 100%;
+                }
+
+                .physical-code {
+                    width: 100%;
+                }
+
+                .btn-groups {
+                    .btn {
+                        display: block;
+                        margin-left: 0;
+                        width: 100%;
+                        margin-bottom: 16px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -162,8 +162,13 @@ body {
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      margin-bottom: 4px;
 
-      &.ant-menu-item-selected {
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.ant-menu-item-selected, &:hover {
         border-radius: 16px;
         background: rgba(180, 188, 208, 0.25);
       }
@@ -270,8 +275,13 @@ body {
 
       .ant-menu-item {
         width: 100%;
+        margin-bottom: 4px;
 
-        &.ant-menu-item-selected {
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &.ant-menu-item-selected, &:hover {
           border-radius: 16px;
           background: rgba(180, 188, 208, 0.25);
         }

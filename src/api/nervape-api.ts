@@ -241,6 +241,13 @@ class NervapeApi {
 
     return this._fnDealSessionResponse(res, url);
   }
+  
+  public async fnVerifyPhysicalCode(code: string) {
+    const url = `${this.baseUrl}/physical-nft/website/verify/code?code=${code}`;
+    const res = await axios.get(url);
+
+    return this._fnDealSessionResponse(res, url);
+  }
 
   public async fnClaimBonelistNonce() {
     const url = `${this.baseUrl}/invitation/website/nonce`;
