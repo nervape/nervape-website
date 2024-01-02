@@ -256,6 +256,14 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnClaimPhysicalNonce() {
+    const url = `${this.baseUrl}/physical-nft/website/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
 
   public async fnSubmitVerify(
     code: string,
@@ -264,6 +272,20 @@ class NervapeApi {
     inviteeAddress: string) {
     const url = `${this.baseUrl}/invitation/website/submit/verify`;
     const res = await axios.post(url, JSON.stringify({ code, message, signature, inviteeAddress }), {
+      headers: { 'content-type': 'application/json' },
+      withCredentials: true
+    });
+
+    return this._fnDealSessionResponse(res, url);
+  }
+ 
+  public async fnPhysicalSubmitVerify(
+    code: string,
+    message: string,
+    signature: string,
+    address: string) {
+    const url = `${this.baseUrl}/physical-nft/website/submit/verify`;
+    const res = await axios.post(url, JSON.stringify({ code, message, signature, address }), {
       headers: { 'content-type': 'application/json' },
       withCredentials: true
     });

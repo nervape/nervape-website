@@ -3,6 +3,7 @@ export class Physical_NFT {
     name: string = '';
     description: string = '';
     token_index: number = 0;
+    status?: ClaimStatus;
 }
 
 export class Physical_Code {
@@ -10,3 +11,10 @@ export class Physical_Code {
     token_id: number = 0;
     nft?: Physical_NFT;
 }
+
+export enum ClaimStatus {
+    PENDING = 'PENDING',
+    MINTING = 'MINTING',
+    MINTED = 'MINTED',
+    FAILED = 'FAILED',
+  }

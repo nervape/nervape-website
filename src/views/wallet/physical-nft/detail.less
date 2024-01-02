@@ -1,14 +1,17 @@
 .wallet-nft-card-detail-container,
 .fullscreen-container {
   z-index: 999;
+
   .model-viewer-class {
     width: 100%;
     height: 100%;
     position: relative;
+
     .model-loading {
       width: 100%;
       height: 100%;
       position: relative;
+
       .model-loading-gif {
         position: absolute;
         left: 50%;
@@ -43,15 +46,17 @@
         width: 100%;
         height: 100%;
       }
-      
+
       .model-viewer-class {
         width: 100%;
         height: 100%;
         position: relative;
+
         .model-loading {
           width: 100%;
           height: 100%;
           position: relative;
+
           .model-loading-gif {
             width: 100px;
             height: 100px;
@@ -171,6 +176,7 @@
           font-weight: 800;
           font-size: 32px;
           line-height: 38px;
+          padding-bottom: 20px;
         }
 
         .chain {
@@ -250,33 +256,20 @@
           display: flex;
           flex-direction: row-reverse;
 
-          .btn {
-            height: 40px;
-            border: unset;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 17px;
-            color: #ffffff;
-            background: #f44d37;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            padding: 0 16px;
+          .opensea-btn {
+            padding: 7px;
+            border-radius: 6px;
+            background: #2081E2;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12);
 
             img {
-              margin-right: 8px;
+              width: 28px;
+              height: 28px;
             }
-          }
-
-          .btn.cancel {
-            background: #506077;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-          }
-
-          .btn:last-child {
-            margin-right: 16px;
           }
         }
       }
+
       .transfer-content {
         height: 100%;
         display: flex;
@@ -350,8 +343,10 @@
   transition: all 0.3s;
   transform-origin: center;
   z-index: 999;
+
   .message-content {
     padding: 16px;
+
     .close {
       width: 12px;
       height: 12px;
@@ -360,20 +355,24 @@
       right: 16px;
       cursor: pointer;
     }
+
     .message {
       color: #ffffff;
       font-size: 12px;
       text-align: left;
       margin-bottom: 1em;
+
       p {
         margin-bottom: 0;
       }
     }
+
     .message:last-child {
       margin-bottom: 0;
     }
   }
 }
+
 .messages.show {
   visibility: visible;
   opacity: 1;
@@ -386,17 +385,21 @@
       width: 600px;
       max-height: 100vh;
       display: unset;
+
       .preview-model {
         width: 600px;
         height: 600px;
         border-radius: 16px 16px 0 0;
       }
+
       .detail-info {
         width: 600px;
         max-height: calc(100vh - 600px);
         overflow-y: scroll;
+
         .info-content {
           padding: 16px 32px;
+
           .description {
             height: 60px;
           }
@@ -409,6 +412,7 @@
 @media screen and (max-width: 750px) {
   .messages {
     width: 347px;
+
     .message {
       width: 90%;
       word-break: break-word;
@@ -420,42 +424,52 @@
       width: 100vw;
       height: 100vh;
       display: unset;
+
       .preview-model {
         width: 100vw;
         height: 100vw;
       }
+
       .detail-info {
         width: 100vw;
         height: calc(100vh - 100vw);
         overflow-y: scroll;
       }
+
       .detail-info.m {
         .info-content {
           padding: 16px;
+
           .attributes-1 {
             display: block;
+
             .range {
               margin-right: 0;
               margin-bottom: 6px;
             }
           }
+
           .name {
             font-size: 20px;
             line-height: 24px;
           }
+
           .chain {
             margin-top: 6px;
           }
+
           .description {
             // height: 72px;
             flex: none;
             height: auto;
           }
+
           .contract.flex-1 {
             .value {
               font-size: 12px;
             }
           }
+
           .btn-groups {
             padding-bottom: 120px;
           }

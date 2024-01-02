@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import './index.less';
 import { DataContext, parseBalance, updateBodyOverflow } from "../../../utils/utils";
-import { Physical_NFT } from "../../../nervape/physical-nft";
+import { ClaimStatus, Physical_NFT } from "../../../nervape/physical-nft";
 import NftEmptyIcon from '../../../assets/wallet/nft/nft_empty.png';
 import { FullscreenPreview } from "../co-created";
 import NftCardDetail from "./detail";
@@ -23,23 +23,39 @@ export default function WalletPhysicalNft(props: any) {
         const { nft, showDetail } = props;
 
         return (
-            <div className="nft-item cursor" onClick={() => { showDetail() }}>
+            <div className="nft-item cursor" onClick={() => { 
+                if (!nft.status || nft.status == ClaimStatus.PENDING) return;
+
+                showDetail();
+             }}>
                 <div className="cover-image">
                     <img
                         src={`${nft.image}?x-oss-process=image/resize,h_100,m_lfit`}
                         alt=""
                     />
+                    {(!nft.status || nft.status == ClaimStatus.PENDING) && (
+                        <div className="cover-tip">Receiving...</div>
+                    )}
                 </div>
                 <div className="name" title={nft.name}>
                     {nft.name}
                 </div>
-                <div className="id">{`#${parseBalance(nft.token_index, 0)}`}</div>
+                <div className="id">{`#${nft.token_index}`}</div>
             </div>
         );
     }
 
     useEffect(() => {
         setIsInit(true);
+        setPhysicalNfts([
+            {
+               name: 'Spooky Nervape',
+               image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/d481128c-d532-49a4-846a-43a7ec4ab678.png',
+               description: 'A winner’s reward for 2023 Halloween Event - Spooky Nervape',
+               token_index: 70010001,
+               status: ClaimStatus.MINTED
+            }
+        ]);
     }, []);
 
     if (!isInit) return <></>;

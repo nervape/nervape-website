@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
 import './claim.less';
-import { DataContext } from "../../../utils/utils";
+import { DataContext, showErrorNotification } from "../../../utils/utils";
 import { nervapeApi } from "../../../api/nervape-api";
 import { Tooltip } from "antd";
 import { Physical_Code } from "../../../nervape/physical-nft";
+import { useSignMessage } from "wagmi";
+import { SiweMessage } from "siwe";
+import { godWoken } from "../../../utils/Chain";
 
 export default function PhysicalNftClaim(props: any) {
     const { show, setPhysicalClaim, setLoading } = props;
@@ -20,6 +23,47 @@ export default function PhysicalNftClaim(props: any) {
         setMessage('');
         setCode('');
         setCurrentStep(1);
+    }
+    
+    const domain = window.location.host;
+    const origin = window.location.origin;
+    const { signMessageAsync, error } = useSignMessage();
+
+    const createSiweMessage = async (_address: string, statement: string) => {
+        const res = await nervapeApi.fnClaimPhysicalNonce();
+
+        const message = new SiweMessage({
+            domain,
+            address: _address,
+            statement,
+            uri: origin,
+            version: '1',
+            chainId: godWoken.id,
+            nonce: res
+        });
+
+        return message.prepareMessage();
+    }
+
+    const signInWithEthereum = async () => {
+        setLoading(true);
+
+        const message = await createSiweMessage(state.currentAddress, 'Sign in to claim your Bonelist.');
+
+        const signature = await signMessageAsync({ message });
+
+        const res = await nervapeApi.fnPhysicalSubmitVerify(code, message, signature, state.currentAddress);
+
+        if (res.code !== 0) {
+            showErrorNotification({
+                message: 'Request Error',
+                description: res.message
+              });
+        } else {
+            setCurrentStep(3);
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -101,7 +145,7 @@ export default function PhysicalNftClaim(props: any) {
                             <div className={`btn-groups ${state.windowWidth > 750 && 'flex-align'}`}>
                                 <button className={`submit-btn cursor btn`}
                                     onClick={async () => {
-                                        setCurrentStep(3);
+                                        await signInWithEthereum();
                                     }}>
                                     CONFIRM AND CLAIM
                                 </button>

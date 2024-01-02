@@ -3,8 +3,13 @@ import { formatUnits } from '@ethersproject/units';
 
 import React, { createContext } from "react";
 import { InitialStateType } from './reducers';
+import ErrorColseIcon from '../assets/icons/error_close_icon.svg';
+import ColseIcon from '../assets/icons/close_icon.svg';
 import { Event } from '../nervape/campaign';
 import { StoryCollectable } from '../nervape/story';
+import { notification } from 'antd';
+import { ArgsProps } from 'antd/lib/notification';
+import htmr from 'htmr';
 
 export const initialState = {
     windowWidth: getWindowWidthRange(),
@@ -83,4 +88,15 @@ export function shuffle(arr: []) {
     }
 
     return stack;
+}
+
+export function showErrorNotification(config: ArgsProps) {
+    notification.error({
+        message: config.message,
+        description: config.description,
+        placement: getWindowWidthRange() > 750 ? 'topRight' : 'top',
+        className: 'global-notification-container',
+        icon: config.icon || htmr(`<img src=${ErrorColseIcon} alt="" />`),
+        closeIcon: htmr(`<img src=${ColseIcon} alt="" />`)
+      });
 }
