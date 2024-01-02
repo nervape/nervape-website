@@ -255,6 +255,14 @@ body {
                     }
                   }
                 }
+
+                .ant-menu-horizontal {
+                  border-bottom: unset;
+
+                  .ant-menu-submenu-active::after, .ant-menu-submenu-selected::after {
+                    border: unset;
+                  }
+                }
               }
             }
           }
@@ -268,14 +276,18 @@ body {
   }
 
   .ant-menu-submenu-popup.collab-nft-item {
+    top: calc(100vh - 124px) !important;
+
     .ant-menu-sub {
       width: 100vw;
+      display: flex;
+      align-items: center;
       margin-left: 0;
-      margin-bottom: 8px;
+      margin-bottom: 0;
 
       .ant-menu-item {
-        width: 100%;
-        margin-bottom: 4px;
+        flex: 1;
+        margin-bottom: 0;
 
         &:last-child {
           margin-bottom: 0;
