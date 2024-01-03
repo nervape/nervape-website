@@ -12,12 +12,12 @@ interface Call {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const multicall = async (abi: any[], calls: Call[], provider?: providers.Provider | undefined) => {
+const multicall = async (abi: any[], calls: Call[], chainId?: number) => {
   // eslint-disable-next-line prettier/prettier, no-unused-expressions
-  provider ||= new providers.JsonRpcProvider(RPC[CHAIN_ID])
+  const provider = new providers.JsonRpcProvider(RPC[chainId || CHAIN_ID])
   // eslint-disable-next-line no-useless-catch
   try {
-    const multi = new Contract(contracts.multicall[CHAIN_ID], MULTICALL_ABI, provider)
+    const multi = new Contract(contracts.multicall[ chainId || CHAIN_ID], MULTICALL_ABI, provider)
     const itf = new Interface(abi)
     const calldata = calls.map((call) => [call.address.toLowerCase(), itf.encodeFunctionData(call.name, call.params)])
     const { returnData } = await multi.callStatic.aggregate(calldata)

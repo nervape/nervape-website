@@ -1,7 +1,8 @@
 import useSWR from 'swr';
+import { providers } from 'ethers'
 import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
 import multicall from '../utils/multicall';
-import { contracts, CHAIN_ID, getAddress } from '../config/constants';
+import { contracts, CHAIN_ID, getAddress, RPC } from '../config/constants';
 import nervapeABI from '../contracts/Nervape.json';
 
 function fetchAllTokenIds(address: string) {
@@ -41,7 +42,7 @@ function fetchAllTokenIds(address: string) {
     };
 }
 
-function fetchCollectionTokenIds(contract: string, address: string) {
+function fetchCollectionTokenIds(contract: string, address: string, chainId?: number) {
     return async () => {
         const balanceOfCall = [
             {
@@ -51,7 +52,7 @@ function fetchCollectionTokenIds(contract: string, address: string) {
             }
         ];
 
-        const [balance] = await multicall(nervapeABI, balanceOfCall);
+        const [balance] = await multicall(nervapeABI, balanceOfCall, chainId);
 
         // eslint-disable-next-line radix
         const calls = Array.from({ length: parseInt(balance[0]) }).map((_, i) => {
@@ -62,7 +63,7 @@ function fetchCollectionTokenIds(contract: string, address: string) {
             };
         });
 
-        const items = await multicall(nervapeABI, calls);
+        const items = await multicall(nervapeABI, calls, chainId);
 
         return items.map((item: any) => item[0].toString());
     };
@@ -79,6 +80,12 @@ export function useFetchCollectionTokenIds(collecionName: string, address: strin
     return result;
 }
 
+export function useFetchPhysicalNFTIds(address: string, chainId: number) {
+    const contract = contracts.physicalNft[chainId]
+    return fetchCollectionTokenIds(contract, address, chainId);
+}
+
 export default function useFetchAllTokenIds(address: string) {
     return fetchAllTokenIds(address);
 }
+

@@ -7,10 +7,23 @@ import { FullscreenPreview } from "../co-created";
 import NftCardDetail from "./detail";
 import { Types } from "../../../utils/reducers";
 import PhysicalNftClaim from "./claim";
+import { useFetchPhysicalNFTIds } from "../../../hooks/useERC721";
 
 export default function WalletPhysicalNft(props: any) {
     const { state, dispatch } = useContext(DataContext);
     const { isFold, setLoading } = props;
+
+    const fetchAllTokenIds = useFetchPhysicalNFTIds(state.currentAddress, 5);
+
+    async function fnFetchAllTokenIds() {
+        setLoading(true);
+        const res = await fetchAllTokenIds();
+        console.log("res = ", res)
+        setLoading(false);
+    }
+    useEffect(() => {
+        fnFetchAllTokenIds()
+    }, [])
 
     const [isInit, setIsInit] = useState(false);
     const [showNftCard, setShowNftCard] = useState(false);

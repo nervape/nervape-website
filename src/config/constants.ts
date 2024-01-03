@@ -3,7 +3,9 @@ import { CONFIG } from '../utils/config';
 export const contracts = {
     multicall: {
         71402: '0xAa055dBC759F416DC6f2A1F792248EE90Bc370c2', // mainnet
-        71401: '' // testnet
+        71401: '', // testnet
+        1: '0xcA11bde05977b3631167028862bE2a173976CA11',
+        5: '0xcA11bde05977b3631167028862bE2a173976CA11'
     },
     character: {
         71402: CONFIG.L2_CHARACTER_ADDRESS, // mainnet
@@ -20,12 +22,18 @@ export const contracts = {
     special: {
         71402: CONFIG.L2_SPECIAL_ADDRESS, // mainnet
         71401: '' // testnet
+    },
+    physicalNft: {
+        1: CONFIG.PHYSICAL_NFT_ADDRESS,
+        5: CONFIG.PHYSICAL_NFT_ADDRESS
     }
 };
 
 export const RPC = {
     71401: 'https://godwoken-testnet-v1.ckbapp.dev',
-    71402: 'https://v1.mainnet.godwoken.io/rpc'
+    71402: 'https://v1.mainnet.godwoken.io/rpc',
+    1: 'https://cloudflare-eth.com',
+    5: 'https://eth-goerli.g.alchemy.com/v2/izqT_CrJZvv9s79j4aCC4xBLE6qMuhG7'
 };
 
 export const DEFAULT_CHAIN_ID = 71402;
@@ -62,6 +70,6 @@ export const POAP_EVENT_IDS = [77390, 74399, 66315, 65433];
 //     }
 // ]
 
-export function getAddress(address: keyof typeof contracts) {
-    return address[CHAIN_ID];
+export function getAddress(address: keyof typeof contracts, chainId?: number) {
+    return address[chainId || CHAIN_ID];
 }
