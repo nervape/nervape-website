@@ -27,9 +27,7 @@ export default function WalletPhysicalNft(props: any) {
     async function fnFetchAllTokenIds() {
         setLoading(true);
         let _res = await nervapeApi.fnGetPhysicalNfts(state.currentAddress);
-        console.log("_res = ", _res);
         const res = await fetchAllTokenIds();
-        console.log("res = ", res);
         let _nfts: Physical_NFT[] = [];
         let refresh = false;
 
@@ -40,7 +38,7 @@ export default function WalletPhysicalNft(props: any) {
         }));
 
         _res = _res.filter((nft: any) => {
-            return !(res as number[]).includes(nft.token_id);
+            return !res.includes(nft.token_id.toString());
         });
 
         await Promise.all(_res.map(async (nft: any) => {
