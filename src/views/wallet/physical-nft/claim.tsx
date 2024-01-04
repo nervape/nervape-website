@@ -9,7 +9,7 @@ import { SiweMessage } from "siwe";
 import { godWoken } from "../../../utils/Chain";
 
 export default function PhysicalNftClaim(props: any) {
-    const { show, setPhysicalClaim, setLoading } = props;
+    const { show, setPhysicalClaim, setLoading, refresh } = props;
 
     const { state, dispatch } = useContext(DataContext);
 
@@ -172,6 +172,7 @@ export default function PhysicalNftClaim(props: any) {
                                 <button className={`submit-btn cursor btn`}
                                     onClick={async () => {
                                         closeClaim();
+                                        refresh();
                                     }}>
                                     DONE
                                 </button>

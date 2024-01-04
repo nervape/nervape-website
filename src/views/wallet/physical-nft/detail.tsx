@@ -7,6 +7,7 @@ import OpenseaLogo from '../../../assets/logo/opensea_logo.svg';
 
 import './detail.less';
 import { Physical_NFT } from '../../../nervape/physical-nft';
+import { CONFIG } from '../../../utils/config';
 
 export default function NftCardDetail(props: {
     show: boolean;
@@ -71,7 +72,7 @@ export default function NftCardDetail(props: {
                                 <button
                                     className="opensea-btn cursor"
                                     onClick={() => {
-                                        window.open('https://app.joy.id/?asset=Collectible', '_blank')
+                                        window.open(`${CONFIG.PN_OPENSEA_URL}${CONFIG.PHYSICAL_NFT_ADDRESS}/${nft.token_index || nft.id}`, '_blank')
                                     }}
                                 >
                                     <img src={OpenseaLogo} alt="OpenseaLogo" />

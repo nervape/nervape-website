@@ -14,15 +14,24 @@ export default function WalletPhysicalNft(props: any) {
     const { state, dispatch } = useContext(DataContext);
     const { isFold, setLoading } = props;
 
+    const [isInit, setIsInit] = useState(false);
+    const [showNftCard, setShowNftCard] = useState(false);
+    const [showFullscreen, setShowFullscreen] = useState(false);
+    const [showPhysicalClaim, setShowPhysicalClaim] = useState(false);
+    const [physicalNfts, setPhysicalNfts] = useState<Physical_NFT[]>([]);
+    const [nftDetail, setNftDetail] = useState<Physical_NFT>();
+    const [timer, setTimer] = useState<any>();
+
     const fetchAllTokenIds = useFetchPhysicalNFTIds(state.currentAddress, 5);
 
     async function fnFetchAllTokenIds() {
         setLoading(true);
-        const _res = await nervapeApi.fnGetPhysicalNfts(state.currentAddress);
+        let _res = await nervapeApi.fnGetPhysicalNfts(state.currentAddress);
         console.log("_res = ", _res);
         const res = await fetchAllTokenIds();
         console.log("res = ", res);
         let _nfts: Physical_NFT[] = [];
+        let refresh = false;
 
         await Promise.all(res.map(async (token_id: number) => {
             const metadata = await fnGetMetadata(token_id);
@@ -30,11 +39,12 @@ export default function WalletPhysicalNft(props: any) {
             _nfts.push(metadata);
         }));
 
-        _res.filter((nft: any) => {
+        _res = _res.filter((nft: any) => {
             return !(res as number[]).includes(nft.token_id);
         });
 
         await Promise.all(_res.map(async (nft: any) => {
+            refresh = true;
             const metadata = await fnGetMetadata(nft.token_id);
             metadata.status = ClaimStatus.PENDING;
             _nfts.push(metadata);
@@ -43,32 +53,36 @@ export default function WalletPhysicalNft(props: any) {
         setPhysicalNfts(_nfts);
         setLoading(false);
         setIsInit(true);
+
+        if (refresh) {
+            if (timer) {
+                clearTimeout(timer);
+                setTimer(null);
+            }
+            
+            setTimeout(() => {
+                fnFetchAllTokenIds();
+            }, 8000);
+        }
     }
 
     async function fnGetMetadata(token_id: number) {
-       return await nervapeApi.fnGetMetadataByTokenId('physical', token_id)
+        return await nervapeApi.fnGetMetadataByTokenId('physical', token_id)
     }
 
     useEffect(() => {
         fnFetchAllTokenIds();
     }, []);
 
-    const [isInit, setIsInit] = useState(false);
-    const [showNftCard, setShowNftCard] = useState(false);
-    const [showFullscreen, setShowFullscreen] = useState(false);
-    const [showPhysicalClaim, setShowPhysicalClaim] = useState(false);
-    const [physicalNfts, setPhysicalNfts] = useState<Physical_NFT[]>([]);
-    const [nftDetail, setNftDetail] = useState<Physical_NFT>();
-
     const NFTItem = (props: { nft: Physical_NFT; showDetail: Function; }) => {
         const { nft, showDetail } = props;
 
         return (
-            <div className="nft-item cursor" onClick={() => { 
+            <div className="nft-item cursor" onClick={() => {
                 if (!nft.status || nft.status == ClaimStatus.PENDING) return;
 
                 showDetail();
-             }}>
+            }}>
                 <div className="cover-image">
                     <img
                         src={`${nft.image}?x-oss-process=image/resize,h_100,m_lfit`}
@@ -157,6 +171,7 @@ export default function WalletPhysicalNft(props: any) {
             <PhysicalNftClaim
                 show={showPhysicalClaim}
                 setLoading={setLoading}
+                refresh={() => { fnFetchAllTokenIds(); }}
                 setPhysicalClaim={setShowPhysicalClaim}
             ></PhysicalNftClaim>
         </div>

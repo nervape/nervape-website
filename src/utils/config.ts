@@ -48,5 +48,8 @@ export const CONFIG = {
     // google map api key
     GOOGLE_MAP_API_KEY: import.meta.env.VITE_GOOGLE_MAP_API_KEY,
 
-    PHYSICAL_NFT_ADDRESS: import.meta.env.VITE_PHYSICAL_NFT_ADDRESS
+    PHYSICAL_NFT_ADDRESS: import.meta.env.VITE_PHYSICAL_NFT_ADDRESS,
+
+    // Physical Nft OPENSEA LINK
+    PN_OPENSEA_URL: import.meta.env.VITE_PHYSICAL_OPENSEA_URL,
 }
