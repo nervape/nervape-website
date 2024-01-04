@@ -56,12 +56,12 @@ export default function NftCardDetail(props: {
                     </div>
                     <div className="detail-info m">
                         <div className="info-content">
-                            <div className="name">{`${nft.name} #${nft.token_index}`}</div>
+                            <div className="name">{`${nft.name.split('#')[0]} #${nft.token_index || nft.id}`}</div>
 
                             <div className="attributes attributes-1 flex">
                                 <div className="range flex-1">
                                     <div className="text">ID</div>
-                                    <div className="value">{nft.token_index}</div>
+                                    <div className="value">{nft.token_index || nft.id}</div>
                                 </div>
                             </div>
                             <div className={`description`}>

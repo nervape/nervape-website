@@ -323,6 +323,7 @@ export default function WalletNewPage() {
                 {
                     name: WalletNavbarTypes.L2NFT,
                     icon: JoyIdNFTIcon,
+                    menu_name: WalletNavbarTypes.NACP,
                     children: [
                         {
                             name: WalletNavbarTypes.NACP,

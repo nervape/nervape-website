@@ -8,6 +8,7 @@ import NftCardDetail from "./detail";
 import { Types } from "../../../utils/reducers";
 import PhysicalNftClaim from "./claim";
 import { useFetchPhysicalNFTIds } from "../../../hooks/useERC721";
+import { nervapeApi } from "../../../api/nervape-api";
 
 export default function WalletPhysicalNft(props: any) {
     const { state, dispatch } = useContext(DataContext);
@@ -17,13 +18,40 @@ export default function WalletPhysicalNft(props: any) {
 
     async function fnFetchAllTokenIds() {
         setLoading(true);
+        const _res = await nervapeApi.fnGetPhysicalNfts(state.currentAddress);
+        console.log("_res = ", _res);
         const res = await fetchAllTokenIds();
-        console.log("res = ", res)
+        console.log("res = ", res);
+        let _nfts: Physical_NFT[] = [];
+
+        await Promise.all(res.map(async (token_id: number) => {
+            const metadata = await fnGetMetadata(token_id);
+            metadata.status = ClaimStatus.MINTED;
+            _nfts.push(metadata);
+        }));
+
+        _res.filter((nft: any) => {
+            return !(res as number[]).includes(nft.token_id);
+        });
+
+        await Promise.all(_res.map(async (nft: any) => {
+            const metadata = await fnGetMetadata(nft.token_id);
+            metadata.status = ClaimStatus.PENDING;
+            _nfts.push(metadata);
+        }))
+
+        setPhysicalNfts(_nfts);
         setLoading(false);
+        setIsInit(true);
     }
+
+    async function fnGetMetadata(token_id: number) {
+       return await nervapeApi.fnGetMetadataByTokenId('physical', token_id)
+    }
+
     useEffect(() => {
-        fnFetchAllTokenIds()
-    }, [])
+        fnFetchAllTokenIds();
+    }, []);
 
     const [isInit, setIsInit] = useState(false);
     const [showNftCard, setShowNftCard] = useState(false);
@@ -51,25 +79,12 @@ export default function WalletPhysicalNft(props: any) {
                     )}
                 </div>
                 <div className="name" title={nft.name}>
-                    {nft.name}
+                    {nft.name.split('#')[0]}
                 </div>
-                <div className="id">{`#${nft.token_index}`}</div>
+                <div className="id">{`#${nft.token_index || nft.id}`}</div>
             </div>
         );
     }
-
-    useEffect(() => {
-        setIsInit(true);
-        setPhysicalNfts([
-            {
-               name: 'Spooky Nervape',
-               image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/d481128c-d532-49a4-846a-43a7ec4ab678.png',
-               description: 'A winner’s reward for 2023 Halloween Event - Spooky Nervape',
-               token_index: 70010001,
-               status: ClaimStatus.MINTED
-            }
-        ]);
-    }, []);
 
     if (!isInit) return <></>;
 

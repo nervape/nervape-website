@@ -5,6 +5,7 @@ import { ChapterList, Story } from "../nervape/story";
 class NervapeApi {
   //@ts-ignore
   public baseUrl = import.meta.env.VITE_API_HOST;
+  public metadataBaseUrl = import.meta.env.VITE_METADATA_API_HOST;
 
   private _fnDealResponse(res: AxiosResponse, url: string) {
     if (res.status !== 200) {
@@ -68,7 +69,7 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetCoCreatedNFTBanners() {
     const url = `${this.baseUrl}/co-created-nft/website/banners`;
     const res = await axios.get(url);
@@ -80,7 +81,7 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetCoCreatedNftFilterList() {
     const url = `${this.baseUrl}/co-created-nft/website/filter`;
     const res = await axios.get(url);
@@ -94,7 +95,7 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnGetCoCreatedNfts(query?: NFT_QUERY) {
     const url = `${this.baseUrl}/co-created-nft/website`;
     const res = await axios.get(url, {
@@ -241,7 +242,7 @@ class NervapeApi {
 
     return this._fnDealSessionResponse(res, url);
   }
-  
+
   public async fnVerifyPhysicalCode(code: string) {
     const url = `${this.baseUrl}/physical-nft/website/verify/code?code=${code}`;
     const res = await axios.get(url);
@@ -256,7 +257,7 @@ class NervapeApi {
     });
     return this._fnDealResponse(res, url);
   }
-  
+
   public async fnClaimPhysicalNonce() {
     const url = `${this.baseUrl}/physical-nft/website/nonce`;
     const res = await axios.get(url, {
@@ -278,7 +279,7 @@ class NervapeApi {
 
     return this._fnDealSessionResponse(res, url);
   }
- 
+
   public async fnPhysicalSubmitVerify(
     code: string,
     message: string,
@@ -309,6 +310,18 @@ class NervapeApi {
     const url = `https://api.joy.id/api/v1/wallet/held_tokens/${address}?cursor=0&count=10`;
     const res = await axios.get(url);
     return res.data;
+  }
+
+  public async fnGetMetadataByTokenId(type: string, token_id: number) {
+    const url = `${this.metadataBaseUrl}/${type}/${token_id}`;
+    const res = await axios.get(url);
+    return res.data;
+  }
+
+  public async fnGetPhysicalNfts(address: string) {
+    const url = `${this.baseUrl}/physical-nft/website/nfts/${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
   }
 }
 
