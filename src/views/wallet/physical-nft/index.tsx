@@ -10,6 +10,8 @@ import PhysicalNftClaim from "./claim";
 import { useFetchPhysicalNFTIds } from "../../../hooks/useERC721";
 import { nervapeApi } from "../../../api/nervape-api";
 
+let timer: any = null;
+
 export default function WalletPhysicalNft(props: any) {
     const { state, dispatch } = useContext(DataContext);
     const { isFold, setLoading } = props;
@@ -20,7 +22,6 @@ export default function WalletPhysicalNft(props: any) {
     const [showPhysicalClaim, setShowPhysicalClaim] = useState(false);
     const [physicalNfts, setPhysicalNfts] = useState<Physical_NFT[]>([]);
     const [nftDetail, setNftDetail] = useState<Physical_NFT>();
-    const [timer, setTimer] = useState<any>();
 
     const fetchAllTokenIds = useFetchPhysicalNFTIds(state.currentAddress, 5);
 
@@ -55,12 +56,14 @@ export default function WalletPhysicalNft(props: any) {
         if (refresh) {
             if (timer) {
                 clearTimeout(timer);
-                setTimer(null);
+                timer = null;
             }
             
-            setTimeout(() => {
+            timer = setTimeout(() => {
                 fnFetchAllTokenIds();
             }, 8000);
+
+            console.log('fnFetchAllTokenIds', timer);
         }
     }
 
@@ -70,6 +73,15 @@ export default function WalletPhysicalNft(props: any) {
 
     useEffect(() => {
         fnFetchAllTokenIds();
+
+        return () => {
+            console.log('fnFetchAllTokenIds', timer);
+
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+        }
     }, []);
 
     const NFTItem = (props: { nft: Physical_NFT; showDetail: Function; }) => {
