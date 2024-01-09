@@ -134,7 +134,7 @@ const GalleryItems: MenuProps = {
         <div onClick={() => {
           handleHeaderClick('galleryCoCreation');
           updateBodyOverflow(true);
-        }}>CO-CREATION</div>
+        }}>Collab NFTs</div>
       ),
       key: '1'
     }
@@ -332,7 +332,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     type: HeaderType.Navbar
   },
   galleryCoCreation: {
-    url: '/nft-co-creation',
+    url: '/collab-nfts',
     type: HeaderType.Navbar
   },
   galleryNacp: {
@@ -393,7 +393,7 @@ const mPages: MenuItem[] = [
   getItem('GALLERY', 'gallery', null, [
     getItem('3D COLLECTION', 'galleryCollection'),
     getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp'),
-    getItem('CO-CREATION', 'galleryCoCreation')
+    getItem('Collab NFTs', 'galleryCoCreation')
   ]),
   getItem('BUY', 'buy', null, [
     getItem('3D COLLECTION', 'buyCollection', null, [

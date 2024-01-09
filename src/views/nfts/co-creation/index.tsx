@@ -235,7 +235,7 @@ export default function NFTCoCreation() {
                 <Swiper
                     autoplay={{ delay: 5000 }}
                     speed={1500}
-                    loop
+                    loop={banners && banners?.length > 1}
                     pagination={{ clickable: true }}
                 >
                     {banners?.map((banner, index) => {
@@ -255,7 +255,7 @@ export default function NFTCoCreation() {
                                                     <div className="type-c">
                                                         <embed src={IconMap.get(banner.type)} className="icon" type="" />
                                                         {/* <img loading="lazy" src={IconMap.get(banner.type)} className="icon" alt="" /> */}
-                                                        <div className="type">{`${banner.type} NFT`.toUpperCase()}</div>
+                                                        <div className="type">{`${banner.type}`.toUpperCase()}</div>
                                                     </div>
                                                     <div
                                                         className="play-icon-c cursor"
@@ -299,7 +299,7 @@ export default function NFTCoCreation() {
             <div className="home-slider" id="home-slider"></div>
             <div className="nfts-content">
                 <div className="content-title">
-                    <div className="title">Co-Created</div>
+                    <div className="title">Collab NFTs</div>
                     <div className="desc">A short description of this category</div>
                 </div>
                 <div className="content">
