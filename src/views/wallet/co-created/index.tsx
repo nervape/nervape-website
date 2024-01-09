@@ -8,6 +8,7 @@ import DetailCloseIcon from '../../../assets/images/nft/close_detail.svg';
 import NftCardDetail from "./detail";
 import { Types } from "../../../utils/reducers";
 import { Physical_NFT } from "../../../nervape/physical-nft";
+import { Co_Created_NFT } from "../../../nervape/co-created-nft";
 
 export class JOYID_NFT {
     audio: string = "";
@@ -29,7 +30,7 @@ export class JOYID_NFT {
 
 // 全屏预览
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function FullscreenPreview(props: { nft?: JOYID_NFT | Physical_NFT; close: any; show: boolean; }) {
+export function FullscreenPreview(props: { nft?: JOYID_NFT | Physical_NFT | Co_Created_NFT; close: any; show: boolean; }) {
     const { nft, close, show } = props;
 
     return (

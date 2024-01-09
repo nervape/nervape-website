@@ -100,7 +100,7 @@ export default function App() {
             }
           />
           <Route
-            path="/nft-co-creation"
+            path="/collab-nfts"
             element={
               <PageView activeIndex={3}>
                 <NFTCoCreation />

@@ -18,6 +18,7 @@ import { DataContext } from "../../../utils/utils";
 import { IconMap } from "../../../nervape/nft";
 import { nervapeApi } from "../../../api/nervape-api";
 import { NftBannerVideo } from "..";
+import { FullscreenPreview } from "../../wallet/co-created";
 
 // 预览 3D 模型
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,89 +69,66 @@ function NftCardDetail(props: { nft: Co_Created_NFT; close: any; fullscreen: any
     const { state } = useContext(DataContext);
 
     return (
-        <div className={`nft-card-detail-container popup-container mask-cover ${show && 'show'}`} onClick={close}>
-            <div className="nft-card-detail" onClick={e => e.stopPropagation()}>
+        <div className={`wallet-nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
+            <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
                 <div className="preview-model">
-                    <PreviewModel enableModuleUrl={nft?.image} id="card"></PreviewModel>
+                    <img className='cover-image-url' src={nft?.image} alt="" />
                     {state.windowWidth !== 1200 && (
                         <div className="close-detail-c">
-                            <img loading="lazy" onClick={close} className="close-detail cursor" src={DetailCloseIcon} alt="DetailCloseIcon" />
+                            <img
+                                loading="lazy"
+                                onClick={close}
+                                className="close-detail cursor"
+                                src={DetailCloseIcon}
+                                alt="DetailCloseIcon"
+                            />
                         </div>
                     )}
                     <div className="fullscreen-c">
-                        <img loading="lazy" onClick={fullscreen} className="full-screen cursor" src={FullscrenIcon} alt="FullscrenIcon" />
+                        <img
+                            loading="lazy"
+                            onClick={fullscreen}
+                            className="full-screen cursor"
+                            src={FullscrenIcon}
+                            alt="FullscrenIcon"
+                        />
                     </div>
                 </div>
-                {/* <div className="detail-info">
+                <div className="detail-info m">
                     <div className="info-content">
                         <div className="name">{nft?.name}</div>
-                        {!nft?.coming_soon && (
-                            <div className="distribution">
-                                <div className="title">Distribution</div>
-                                <div className="flex">
-                                    <div className="godwoken flex-1">
-                                        <span className="text">GODWOKEN</span>
-                                        <span className="value">{`${nft?.issued}/${nft?.total}`}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+
                         <div className="attributes attributes-1 flex">
                             <div className="range flex-1">
                                 <div className="text">ID Range</div>
-                                <div className="value">{nft?.coming_soon ? '-' : nft?.id_range}</div>
+                                <div className="value">0 - 900</div>
                             </div>
                             <div className="origin flex-1">
-                                <div className="text">Origin</div>
-                                <div className="value">{nft?.origin}</div>
+                                <div className="text">Number of Participant</div>
+                                <div className="value">900</div>
                             </div>
                         </div>
                         <div className="attributes flex">
-                            {nft?.type === 'Character' && (
-                                <>
-                                    <div className="name flex-1">
-                                        <div className="text">Name</div>
-                                        <div className="value">{nft?.short_name}</div>
-                                    </div>
-                                    <div className="birthday flex-1">
-                                        <div className="text">Birthday</div>
-                                        <div className="value">{nft?.birthday && nft.birthday.replace(/-/g, '/')}</div>
-                                    </div>
-                                </>
-                            )}
                             <div className="type flex-1">
-                                <div className="text">Type</div>
-                                <div className="value">{nft?.type}</div>
+                                <div className="text">Event Period</div>
+                                <div className="value">11/15/2023 - 11/20/2023</div>
                             </div>
                         </div>
-                        <div className="description">
-                            <div className="desc-c">{nft?.description}</div>
+                        <div className={`description`}>
+                            {nft?.description}
                         </div>
                         <div className="btn-groups">
                             <button
-                                className={`btn cursor ${nft?.coming_soon && 'coming-soon'}`}
+                                className="btn cursor"
                                 onClick={() => {
-                                    if (nft?.coming_soon) return;
-                                    window.open(nft?.yokaiUrl);
+                                    window.open('https://app.joy.id/?asset=Collectible', '_blank')
                                 }}
                             >
-                                {nft?.coming_soon ? 'COMING SOON' : 'BUY ON YOKAI'}
+                                VIEW ON NFT BOX
                             </button>
                         </div>
                     </div>
-                </div> */}
-            </div>
-        </div>
-    );
-}
-
-function FullscreenPreview(props: { nft?: Co_Created_NFT; close: any; show: boolean; }) {
-    const { nft, close, show } = props;
-    return (
-        <div className={`fullscreen-container mask-cover ${show && 'show'}`}>
-            <PreviewModel enableModuleUrl={nft?.image} id="fullscreen"></PreviewModel>
-            <div className="close-c cursor">
-                <img loading="lazy" className="close-icon transform-center" onClick={close} src={DetailCloseIcon} alt="IconPreviewClose" />
+                </div>
             </div>
         </div>
     );
@@ -257,7 +235,7 @@ export default function NFTCoCreation() {
                 <Swiper
                     autoplay={{ delay: 5000 }}
                     speed={1500}
-                    loop
+                    loop={banners && banners?.length > 1}
                     pagination={{ clickable: true }}
                 >
                     {banners?.map((banner, index) => {
@@ -277,7 +255,7 @@ export default function NFTCoCreation() {
                                                     <div className="type-c">
                                                         <embed src={IconMap.get(banner.type)} className="icon" type="" />
                                                         {/* <img loading="lazy" src={IconMap.get(banner.type)} className="icon" alt="" /> */}
-                                                        <div className="type">{`${banner.type} NFT`.toUpperCase()}</div>
+                                                        <div className="type">{`${banner.type}`.toUpperCase()}</div>
                                                     </div>
                                                     <div
                                                         className="play-icon-c cursor"
@@ -321,7 +299,7 @@ export default function NFTCoCreation() {
             <div className="home-slider" id="home-slider"></div>
             <div className="nfts-content">
                 <div className="content-title">
-                    <div className="title">Co-Created</div>
+                    <div className="title">Collab NFTs</div>
                     <div className="desc">A short description of this category</div>
                 </div>
                 <div className="content">
@@ -454,7 +432,7 @@ export default function NFTCoCreation() {
                 }}></NftCardDetail>
             <FullscreenPreview
                 show={showFullscreen}
-                nft={nftDetail}
+                nft={nftDetail as Co_Created_NFT}
                 close={() => {
                     document.body.style.overflow = 'auto';
                     setShowFullscreen(false)

@@ -20,6 +20,7 @@ export class NFT_QUERY {
 
 export class Co_Created_NFT {
     name: string = "";
+    description: string = "";
     image: string = "";
     type: NFT_TYPE = "";
     total: number = 0;
