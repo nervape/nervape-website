@@ -323,6 +323,30 @@ class NervapeApi {
     const res = await axios.get(url);
     return this._fnDealResponse(res, url);
   }
+  
+  public async fnGetAllPhysicalNfts() {
+    const url = `${this.baseUrl}/physical-nft/website/nfts`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetPhysicalApeDetail(path_name: string) {
+    const url = `${this.baseUrl}/physical-nft/website/nfts/profile/${path_name}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetPhysicalNftImages() {
+    const url = `${this.baseUrl}/physical-nft/website/all/physical/nft/images`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
+  
+  public async fnGetProfileByTokenId(token_id: number) {
+    const url = `${this.baseUrl}/physical-nft/website/profile/${token_id}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();

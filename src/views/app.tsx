@@ -31,6 +31,8 @@ import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
 import NFTCoCreation from "./nfts/co-creation";
 import PhysicalApe from "./nfts/physical-ape";
+import PhysicalApeDetail from "./nfts/physical-ape/ape";
+import PhysicalNftProfile from "./nfts/physical-ape/profile";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -110,8 +112,24 @@ export default function App() {
           <Route
             path="/physical-ape"
             element={
-              <PageView activeIndex={3}>
+              <PageView activeIndex={3} disableFooter={true}>
                 <PhysicalApe />
+              </PageView>
+            }
+          />
+          <Route
+            path="/physical-ape/:name"
+            element={
+              <PageView activeIndex={3} disableFooter={true}>
+                <PhysicalApeDetail />
+              </PageView>
+            }
+          />
+          <Route
+            path="/physical-ape/:name/:token_id"
+            element={
+              <PageView activeIndex={3} disableFooter={true}>
+                <PhysicalNftProfile />
               </PageView>
             }
           />

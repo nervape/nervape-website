@@ -69,6 +69,26 @@ function fetchCollectionTokenIds(contract: string, address: string, chainId?: nu
     };
 }
 
+function fetchPhysicalNftOwnerOf(contract: string, token_id: number, chainId?: number) {
+    return async () => {
+        const balanceOfCall = [
+            {
+                address: contract,
+                name: 'ownerOf',
+                params: [token_id]
+            }
+        ];
+
+        const [address] = await multicall(nervapeABI, balanceOfCall, chainId);
+        
+        if (address && address.length) {
+            return address[0];
+        }
+
+        return '';
+    } 
+}
+
 export function useFetchCollectionTokenIds(collecionName: string, address: string) {
     const contract = getAddress(contracts[collecionName]);
     const result = useSWR(['Items', address], fetchCollectionTokenIds(contract, address), {
@@ -81,11 +101,17 @@ export function useFetchCollectionTokenIds(collecionName: string, address: strin
 }
 
 export function useFetchPhysicalNFTIds(address: string, chainId: number) {
-    const contract = contracts.physicalNft[chainId]
+    const contract = contracts.physicalNft[chainId];
     return fetchCollectionTokenIds(contract, address, chainId);
 }
 
 export default function useFetchAllTokenIds(address: string) {
     return fetchAllTokenIds(address);
+}
+
+export function useFetchPhysicalNFTOwnOf(token_id: number, chainId: number) {
+    const contract = contracts.physicalNft[chainId];
+
+    return fetchPhysicalNftOwnerOf(contract, token_id, chainId);
 }
 

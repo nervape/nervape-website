@@ -3,14 +3,16 @@ import iconScene from "../assets/icons/scene.png";
 import iconCharacter from "../assets/icons/character.png";
 import iconItem from "../assets/icons/item.png";
 import iconSpecial from "../assets/icons/special.png";
+import iconCoCreated from "../assets/icons/co_created.svg";
 
-export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special";
+export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special" | "Collab NFTs";
 
 export const IconMap = new Map<NFT_TYPE, string>();
 IconMap.set("Character", iconCharacter);
 IconMap.set("Scene", iconScene);
 IconMap.set("Item", iconItem);
 IconMap.set("Special", iconSpecial);
+IconMap.set("Collab NFTs", iconCoCreated);
 
 export class NFT {
   id: string = "";
