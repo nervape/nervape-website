@@ -27,7 +27,7 @@ export default function PhysicalApeDetail() {
         for (let i = 0; i < physicalNft.total; i++) {
             _nfts.push({
                 ...physicalNft,
-                token_index: parseInt(`700${(physicalNft?.class_id || 1) * 10000 + (i + 1)}`)
+                token_index: parseInt(`800${(physicalNft?.class_id || 1) * 10000 + (i + 1)}`)
             })
         }
 
@@ -35,7 +35,7 @@ export default function PhysicalApeDetail() {
         setDetail([
             {
                 name: 'Nervape ID#',
-                value: `#${parseInt(`700${(physicalNft?.class_id || 1) * 10000 + 1}`)} - #${parseInt(`700${(physicalNft?.class_id || 1) * 10000 + physicalNft.total}`)} (${physicalNft.total} ct)`
+                value: `#${parseInt(`800${(physicalNft?.class_id || 1) * 10000 + 1}`)} - #${parseInt(`800${(physicalNft?.class_id || 1) * 10000 + physicalNft.total}`)} (${physicalNft.total} ct)`
             },
             {
                 name: 'Category',
