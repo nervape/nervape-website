@@ -68,7 +68,7 @@ export default function WalletPhysicalNft(props: any) {
     }
 
     async function fnGetMetadata(token_id: number) {
-        return await nervapeApi.fnGetMetadataByTokenId('physical', token_id)
+        return await nervapeApi.fnGetMetadataByTokenId('naaf', token_id)
     }
 
     useEffect(() => {
