@@ -110,7 +110,7 @@ export default function App() {
             }
           />
           <Route
-            path="/physical-ape"
+            path="/nervape-artifacts"
             element={
               <PageView activeIndex={3} disableFooter={true}>
                 <PhysicalApe />
@@ -118,7 +118,7 @@ export default function App() {
             }
           />
           <Route
-            path="/physical-ape/:name"
+            path="/nervape-artifacts/:name"
             element={
               <PageView activeIndex={3} disableFooter={true}>
                 <PhysicalApeDetail />
@@ -126,7 +126,7 @@ export default function App() {
             }
           />
           <Route
-            path="/physical-ape/:name/:token_id"
+            path="/nervape-artifacts/:name/:token_id"
             element={
               <PageView activeIndex={3} disableFooter={true}>
                 <PhysicalNftProfile />

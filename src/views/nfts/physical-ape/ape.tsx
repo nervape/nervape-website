@@ -81,7 +81,7 @@ export default function PhysicalApeDetail() {
                         return (
                             <div
                                 onClick={() => {
-                                    NavTool.fnJumpToPage(`/physical-ape/${params.name}/${nft.token_index}`)
+                                    NavTool.fnJumpToPage(`/nervape-artifacts/${params.name}/${nft.token_index}`)
                                 }}
                                 className={`ape-item cursor ${index == nfts.length - 1 && 'last'}`}
                                 key={index}>

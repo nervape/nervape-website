@@ -227,7 +227,7 @@ export default function PhysicalApe() {
                                 return (
                                     <SwiperSlide key={index}>
                                         <div className="swiper-item" onClick={() => {
-                                            NavTool.fnJumpToPage(`/physical-ape/${nft.path_name}`)
+                                            NavTool.fnJumpToPage(`/nervape-artifacts/${nft.path_name}`)
                                         }}>
                                             <img className="cover-image" src={nft.cover_image} alt="" />
                                             <div className="nft-info">

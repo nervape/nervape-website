@@ -139,7 +139,7 @@ export default function PhysicalNftProfile() {
                     {physicalImage?.recommends?.map((recommend, index) => {
                         return (
                             <div className="recommend" onClick={() => {
-                                NavTool.fnJumpToPage(`/physical-ape/${recommend.path_name}`);
+                                NavTool.fnJumpToPage(`/nervape-artifacts/${recommend.path_name}`);
                             }} key={index}>
                                 <img src={recommend.image} alt="" />
                             </div>

@@ -143,7 +143,7 @@ const GalleryItems: MenuProps = {
         <div onClick={() => {
           handleHeaderClick('galleryPhysicalApe');
           updateBodyOverflow(true);
-        }}>PHYSICAL APE</div>
+        }}>Nervape Artifacts</div>
       ),
       key: '1'
     }
@@ -345,7 +345,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     type: HeaderType.Navbar
   },
   galleryPhysicalApe: {
-    url: '/physical-ape',
+    url: '/nervape-artifacts',
     type: HeaderType.Navbar
   },
   galleryNacp: {
@@ -407,7 +407,7 @@ const mPages: MenuItem[] = [
     getItem('3D COLLECTION', 'galleryCollection'),
     getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp'),
     getItem('Collab NFTs', 'galleryCoCreation'),
-    getItem('PHYSICAL APE', 'galleryPhysicalApe')
+    getItem('Nervape Artifacts', 'galleryPhysicalApe')
   ]),
   getItem('BUY', 'buy', null, [
     getItem('3D COLLECTION', 'buyCollection', null, [
