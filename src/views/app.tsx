@@ -30,6 +30,7 @@ import WalletPage from "./wallet";
 import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
 import NFTCoCreation from "./nfts/co-creation";
+import CommunityPage from "./communities";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -135,6 +136,14 @@ export default function App() {
             element={
               <PageView activeIndex={7} disableFooter={true}>
                 <WalletPage></WalletPage>
+              </PageView>
+            }>
+          </Route>
+          <Route
+            path="/communities"
+            element={
+              <PageView activeIndex={8} disableFooter={true}>
+                <CommunityPage></CommunityPage>
               </PageView>
             }>
           </Route>

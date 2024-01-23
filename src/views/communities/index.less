@@ -1,0 +1,190 @@
+.community-container {
+    font-family: 'input-sans';
+
+    .banner-section {
+        .swiper {
+            .swiper-slide {
+                height: 560px;
+
+                .swiper-item {
+                    width: 100%;
+                    height: 100%;
+
+                    .item {
+                        flex: 1;
+                        height: 100%;
+                    }
+
+                    .item-left {
+                        justify-content: flex-end;
+
+                        .banner-info {
+                            padding: 0 80px;
+                            width: 600px;
+
+                            .type-date {
+                                padding-bottom: 16px;
+
+                                .type {
+                                    border-radius: 2px;
+                                    background: #9C9C9C;
+                                    padding: 2px 4px;
+                                    color: #FFF;
+                                    font-size: 12px;
+                                    font-weight: 400;
+                                    line-height: normal;
+                                    letter-spacing: -0.6px;
+                                }
+
+                                .date {
+                                    flex: 1;
+                                    color: rgba(255, 255, 255, 0.50);
+                                    text-align: right;
+                                    font-size: 12px;
+                                    font-weight: 500;
+                                    line-height: normal;
+                                    letter-spacing: -0.6px;
+                                }
+                            }
+
+                            .title {
+                                text-align: center;
+                                color: #FFF;
+                                font-size: 24px;
+                                font-weight: 800;
+                                line-height: normal;
+                                letter-spacing: -1.2px;
+                                padding-bottom: 16px;
+                                border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+                            }
+
+                            .banner-podcast {
+                                padding: 16px 0;
+                                border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+
+                                .part-info {
+                                    flex: 1;
+
+                                    .identity {
+                                        color: rgba(255, 255, 255, 0.50);
+                                        text-align: center;
+                                        font-size: 12px;
+                                        font-weight: 700;
+                                        line-height: normal;
+                                        letter-spacing: -0.6px;
+                                    }
+
+                                    .avatar {
+                                        width: 40px;
+                                        height: 40px;
+                                        border-radius: 50%;
+                                        overflow: hidden;
+                                        margin: 8px auto;
+
+                                        img {
+                                            width: 100%;
+                                            height: 100%;
+                                        }
+                                    }
+
+                                    .name {
+                                        color: #FFF;
+                                        text-align: center;
+                                        font-size: 12px;
+                                        font-weight: 500;
+                                        line-height: normal;
+                                        letter-spacing: -0.6px;
+                                    }
+
+                                    .twitter {
+                                        padding-top: 4px;
+                                        color: rgba(255, 255, 255, 0.50);
+                                        text-align: center;
+                                        font-size: 12px;
+                                        font-weight: 400;
+                                        line-height: normal;
+                                        letter-spacing: -0.6px;
+                                    }
+                                }
+                            }
+
+                            .sub-title {
+                                padding-top: 16px;
+                                color: #FFF;
+                                text-align: center;
+                                font-size: 14px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                letter-spacing: -0.7px;
+                            }
+
+                            .tags {
+                                padding-top: 16px;
+
+                                .tag {
+                                    padding: 4px;
+                                    border-radius: 2px;
+                                    border: 1px solid rgba(255, 255, 255, 0.50);
+                                    color: rgba(255, 255, 255, 0.50);
+                                    font-size: 12px;
+                                    font-weight: 400;
+                                    line-height: normal;
+                                    letter-spacing: -0.6px;
+                                    margin-right: 8px;
+
+                                    &:last-child {
+                                        margin-right: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .item-right {
+                        .banner {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                }
+            }
+        }
+
+        .swiper-dots {
+            padding: 16px 0;
+            background: rgba(25, 6, 35, 1);
+
+            .left-arrow, .right-arrow {
+                width: 23px;
+                height: 24px;
+                margin: 0 16px;
+
+                &.disabled {
+                    cursor: not-allowed;
+                }
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .left-arrow {
+                transform: rotate(180deg);
+            }
+
+            .dot {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: rgba(217, 217, 217, 0.5);
+                margin: 0 16px;
+
+                &.active {
+                    background: rgba(217, 217, 217, 1);
+                }
+            }
+        }
+    }
+}
