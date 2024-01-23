@@ -6,9 +6,11 @@
 
   text-decoration: none;
 }
+
 ::-webkit-scrollbar {
   width: 0;
 }
+
 @import url(https://use.typekit.net/vwe0cmw.css);
 
 body,
@@ -19,6 +21,10 @@ html {
 
 .cursor {
   cursor: pointer;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .hidden {
@@ -41,4 +47,20 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.ellipsis-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis-2 {
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
 // @import "./assets/font//ethnocentric_book_macroman/stylesheet.css";

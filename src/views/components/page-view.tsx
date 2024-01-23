@@ -94,6 +94,10 @@ export default function PageView(props: any) {
     dispatch({
       type: Types.UpdateWindowWith
     });
+    
+    dispatch({
+      type: Types.UpdateWindowRealWith
+    });
   }
 
   useEffect(() => {

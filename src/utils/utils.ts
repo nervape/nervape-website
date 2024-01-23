@@ -8,6 +8,7 @@ import { StoryCollectable } from '../nervape/story';
 
 export const initialState = {
     windowWidth: getWindowWidthRange(),
+    windowRealWidth: getWindowRealWidth(),
     loading: false,
     loadingNumber: 0,
     showLoginModal: false,
@@ -40,6 +41,10 @@ export function getWindowWidthRange() {
     if (width <= 750) return 375;
     if (width > 750 && width <= 1200) return 750;
     return 1200;
+}
+
+export function getWindowRealWidth() {
+    return window.innerWidth;
 }
 
 export function getWindowScrollTop() {
