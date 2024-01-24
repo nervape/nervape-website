@@ -199,13 +199,13 @@ export default function PhysicalApe() {
                 <div className="section banner-section">
                     <img className="banner user-select-none" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/593fcf23-4d17-47a4-9e3c-14cafec5f1ca.png" alt="" />
                     <div className="banner-content">
-                        <div className="bread-crumbs">
-                            <div className="root-bread">NFT Gallery / <span className="curr-bread">Physical Ape</span></div>
-                        </div>
+                        {/* <div className="bread-crumbs">
+                            <div className="root-bread">NFT Gallery / <span className="curr-bread">Nervape Artifacts</span></div>
+                        </div> */}
                         <div className="nft-info">
                             <img className="icon user-select-none" src={PhysicalIcon} alt="" />
-                            <div className="name">Physical Ape</div>
-                            <div className="desc">Slogan slogan here</div>
+                            <div className="name">Nervape Artifacts</div>
+                            {/* <div className="desc">Slogan slogan here</div> */}
                         </div>
                     </div>
                 </div>
@@ -217,7 +217,7 @@ export default function PhysicalApe() {
                         <Swiper
                             slidesPerView='auto'
                             centeredSlides={true}
-                            spaceBetween={64}
+                            spaceBetween={48}
                             freeMode={true}
                             grabCursor={true}
                             pagination={{ clickable: true }}
@@ -229,7 +229,9 @@ export default function PhysicalApe() {
                                         <div className="swiper-item" onClick={() => {
                                             NavTool.fnJumpToPage(`/nervape-artifacts/${nft.path_name}`)
                                         }}>
-                                            <img className="cover-image" src={nft.cover_image} alt="" />
+                                            <div className="cover-image image-hover">
+                                                <img src={nft.cover_image} alt="" />
+                                            </div>
                                             <div className="nft-info">
                                                 <div className="name">{nft.name}</div>
                                                 <div className="qty">Qty:{nft.total}</div>
@@ -287,7 +289,9 @@ export default function PhysicalApe() {
                                         backgroundColor: '#000000',
                                         fullscreenControl: false,
                                         disableDefaultUI: true,
-                                        styles: styles
+                                        styles: styles,
+                                        maxZoom: 10,
+                                        minZoom: 3
                                     }}
                                     center={center}>
                                     {gridImages.map((grid, index) => {
@@ -296,7 +300,7 @@ export default function PhysicalApe() {
                                                 onClick={() => {
                                                     console.log(123);
                                                 }}
-                                                
+
                                                 position={{ lat: grid.lat, lng: grid.lng }}
                                                 title={grid?.nft?.name}
                                                 icon={{

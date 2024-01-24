@@ -68,13 +68,15 @@ export default function PhysicalApeDetail() {
                 <img className="banner" src={physicalNft.banner} alt="" />
                 <div className="banner-content">
                     <div className="bread-crumbs">
-                        <div className="root-bread">NFT Gallery / Physical Ape / <span className="curr-bread">{physicalNft?.name}</span></div>
+                        <div className="root-bread"><span className="cursor" onClick={() => {
+                            NavTool.fnJumpToPage('/nervape-artifacts');
+                        }}>Nervape Artifacts</span> / <span className="curr-bread">{physicalNft?.name}</span></div>
                     </div>
                 </div>
             </div>
 
             <div className="section nft-section">
-                <div className="title">Apes</div>
+                {/* <div className="title">Apes</div> */}
 
                 <div className="apes flex-align">
                     {nfts.map((nft, index) => {
@@ -83,7 +85,7 @@ export default function PhysicalApeDetail() {
                                 onClick={() => {
                                     NavTool.fnJumpToPage(`/nervape-artifacts/${params.name}/${nft.token_index}`)
                                 }}
-                                className={`ape-item cursor ${index == nfts.length - 1 && 'last'}`}
+                                className={`ape-item image-hover cursor ${index == nfts.length - 1 && 'last'}`}
                                 key={index}>
                                 <img src={nft.image} className="image" alt="" />
                             </div>

@@ -23,7 +23,7 @@ export default function PhysicalNftProfile() {
 
     useEffect(() => {
         if (!params.token_id) return;
-        
+
         nervapeApi.fnGetProfileByTokenId(parseInt(params.token_id)).then(async res => {
             setPhysicalImage(res);
 
@@ -72,7 +72,11 @@ export default function PhysicalNftProfile() {
             <section className="section profile-section">
                 <div className="profile-content">
                     <div className="bread-crumbs">
-                        <div className="root-bread">NFT Gallery / Physical Ape / {params.name} / <span className="curr-bread">{`${physicalImage?.nft?.name} #${params.token_id}`}</span></div>
+                        <div className="root-bread"><span className="cursor" onClick={() => {
+                            NavTool.fnJumpToPage('/nervape-artifacts');
+                        }}>Nervape Artifacts</span> / <span className="cursor" onClick={() => {
+                            NavTool.fnJumpToPage(`/nervape-artifacts/${params.name}`);
+                        }}>{params.name}</span> / <span className="curr-bread">{`${physicalImage?.nft?.name} #${params.token_id}`}</span></div>
                     </div>
 
                     <div className="profile-info flex-align">

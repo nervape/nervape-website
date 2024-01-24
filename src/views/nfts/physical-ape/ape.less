@@ -56,16 +56,17 @@
         }
 
         .apes {
-            width: 1280px;
+            width: 1000px;
+            max-width: 1000px;
             margin: 0 auto;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
 
             .ape-item {
-                width: calc((100% - 48px) / 3);
+                width: calc((100% - 48px) / 4);
                 aspect-ratio: 1;
-                margin-right: 24px;
-                margin-bottom: 24px;
+                margin-right: 16px;
+                margin-top: 16px;
                 border-radius: 16px;
                 border: 1px solid #B4BCD0;
                 overflow: hidden;
@@ -77,7 +78,11 @@
                     user-select: none;
                 }
 
-                &:nth-child(3n),
+                &:nth-child(-n + 4) {
+                    margin-top: 0;
+                }
+
+                &:nth-child(4n),
                 &.last {
                     margin-right: 0;
                 }
@@ -109,11 +114,11 @@
             .desc {
                 color: #FFF;
                 text-align: center;
-                font-size: 14px;
+                font-size: 12px;
                 font-weight: 400;
                 line-height: 24px;
                 letter-spacing: -0.7px;
-                padding: 40px 0;
+                padding: 16px 0 40px;
                 margin: 0 auto;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.10);
             }
@@ -163,7 +168,6 @@
 
         .nft-section {
             .apes {
-                margin: 0 80px;
                 width: auto;
             }
         }
@@ -181,7 +185,6 @@
     .physical-ape-detail-container {
         .nft-section {
             .apes {
-                margin: 0 40px;
                 width: auto;
             }
         }
@@ -197,6 +200,33 @@
 
 @media screen and (max-width: 1000px) {
     .physical-ape-detail-container {
+        .nft-section {
+            .apes {
+                margin: 0 40px;
+                width: auto;
+
+                .ape-item {
+                    width: calc((100% - 16px * 2) / 3);
+
+                    &:nth-child(-n + 4) {
+                        margin-top: 16px;
+                    }
+                    
+                    &:nth-child(-n + 3) {
+                        margin-top: 0;
+                    }
+
+                    &:nth-child(4n) {
+                        margin-right: 16px;
+                    }
+                    
+                    &:nth-child(3n) {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+        
         .detail-section {
             .detail-content {
                 .details {
@@ -246,8 +276,24 @@
                     width: calc((100% - 12px) / 2);
                     aspect-ratio: 1;
                     margin-right: 12px;
-                    margin-bottom: 12px;
+                    margin-top: 12px;
 
+                    &:nth-child(-n + 4) {
+                        margin-top: 12px;
+                    }
+
+                    &:nth-child(-n + 3) {
+                        margin-top: 12px;
+                    }
+                    
+                    &:nth-child(-n + 2) {
+                        margin-top: 0;
+                    }
+
+                    &:nth-child(4n) {
+                        margin-right: 12px;
+                    }
+                    
                     &:nth-child(3n) {
                         margin-right: 12px;
                     }

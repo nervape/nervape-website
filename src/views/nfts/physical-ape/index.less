@@ -89,8 +89,8 @@
                 user-select: none;
 
                 .swiper-slide {
-                    width: 480px !important;
-                    height: 640px;
+                    width: 347px !important;
+                    height: 463px;
 
                     .swiper-item {
                         width: 100%;
@@ -102,8 +102,14 @@
 
                         .cover-image {
                             width: 100%;
-                            height: 538px;
-                            object-fit: cover;
+                            height: 371px;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
                         }
 
                         .nft-info {
@@ -115,7 +121,7 @@
                                 margin: 0 auto;
                                 color: #FFF;
                                 text-align: center;
-                                font-size: 20px;
+                                font-size: 12px;
                                 font-weight: 800;
                                 line-height: normal;
                                 letter-spacing: -1px;
@@ -162,20 +168,25 @@
         background: #242424;
 
         .about-content {
-            width: 1280px;
+            width: 1000px;
             margin: 0 auto;
+
+            .title {
+                margin: unset;
+            }
 
             .desc {
                 color: #FFF;
-                text-align: center;
-                font-size: 16px;
-                padding: 40px 0;
+                text-align: left;
+                font-size: 12px;
+                padding: 16px 0 40px;
                 font-weight: 400;
                 line-height: normal;
             }
 
             .cover-image {
                 width: 100%;
+                max-width: 800px;
                 aspect-ratio: 1.333;
                 margin: 0 auto;
 
@@ -202,7 +213,7 @@
 
                     .question {
                         color: #5FFF37;
-                        text-align: center;
+                        text-align: left;
                         font-size: 16px;
                         font-weight: 700;
                         line-height: normal;
@@ -211,7 +222,7 @@
 
                     .answer {
                         color: #FFF;
-                        text-align: center;
+                        text-align: left;
                         padding-top: 16px;
                         font-size: 12px;
                         font-weight: 400;
@@ -239,9 +250,9 @@
             }
 
             .view {
-                padding: 10px;
+                padding: 8px;
                 color: #FFF;
-                font-size: 16px;
+                font-size: 12px;
                 font-weight: 500;
                 line-height: normal;
                 letter-spacing: -0.8px;
@@ -296,7 +307,6 @@
                 position: relative;
                 overflow: hidden;
                 border-radius: 1px;
-                border: 1px solid #B4BCD0;
                 background: #B7B7B7;
                 margin-right: 1px;
                 margin-bottom: 1px;
@@ -564,18 +574,6 @@
         .ape-swiper-section {
             .swiper-content {
                 .swiper {
-                    .swiper-slide {
-                        width: 347px !important;
-                        height: 463px;
-
-                        .swiper-item {
-                            .cover-image {
-                                width: 100%;
-                                height: 361px;
-                            }
-                        }
-                    }
-
                     .swiper-pagination {
                         margin-top: 24px;
                     }
