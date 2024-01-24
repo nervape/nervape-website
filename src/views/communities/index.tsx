@@ -5,13 +5,49 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Pagination } from "swiper";
 import "swiper/css";
 import 'swiper/css/pagination';
-import { DataContext } from "../../utils/utils";
+import { DataContext, updateBodyOverflow } from "../../utils/utils";
 import { NavTool } from "../../route/navi-tool";
 import { Community, Community_Type } from "../../nervape/community";
 import { nervapeApi } from "../../api/nervape-api";
 
 import ArrowIcon from '../../assets/community/arrow.svg';
 import Footer from "../components/footer";
+
+// 全屏预览
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function FullscreenPreview(props: { community?: Community; close: any; show: boolean; }) {
+    const { community, close, show } = props;
+
+    return (
+        <div className={`community-fullscreen-container mask-cover ${show && 'show'}`} onClick={close}>
+            <div className="fullscreen-image-cover-c">
+                <div className="info-c" onClick={(e) => {
+                    e.stopPropagation();
+                }}>
+                    <div className="fullscreen-image-cover">
+                        <img className="fullscreen-image" src={community?.cover_image} alt="fullscreen-image" />
+                    </div>
+
+                    <div className="fullscreen-info flex-align">
+                        <div className="left">
+                            <div className="title">{community?.title}</div>
+                            <div className="date">{community?.start_date}</div>
+                        </div>
+
+                        <div className="right">
+                            <div className="sub-title">{community?.sub_title}</div>
+                            <div className="tags flex-align">
+                                {community?.tags.split(',').map((tag, t_i) => {
+                                    return <div className="tag" key={t_i}>{tag}</div>;
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function CommunityPage() {
     const { state } = useContext(DataContext);
@@ -26,6 +62,8 @@ export default function CommunityPage() {
     const [swiper, setSwiper] = useState<SwiperCore>();
     const [communityActiveIndex, setCommunityActiveIndex] = useState(0);
     const [communitySwiper, setCommunitySwiper] = useState<SwiperCore>();
+
+    const [showArtworkDetail, setShowArtworkDetail] = useState(false);
 
     async function fnGetCommunityData() {
         const { banners, blogs, podcasts, communityEvents, artworks } = await nervapeApi.fnGetCommunityConfig();
@@ -43,10 +81,6 @@ export default function CommunityPage() {
     useEffect(() => {
         fnGetCommunityData();
     }, []);
-
-    useEffect(() => {
-        console.log(state.windowRealWidth);
-    }, [state.windowRealWidth]);
 
     return (
         <div className="community-container">
@@ -336,7 +370,10 @@ export default function CommunityPage() {
                     <div className="artwork-content">
                         {state.windowRealWidth > 750 && (
                             <div className="artwork-info flex-align">
-                                <div className="cover-image">
+                                <div className="cover-image cursor" onClick={() => {
+                                    setShowArtworkDetail(true);
+                                    updateBodyOverflow(false);
+                                }}>
                                     <img src={currArtwork?.cover_image} alt="" />
                                 </div>
 
@@ -358,6 +395,11 @@ export default function CommunityPage() {
                                 return (
                                     <div className="cover-image cursor" onClick={() => {
                                         setCurrArtwork(artwork);
+
+                                        if (state.windowRealWidth < 750) {
+                                            setShowArtworkDetail(true);
+                                            updateBodyOverflow(false);
+                                        }
                                     }} key={index}>
                                         <img src={artwork.cover_image} alt="" />
                                     </div>
@@ -369,6 +411,15 @@ export default function CommunityPage() {
             )}
 
             <Footer></Footer>
+
+            <FullscreenPreview
+                community={currArtwork}
+                show={showArtworkDetail}
+                close={
+                    () => {
+                        setShowArtworkDetail(false);
+                        updateBodyOverflow(true);
+                    }}></FullscreenPreview>
         </div>
     );
 }

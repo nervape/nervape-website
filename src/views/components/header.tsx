@@ -209,6 +209,29 @@ const BuyItems: MenuProps = {
   ]
 };
 
+const CommunityItems: MenuProps = {
+  items: [
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('community');
+          updateBodyOverflow(true);
+        }}>COMMUNITY NEWS</div>
+      ),
+      key: '-1'
+    },
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('campaign');
+          updateBodyOverflow(true);
+        }}>CAMPAIGN</div>
+      ),
+      key: '-1'
+    }
+  ]
+};
+
 const pages: NavPageInfo[] = [
   {
     title: "",
@@ -294,10 +317,28 @@ const pages: NavPageInfo[] = [
     }
   },
   {
-    title: "CAMPAIGN",
-    key: "campaign",
-    type: "navbar",
+    title: 'COMMUNITY',
+    key: "",
+    type: "hover",
     image: "",
+    eleItem: () => {
+      return (
+        <Dropdown
+          menu={CommunityItems}
+          // @ts-ignore
+          getPopupContainer={() => document.getElementById('header-container')}
+          overlayClassName="gallery-items"
+          onOpenChange={open => {
+            updateBodyOverflow(!open);
+            document.getElementById('buy-open-icon')?.setAttribute('class', open ? 'header-open open' : 'header-open')
+          }}>
+          <div className="gallery-item title-text">
+            COMMUNITY
+            <img id="buy-open-icon" src={HeaderOpenIcon} className="header-open" alt="" />
+          </div>
+        </Dropdown>
+      );
+    }
   },
   {
     title: "BRIDGE",
@@ -363,6 +404,10 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     url: '/campaign',
     type: HeaderType.Navbar
   },
+  community: {
+    url: '/communities',
+    type: HeaderType.Navbar
+  },
   bridge: {
     url: 'https://www.nervape.com/bridge/',
     type: HeaderType.Open
@@ -372,7 +417,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
 const mPages: MenuItem[] = [
   getItem((
     <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
-  ), 'nacp', null, [
+  ), 'nacpCollection', null, [
     getItem((
       <div onClick={() => {
         handleHeaderClick('nacp');
@@ -404,7 +449,10 @@ const mPages: MenuItem[] = [
     ]),
     getItem(MNacpTooltip('buyNacp', 'right'), 'buyNacp')
   ]),
-  getItem('CAMPAIGN', 'campaign'),
+  getItem('COMMUNITY', 'communityCollection', null, [
+    getItem('COMMUNITY NEWS', 'community'),
+    getItem('CAMPAIGN', 'campaign'),
+  ]),
   getItem('BRIDGE', 'bridge')
 ];
 
