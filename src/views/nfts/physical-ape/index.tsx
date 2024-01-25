@@ -4,6 +4,7 @@ import './index.less';
 import PhysicalIcon from '../../../assets/gallery/physical/physical_icon.svg';
 import MarkerIcon from '../../../assets/gallery/physical/marker.svg';
 import PhotoIcon from '../../../assets/gallery/physical/photo_icon.svg';
+import ArrowIcon from '../../../assets/community/arrow.svg';
 import { nervapeApi } from "../../../api/nervape-api";
 import { AboutQuestion, PhysicalNFTGridImage, Physical_NFT } from "../../../nervape/physical-nft";
 
@@ -145,6 +146,9 @@ export default function PhysicalApe() {
     const [currGridImage, setCurrGridImage] = useState<PhysicalNFTGridImage>();
     const [showGridImage, setShowGridImage] = useState(false);
 
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [swiper, setSwiper] = useState<SwiperCore>();
+
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: CONFIG.GOOGLE_MAP_API_KEY,
         libraries,
@@ -183,7 +187,7 @@ export default function PhysicalApe() {
         setGridImages(res);
     }
 
-    SwiperCore.use([Autoplay, Pagination]);
+    SwiperCore.use([Autoplay]);
 
     useEffect(() => {
         fnGetnfts();
@@ -222,6 +226,12 @@ export default function PhysicalApe() {
                             grabCursor={true}
                             pagination={{ clickable: true }}
                             className="swiper"
+                            onSlideChange={(e) => {
+                                setActiveIndex(e.activeIndex);
+                            }}
+                            onSwiper={(swiper) => {
+                                setSwiper(swiper);
+                            }}
                         >
                             {nfts?.map((nft, index) => {
                                 return (
@@ -241,6 +251,28 @@ export default function PhysicalApe() {
                                 );
                             })}
                         </Swiper>
+
+                        <div className="swiper-dots flex-center">
+                            <div className={`left-arrow cursor ${activeIndex == 0 && 'disabled'}`}>
+                                <img onClick={() => {
+                                    swiper?.slidePrev();
+                                }} src={ArrowIcon} alt="" />
+                            </div>
+                            {nfts.map((banner, index) => {
+                                return <div
+                                    key={index}
+                                    onClick={() => {
+                                        swiper?.slideTo(index);
+                                        setActiveIndex(index);
+                                    }}
+                                    className={`dot cursor transition ${index == activeIndex && 'active'}`}></div>;
+                            })}
+                            <div className={`right-arrow cursor ${nfts.length - 1 == activeIndex && 'disabled'}`}>
+                                <img onClick={() => {
+                                    swiper?.slideNext();
+                                }} src={ArrowIcon} alt="" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

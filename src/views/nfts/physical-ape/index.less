@@ -141,22 +141,44 @@
                         }
                     }
                 }
+            }
 
-                .swiper-pagination {
-                    position: relative;
-                    margin-top: 40px;
-                    bottom: 0;
+            .swiper-pagination {
+                display: none;
+            }
 
-                    .swiper-pagination-bullet {
-                        background: rgba(217, 217, 217, 0.5);
-                        width: 16px;
-                        height: 16px;
-                        margin: 0 16px;
-                        transition: all 0.3s;
+            .swiper-dots {
+                padding-top: 40px;
 
-                        &.swiper-pagination-bullet-active {
-                            background: #FFFFFF;
-                        }
+                .left-arrow,
+                .right-arrow {
+                    width: 23px;
+                    height: 24px;
+                    margin: 0 16px;
+
+                    &.disabled {
+                        cursor: not-allowed;
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .left-arrow {
+                    transform: rotate(180deg);
+                }
+
+                .dot {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    background: rgba(217, 217, 217, 0.5);
+                    margin: 0 16px;
+
+                    &.active {
+                        background: rgba(217, 217, 217, 1);
                     }
                 }
             }
@@ -468,7 +490,7 @@
             .grid-container {
                 .grid-image {
                     width: calc((100% - 8px) / 5);
-    
+
                     &:nth-child(6n) {
                         margin-right: 1px;
                     }
@@ -488,7 +510,7 @@
             .grid-container {
                 .grid-image {
                     width: calc((100% - 6px) / 4);
-    
+
                     &:nth-child(6n) {
                         margin-right: 1px;
                     }
@@ -514,7 +536,7 @@
 
         .banner-section {
             padding: 0;
-            
+
             .banner {
                 aspect-ratio: 1;
                 object-fit: none;
@@ -573,10 +595,8 @@
 
         .ape-swiper-section {
             .swiper-content {
-                .swiper {
-                    .swiper-pagination {
-                        margin-top: 24px;
-                    }
+                .swiper-dots {
+                    padding-top: 24px;
                 }
             }
         }
@@ -591,7 +611,7 @@
             .grid-container {
                 .grid-image {
                     width: calc((100% - 2px) / 2);
-    
+
                     &:nth-child(6n) {
                         margin-right: 1px;
                     }
