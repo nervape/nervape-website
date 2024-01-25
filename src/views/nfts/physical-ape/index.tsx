@@ -323,7 +323,15 @@ export default function PhysicalApe() {
                                         disableDefaultUI: true,
                                         styles: styles,
                                         maxZoom: 10,
-                                        minZoom: 3
+                                        minZoom: 3,
+                                        restriction: {
+                                            latLngBounds: {
+                                                north: 85,
+                                                south: -85,
+                                                east: 180,
+                                                west: -180,
+                                            }
+                                        }
                                     }}
                                     center={center}>
                                     {gridImages.map((grid, index) => {
