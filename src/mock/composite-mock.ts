@@ -64,8 +64,8 @@ const questionsData: Question[] = [
 const introData: Intro[] = [
     {
         cover: Landing01,
-        title: 'Free Mint',
-        desc: 'Yup, that’s not a misprint. It’s FREE my fellow ape! Were you able to get a bonelist (our whitelist)? That means you get <span style="font-weight: 600">2</span> guaranteed mints! Enter your ETH address in our lookup tool below to confirm.'
+        title: 'Refundable NFT',
+        desc: "Want to return your purchase? Don't worry, you can get a full refund within our return timeframe! We’re sad to see you go. <br /><br />However, if you don’t want to miss out on this opportunity to express your creativity,  you can always purchase again while spots are available."
     },
     {
         cover: Landing02,
@@ -75,7 +75,7 @@ const introData: Intro[] = [
     {
         cover: Landing03,
         title: 'Total Supply 7777',
-        desc: 'You like the number 7? We do too! A total of 7,777 NACPs will be issued: 7,000 will be released in our public mint (with a priority for bonelist members) with the other 777 NACPs reserved for our team and collaborators.'
+        desc: 'You like the number 7? We do too! A total of 7,777 NACPs will be issued: 7,700 will be released in our public mint (with a priority for bonelist members) with the other 77 NACPs reserved for our team and collaborators.'
     }
 ];
 
