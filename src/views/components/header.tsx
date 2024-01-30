@@ -126,10 +126,6 @@ const GalleryItems: MenuProps = {
       key: '-1'
     },
     {
-      label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
-      key: '0'
-    },
-    {
       label: (
         <div onClick={() => {
           handleHeaderClick('galleryCoCreation');
@@ -137,6 +133,10 @@ const GalleryItems: MenuProps = {
         }}>Collab NFTs</div>
       ),
       key: '1'
+    },
+    {
+      label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
+      key: '0'
     }
   ]
 };
@@ -438,8 +438,8 @@ const mPages: MenuItem[] = [
   getItem('STORY', 'story'),
   getItem('GALLERY', 'gallery', null, [
     getItem('3D COLLECTION', 'galleryCollection'),
-    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp'),
-    getItem('Collab NFTs', 'galleryCoCreation')
+    getItem('Collab NFTs', 'galleryCoCreation'),
+    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp')
   ]),
   getItem('BUY', 'buy', null, [
     getItem('3D COLLECTION', 'buyCollection', null, [
