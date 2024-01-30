@@ -156,6 +156,7 @@ const HallweenNacpItems: MenuProps = {
       label: (
         <div onClick={() => {
           handleHeaderClick('nacp');
+          updateBodyOverflow(true);
         }}>
           <img src={NacpLogo} alt="NacpLogo" />
         </div>
@@ -235,7 +236,7 @@ const CommunityItems: MenuProps = {
 const pages: NavPageInfo[] = [
   {
     title: "",
-    key: "nacp",
+    key: "",
     type: "logo",
     image: NacpLogo,
     mImage: MNacpLogo,
