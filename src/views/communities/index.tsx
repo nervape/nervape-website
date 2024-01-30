@@ -85,7 +85,7 @@ export default function CommunityPage() {
     return (
         <div className="community-container">
             <section className="banner-section section">
-                <Swiper
+                {/* <Swiper
                     freeMode={true}
                     grabCursor={true}
                     pagination={{ clickable: true }}
@@ -151,9 +151,9 @@ export default function CommunityPage() {
                             </SwiperSlide>
                         );
                     })}
-                </Swiper>
+                </Swiper> */}
 
-                <div className="swiper-dots flex-center">
+                {/* <div className="swiper-dots flex-center">
                     <div className={`left-arrow cursor ${bannerActiveIndex == 0 && 'disabled'}`}>
                         <img onClick={() => {
                             swiper?.slidePrev();
@@ -172,6 +172,30 @@ export default function CommunityPage() {
                         <img onClick={() => {
                             swiper?.slideNext();
                         }} src={ArrowIcon} alt="" />
+                    </div>
+                </div> */}
+                <img className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/0b35f875-fb40-47f7-88ca-82d51db8d65e.png" alt="" />
+
+                <div className="community-news-content">
+                    <div className="banner-title">Community News</div>
+
+                    <div className="community-news flex-align">
+                        {banners.filter((banner, index) => index < 3).map((banner, index) => {
+                            return (
+                                <>
+                                    <div className="community-news-item" key={index}>
+                                        <div className="type-date flex-align">
+                                            <div className="type ellipsis-1">{banner.type}</div>
+                                            <div className="date ellipsis-1">{banner.start_date}</div>
+                                        </div>
+                                        <div className="item-title ellipsis-1">{banner.title}</div>
+                                    </div>
+                                    {index < 2 && (
+                                        <div className="line"></div>
+                                    )}
+                                </>
+                            )
+                        })}
                     </div>
                 </div>
             </section>

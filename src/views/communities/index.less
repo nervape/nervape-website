@@ -230,6 +230,9 @@
 
     .banner-section {
         padding: 0;
+        background: #525252;
+        height: 476px;
+        position: relative;
 
         .swiper {
             .swiper-slide {
@@ -367,6 +370,87 @@
         .swiper-dots {
             padding: 16px 0;
             background: rgba(25, 6, 35, 1);
+        }
+
+        .banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .community-news-content {
+            width: 670px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+
+            .banner-title {
+                color: #FFF;
+                text-align: center;
+                font-size: 40px;
+                font-weight: 800;
+                line-height: 24px;
+                letter-spacing: -2px;
+            }
+
+            .community-news {
+                margin-top: 80px;
+                margin-bottom: 40px;
+
+                .community-news-item {
+                    width: calc((100% - 24px * 4 - 2px) / 3);
+                    padding: 9px 0;
+
+                    .type-date {
+                        padding-bottom: 8px;
+
+                        .type {
+                            border-radius: 2px;
+                            background: #9C9C9C;
+                            padding: 2px 4px;
+                            color: #FFF;
+                            font-size: 12px;
+                            line-height: normal;
+                            letter-spacing: -0.6px;
+                        }
+
+                        .date {
+                            flex: 1;
+                            color: rgba(255, 255, 255, 0.50);
+                            text-align: right;
+                            font-size: 12px;
+                            line-height: normal;
+                            letter-spacing: -0.6px;
+                        }
+                    }
+
+                    .item-title {
+                        color: #FFF;
+                        font-size: 16px;
+                        line-height: normal;
+                        letter-spacing: -0.8px;
+                    }
+
+                    &:first-child {
+                        padding-left: 0;
+                    }
+
+                    &:last-child {
+                        padding-right: 0;
+                    }
+                }
+
+                .line {
+                    width: 1px;
+                    height: 63px;
+                    background: rgba(255, 255, 255, 0.50);
+                    margin: 0 24px;
+                }
+            }
         }
     }
 
@@ -879,7 +963,7 @@
                 .fullscreen-info {
                     height: auto;
                     flex-direction: column;
-    
+
                     .left {
                         width: 100%;
                         display: flex;
@@ -894,7 +978,7 @@
                             align-self: flex-start;
                         }
                     }
-    
+
                     .right {
                         width: 100%;
                         padding-top: 16px;
@@ -1120,6 +1204,54 @@
                         &:nth-child(3n) {
                             margin-right: 0;
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 750px) {
+    .community-container {
+        .banner-section {
+            .community-news-content {
+                width: 520px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .community-container {
+        .banner-section {
+            .community-news-content {
+                width: 347px;
+
+                .banner-title {
+                    font-size: 32px;
+                }
+
+                .community-news {
+                    display: block;
+                    margin: 80px 32px 40px;
+
+                    .community-news-item {
+                        width: 100%;
+                        padding: 16px 0;
+                        
+                        &:first-child {
+                            padding-top: 0;
+                        }
+    
+                        &:last-child {
+                            padding-bottom: 0;
+                        }
+                    }
+
+                    .line {
+                        width: 100%;
+                        height: 1px;
+                        margin: 0;
                     }
                 }
             }
