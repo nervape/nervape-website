@@ -27,7 +27,7 @@ export default function PhysicalApeDetail() {
         for (let i = 0; i < physicalNft.total; i++) {
             _nfts.push({
                 ...physicalNft,
-                token_index: parseInt(`800${(physicalNft?.class_id || 1) * 10000 + (i + 1)}`)
+                token_index: parseInt(`${(8000 + (physicalNft?.class_id || 1)) * 10000 + (i + 1)}`)
             })
         }
 
@@ -35,7 +35,7 @@ export default function PhysicalApeDetail() {
         setDetail([
             {
                 name: 'Nervape ID#',
-                value: `#${parseInt(`800${(physicalNft?.class_id || 1) * 10000 + 1}`)} - #${parseInt(`800${(physicalNft?.class_id || 1) * 10000 + physicalNft.total}`)} (${physicalNft.total} ct)`
+                value: `#${parseInt(`${(8000 + (physicalNft?.class_id || 1)) * 10000 + 1}`)} - #${parseInt(`${(8000 + (physicalNft?.class_id || 1)) * 10000 + physicalNft.total}`)} (${physicalNft.total} ct)`
             },
             {
                 name: 'Category',
@@ -88,6 +88,7 @@ export default function PhysicalApeDetail() {
                                 className={`ape-item image-hover cursor ${index == nfts.length - 1 && 'last'}`}
                                 key={index}>
                                 <img src={nft.image} className="image" alt="" />
+                                <div className="id">{`#${nft.token_index}`}</div>
                             </div>
                         );
                     })}

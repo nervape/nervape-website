@@ -27,12 +27,12 @@ export default function PhysicalNftProfile() {
         nervapeApi.fnGetProfileByTokenId(parseInt(params.token_id)).then(async res => {
             setPhysicalImage(res);
 
-            const _address = await fetchPhysicalNFTOwnOf();
-            setAddress(_address);
-
             if (res && res.images.length) {
                 setCurrImage(res.images[0]);
             }
+
+            const _address = await fetchPhysicalNFTOwnOf();
+            setAddress(_address);
         })
     }, [params.token_id]);
 
@@ -65,7 +65,7 @@ export default function PhysicalNftProfile() {
         ]);
     }, [physicalImage]);
 
-    if (!physicalImage) return <></>;
+    if (!physicalImage || !currImage) return <></>;
 
     return (
         <div className="physical-nft-profile-container">
@@ -142,7 +142,7 @@ export default function PhysicalNftProfile() {
                 <div className="recommends flex-align">
                     {physicalImage?.recommends?.map((recommend, index) => {
                         return (
-                            <div className="recommend" onClick={() => {
+                            <div className="recommend cursor" onClick={() => {
                                 NavTool.fnJumpToPage(`/nervape-artifacts/${recommend.path_name}`);
                             }} key={index}>
                                 <img src={recommend.image} alt="" />

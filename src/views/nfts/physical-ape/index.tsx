@@ -239,11 +239,12 @@ export default function PhysicalApe() {
                                         <div className="swiper-item" onClick={() => {
                                             NavTool.fnJumpToPage(`/nervape-artifacts/${nft.path_name}`)
                                         }}>
-                                            <div className="cover-image image-hover">
+                                            <div className="cover-image cursor image-hover">
                                                 <img src={nft.cover_image} alt="" />
                                             </div>
                                             <div className="nft-info">
                                                 <div className="name">{nft.name}</div>
+                                                <div className="id-range">{`#${(8000 + (nft.class_id || 1)) * 10000 + 1} - ${(8000 + (nft.class_id || 1)) * 10000 + (nft.total || 1)}`}</div>
                                                 <div className="qty">Qty:{nft.total}</div>
                                             </div>
                                         </div>
