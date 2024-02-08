@@ -140,7 +140,7 @@ export default function App() {
             }>
           </Route>
           <Route
-            path="/communities"
+            path="/community"
             element={
               <PageView activeIndex={5} disableFooter={true}>
                 <CommunityPage></CommunityPage>
