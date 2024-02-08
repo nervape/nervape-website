@@ -207,7 +207,7 @@ export default function CommunityPage() {
                 </div>
             </section>
 
-            {blogs.length && (
+            {blogs.length > 0 && (
                 <section className="blog-section section">
                     <div className="title">Blog</div>
                     <div className="blog-content flex-align">
@@ -280,7 +280,7 @@ export default function CommunityPage() {
                 </section>
             )}
 
-            {podcasts.length && (
+            {podcasts.length > 0 && (
                 <section className="podcast-section section">
                     <div className="title">Podcast</div>
                     <div className="podcast-content flex-align">
@@ -323,7 +323,7 @@ export default function CommunityPage() {
                 </section>
             )}
 
-            {communityEvents.length && (
+            {communityEvents.length > 0 && (
                 <section className="community-event-section section">
                     <div className="title">Community Events</div>
                     <div className="community-content">
@@ -394,7 +394,7 @@ export default function CommunityPage() {
                 </section>
             )}
 
-            {artworks.length && (
+            {artworks.length > 0 && (
                 <section className="artwork-section section">
                     <div className="title">Artworks</div>
 
