@@ -298,7 +298,9 @@ export default function CommunityPage() {
                 <section className="podcast-section section">
                     <div className="title">Podcast</div>
                     <div className="podcast-content flex-align">
-                        <div className="podcast-left">
+                        <div className="podcast-left cursor" onClick={() => {
+                            openLink(podcasts[0].link);
+                        }}>
                             <div className="cover-image">
                                 <img src={podcasts[0].cover_image} alt="" />
                             </div>
