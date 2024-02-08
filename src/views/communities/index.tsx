@@ -174,10 +174,17 @@ export default function CommunityPage() {
                         }} src={ArrowIcon} alt="" />
                     </div>
                 </div> */}
-                <img className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/0b35f875-fb40-47f7-88ca-82d51db8d65e.png" alt="" />
+                {/* <img className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/0b35f875-fb40-47f7-88ca-82d51db8d65e.png" alt="" /> */}
+                <video id="video" 
+                    playsInline
+                    loop
+                    preload="true"
+                    autoPlay
+                    muted className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/72101208-6ab1-4e99-8896-81dbb0c8c4c5.mp4"></video>
 
                 <div className="community-news-content">
                     <div className="banner-title">Community News</div>
+                    <div className="desc">Keep up to <span>ape</span> date with the latest Nervape community events, blogs, podcasts, and more.</div>
 
                     <div className="community-news flex-align">
                         {banners.filter((banner, index) => index < 3).map((banner, index) => {
