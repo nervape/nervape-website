@@ -175,34 +175,36 @@ export default function CommunityPage() {
                     </div>
                 </div> */}
                 {/* <img className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/0b35f875-fb40-47f7-88ca-82d51db8d65e.png" alt="" /> */}
-                <video id="video" 
+                <video id="video"
                     playsInline
                     loop
                     preload="true"
                     autoPlay
                     muted className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/72101208-6ab1-4e99-8896-81dbb0c8c4c5.mp4"></video>
 
-                <div className="community-news-content">
-                    <div className="banner-title">Community News</div>
-                    <div className="desc">Keep up to <span>ape</span> date with the latest Nervape community events, blogs, podcasts, and more.</div>
+                <div className="community-news-bg">
+                    <div className="community-news-content">
+                        <div className="banner-title">Community News</div>
+                        <div className="desc">Keep up to <span>ape</span> date with the latest Nervape community events, blogs, podcasts, and more.</div>
 
-                    <div className="community-news flex-align">
-                        {banners.filter((banner, index) => index < 3).map((banner, index) => {
-                            return (
-                                <>
-                                    <div className="community-news-item" key={index}>
-                                        <div className="type-date flex-align">
-                                            <div className="type ellipsis-1">{banner.type}</div>
-                                            <div className="date ellipsis-1">{banner.start_date}</div>
+                        <div className="community-news flex-align">
+                            {banners.filter((banner, index) => index < 3).map((banner, index) => {
+                                return (
+                                    <>
+                                        <div className="community-news-item" key={index}>
+                                            <div className="type-date flex-align">
+                                                <div className="type ellipsis-1">{banner.type}</div>
+                                                <div className="date ellipsis-1">{banner.start_date}</div>
+                                            </div>
+                                            <div className="item-title ellipsis-1">{banner.title}</div>
                                         </div>
-                                        <div className="item-title ellipsis-1">{banner.title}</div>
-                                    </div>
-                                    {index < 2 && (
-                                        <div className="line"></div>
-                                    )}
-                                </>
-                            )
-                        })}
+                                        {index < 2 && (
+                                            <div className="line"></div>
+                                        )}
+                                    </>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </section>

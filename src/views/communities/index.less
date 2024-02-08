@@ -381,92 +381,96 @@
             object-fit: cover;
         }
 
-        .community-news-content {
-            width: 670px;
+        .community-news-bg {
+            width: 100%;
             position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.25) 18%, rgba(0, 0, 0, 0.90) 100%);
 
-            .banner-title {
-                color: #FFF;
-                text-align: center;
-                font-size: 40px;
-                font-weight: 800;
-                line-height: normal;
-                letter-spacing: -2px;
-            }
+            .community-news-content {
+                width: 670px;
+                margin: 0 auto;
 
-            .desc {
-                color: #FFF;
-                text-align: center;
-                font-size: 12px;
-                font-weight: 700;
-                line-height: normal;
-                letter-spacing: -0.6px;
-
-                span {
+                .banner-title {
                     color: #FFF;
+                    text-align: center;
+                    font-size: 40px;
+                    font-weight: 800;
+                    line-height: normal;
+                    letter-spacing: -2px;
+                }
+
+                .desc {
+                    color: #FFF;
+                    text-align: center;
                     font-size: 12px;
                     font-weight: 700;
                     line-height: normal;
                     letter-spacing: -0.6px;
-                    text-decoration-line: strikethrough;
-                }
-            }
 
-            .community-news {
-                margin-top: 80px;
-                margin-bottom: 40px;
-
-                .community-news-item {
-                    width: calc((100% - 24px * 4 - 2px) / 3);
-                    padding: 9px 0;
-
-                    .type-date {
-                        padding-bottom: 8px;
-
-                        .type {
-                            border-radius: 2px;
-                            background: #9C9C9C;
-                            padding: 2px 4px;
-                            color: #FFF;
-                            font-size: 12px;
-                            line-height: normal;
-                            letter-spacing: -0.6px;
-                        }
-
-                        .date {
-                            flex: 1;
-                            color: rgba(255, 255, 255, 0.50);
-                            text-align: right;
-                            font-size: 12px;
-                            line-height: normal;
-                            letter-spacing: -0.6px;
-                        }
-                    }
-
-                    .item-title {
+                    span {
                         color: #FFF;
-                        font-size: 16px;
+                        font-size: 12px;
+                        font-weight: 700;
                         line-height: normal;
-                        letter-spacing: -0.8px;
-                    }
-
-                    &:first-child {
-                        padding-left: 0;
-                    }
-
-                    &:last-child {
-                        padding-right: 0;
+                        letter-spacing: -0.6px;
+                        text-decoration: line-through;
                     }
                 }
 
-                .line {
-                    width: 1px;
-                    height: 63px;
-                    background: rgba(255, 255, 255, 0.50);
-                    margin: 0 24px;
+                .community-news {
+                    margin-top: 80px;
+                    margin-bottom: 40px;
+
+                    .community-news-item {
+                        width: calc((100% - 24px * 4 - 2px) / 3);
+                        padding: 9px 0;
+
+                        .type-date {
+                            padding-bottom: 8px;
+
+                            .type {
+                                border-radius: 2px;
+                                background: #9C9C9C;
+                                padding: 2px 4px;
+                                color: #FFF;
+                                font-size: 12px;
+                                line-height: normal;
+                                letter-spacing: -0.6px;
+                            }
+
+                            .date {
+                                flex: 1;
+                                color: rgba(255, 255, 255, 0.50);
+                                text-align: right;
+                                font-size: 12px;
+                                line-height: normal;
+                                letter-spacing: -0.6px;
+                            }
+                        }
+
+                        .item-title {
+                            color: #FFF;
+                            font-size: 16px;
+                            line-height: normal;
+                            letter-spacing: -0.8px;
+                        }
+
+                        &:first-child {
+                            padding-left: 0;
+                        }
+
+                        &:last-child {
+                            padding-right: 0;
+                        }
+                    }
+
+                    .line {
+                        width: 1px;
+                        height: 63px;
+                        background: rgba(255, 255, 255, 0.50);
+                        margin: 0 24px;
+                    }
                 }
             }
         }
