@@ -406,7 +406,7 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
     type: HeaderType.Navbar
   },
   community: {
-    url: '/communities',
+    url: '/community',
     type: HeaderType.Navbar
   },
   bridge: {
