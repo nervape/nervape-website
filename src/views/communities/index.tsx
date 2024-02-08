@@ -76,6 +76,10 @@ export default function CommunityPage() {
         setCurrArtwork(artworks.length ? artworks[0] : null);
     }
 
+    function openLink(link: string) {
+        link && window.open(link, '_blank');
+    }
+
     SwiperCore.use([Autoplay]);
 
     useEffect(() => {
@@ -191,7 +195,9 @@ export default function CommunityPage() {
                             {banners.filter((banner, index) => index < 3).map((banner, index) => {
                                 return (
                                     <>
-                                        <div className="community-news-item" key={index}>
+                                        <div className="community-news-item cursor" onClick={() => {
+                                            openLink(banner.link);
+                                        }} key={index}>
                                             <div className="type-date flex-align">
                                                 <div className="type ellipsis-1">{banner.type}</div>
                                                 <div className="date ellipsis-1">{banner.start_date}</div>
@@ -225,7 +231,9 @@ export default function CommunityPage() {
                                     }
                                 }).map((blog, index) => {
                                     return (
-                                        <div className="blog-item" key={index}>
+                                        <div className="blog-item cursor" onClick={() => {
+                                            openLink(blog.link);
+                                        }} key={index}>
                                             <div className="cover-image">
                                                 <img src={blog.cover_image} alt="" />
                                             </div>
@@ -243,7 +251,9 @@ export default function CommunityPage() {
                             </>
                         ) : (
                             <>
-                                <div className="blog-item">
+                                <div className="blog-item cursor" onClick={() => {
+                                    openLink(blogs[0].link);
+                                }}>
                                     <div className="cover-image">
                                         <img src={blogs[0].cover_image} alt="" />
                                     </div>
@@ -259,7 +269,9 @@ export default function CommunityPage() {
 
                                 {blogs.filter((p, i) => i > 0 && i < 3).map((p, i) => {
                                     return (
-                                        <div className="podcast-item flex-align" key={i}>
+                                        <div className="podcast-item flex-align cursor" onClick={() => {
+                                            openLink(p.link);
+                                        }} key={i}>
                                             <div className="cover-image">
                                                 <img src={p.cover_image} alt="" />
                                             </div>
@@ -302,7 +314,9 @@ export default function CommunityPage() {
                         <div className="podcast-right">
                             {podcasts.filter((p, i) => i > 0).map((p, i) => {
                                 return (
-                                    <div className="podcast-item flex-align" key={i}>
+                                    <div className="podcast-item flex-align cursor" onClick={() => {
+                                        openLink(p.link);
+                                    }} key={i}>
                                         <div className="cover-image">
                                             <img src={p.cover_image} alt="" />
                                         </div>
@@ -347,7 +361,8 @@ export default function CommunityPage() {
                             {communityEvents?.map((community, index) => {
                                 return (
                                     <SwiperSlide key={index}>
-                                        <div className="swiper-item" onClick={() => {
+                                        <div className="swiper-item cursor" onClick={() => {
+                                            openLink(community.link)
                                         }}>
                                             <div className="cover-image">
                                                 <img src={community.cover_image} alt="" />

@@ -33,4 +33,5 @@ export class Community {
     is_banner?: boolean;
     status: Community_Status = Community_Status.ComingSoon;
     sort: number = 0;
+    link: string = "";
 }
