@@ -184,7 +184,7 @@ export default function CommunityPage() {
                     loop
                     preload="true"
                     autoPlay
-                    muted className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-dev/production/72101208-6ab1-4e99-8896-81dbb0c8c4c5.mp4"></video>
+                    muted className="banner" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/752873cc-9e57-4bd8-a34c-5c6a6b500875.mp4"></video>
 
                 <div className="community-news-bg">
                     <div className="community-news-content">
