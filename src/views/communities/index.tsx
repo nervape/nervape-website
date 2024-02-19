@@ -290,7 +290,9 @@ export default function CommunityPage() {
                             </>
                         )}
                     </div>
-                    <div className="discover-more cursor underline">discover more...</div>
+                    <div className="discover-more cursor underline" onClick={() => {
+                        window.open('https://medium.com/@Nervape', '_blank');
+                    }}>discover more...</div>
                 </section>
             )}
 
@@ -335,7 +337,9 @@ export default function CommunityPage() {
                                 );
                             })}
 
-                            <div className="discover-more cursor underline">discover more...</div>
+                            <div className="discover-more cursor underline" onClick={() => {
+                                window.open('https://www.nervapepodcast.com/', '_blank');
+                            }}>discover more...</div>
                         </div>
                     </div>
                 </section>
