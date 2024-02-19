@@ -19,8 +19,8 @@ export function FullscreenPreview(props: { community?: Community; close: any; sh
     const { community, close, show } = props;
 
     return (
-        <div className={`community-fullscreen-container mask-cover ${show && 'show'}`} onClick={close}>
-            <div className="fullscreen-image-cover-c">
+        <div className={`community-fullscreen-container mask-cover ${show && 'show'}`}>
+            <div className="fullscreen-image-cover-c" onClick={close}>
                 <div className="info-c" onClick={(e) => {
                     e.stopPropagation();
                 }}>
@@ -202,7 +202,7 @@ export default function CommunityPage() {
                                                 <div className="type ellipsis-1">{banner.type}</div>
                                                 <div className="date ellipsis-1">{banner.start_date}</div>
                                             </div>
-                                            <div className="item-title ellipsis-1">{banner.title}</div>
+                                            <div className="item-title ellipsis-2">{banner.title}</div>
                                         </div>
                                         {index < 2 && (
                                             <div className="line"></div>
@@ -367,7 +367,7 @@ export default function CommunityPage() {
                             {communityEvents?.map((community, index) => {
                                 return (
                                     <SwiperSlide key={index}>
-                                        <div className="swiper-item cursor" onClick={() => {
+                                        <div className={`swiper-item cursor transition ${communityActiveIndex == index && 'focus'}`} onClick={() => {
                                             openLink(community.link)
                                         }}>
                                             <div className="cover-image">

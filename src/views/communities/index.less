@@ -423,7 +423,7 @@
 
                     .community-news-item {
                         width: calc((100% - 24px * 4 - 2px) / 3);
-                        padding: 9px 0;
+                        padding: 12px 0;
 
                         .type-date {
                             padding-bottom: 8px;
@@ -611,7 +611,12 @@
                         border-radius: 6px;
                         overflow: hidden;
                         border: 1px solid rgba(62, 62, 62, 0.10);
-                        background: #3F3F3F;
+                        background: rgba(0, 0, 0, 0.20);
+                        opacity: 0.5;
+
+                        &.focus {
+                            opacity: 1;
+                        }
 
                         .cover-image {
                             width: 600px;
@@ -982,6 +987,7 @@
         .community-fullscreen-container {
             .fullscreen-image-cover-c {
                 padding: 0 14px;
+                align-items: center;
 
                 .fullscreen-info {
                     height: auto;
