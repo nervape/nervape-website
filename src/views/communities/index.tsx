@@ -19,7 +19,7 @@ export function FullscreenPreview(props: { community?: Community; close: any; sh
     const { community, close, show } = props;
 
     return (
-        <div className={`community-fullscreen-container mask-cover ${show && 'show'}`}>
+        <div className={`community-fullscreen-container mask-cover ${show && 'show'}`} onClick={close}>
             <div className="fullscreen-image-cover-c" onClick={close}>
                 <div className="info-c" onClick={(e) => {
                     e.stopPropagation();
@@ -219,12 +219,12 @@ export default function CommunityPage() {
                 <section className="blog-section section">
                     <div className="title">Blog</div>
                     <div className="blog-content flex-align">
-                        {state.windowRealWidth > 750 ? (
+                        {state.windowRealWidth > 600 ? (
                             <>
                                 {blogs.filter((b, i) => {
                                     if (state.windowRealWidth >= 1000 && state.windowRealWidth <= 1440) {
                                         return i < 3;
-                                    } else if (state.windowRealWidth >= 750 && state.windowRealWidth < 1000) {
+                                    } else if (state.windowRealWidth >= 600 && state.windowRealWidth < 1000) {
                                         return i < 2;
                                     } else {
                                         return i < 4;
@@ -306,17 +306,25 @@ export default function CommunityPage() {
                             <div className="cover-image">
                                 <img src={podcasts[0].cover_image} alt="" />
                             </div>
-                            <div className="item-title">{podcasts[0].title}</div>
-                            <div className="item-date">{podcasts[0].start_date}</div>
-                            <div className="item-sub-title">{podcasts[0].sub_title}</div>
-                            <div className="tags flex-align">
-                                {podcasts[0].tags.split(',').map((tag, t_i) => {
-                                    return <div className="tag" key={t_i}>{tag}</div>;
-                                })}
+                            <div className="podcast-info">
+                                <div className="item-title">{podcasts[0].title}</div>
+                                <div className="item-date">{podcasts[0].start_date}</div>
+                                <div className="item-sub-title">{podcasts[0].sub_title}</div>
+                                <div className="tags flex-align">
+                                    {podcasts[0].tags.split(',').map((tag, t_i) => {
+                                        return <div className="tag" key={t_i}>{tag}</div>;
+                                    })}
+                                </div>
                             </div>
                         </div>
                         <div className="podcast-right">
-                            {podcasts.filter((p, i) => i > 0).map((p, i) => {
+                            {podcasts.filter((p, i) => {
+                                if (state.windowRealWidth > 1000) {
+                                    return i > 0;
+                                } else {
+                                    return i > 0 && i < 3;
+                                }
+                            }).map((p, i) => {
                                 return (
                                     <div className="podcast-item flex-align cursor" onClick={() => {
                                         openLink(p.link);
@@ -422,7 +430,7 @@ export default function CommunityPage() {
                     <div className="title">Artworks</div>
 
                     <div className="artwork-content">
-                        {state.windowRealWidth > 750 && (
+                        {state.windowRealWidth > 600 && (
                             <div className="artwork-info flex-align">
                                 <div className="cover-image cursor" onClick={() => {
                                     setShowArtworkDetail(true);
