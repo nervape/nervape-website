@@ -27,6 +27,13 @@
             display: flex;
             align-items: center;
             padding: 0 32px;
+            position: relative;
+
+            .close-icon {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
 
             .info-c {
                 align-self: self-start;
@@ -1197,6 +1204,10 @@
                 padding: 0 14px;
                 align-items: center;
 
+                .info-c {
+                    align-self: center;
+                }
+
                 .fullscreen-info {
                     height: auto;
                     flex-direction: column;
@@ -1226,6 +1237,8 @@
 
         .banner-section {
             .community-news-bg {
+                background: linear-gradient(180deg, rgba(21, 22, 31, 0.00) 0%, rgba(21, 22, 31, 0.90) 18%, #15161F 100%);
+
                 .community-news-content {
                     width: 347px;
 
@@ -1300,6 +1313,7 @@
 
                     .item-right {
                         padding-left: 8px;
+                        flex: 1;
                         align-self: flex-start;
 
                         .item-title {

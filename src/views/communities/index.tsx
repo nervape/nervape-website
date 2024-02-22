@@ -11,6 +11,7 @@ import { Community, Community_Type } from "../../nervape/community";
 import { nervapeApi } from "../../api/nervape-api";
 
 import ArrowIcon from '../../assets/community/arrow.svg';
+import CloseIcon from '../../assets/community/close.svg'
 import Footer from "../components/footer";
 
 // 全屏预览
@@ -18,9 +19,15 @@ import Footer from "../components/footer";
 export function FullscreenPreview(props: { community?: Community; close: any; show: boolean; }) {
     const { community, close, show } = props;
 
+    const { state } = useContext(DataContext);
+
     return (
         <div className={`community-fullscreen-container mask-cover ${show && 'show'}`} onClick={close}>
             <div className="fullscreen-image-cover-c" onClick={close}>
+                {state.windowRealWidth < 600 && (
+                    <img src={CloseIcon} onClick={close} className="close-icon" alt="" />
+                )}
+
                 <div className="info-c" onClick={(e) => {
                     e.stopPropagation();
                 }}>
