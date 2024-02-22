@@ -112,16 +112,16 @@ const parthershipData: Parthership[] = [
 
 const phaseData: Phase[] = [
     {
-        title: 'PHASE 1',
+        title: 'STEP 1',
         cover: Phase1Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
         background: '#FFF5C1',
         assets: [
-            {
-                cover: AssetIconSkin,
-                name: 'Skin'
-            },
+            // {
+            //     cover: AssetIconSkin,
+            //     name: 'Skin'
+            // },
             {
                 cover: AssetIconTattoo,
                 name: 'Tattoo'
@@ -141,7 +141,7 @@ const phaseData: Phase[] = [
         ]
     },
     {
-        title: 'PHASE 2',
+        title: 'STEP 2',
         cover: Phase2Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',
@@ -170,7 +170,7 @@ const phaseData: Phase[] = [
         ]
     },
     {
-        title: 'PHASE 3',
+        title: 'STEP 3',
         cover: Phase3Cover,
         startDate: '10/03/2023',
         endDate: '20/03/2023',

@@ -245,7 +245,7 @@ export default function Composite() {
                                             </div>
                                         </TweenOne>
                                         <div className="composite-content" id="composite-content">
-                                            <div className="intro-items" style={{ float: 'left', position: 'relative', left: '0' }}>
+                                            {/* <div className="intro-items" style={{ float: 'left', position: 'relative', left: '0' }}>
                                                 {introItems.map((item, index) => {
                                                     return (
                                                         <TweenOne className="intro-content"
@@ -295,6 +295,45 @@ export default function Composite() {
                                                         </TweenOne>
                                                     );
                                                 })}
+                                            </div> */}
+                                            <div className="bone-list">
+                                                <div className="title">Bonelist Lookup</div>
+                                                <div className="address-input">
+                                                    <Tooltip
+                                                        title={() => {
+                                                            return (
+                                                                <p>{isBonelist ? (
+                                                                    <>
+                                                                        🦴 You’re a bonelist holder!
+                                                                        <br />
+                                                                        🦧 Welcome to the Third Continent.
+                                                                    </>
+                                                                ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
+                                                            );
+                                                        }}
+                                                        placement="bottom"
+                                                        overlayClassName="bonelist-tooltip"
+                                                        color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
+                                                        open={open}>
+                                                        <input type="text" value={godwokenAddress} onInput={(e: any) => {
+                                                            setGodwokenAddress(e.target.value)
+                                                            setOpen(false);
+                                                        }} placeholder="Ethereum address" />
+                                                    </Tooltip>
+                                                    <button
+                                                        className="check-btn cursor"
+                                                        onClick={async () => {
+                                                            if (!godwokenAddress) return;
+                                                            setOpen(false);
+                                                            const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
+                                                            console.log(res);
+                                                            setOpen(true);
+                                                            setIsBonelist(res > 0);
+                                                        }}>CHECK</button>
+                                                </div>
+                                                <div className="tip">
+                                                    To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </OverPack>
@@ -335,11 +374,12 @@ export default function Composite() {
                             <div className="minting-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
-                                        <div className="section-title">MINTING PHASES</div>
+                                        <div className="section-title">DRESSING STEPS</div>
                                         <div className="desc">
-                                            NACP PFP has 14 different types of assets you can use to assemble your Nervape PFP.
-                                            These asset classes will be released in 3 phases. Each phase will allow you to easily buy,
-                                            trade, and sell your NACP! We encourage you to stick through all 3 phases to get the full PFP experience
+                                            NACP PFP has 13 different types of assets you can use to assemble your Nervape PFP. 
+                                            These asset classes will be divided in 3 steps. 
+                                            Each step will allow you to easily buy, trade, and sell your NACP! 
+                                            We encourage you to try through all 3 steps to get the full PFP experience 
                                             that our platform has to offer and to design the ape PFP you want!
                                         </div>
                                         <div className="learn-more">More details coming soon!</div>
@@ -441,7 +481,7 @@ export default function Composite() {
                                                 window.open(parthershipItems[0].link);
                                             }}>
                                                 <TweenOne key="what-2" animation={{ opacity: 1, delay: 400, duration: 600 }} style={{ opacity: 0 }}>
-                                                <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/8c16604a-3a5e-4e5e-adf2-6236c76249c2.png" alt="" />
+                                                    <img className="cover-image img-filter" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/8c16604a-3a5e-4e5e-adf2-6236c76249c2.png" alt="" />
                                                 </TweenOne>
 
                                                 <TweenOne key="what-3" animation={{ opacity: 1, delay: 600, duration: 600 }} style={{ opacity: 0 }}>
@@ -498,7 +538,7 @@ export default function Composite() {
                                 </div>
                             </div>
                         </section>
-                        
+
                         <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.2}>
