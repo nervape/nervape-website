@@ -281,6 +281,33 @@ class NervapeApi {
     const res = await axios.get(url);
     return res.data;
   }
+
+  public async fnTransferBonelistNonce() {
+    const url = `${this.baseUrl}/bonelist/website/nonce`;
+    const res = await axios.get(url, {
+      withCredentials: true
+    });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnTransferBonelistVerify(
+    btc_address: string,
+    message: string,
+    signature: string) {
+    const url = `${this.baseUrl}/bonelist/website/transfer/verify`;
+    const res = await axios.post(url, JSON.stringify({ btc_address, message, signature }), {
+      headers: { 'content-type': 'application/json' },
+      withCredentials: true
+    });
+
+    return this._fnDealSessionResponse(res, url);
+  }
+
+  public async fnSearchBonelistStatus(address: string) {
+    const url = `${this.baseUrl}/bonelist/search/status`;
+    const res = await axios.post(url, { address });
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();
