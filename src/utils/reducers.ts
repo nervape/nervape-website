@@ -1,11 +1,12 @@
 import { StoryCollectable } from "../nervape/story";
 import { UnipassV3Wrapper } from "./UnipassV3Wrapper";
-import { getWindowWidthRange, updateBodyOverflow } from "./utils";
+import { getWindowRealWidth, getWindowWidthRange, updateBodyOverflow } from "./utils";
 import { LoginWalletType } from "./Wallet";
 import { Event } from '../nervape/campaign';
 
 export enum Types {
     UpdateWindowWith = 'UpdateWindowWith',
+    UpdateWindowRealWith = 'UpdateWindowRealWith',
     ShowLoading = 'ShowLoading',
     HideLoading = 'HideLoading',
     ShowLoginModal = 'ShowLoginModal',
@@ -26,6 +27,7 @@ export enum Types {
 
 export type InitialStateType = {
     windowWidth: number;
+    windowRealWidth: number;
     loading: boolean;
     loadingNumber: number;
     showLoginModal: boolean;
@@ -51,6 +53,13 @@ export const globalReducer = (state: InitialStateType, action: any) => {
             return {
                 ...state,
                 windowWidth: width
+            };
+        case Types.UpdateWindowRealWith:
+            const _width = getWindowRealWidth();
+
+            return {
+                ...state,
+                windowRealWidth: _width
             };
         case Types.IsInit:
             return {
