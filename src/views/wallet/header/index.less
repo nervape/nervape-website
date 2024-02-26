@@ -61,6 +61,7 @@
             color: #eaeae8;
           }
         }
+
         img {
           width: 24px;
           height: 24px;
@@ -186,11 +187,47 @@
 
         .nacp {
           padding-bottom: 8px;
-          border-bottom: 1px dashed rgba(180, 188, 208, 0.25);
+          border-bottom: 1px solid rgba(180, 188, 208, 0.25);
         }
 
         .nft-3d {
           padding-top: 8px;
+        }
+
+        .bonelist-transfer-content {
+          margin-top: 12px;
+
+          .left {
+            .title {
+              color: #B4BCD0;
+              font-size: 12px;
+              font-weight: 800;
+              line-height: normal;
+              letter-spacing: -0.6px;
+              padding-bottom: 4px;
+            }
+
+            .desc {
+              color: rgba(180, 188, 208, 0.75);
+              font-size: 12px;
+              line-height: normal;
+              letter-spacing: -0.6px;
+            }
+          }
+
+          .right {
+            .transfer-btn {
+              border-radius: 16px;
+              border: 1px solid rgba(180, 188, 208, 0.50);
+              background: rgba(180, 188, 208, 0.15);
+              color: #B4BCD0;
+              text-align: center;
+              font-size: 12px;
+              padding: 8px 16px;
+              line-height: normal;
+              letter-spacing: -0.6px;
+            }
+          }
         }
       }
 
@@ -364,7 +401,7 @@
         padding-bottom: 16px;
         border-top: unset;
         border-bottom: 1px solid rgba(180, 188, 208, 0.5);
-  
+
         .title {
           font-style: italic;
           font-weight: 800;
@@ -372,11 +409,11 @@
           line-height: 14px;
           color: #b4bcd0;
           padding-bottom: 12px;
-  
+
           .title-left {
             align-self: flex-start;
           }
-  
+
           .record {
             flex: 1;
             text-align: right;
@@ -384,7 +421,7 @@
             color: rgba(134, 139, 155, 0.75);
           }
         }
-  
+
         .code-copy {
           width: fit-content;
           color: #fff;
@@ -396,7 +433,7 @@
           border-radius: 6px;
           background: rgba(255, 255, 255, 0.1);
           margin-top: 8px;
-  
+
           img {
             width: 12px;
             margin-left: 8px;
@@ -424,10 +461,11 @@
     }
 
     .user-info {
+
       .bone-list-points,
       .ckb-balance {
         opacity: 1;
-        height: 71px;
+        // height: 71px;
       }
 
       .wallet-header-hide {

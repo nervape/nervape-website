@@ -39,3 +39,8 @@ export class InvitationCodeInfo {
     limit: number = 0;
     count: number = 0;
 }
+
+export class BonelistTransferInfo {
+    status: number = 0;
+    btc_address: string = "";
+}

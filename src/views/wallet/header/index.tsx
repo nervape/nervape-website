@@ -45,7 +45,7 @@ const AvatarBackgroundColors = [
 
 export default function WalletHeader(props: any) {
     const { state, dispatch } = useContext(DataContext);
-    const { setShowTransfer, balance, isBonelist, isFold, setInviteClaim } = props;
+    const { setShowTransfer, balance, isBonelist, isFold, setInviteClaim, setShowPrompt, setShowBonelistTransfer, bonelistTransferInfo } = props;
 
     const { chain } = useNetwork();
 
@@ -266,12 +266,28 @@ export default function WalletHeader(props: any) {
                                 <img src={isBonelist ? SuccessIcon : FailedIcon} alt="FailedIcon" />
                             </div>
                         </div>
-                        <div className="nft-3d flex-align">
+                        {/* <div className="nft-3d flex-align">
                             <div className="name">3D NFT</div>
                             <div className="icon">
                                 <img src={FailedIcon} alt="FailedIcon" />
                             </div>
-                        </div>
+                        </div> */}
+
+                        {isBonelist && (
+                            <div className="bonelist-transfer-content flex-align">
+                                <div className="left">
+                                    <div className="title">{bonelistTransferInfo?.status == 1 ? "Moving to Bitcoin" : "Bonelist Transferred"}</div>
+                                    <div className="desc">{bonelistTransferInfo?.status == 1 ? "NACP is moving to Bitcoin! Your NACP Bonelist must be on a Bitcoin wallet before use." : "Your Bonelist had been transferred to following Bitcoin address:"}</div>
+                                </div>
+                                {bonelistTransferInfo?.status == 1 && (
+                                    <div className="right">
+                                        <div className="transfer-btn cursor" onClick={() => {
+                                            setShowBonelistTransfer(true);
+                                        }}>Transfer</div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                     <div className="bone-item bone-points">
                         <div className="title flex-align">

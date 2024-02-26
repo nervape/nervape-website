@@ -36,6 +36,9 @@ import JoyIdNFTIcon from "../../assets/wallet/navbar/joyid_nft.svg";
 import InvitationClaim from "./invitation";
 import WalletCoCreatedNFT from "./co-created";
 import { Menu, MenuProps } from "antd";
+import TransferBonelistPrompt from "./transfer-bonelist/prompt";
+import TransferBonelist from "./transfer-bonelist";
+import { BonelistTransferInfo } from "../../nervape/nacp";
 
 type MenuItem = Required<MenuProps>['items'][number];
 export class WalletNavBar {
@@ -100,7 +103,10 @@ export default function WalletNewPage() {
     const [navbars, setNavbars] = useState<WalletNavBar[]>([]);
     const [currNavbarName, setCurrNavbarName] = useState<WalletNavbarTypes>();
     const [isBonelist, setIsBonelist] = useState(false);
+    const [showPrompt, setShowPrompt] = useState(false);
+    const [showBonelistTransfer, setShowBonelistTransfer] = useState(false);
     const [current, setCurrent] = useState('');
+    const [bonelistTransferInfo, setBonelistTransferInfo] = useState<BonelistTransferInfo>();
 
     const setLoading = (flag: boolean) => {
         dispatch({
@@ -149,11 +155,23 @@ export default function WalletNewPage() {
         setNftCoverImages(res.data);
     }
 
+    const fnSearchBonelistStatus = async () => {
+        const res = await nervapeApi.fnSearchBonelistStatus(state.currentAddress);
+        setBonelistTransferInfo(res);
+
+        if (res.status == 1) {
+            // 提示用户 transfer bonelist
+            setShowPrompt(true);
+            updateBodyOverflow(false);
+        }
+    }
+
     useEffect(() => {
         console.log('current', current);
     }, [current]);
     useEffect(() => {
         if (!state.currentAddress) return;
+        if (state.loginWalletType == LoginWalletType.METAMASK || state.loginWalletType == LoginWalletType.WALLET_CONNECT) fnSearchBonelistStatus();
         if (nftCoverImages.length) return;
         // 后台读取 NFTS 查找对应 CoverImage
         fnNFTNameCoverImg();
@@ -184,7 +202,7 @@ export default function WalletNewPage() {
                 if (n.menu_name) {
                     return '#' + n.menu_name.toLocaleLowerCase() == hash;
                 }
-                
+
                 return '#' + n.name.toLocaleLowerCase() == hash;
             });
             if (filters.length) {
@@ -404,6 +422,9 @@ export default function WalletNewPage() {
                             setInviteClaim={setInviteClaim}
                             isBonelist={isBonelist}
                             setShowTransfer={setShowTransfer}
+                            setShowPrompt={setShowPrompt}
+                            setShowBonelistTransfer={setShowBonelistTransfer}
+                            bonelistTransferInfo={bonelistTransferInfo}
                             balance={balance}></WalletHeader>
 
                         <section className={`wallet-section flex-align ${isFold && 'fold'}`}>
@@ -485,6 +506,22 @@ export default function WalletNewPage() {
                 setInviteClaim={setInviteClaim}
                 searchBonelist={searchBonelist}
             ></InvitationClaim>
+            <TransferBonelistPrompt show={showPrompt} close={() => {
+                setShowPrompt(false);
+                updateBodyOverflow(true);
+            }} confirm={() => {
+                setShowPrompt(false);
+                setShowBonelistTransfer(true);
+            }}></TransferBonelistPrompt>
+
+            <TransferBonelist
+                show={showBonelistTransfer}
+                close={() => {
+                    setShowBonelistTransfer(false);
+                    updateBodyOverflow(true);
+                }}
+                setLoading={setLoading}
+                fnSearchBonelistStatus={fnSearchBonelistStatus}></TransferBonelist>
         </div>
     );
 }

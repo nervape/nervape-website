@@ -1,5 +1,5 @@
-.transfer-bonelist-container {
-    .transfer-content {
+.transfer-bonelist-prompt-container {
+    .prompt-content {
         padding: 32px;
         width: 500px;
         background: #454F5C;
@@ -23,45 +23,9 @@
             padding-bottom: 32px;
         }
 
-        .address-input {
-            input {
-                border-radius: 16px;
-                background: rgba(255, 255, 255, 0.10);
-                width: 100%;
-                height: 59px;
-                border: unset;
-                padding: 20px;
-                color: rgba(255, 255, 255, 1);
-
-                &:focus {
-                    outline: none;
-                }
-
-                &::-webkit-inner-spin-button,
-                &::-webkit-outer-spin-button {
-                    -webkit-appearance: none !important;
-                    margin: 0;
-                }
-
-                &::placeholder {
-                    color: rgba(255, 255, 255, 0.50);
-                }
-            }
-
-            .message {
-                font-weight: 700;
-                font-size: 12px;
-                line-height: 14px;
-                color: #ff5555;
-                margin-top: 6px;
-                text-align: right;
-            }
-        }
-
         .btn-groups {
             flex-direction: row-reverse;
-            margin-top: 32px;
-
+            
             .btn {
                 border-radius: 12px;
                 height: 40px;
@@ -80,13 +44,8 @@
             }
 
             .confirm-btn {
-                border-radius: 12px;
-                background: #888888;
+                background: #6A9FBD;
                 box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.10);
-
-                &.active {
-                    background: #F44D37;
-                }
             }
         }
     }
