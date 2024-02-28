@@ -314,6 +314,18 @@ class NervapeApi {
     const res = await axios.post(url, { address });
     return this._fnDealResponse(res, url);
   }
+
+  public async fnGetInscribe(receiveAddress: string, count: number) {
+    const url = `${this.baseUrl}/nacp/inscribe`;
+    const res = await axios.post(url, { receiveAddress, count, feeRate: 2 });
+    return this._fnDealResponse(res, url);
+  }
+
+  public async fnGetOrders(address: string) {
+    const url = `${this.baseUrl}/nacp/orders?address=${address}`;
+    const res = await axios.get(url);
+    return this._fnDealResponse(res, url);
+  }
 }
 
 export const nervapeApi = new NervapeApi();

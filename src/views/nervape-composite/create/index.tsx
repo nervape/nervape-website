@@ -15,6 +15,7 @@ import { DataContext } from "../../../utils/utils";
 import { LoginWalletType } from "../../../utils/Wallet";
 import { godWoken, godWokenTestnet } from "../../../utils/Chain";
 import NacpLogin from "../../components/nacp-login";
+import { count } from "console";
 
 export default function Nacp() {
     const domain = window.location.host;
@@ -30,6 +31,12 @@ export default function Nacp() {
 
     const [ids, setIds] = useState([]);
     const [signatures, setSignatures] = useState([]);
+
+    const [unisatInstall, setUnisatInstall] = useState(false);
+    const [btcAddress, setBtcAddress] = useState('');
+    const [btcNetwork, setBtcNetWork] = useState('');
+    const [mintCount, setMintCount] = useState(1);
+    const [orders, setOrders] = useState<any[]>([]);
 
     const disconnectReload = () => {
         localStorage.clear();
@@ -91,6 +98,7 @@ export default function Nacp() {
     }
 
     useEffect(() => {
+        return;
         console.log(state);
         if (!state.currentAddress) return;
 
@@ -115,6 +123,45 @@ export default function Nacp() {
             write?.();
         }
     }
+
+    const getAccounts = async () => {
+        let accounts = await window.unisat.getAccounts();
+
+        if (accounts && accounts.length) setBtcAddress(accounts[0]);
+
+        let network = await window.unisat.getNetwork();
+        setBtcNetWork(network);
+
+        if (network != 'testnet') {
+            await window.unisat.switchNetwork('testnet');
+            await getAccounts();
+        }
+    }
+
+    const getOrders = async () => {
+        const orders = await nervapeApi.fnGetOrders(btcAddress);
+        console.log(orders);
+        setOrders(orders);
+
+        if (orders.filter((order: any) => order.status != 'minted').length) {
+            setTimeout(() => {
+                getOrders();
+            }, 10000);
+        }
+    }
+
+    useEffect(() => {
+        if (typeof window.unisat !== 'undefined') setUnisatInstall(true);
+        else return;
+
+        getAccounts();
+    }, []);
+
+    useEffect(() => {
+        if (!btcAddress) return;
+
+        getOrders();
+    }, [btcAddress, btcNetwork]);
 
     const { data: txData, isLoading: isTxLoading, isSuccess: isTxSuccess } = useWaitForTransaction({
         hash: writeData?.hash,
@@ -154,6 +201,48 @@ export default function Nacp() {
             <button className="sign-btn" onClick={async () => {
                 await fnVerifyLogin();
             }}>Get Information</button>
+
+            <br />
+            <br />
+            {unisatInstall && !btcAddress && (
+                <button className="login-btn cursor" onClick={async () => {
+                    const accounts = await window.unisat.requestAccounts();
+                    console.log(accounts);
+                    setBtcAddress(accounts[0]);
+                }}>Connect UniSat</button>
+            )}
+            <br />
+            <br />
+
+            <div style={{ color: "#fff" }}>
+                BTC Address: {btcAddress}
+            </div>
+
+            {btcAddress && btcNetwork == 'testnet' && (
+                <>
+                    <input type="number" style={{ width: '100px' }} min={1} max={3} value={mintCount} onChange={(e) => {
+                        setMintCount(parseInt(e.target.value));
+                    }} />
+                    <button className="login-btn cursor" onClick={async () => {
+                        const res = await nervapeApi.fnGetInscribe(btcAddress, mintCount);
+
+                        const { payAddress, amount, feeRate } = res;
+                        const txid = await window.unisat.sendBitcoin(payAddress, amount, { feeRate });
+                        console.log(txid);
+                    }}>Mint</button>
+                </>
+            )}
+
+            {orders.length && (
+                <div className="orders">
+                    {orders.map((order, index) => {
+                        return <div className="order" style={{ color: '#FFFFFF' }} key={index}>
+                            <div className="order-id">OrderId: {order.orderId}</div>
+                            <div className="status">Status: {order.status}</div>
+                        </div>
+                    })}
+                </div>
+            )}
 
             <NacpLogin show={showWalletError} logout={disconnectReload}></NacpLogin>
         </div>
