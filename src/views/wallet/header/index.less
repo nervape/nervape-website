@@ -134,7 +134,7 @@
       margin: 16px;
 
       .bone-item {
-        flex: 1;
+        width: 50%;
 
         .title {
           font-style: italic;
@@ -198,6 +198,8 @@
           margin-top: 12px;
 
           .left {
+            width: 100%;
+
             .title {
               color: #B4BCD0;
               font-size: 12px;
@@ -212,6 +214,23 @@
               font-size: 12px;
               line-height: normal;
               letter-spacing: -0.6px;
+            }
+
+            .transfered-address {
+              width: fit-content;
+              margin-top: 4px;
+              border-radius: 4px;
+              background: rgba(180, 188, 208, 0.10);
+              padding: 11px 8px;
+              max-width: 100%;
+              color: #B4BCD0;
+              font-size: 12px;
+              font-weight: 400;
+              line-height: normal;
+              letter-spacing: -0.6px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
 

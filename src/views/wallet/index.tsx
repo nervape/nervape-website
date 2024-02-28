@@ -521,7 +521,11 @@ export default function WalletNewPage() {
                     updateBodyOverflow(true);
                 }}
                 setLoading={setLoading}
-                fnSearchBonelistStatus={fnSearchBonelistStatus}></TransferBonelist>
+                fnSearchBonelistStatus={() => {
+                    setShowBonelistTransfer(false);
+                    updateBodyOverflow(true);
+                    fnSearchBonelistStatus();
+                }}></TransferBonelist>
         </div>
     );
 }

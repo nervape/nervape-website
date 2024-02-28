@@ -94,7 +94,8 @@ export default function Composite() {
     const { state } = useContext(DataContext);
     const [showLandingPage, setShowLandingPage] = useState(false);
     const [godwokenAddress, setGodwokenAddress] = useState('');
-    const [isBonelist, setIsBonelist] = useState(false);
+    const [bonelistStatus, setBonelistStatus] = useState(0);
+    const [bonelistStatusStr, setBonelistStatusStr] = useState('');
     const [open, setOpen] = useState(false);
     const [joinUsClick, setJoinUsClick] = useState(false);
 
@@ -144,6 +145,14 @@ export default function Composite() {
             </div>
         );
     }
+
+    useEffect(() => {
+        if (bonelistStatus == 3) return;
+        setBonelistStatusStr(bonelistStatus == 0 
+            ? '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! ' 
+            : bonelistStatus == 1 ? 'This Eth address is Bonelisted. If you are the owner of this address, please make sure you transfer the Bonelist to your BTC address before minting NACP.' 
+            : 'This Eth address has transferred its Bonelist to a BTC address.')
+    }, [bonelistStatus]);
 
     useEffect(() => {
         if (!phases.length) return;
@@ -302,18 +311,18 @@ export default function Composite() {
                                                     <Tooltip
                                                         title={() => {
                                                             return (
-                                                                <p>{isBonelist ? (
+                                                                <p>{bonelistStatus == 3 ? (
                                                                     <>
                                                                         🦴 You’re a bonelist holder!
                                                                         <br />
                                                                         🦧 Welcome to the Third Continent.
                                                                     </>
-                                                                ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
+                                                                ) : bonelistStatusStr}</p>
                                                             );
                                                         }}
                                                         placement="bottom"
                                                         overlayClassName="bonelist-tooltip"
-                                                        color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
+                                                        color={`${bonelistStatus != 0 ? "#F44D37" : "#CDCFD1"}`}
                                                         open={open}>
                                                         <input type="text" value={godwokenAddress} onInput={(e: any) => {
                                                             setGodwokenAddress(e.target.value)
@@ -328,7 +337,7 @@ export default function Composite() {
                                                             const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
                                                             console.log(res);
                                                             setOpen(true);
-                                                            setIsBonelist(res > 0);
+                                                            setBonelistStatus(res);
                                                         }}>CHECK</button>
                                                 </div>
                                                 <div className="tip">
