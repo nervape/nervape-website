@@ -147,10 +147,9 @@ export default function Composite() {
     }
 
     useEffect(() => {
-        if (bonelistStatus == 3) return;
-        setBonelistStatusStr(bonelistStatus == 0 
-            ? '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! ' 
-            : bonelistStatus == 1 ? 'This Eth address is Bonelisted. If you are the owner of this address, please make sure you transfer the Bonelist to your BTC address before minting NACP.' 
+        if (bonelistStatus == 3 || bonelistStatus == 1) return;
+        setBonelistStatusStr(bonelistStatus == 0
+            ? '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '
             : 'This Eth address has transferred its Bonelist to a BTC address.')
     }, [bonelistStatus]);
 
@@ -317,6 +316,10 @@ export default function Composite() {
                                                                         <br />
                                                                         🦧 Welcome to the Third Continent.
                                                                     </>
+                                                                ) : bonelistStatus == 1 ? (
+                                                                    <>
+                                                                        This ETH address is Bonelisted. If you are the owner of this address, please transfer your Bonelist to your BTC address before minting NACP! <a style={{ color: '#FFFFFF', textDecoration: 'underline' }} href="https://www.nervape.com/wallet" target="_blank">Connect your wallet</a> and follow the prompts.
+                                                                    </>
                                                                 ) : bonelistStatusStr}</p>
                                                             );
                                                         }}
@@ -385,10 +388,10 @@ export default function Composite() {
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">DRESSING STEPS</div>
                                         <div className="desc">
-                                            NACP PFP has 13 different types of assets you can use to assemble your Nervape PFP. 
-                                            These asset classes will be divided in 3 steps. 
-                                            Each step will allow you to easily buy, trade, and sell your NACP! 
-                                            We encourage you to try through all 3 steps to get the full PFP experience 
+                                            NACP PFP has 13 different types of assets you can use to assemble your Nervape PFP.
+                                            These asset classes will be divided in 3 steps.
+                                            Each step will allow you to easily buy, trade, and sell your NACP!
+                                            We encourage you to try through all 3 steps to get the full PFP experience
                                             that our platform has to offer and to design the ape PFP you want!
                                         </div>
                                         <div className="learn-more">More details coming soon!</div>
