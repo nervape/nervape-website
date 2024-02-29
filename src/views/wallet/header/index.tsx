@@ -277,7 +277,7 @@ export default function WalletHeader(props: any) {
                             <div className="bonelist-transfer-content flex-align">
                                 <div className="left">
                                     <div className="title">{bonelistTransferInfo?.status == 1 ? "Moving to Bitcoin" : "Bonelist Transferred"}</div>
-                                    <div className="desc">{bonelistTransferInfo?.status == 1 ? "NACP is moving to Bitcoin! Your NACP Bonelist must be on a Bitcoin wallet before use." : "Your Bonelist had been transferred to following Bitcoin address:"}</div>
+                                    <div className="desc">{bonelistTransferInfo?.status == 1 ? "NACP is moving to Bitcoin! Your NACP Bonelist must be on a Bitcoin wallet before use." : "Your Bonelist has been transferred to following Bitcoin address:"}</div>
                                     {bonelistTransferInfo?.status == 2 && (
                                         <div className="transfered-address">{bonelistTransferInfo?.btc_address}</div>
                                     )}

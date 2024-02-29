@@ -25,7 +25,7 @@
 
         .btn-groups {
             flex-direction: row-reverse;
-            
+
             .btn {
                 border-radius: 12px;
                 height: 40px;
@@ -46,6 +46,28 @@
             .confirm-btn {
                 background: #6A9FBD;
                 box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.10);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .transfer-bonelist-prompt-container {
+        .prompt-content {
+            width: 347px;
+
+            .btn-groups {
+                flex-direction: column;
+    
+                .btn {
+                    width: 100%;
+                    text-align: center;
+                }
+    
+                .skip-btn {
+                    margin-top: 16px;
+                    margin-right: 0;
+                }
             }
         }
     }
