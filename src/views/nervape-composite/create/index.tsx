@@ -229,6 +229,7 @@ export default function Nacp() {
                         const { payAddress, amount, feeRate } = res;
                         const txid = await window.unisat.sendBitcoin(payAddress, amount, { feeRate });
                         console.log(txid);
+                        getOrders();
                     }}>Mint</button>
                 </>
             )}
