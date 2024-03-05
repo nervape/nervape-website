@@ -14,3 +14,9 @@ export class Question {
     background: string = "";
     open: boolean = false;
 }
+
+export class Digital {
+    cover_image: string = "";
+    title: string = "";
+    link: string = "";
+}

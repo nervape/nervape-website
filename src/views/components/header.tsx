@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useContext, useEffect, useState } fro
 import "./header.less";
 import logo from "../../assets/logo/logo_nervape.svg";
 import hamburger from "../../assets/icons/hamburger.svg";
-import twitter from "../../assets/icons/twitter.svg";
+import twitter from "../../assets/about/social-media/twitter.svg";
 import discord from "../../assets/icons/discord.svg";
 import instegram from "../../assets/icons/instegram.svg";
 import NacpLogo from '../../assets/logo/logo_nacp.svg';

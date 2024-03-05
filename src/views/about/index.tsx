@@ -13,13 +13,29 @@ import ArrowIcon from '../../assets/about/icon_arrow.png';
 import SceneDragon from '../../assets/about/scene_dragon.png';
 import SceneDragonSmall from '../../assets/about/scene_dragon_small.png';
 import './index.less';
-import { Question, Staff } from "../../nervape/about";
+import { Digital, Question, Staff } from "../../nervape/about";
 import { nervapeApi } from "../../api/nervape-api";
 import TwitterIcon from '../../assets/about/twitter.svg';
 import UpArrowIcon from '../../assets/about/up_arrow.svg';
 import AboutBottom from '../../assets/about/about_bottom.png';
 import { NavTool } from "../../route/navi-tool";
 import { DataContext, isMobile, scrollToTop } from "../../utils/utils";
+import CryptapeLogo from '../../assets/about/partners/cryptape.svg';
+import DidLogo from '../../assets/about/partners/did.svg';
+import JoyidLogo from '../../assets/about/partners/joyid.svg';
+import Mail3Logo from '../../assets/about/partners/mail3.svg';
+import NervosLogo from '../../assets/about/partners/nervos.svg';
+import RbyLogo from '../../assets/about/partners/rby.svg';
+import SeedaoLogo from '../../assets/about/partners/seedao.svg';
+
+import TwitterLogo from '../../assets/about/social-media/twitter.svg';
+import DiscodeLogo from '../../assets/about/social-media/discode.svg';
+import InstagramLogo from '../../assets/about/social-media/instagram.svg';
+import YoutubeLogo from '../../assets/about/social-media/youtube.svg';
+import PodcastLogo from '../../assets/about/social-media/podcast.svg';
+import MediumLogo from '../../assets/about/social-media/medium.svg';
+import PinterestLogo from '../../assets/about/social-media/pinterest.svg';
+import RedLogo from '../../assets/about/social-media/red.svg';
 
 import { Parallax } from 'rc-scroll-anim';
 import Footer from "../components/footer";
@@ -30,12 +46,112 @@ export default function AboutPage() {
     const [currIndex, setCurrIndex] = useState(-1);
     const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
     const [innerHeight, setInnerHeight] = useState(0);
+    const [digitals, setDigitals] = useState<Digital[]>([]);
+    const [partners, setPartners] = useState<Digital[]>([]);
+    const [socialMedia, setSocialMedia] = useState<Digital[]>([]);
 
     const { state } = useContext(DataContext);
 
     const bannerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        setDigitals([
+            {
+                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/8714f12c-907a-4742-992d-1e1ae9e43c8a.png',
+                title: 'NACP',
+                link: '/nacp'
+            },
+            {
+                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/33702679-bcf5-4ba6-83ac-7eafdbd30958.png',
+                title: '3D Collection',
+                link: '/3dnft'
+            },
+            {
+                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/58a53ee5-af10-478f-a2a3-55d0685ba782.png',
+                title: 'Collab NFTs',
+                link: '/collab-nfts'
+            }
+        ]);
+        setPartners([
+            {
+                cover_image: NervosLogo,
+                title: '',
+                link: 'https://www.nervos.org/',
+            },
+            {
+                cover_image: CryptapeLogo,
+                title: '',
+                link: 'https://cryptape.com/#/home',
+            },
+            {
+                cover_image: JoyidLogo,
+                title: '',
+                link: 'https://joy.id/',
+            },
+            {
+                cover_image: DidLogo,
+                title: '',
+                link: 'https://d.id/',
+            },
+            {
+                cover_image: SeedaoLogo,
+                title: '',
+                link: 'https://seedao.xyz/',
+            },
+            {
+                cover_image: Mail3Logo,
+                title: '',
+                link: 'https://mail3.me/',
+            },
+            {
+                cover_image: RbyLogo,
+                title: '',
+                link: 'https://www.facebook.com/rbywooddesign/',
+            },
+        ]);
+
+        setSocialMedia([
+            {
+                cover_image: TwitterLogo,
+                title: '',
+                link: 'https://twitter.com/Nervapes',
+            },
+            {
+                cover_image: DiscodeLogo,
+                title: '',
+                link: 'https://discord.gg/rXTcbsxnzd',
+            },
+            {
+                cover_image: InstagramLogo,
+                title: '',
+                link: 'https://www.instagram.com/nervapes/?hl=en',
+            },
+            {
+                cover_image: YoutubeLogo,
+                title: '',
+                link: 'https://www.youtube.com/@nervapes',
+            },
+            {
+                cover_image: PodcastLogo,
+                title: '',
+                link: 'https://podcasts.apple.com/us/podcast/nervape-podcast/id1715173378',
+            },
+            {
+                cover_image: MediumLogo,
+                title: '',
+                link: 'https://medium.com/@Nervape/',
+            },
+            {
+                cover_image: PinterestLogo,
+                title: '',
+                link: 'https://www.pinterest.com/nervape/',
+            },
+            {
+                cover_image: RedLogo,
+                title: '',
+                link: 'https://www.xiaohongshu.com/user/profile/60d0b58300000000010009b8?xhsshare=CopyLink&appuid=60d0b58300000000010009b8&apptime=1696992894',
+            },
+        ]);
         setInnerHeight(window.innerHeight / 2);
         nervapeApi.fnGetStaffs().then(res => {
             setHumans(res);
@@ -131,6 +247,47 @@ export default function AboutPage() {
 
                 </div>
             </section>
+            <section className="mission-section">
+                <div className="section-bg flex-center">
+                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+
+                    <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
+                </div>
+            </section>
+            <div className="stable-line"></div>
+            <section className="digital-section">
+                <div className="section-bg flex-align">
+                    {digitals.map((digital, index) => {
+                        return (
+                            <div className="digital-item cursor" key={index}>
+                                <img src={digital.cover_image} onClick={() => {
+                                    if (digital.link) {
+                                        window.open(digital.link, '_blank');
+                                    }
+                                }} alt="" />
+                                <div className="title transition">{digital.title}</div>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div className="digital-info">
+                    <div className="title">Digital NFTs</div>
+
+                    <div className="desc">
+                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
+                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                    </div>
+                </div>
+            </section>
+            <div className="stable-line"></div>
+            <section className="physical-section">
+                <div className="section-bg flex-center">
+                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+                    <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
+                </div>
+            </section>
+            <div className="stable-line"></div>
             <Parallax
                 animation={{
                     playScale: [0, 0],
@@ -183,7 +340,7 @@ export default function AboutPage() {
                 <div className="custom-cover">
                     <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
                 </div>
-                <div className="customizable-collection">
+                {/* <div className="customizable-collection">
                     <div className="custom-content">
                         <div className="title">CUSTOMIZABLE NFT COLLECTION</div>
                         <div className="desc">
@@ -205,7 +362,7 @@ export default function AboutPage() {
                             <img loading="lazy" src={ArrowIcon} alt="ArrowIcon" />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </section>
             <section className="humans-section">
                 <div className="humans-content">
@@ -262,7 +419,43 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <section className="qa-section">
+            <section className="partners-section">
+                <div className="title">Partners</div>
+
+                <div className="partners flex-align">
+                    {partners.map((partner, index) => {
+                        return (
+                            <div className="partner cursor" key={index}>
+                                <img src={partner.cover_image} onClick={() => {
+                                    if (partner.link) {
+                                        window.open(partner.link, '_blank');
+                                    }
+                                }} alt="" />
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
+
+            <section className="social-media-section">
+                <div className="title">Social Media</div>
+
+                <div className="social-medias flex-align">
+                    {socialMedia.map((item, index) => {
+                        return (
+                            <div className="social-media transition cursor" key={index}>
+                                <img src={item.cover_image} onClick={() => {
+                                    if (item.link) {
+                                        window.open(item.link, '_blank');
+                                    }
+                                }} alt="" />
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
+
+            {/* <section className="qa-section">
                 <div className="qa-content">
                     <h3 className="title">Q&A</h3>
                     <div className="questions">
@@ -315,7 +508,7 @@ export default function AboutPage() {
                         ) : ''}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             <section className="bottom-section">
                 <img loading="lazy" src={AboutBottom} alt="AboutBottom" />
