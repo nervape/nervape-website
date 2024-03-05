@@ -249,9 +249,20 @@ export default function AboutPage() {
             </section>
             <section className="mission-section">
                 <div className="section-bg flex-center">
-                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
+                    <div className="lightgray"></div>
+                </div>
 
-                    <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
+                <div className="physical-info section-info">
+                    <div className="title">Physical NFTs</div>
+                    <div className="desc">
+                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
+                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                    </div>
+
+                    <div className="view-btn cursor" onClick={() => {
+                        // window.open('/')
+                    }}>VIEW PHYSIAL NFT</div>
                 </div>
             </section>
             <div className="stable-line"></div>
@@ -271,7 +282,7 @@ export default function AboutPage() {
                     })}
                 </div>
 
-                <div className="digital-info">
+                <div className="digital-info section-info">
                     <div className="title">Digital NFTs</div>
 
                     <div className="desc">
@@ -282,9 +293,21 @@ export default function AboutPage() {
             </section>
             <div className="stable-line"></div>
             <section className="physical-section">
-                <div className="section-bg flex-center">
-                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
-                    <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
+                <div className="section-bg">
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
+                    <div className="lightgray"></div>
+                </div>
+
+                <div className="physical-info section-info">
+                    <div className="title">Physical NFTs</div>
+                    <div className="desc">
+                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
+                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                    </div>
+
+                    <div className="view-btn cursor" onClick={() => {
+                        // window.open('/')
+                    }}>VIEW PHYSIAL NFT</div>
                 </div>
             </section>
             <div className="stable-line"></div>

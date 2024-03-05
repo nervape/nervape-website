@@ -123,15 +123,64 @@
     height: 100vh;
     position: sticky;
     top: 0;
+    background: #141D26;
 
     .section-bg {
       width: 100%;
-      height: 100%;
+      height: calc(100% - 175px);
+      position: relative;
 
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+      }
+
+      .lightgray {
+        width: 100%;
+        height: 240px;
+        position: absolute;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(20, 29, 38, 0.00) 0%, #141D26 100%);
+      }
+    }
+
+    .section-info {
+      padding: 20px 0 80px;
+      margin: 0 auto;
+      width: 1200px;
+
+      .title {
+        color: #FFF;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: normal;
+        letter-spacing: -1.2px;
+      }
+
+      .desc {
+        margin-top: 12px;
+        color: #FFF;
+        font-size: 14px;
+        line-height: normal;
+
+        p {
+          padding: 0;
+          margin: 0;
+        }
+      }
+
+      .view-btn {
+        width: fit-content;
+        margin-top: 24px;
+        border-radius: 4px;
+        background: #F44D37;
+        color: #FFF;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: normal;
+        padding: 6px 10px;
       }
     }
   }
@@ -139,20 +188,11 @@
   .mission-section,
   .physical-section {
     .section-bg {
+      height: calc(100% - 230px);
       position: relative;
 
       img {
         position: absolute;
-      }
-
-      .title {
-        z-index: 1;
-        width: 500px;
-        color: #FFF;
-        font-style: italic;
-        font-size: 32px;
-        font-weight: 400;
-        line-height: normal;
       }
     }
   }
@@ -194,32 +234,6 @@
           font-weight: 800;
           line-height: normal;
           letter-spacing: -1.2px;
-        }
-      }
-    }
-
-    .digital-info {
-      padding: 20px 0 80px;
-      margin: 0 auto;
-      width: 1200px;
-
-      .title {
-        color: #FFF;
-        font-size: 24px;
-        font-weight: 800;
-        line-height: normal;
-        letter-spacing: -1.2px;
-      }
-
-      .desc {
-        margin-top: 12px;
-        color: #FFF;
-        font-size: 14px;
-        line-height: normal;
-
-        p {
-          padding: 0;
-          margin: 0;
         }
       }
     }
@@ -804,13 +818,21 @@
       }
     }
 
-    .digital-section {
+    .mission-section,
+    .digital-section,
+    .physical-section {
       .section-bg {
         height: calc(100% - 175px);
       }
 
-      .digital-info {
+      .section-info {
         width: 1120px;
+      }
+    }
+
+    .physical-section {
+      .section-bg {
+        height: calc(100% - 230px);
       }
     }
   }
@@ -845,13 +867,21 @@
       }
     }
 
-    .digital-section {
+    .mission-section,
+    .digital-section,
+    .physical-section {
       .section-bg {
         height: calc(100% - 192px);
       }
 
-      .digital-info {
+      .section-info {
         width: 670px;
+      }
+    }
+
+    .physical-section {
+      .section-bg {
+        height: calc(100% - 247.5px);
       }
     }
 
@@ -994,6 +1024,25 @@
       .digital-info {
         width: 347px;
         padding: 20px 0 40px;
+
+        .desc {
+          font-size: 12px;
+          letter-spacing: 0;
+        }
+      }
+    }
+
+    .mission-section,
+    .physical-section {
+      height: 100vh;
+
+      .section-bg {
+        height: calc(100vh - 246px);
+      }
+
+      .section-info {
+        padding: 40px 0;
+        width: 319px;
 
         .desc {
           font-size: 12px;
