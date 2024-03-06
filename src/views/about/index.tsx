@@ -57,7 +57,7 @@ export default function AboutPage() {
     useEffect(() => {
         setDigitals([
             {
-                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/8714f12c-907a-4742-992d-1e1ae9e43c8a.png',
+                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png',
                 title: 'NACP',
                 link: '/nacp'
             },
