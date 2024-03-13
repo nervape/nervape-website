@@ -113,7 +113,7 @@
 
   .stable-line {
     width: 100%;
-    height: 100px;
+    height: 200px;
   }
 
   .mission-section,
@@ -183,6 +183,17 @@
         padding: 6px 10px;
       }
     }
+
+    .mask-cover-content {
+      background: rgba(0, 0, 0);
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: -100vh;
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
   }
 
   .mission-section,
@@ -227,7 +238,7 @@
           text-align: center;
           bottom: -61px;
           padding: 16px;
-          background: rgba(20, 29, 38, 0.90);
+          background: #F44D37;
           color: #FFF;
           text-align: center;
           font-size: 24px;
@@ -403,6 +414,17 @@
   .humans-section {
     background: #242e38;
     position: relative;
+
+    .mask-cover-content {
+      background: rgba(0, 0, 0);
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: -100vh;
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
 
     .humans-content {
       width: 950px;

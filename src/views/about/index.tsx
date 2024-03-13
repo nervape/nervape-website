@@ -49,6 +49,7 @@ export default function AboutPage() {
     const [digitals, setDigitals] = useState<Digital[]>([]);
     const [partners, setPartners] = useState<Digital[]>([]);
     const [socialMedia, setSocialMedia] = useState<Digital[]>([]);
+    const [maskOpacity, setMaskOpacity] = useState(1);
 
     const { state } = useContext(DataContext);
 
@@ -58,18 +59,13 @@ export default function AboutPage() {
         setDigitals([
             {
                 cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png',
-                title: 'NACP',
-                link: '/nacp'
+                title: 'STORYTELLING',
+                link: '/story'
             },
             {
                 cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/33702679-bcf5-4ba6-83ac-7eafdbd30958.png',
-                title: '3D Collection',
+                title: '3D COLLECTION NFT',
                 link: '/3dnft'
-            },
-            {
-                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/58a53ee5-af10-478f-a2a3-55d0685ba782.png',
-                title: 'Collab NFTs',
-                link: '/collab-nfts'
             }
         ]);
         setPartners([
@@ -247,14 +243,15 @@ export default function AboutPage() {
 
                 </div>
             </section>
-            <section className="mission-section">
-                <div className="section-bg flex-center">
+
+            <section className="physical-section">
+                <div className="section-bg">
                     <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
                     <div className="lightgray"></div>
                 </div>
 
                 <div className="physical-info section-info">
-                    <div className="title">Physical NFTs</div>
+                    <div className="title">Nervape</div>
                     <div className="desc">
                         <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
                         <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
@@ -262,11 +259,78 @@ export default function AboutPage() {
 
                     <div className="view-btn cursor" onClick={() => {
                         // window.open('/')
-                    }}>VIEW PHYSIAL NFT</div>
+                    }}>VIEW NERVAPE NFT</div>
                 </div>
             </section>
             <div className="stable-line"></div>
+            <section className="mission-section">
+                <Parallax
+                    className="mask-cover-content"
+                    animation={{
+                        playScale: [1, 1.5],
+                        opacity: 0.7
+                    }}
+                >
+                </Parallax>
+
+                <div className="section-bg flex-center">
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
+                    <div className="lightgray"></div>
+                </div>
+
+                <div className="physical-info section-info">
+                    <div className="title">Artifact</div>
+                    <div className="desc">
+                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
+                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                    </div>
+
+                    <div className="view-btn cursor" onClick={() => {
+                        // window.open('/')
+                    }}>VIEW PHYSICAL NFT</div>
+                </div>
+            </section>
+
+            <div className="stable-line"></div>
+            <section className="physical-section">
+                <Parallax
+                    className="mask-cover-content"
+                    animation={{
+                        playScale: [1, 1.5],
+                        opacity: 0.7
+                    }}
+                >
+                </Parallax>
+
+                <div className="section-bg">
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/58a53ee5-af10-478f-a2a3-55d0685ba782.png" alt="SceneDragon" />
+                    <div className="lightgray"></div>
+                </div>
+
+                <div className="physical-info section-info">
+                    <div className="title">Collab NFT</div>
+                    <div className="desc">
+                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
+                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                    </div>
+
+                    <div className="view-btn cursor" onClick={() => {
+                        // window.open('/')
+                    }}>VIEW COLLAB NFT</div>
+                </div>
+            </section>
+
+            <div className="stable-line"></div>
             <section className="digital-section">
+                <Parallax
+                    className="mask-cover-content"
+                    animation={{
+                        playScale: [1, 1.5],
+                        opacity: 0.7
+                    }}
+                >
+                </Parallax>
+
                 <div className="section-bg flex-align">
                     {digitals.map((digital, index) => {
                         return (
@@ -283,7 +347,7 @@ export default function AboutPage() {
                 </div>
 
                 <div className="digital-info section-info">
-                    <div className="title">Digital NFTs</div>
+                    <div className="title">The Nervape Saga</div>
 
                     <div className="desc">
                         <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
@@ -291,27 +355,9 @@ export default function AboutPage() {
                     </div>
                 </div>
             </section>
-            <div className="stable-line"></div>
-            <section className="physical-section">
-                <div className="section-bg">
-                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
-                    <div className="lightgray"></div>
-                </div>
 
-                <div className="physical-info section-info">
-                    <div className="title">Physical NFTs</div>
-                    <div className="desc">
-                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
-                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
-                    </div>
-
-                    <div className="view-btn cursor" onClick={() => {
-                        // window.open('/')
-                    }}>VIEW PHYSIAL NFT</div>
-                </div>
-            </section>
             <div className="stable-line"></div>
-            <Parallax
+            {/* <Parallax
                 animation={{
                     playScale: [0, 0],
                     onStart: () => {
@@ -356,14 +402,14 @@ export default function AboutPage() {
                         <img loading="lazy" src={AboutStory02} alt="AboutStory01" />
                     </div>
                 </section>
-            </Parallax>
+            </Parallax> */}
 
-            <section className="customizable-section">
+            {/* <section className="customizable-section">
                 <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
                 <div className="custom-cover">
                     <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
                 </div>
-                {/* <div className="customizable-collection">
+                <div className="customizable-collection">
                     <div className="custom-content">
                         <div className="title">CUSTOMIZABLE NFT COLLECTION</div>
                         <div className="desc">
@@ -385,9 +431,18 @@ export default function AboutPage() {
                             <img loading="lazy" src={ArrowIcon} alt="ArrowIcon" />
                         </div>
                     </div>
-                </div> */}
-            </section>
+                </div>
+            </section> */}
             <section className="humans-section">
+                <Parallax
+                    className="mask-cover-content"
+                    animation={{
+                        playScale: [1, 1.5],
+                        opacity: 0.7
+                    }}
+                >
+                </Parallax>
+
                 <div className="humans-content">
                     <h3 className="title">The Humans and Other Creatures Behind Nervape</h3>
                     <p className="desc">A group of humans, Nervapes, and a bear…united by their wild minds.</p>
@@ -539,6 +594,6 @@ export default function AboutPage() {
             <section className="page-footer">
                 <Footer></Footer>
             </section>
-        </div>
+        </div >
     );
 }

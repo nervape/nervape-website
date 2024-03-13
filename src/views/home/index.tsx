@@ -32,11 +32,11 @@ export default function HomePage() {
                 <div className="video-mask"></div>
                 <div className="b-content">
                     <div className="about-here">
-                        <div className="text">Enter The Third Continent</div>
+                        <div className="text">Build Your Nervape</div>
                         <button 
                             className="here-btn cursor"
                             onClick={() => {
-                                NavTool.fnJumpToPage('/about');
+                                NavTool.fnJumpToPage('/nervape');
                                 window.scrollTo(0, 0);
                             }}>HERE</button>
                     </div>

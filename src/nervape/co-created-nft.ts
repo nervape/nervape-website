@@ -1,3 +1,5 @@
+import { Community } from "./community";
+
 export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special";
 
 export class NFT_BANNER {
@@ -26,6 +28,7 @@ export class Co_Created_NFT {
     total: number = 0;
     issued: number = 0;
     coming_soon: boolean = false;
+    community?: Community;
     sort: number = 0;
 }
 

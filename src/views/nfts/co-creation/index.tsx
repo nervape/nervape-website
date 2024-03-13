@@ -68,6 +68,8 @@ function NftCardDetail(props: { nft: Co_Created_NFT; close: any; fullscreen: any
 
     const { state } = useContext(DataContext);
 
+    if (!nft) return <></>;
+
     return (
         <div className={`wallet-nft-card-detail-container popup-container ${show && 'show'}`} onClick={close}>
             <div className="popup-content nft-card-detail" onClick={e => e.stopPropagation()}>
@@ -126,6 +128,17 @@ function NftCardDetail(props: { nft: Co_Created_NFT; close: any; fullscreen: any
                             >
                                 VIEW ON NFT BOX
                             </button>
+
+                            {(nft.community && nft.community.link) && (
+                                <button
+                                    className="btn cursor"
+                                    onClick={() => {
+                                        window.open(nft.community?.link, '_blank')
+                                    }}
+                                >
+                                    VIEW EVENT
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

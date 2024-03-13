@@ -68,7 +68,7 @@ const NacpTooltip = (id: string, key: string, placement?: 'bottom' | 'right') =>
         getPopupContainer={() => document.getElementById('header-container')}
         placement={placement || 'bottom'}
         title="Coming Soon!">
-        <div>NACP</div>
+        <div>NERVAPE</div>
       </Tooltip>
     </div>
   );
@@ -85,7 +85,7 @@ const MNacpTooltip = (key: string, placement?: 'bottom' | 'right') => {
         color="#506077"
         placement={placement || 'right'}
         title="Coming Soon!">
-        NACP
+        NERVAPE
       </Tooltip>
     </div>
   );
@@ -115,6 +115,10 @@ const handleHeaderClick = (key: string) => {
 const GalleryItems: MenuProps = {
   items: [
     {
+      label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
+      key: '0'
+    },
+    {
       label: (
         <div onClick={() => {
           handleHeaderClick('galleryCollection');
@@ -133,10 +137,6 @@ const GalleryItems: MenuProps = {
         }}>Collab NFTs</div>
       ),
       key: '1'
-    },
-    {
-      label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
-      key: '0'
     }
   ]
 };
@@ -236,26 +236,26 @@ const CommunityItems: MenuProps = {
 const pages: NavPageInfo[] = [
   {
     title: "",
-    key: "",
+    key: "nacp",
     type: "logo",
     image: NacpLogo,
     mImage: MNacpLogo,
-    eleItem: () => {
-      return (
-        <Dropdown
-          menu={HallweenNacpItems}
-          // @ts-ignore
-          getPopupContainer={() => document.getElementById('header-container')}
-          overlayClassName="hallween-items gallery-items"
-          onOpenChange={open => {
-            updateBodyOverflow(!open);
-          }}>
-          <div className="hallween-item title-text">
-            <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
-          </div>
-        </Dropdown>
-      )
-    }
+    // eleItem: () => {
+    //   return (
+    //     <Dropdown
+    //       menu={HallweenNacpItems}
+    //       // @ts-ignore
+    //       getPopupContainer={() => document.getElementById('header-container')}
+    //       overlayClassName="hallween-items gallery-items"
+    //       onOpenChange={open => {
+    //         updateBodyOverflow(!open);
+    //       }}>
+    //       <div className="hallween-item title-text">
+    //         <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
+    //       </div>
+    //     </Dropdown>
+    //   )
+    // }
   },
   {
     title: "ABOUT",
@@ -264,8 +264,14 @@ const pages: NavPageInfo[] = [
     image: "",
   },
   {
-    title: "STORY",
+    title: "SAGA",
     key: "story",
+    type: "navbar",
+    image: "",
+  },
+  {
+    title: "ARTIFACT",
+    key: "artifact",
     type: "navbar",
     image: "",
   },
@@ -293,30 +299,30 @@ const pages: NavPageInfo[] = [
       );
     }
   },
-  {
-    title: "BUY",
-    key: "",
-    type: "hover",
-    image: "",
-    eleItem: () => {
-      return (
-        <Dropdown
-          menu={BuyItems}
-          // @ts-ignore
-          getPopupContainer={() => document.getElementById('header-container')}
-          overlayClassName="gallery-items"
-          onOpenChange={open => {
-            updateBodyOverflow(!open);
-            document.getElementById('buy-open-icon')?.setAttribute('class', open ? 'header-open open' : 'header-open')
-          }}>
-          <div className="gallery-item title-text">
-            BUY
-            <img id="buy-open-icon" src={HeaderOpenIcon} className="header-open" alt="" />
-          </div>
-        </Dropdown>
-      );
-    }
-  },
+  // {
+  //   title: "BUY",
+  //   key: "",
+  //   type: "hover",
+  //   image: "",
+  //   eleItem: () => {
+  //     return (
+  //       <Dropdown
+  //         menu={BuyItems}
+  //         // @ts-ignore
+  //         getPopupContainer={() => document.getElementById('header-container')}
+  //         overlayClassName="gallery-items"
+  //         onOpenChange={open => {
+  //           updateBodyOverflow(!open);
+  //           document.getElementById('buy-open-icon')?.setAttribute('class', open ? 'header-open open' : 'header-open')
+  //         }}>
+  //         <div className="gallery-item title-text">
+  //           BUY
+  //           <img id="buy-open-icon" src={HeaderOpenIcon} className="header-open" alt="" />
+  //         </div>
+  //       </Dropdown>
+  //     );
+  //   }
+  // },
   {
     title: 'COMMUNITY',
     key: "",
@@ -358,7 +364,7 @@ enum HeaderType {
 
 const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
   nacp: {
-    url: '/nacp',
+    url: '/nervape',
     type: HeaderType.Logo
   },
   about: {
@@ -367,6 +373,10 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
   },
   story: {
     url: '/story',
+    type: HeaderType.Navbar
+  },
+  artifact: {
+    url: '/artifact',
     type: HeaderType.Navbar
   },
   galleryCollection: {
@@ -416,40 +426,41 @@ const headers: { [propName: string]: { url: string; type: HeaderType; } } = {
 };
 
 const mPages: MenuItem[] = [
-  getItem((
-    <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
-  ), 'nacpCollection', null, [
-    getItem((
-      <div onClick={() => {
-        handleHeaderClick('nacp');
-      }}>
-        <img src={NacpLogo} alt="NacpLogo" />
-      </div>
-    ), 'nacp'),
-    getItem((
-      <div onClick={() => {
-        window.open(`${CONFIG.WEBSITE_HOST}/halve-ape-blast/nacp/`, '_block');
-      }}>
-        <img src={HallweenTitle} alt="HallweenTitle" />
-      </div>
-    ), 'hallween-nacp')
-  ]),
+  // getItem((
+  //   <img src={HallweenNacpLogo} className="hallween-nacp-logo" alt="" />
+  // ), 'nacpCollection', null, [
+  //   getItem((
+  //     <div onClick={() => {
+  //       handleHeaderClick('nacp');
+  //     }}>
+  //       <img src={NacpLogo} alt="NacpLogo" />
+  //     </div>
+  //   ), 'nacp'),
+  //   getItem((
+  //     <div onClick={() => {
+  //       window.open(`${CONFIG.WEBSITE_HOST}/halve-ape-blast/nacp/`, '_block');
+  //     }}>
+  //       <img src={HallweenTitle} alt="HallweenTitle" />
+  //     </div>
+  //   ), 'hallween-nacp')
+  // ]),
   getItem('ABOUT', 'about'),
-  getItem('STORY', 'story'),
+  getItem('SAGA', 'story'),
+  getItem('ARTIFACT', 'artifact'),
   getItem('GALLERY', 'gallery', null, [
     getItem('3D COLLECTION', 'galleryCollection'),
     getItem('Collab NFTs', 'galleryCoCreation'),
     getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp')
   ]),
-  getItem('BUY', 'buy', null, [
-    getItem('3D COLLECTION', 'buyCollection', null, [
-      getItem('CHARACTER', 'buyCollectionCharacter'),
-      getItem('ITEM', 'buyCollectionItem'),
-      getItem('SCENE', 'buyCollectionScene'),
-      getItem('SPECIAL', 'buyCollectionSpecial'),
-    ]),
-    getItem(MNacpTooltip('buyNacp', 'right'), 'buyNacp')
-  ]),
+  // getItem('BUY', 'buy', null, [
+  //   getItem('3D COLLECTION', 'buyCollection', null, [
+  //     getItem('CHARACTER', 'buyCollectionCharacter'),
+  //     getItem('ITEM', 'buyCollectionItem'),
+  //     getItem('SCENE', 'buyCollectionScene'),
+  //     getItem('SPECIAL', 'buyCollectionSpecial'),
+  //   ]),
+  //   getItem(MNacpTooltip('buyNacp', 'right'), 'buyNacp')
+  // ]),
   getItem('COMMUNITY', 'communityCollection', null, [
     getItem('COMMUNITY NEWS', 'community'),
     getItem('CAMPAIGN', 'campaign'),
@@ -582,19 +593,19 @@ export default function NavHeader(props: any) {
                     }}
                   >
                     {v.type === 'logo'
-                      // ? (
-                      //   <div className="nacp-logo">
-                      //     <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
-                      //   </div>
-                      // )
-                      ? (v.eleItem && v.eleItem())
+                      ? (
+                        <div className="nacp-logo">
+                          <img className="icon-image" src={state.windowWidth <= 750 ? v.mImage : v.image} alt="" />
+                        </div>
+                      )
+                      // ? (v.eleItem && v.eleItem())
                       : v.type === 'hover' ? (v.eleItem && v.eleItem()) : (<div className="title-text">{v.title}</div>)}
                   </div>
                 );
               })
             ) : (
               <>
-                {/* <div
+                <div
                   className="nav-area logo"
                   onClick={() => {
                     setDisableList(true);
@@ -603,7 +614,7 @@ export default function NavHeader(props: any) {
                   <div className="nacp-logo">
                     <img className="icon-image" src={state.windowWidth <= 750 ? MNacpLogo : NacpLogo} alt="" />
                   </div>
-                </div> */}
+                </div>
                 <Menu
                   className="mobile-menu-items"
                   expandIcon={() => {
@@ -648,7 +659,7 @@ export default function NavHeader(props: any) {
               >
                 <img className="icon-image" src={discord} alt="" />
               </div>
-              <div
+              {/* <div
                 className={`nav-area cursor icon`}
                 onClick={() => {
                   setDisableList(true);
@@ -656,7 +667,7 @@ export default function NavHeader(props: any) {
                 }}
               >
                 <img className="icon-image" src={instegram} alt="" />
-              </div>
+              </div> */}
             </div>
 
             {state.windowWidth > 750 && (

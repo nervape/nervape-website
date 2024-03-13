@@ -31,6 +31,7 @@ import Composite from "./nervape-composite";
 import Nacp from "./nervape-composite/create";
 import NFTCoCreation from "./nfts/co-creation";
 import CommunityPage from "./communities";
+import ArtifactPage from "./artifacts";
 
 export default function App() {
   NavTool.navigation = useNavigate();
@@ -94,7 +95,7 @@ export default function App() {
           <Route
             path="/3dnft"
             element={
-              <PageView activeIndex={3}>
+              <PageView activeIndex={4}>
                 <NFTPage />
               </PageView>
             }
@@ -102,7 +103,7 @@ export default function App() {
           <Route
             path="/collab-nfts"
             element={
-              <PageView activeIndex={3}>
+              <PageView activeIndex={4}>
                 <NFTCoCreation />
               </PageView>
             }
@@ -112,6 +113,14 @@ export default function App() {
             element={
               <PageView activeIndex={2}>
                 <Story />
+              </PageView>
+            }
+          />
+          <Route
+            path="/artifact"
+            element={
+              <PageView activeIndex={3} disableFooter={true}>
+                <ArtifactPage />
               </PageView>
             }
           />
@@ -148,7 +157,7 @@ export default function App() {
             }>
           </Route>
           <Route
-            path="/nacp"
+            path="/nervape"
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Composite></Composite>
@@ -156,7 +165,7 @@ export default function App() {
             }>
           </Route>
           <Route
-            path="/nacp/create"
+            path="/nervape/create"
             element={
               <PageView activeIndex={0} disableFooter={true}>
                 <Nacp></Nacp>
