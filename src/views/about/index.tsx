@@ -244,9 +244,28 @@ export default function AboutPage() {
                 </div>
             </section>
 
+            <section className="image-section">
+                <div className="section-bg flex-center">
+                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+
+                    <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
+                </div>
+            </section>
+
+            <div className="stable-line"></div>
+
             <section className="physical-section">
+                <Parallax
+                    className="mask-cover-content"
+                    animation={{
+                        playScale: [1, 1.5],
+                        opacity: 0.7
+                    }}
+                >
+                </Parallax>
+
                 <div className="section-bg">
-                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png" alt="SceneDragon" />
                     <div className="lightgray"></div>
                 </div>
 
@@ -258,7 +277,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
-                        // window.open('/')
+                        NavTool.fnJumpToPage('/nervape');
                     }}>VIEW NERVAPE NFT</div>
                 </div>
             </section>
@@ -315,7 +334,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
-                        // window.open('/')
+                        NavTool.fnJumpToPage('/collab-nfts')
                     }}>VIEW COLLAB NFT</div>
                 </div>
             </section>
@@ -353,6 +372,25 @@ export default function AboutPage() {
                         <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
                         <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
                     </div>
+                </div>
+            </section>
+
+            <div className="stable-line"></div>
+
+            <section className="image-section">
+                <Parallax
+                    className="mask-cover-content"
+                    animation={{
+                        playScale: [1, 1.5],
+                        opacity: 0.7
+                    }}
+                >
+                </Parallax>
+
+                <div className="section-bg flex-center">
+                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+
+                    <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
                 </div>
             </section>
 

@@ -116,6 +116,7 @@
     height: 200px;
   }
 
+  .image-section,
   .mission-section,
   .digital-section,
   .physical-section {
@@ -193,6 +194,27 @@
       opacity: 0;
       z-index: 1;
       pointer-events: none;
+    }
+  }
+
+  .image-section {
+    .section-bg {
+      height: 100%;
+      position: relative;
+
+      img {
+        position: absolute;
+      }
+
+      .title {
+        z-index: 1;
+        width: 500px;
+        color: #FFF;
+        font-style: italic;
+        font-size: 32px;
+        font-weight: 400;
+        line-height: normal;
+      }
     }
   }
 
@@ -994,14 +1016,14 @@
 
     .stable-line {
       width: 100%;
-      height: 0;
+      // height: 0;
     }
 
     .mission-section,
     .digital-section,
     .physical-section {
       height: 100vw;
-      position: relative;
+      // position: relative;
     }
 
     .mission-section,
@@ -1016,15 +1038,15 @@
     }
 
     .digital-section {
-      height: fit-content;
+      height: 100vh;
 
       .section-bg {
-        display: unset;
-        height: fit-content;
+        display: block;
+        height: calc(100% - 173.5px);
 
         .digital-item {
           width: 100%;
-          height: 190px;
+          height: 50%;
 
           &:hover {
             .title {

@@ -68,7 +68,7 @@ const NacpTooltip = (id: string, key: string, placement?: 'bottom' | 'right') =>
         getPopupContainer={() => document.getElementById('header-container')}
         placement={placement || 'bottom'}
         title="Coming Soon!">
-        <div>NERVAPE</div>
+        <div style={{ padding: '9px 16px' }}>NERVAPE</div>
       </Tooltip>
     </div>
   );
@@ -115,8 +115,17 @@ const handleHeaderClick = (key: string) => {
 const GalleryItems: MenuProps = {
   items: [
     {
-      label: NacpTooltip('gallery-open-icon', 'galleryNacp'),
+      label: NacpTooltip('gallery-open-icon', 'galleryNacp', 'right'),
       key: '0'
+    },
+    {
+      label: (
+        <div onClick={() => {
+          handleHeaderClick('galleryCoCreation');
+          updateBodyOverflow(true);
+        }}>COLLAB NFT</div>
+      ),
+      key: '1'
     },
     {
       label: (
@@ -128,15 +137,6 @@ const GalleryItems: MenuProps = {
         }}>3D COLLECTION</div>
       ),
       key: '-1'
-    },
-    {
-      label: (
-        <div onClick={() => {
-          handleHeaderClick('galleryCoCreation');
-          updateBodyOverflow(true);
-        }}>Collab NFTs</div>
-      ),
-      key: '1'
     }
   ]
 };
@@ -286,7 +286,7 @@ const pages: NavPageInfo[] = [
           menu={GalleryItems}
           // @ts-ignore
           getPopupContainer={() => document.getElementById('header-container')}
-          overlayClassName="gallery-items"
+          overlayClassName="gallery-items gallery-items-gallery"
           onOpenChange={open => {
             updateBodyOverflow(!open);
             document.getElementById('gallery-open-icon')?.setAttribute('class', open ? 'header-open open' : 'header-open')
@@ -448,9 +448,9 @@ const mPages: MenuItem[] = [
   getItem('SAGA', 'story'),
   getItem('ARTIFACT', 'artifact'),
   getItem('GALLERY', 'gallery', null, [
+    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp'),
+    getItem('COLLAB NFT', 'galleryCoCreation'),
     getItem('3D COLLECTION', 'galleryCollection'),
-    getItem('Collab NFTs', 'galleryCoCreation'),
-    getItem(MNacpTooltip('galleryNacp', 'right'), 'galleryNacp')
   ]),
   // getItem('BUY', 'buy', null, [
   //   getItem('3D COLLECTION', 'buyCollection', null, [
