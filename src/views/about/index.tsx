@@ -277,7 +277,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
-                        NavTool.fnJumpToPage('/nervape');
+                        window.open('/nervape', '_blank');
                     }}>VIEW NERVAPE NFT</div>
                 </div>
             </section>
@@ -535,7 +535,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <section className="partners-section">
+            {/* <section className="partners-section">
                 <div className="title">Partners</div>
 
                 <div className="partners flex-align">
@@ -551,7 +551,7 @@ export default function AboutPage() {
                         );
                     })}
                 </div>
-            </section>
+            </section> */}
 
             <section className="social-media-section">
                 <div className="title">Social Media</div>
