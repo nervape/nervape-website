@@ -312,7 +312,7 @@ export default function NFTCoCreation() {
             <div className="home-slider" id="home-slider"></div>
             <div className="nfts-content">
                 <div className="content-title">
-                    <div className="title">Collab NFTs</div>
+                    <div className="title">Collab DOBs</div>
                     <div className="desc">We believe the true power of web3 is in collaboration. That’s why at Nervape, we invite our community members to collaborate and create NFT art with us that truly expresses themselves.</div>
                 </div>
                 <div className="content">

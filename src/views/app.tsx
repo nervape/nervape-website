@@ -101,7 +101,7 @@ export default function App() {
             }
           />
           <Route
-            path="/collab-nfts"
+            path="/collab-dobs"
             element={
               <PageView activeIndex={4}>
                 <NFTCoCreation />

@@ -173,7 +173,7 @@ export default function AboutPage() {
                             location="intro-top"
                             className="intro-top-text"
                         >
-                            Nervape is a Metaverse with an Ongoing Story and NFTs Shaped by the Community.
+                            Nervape, the Power of Co-Creation.
                         </Parallax>
                     </div>
                 )}
@@ -248,7 +248,7 @@ export default function AboutPage() {
                 <div className="section-bg flex-center">
                     <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
 
-                    <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
+                    <div className="title">”Nervape Studio lives at the intersection of digital and physical art, storytelling, and blockchain technology. We are building a creator ecosystem that deeply values freedom, trust, and creativity to foster long-term, sustainable collaboration.”</div>
                 </div>
             </section>
 
@@ -272,13 +272,13 @@ export default function AboutPage() {
                 <div className="physical-info section-info">
                     <div className="title">Nervape</div>
                     <div className="desc">
-                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
-                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                        <p>Nervape, multi-chain composable digital objects built on Bitcoin.</p>
+                        <p>BE YOURSELF, TRUST YOURSELF, CREATE YOURSELF.</p>
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
                         window.open('/nervape', '_blank');
-                    }}>VIEW NERVAPE NFT</div>
+                    }}>VIEW NERVAPE</div>
                 </div>
             </section>
             <div className="stable-line"></div>
@@ -293,21 +293,21 @@ export default function AboutPage() {
                 </Parallax>
 
                 <div className="section-bg flex-center">
-                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
-                    <div className="lightgray"></div>
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/d3f69884-4a83-44c0-a03c-20f2b90c63e9.png" alt="SceneDragon" />
+                    {/* <div className="lightgray"></div> */}
                 </div>
-
-                <div className="physical-info section-info">
+                <div className="coming-soon">COMING SOON...</div>
+                {/* <div className="physical-info section-info">
                     <div className="title">Artifact</div>
                     <div className="desc">
-                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
-                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                        <p>A new Nervape Studio collection, this time in physical form. </p>
+                        <p>Coming soon.</p>
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
                         // window.open('/')
-                    }}>VIEW PHYSICAL NFT</div>
-                </div>
+                    }}>VIEW ARTIFACT</div>
+                </div> */}
             </section>
 
             <div className="stable-line"></div>
@@ -327,15 +327,15 @@ export default function AboutPage() {
                 </div>
 
                 <div className="physical-info section-info">
-                    <div className="title">Collab NFT</div>
+                    <div className="title">Collab DOBs</div>
                     <div className="desc">
-                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
-                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                        <p>An exploration into the possibilities of co-creation in the blockchain era,</p>
+                        <p>fostering collaborations between individual artists and communities to craft unique forms of artistic digital objects (DOBs) in the web3 space.</p>
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
-                        NavTool.fnJumpToPage('/collab-nfts')
-                    }}>VIEW COLLAB NFT</div>
+                        NavTool.fnJumpToPage('/collab-dobs')
+                    }}>VIEW COLLAB DOBs</div>
                 </div>
             </section>
 
@@ -366,11 +366,11 @@ export default function AboutPage() {
                 </div>
 
                 <div className="digital-info section-info">
-                    <div className="title">The Nervape Saga</div>
+                    <div className="title">Nervape Saga</div>
 
                     <div className="desc">
-                        <p>Express yourself. Create your own avatar. Nervape is for everyone.</p>
-                        <p>Character NFTs that have been released by Nervape can be disassembled and reassembled into different combinations.</p>
+                        <p>The heart of our narrative-driven universe, Nervape Saga tells the journey of brave apes venturing out in search of the mysterious Third Continent.</p>
+                        <p>3D character, item, and scene NFT collections are released alongside the narrative progression of the Nervape Saga, bringing the Nervape Saga universe to life.</p>
                     </div>
                 </div>
             </section>
