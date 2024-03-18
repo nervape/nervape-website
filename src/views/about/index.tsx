@@ -58,7 +58,7 @@ export default function AboutPage() {
     useEffect(() => {
         setDigitals([
             {
-                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png',
+                cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/63d4b427-e741-422b-b734-553817ded90d.png',
                 title: 'STORYTELLING',
                 link: '/story'
             },
