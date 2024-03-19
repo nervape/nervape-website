@@ -389,7 +389,7 @@ export default function AboutPage() {
                 </Parallax>
 
                 <div className="section-bg flex-center">
-                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/2ceb0a03-d3ee-4b78-88c1-1aaefe95de3c.png" alt="SceneDragon" />
 
                     <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
                 </div>
