@@ -5,14 +5,14 @@ import iconItem from "../assets/icons/item.png";
 import iconSpecial from "../assets/icons/special.png";
 import iconCoCreated from "../assets/icons/co_created.svg";
 
-export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special" | "Collab DOBS";
+export type NFT_TYPE = "" | "Character" | "Scene" | "Item" | "Special" | "Collab DOBs";
 
 export const IconMap = new Map<NFT_TYPE, string>();
 IconMap.set("Character", iconCharacter);
 IconMap.set("Scene", iconScene);
 IconMap.set("Item", iconItem);
 IconMap.set("Special", iconSpecial);
-IconMap.set("Collab DOBS", iconCoCreated);
+IconMap.set("Collab DOBs", iconCoCreated);
 
 export class NFT {
   id: string = "";
