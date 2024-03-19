@@ -59,12 +59,12 @@ export default function AboutPage() {
         setDigitals([
             {
                 cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/63d4b427-e741-422b-b734-553817ded90d.png',
-                title: 'STORYTELLING',
+                title: 'VIEW SAGA',
                 link: '/story'
             },
             {
                 cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/33702679-bcf5-4ba6-83ac-7eafdbd30958.png',
-                title: '3D COLLECTION NFT',
+                title: 'VIEW 3D COLLECTIONS',
                 link: '/3dnft'
             }
         ]);
@@ -271,7 +271,6 @@ export default function AboutPage() {
 
                 <div className="section-bg">
                     <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png" alt="SceneDragon" />
-                    <div className="lightgray"></div>
                 </div>
 
                 <div className="physical-info section-info">
@@ -298,11 +297,9 @@ export default function AboutPage() {
                 </Parallax>
 
                 <div className="section-bg flex-center">
-                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/d3f69884-4a83-44c0-a03c-20f2b90c63e9.png" alt="SceneDragon" />
-                    {/* <div className="lightgray"></div> */}
-                    <div className="coming-soon">COMING SOON...</div>
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/b08f1c0e-b444-4cd8-b047-4236106295f5.jpg" alt="SceneDragon" />
                 </div>
-                {/* <div className="physical-info section-info">
+                <div className="physical-info section-info">
                     <div className="title">Artifact</div>
                     <div className="desc">
                         <p>A new Nervape Studio collection, this time in physical form. </p>
@@ -310,9 +307,9 @@ export default function AboutPage() {
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
-                        // window.open('/')
+                        window.open('/artifact')
                     }}>VIEW ARTIFACT</div>
-                </div> */}
+                </div>
             </section>
 
             <div className="stable-line"></div>
@@ -328,7 +325,6 @@ export default function AboutPage() {
 
                 <div className="section-bg">
                     <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/58a53ee5-af10-478f-a2a3-55d0685ba782.png" alt="SceneDragon" />
-                    <div className="lightgray"></div>
                 </div>
 
                 <div className="physical-info section-info">
@@ -339,7 +335,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="view-btn cursor" onClick={() => {
-                        NavTool.fnJumpToPage('/collab-dobs')
+                        window.open('/collab-dobs');
                     }}>VIEW COLLAB DOBs</div>
                 </div>
             </section>
@@ -393,7 +389,7 @@ export default function AboutPage() {
                 </Parallax>
 
                 <div className="section-bg flex-center">
-                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/2ceb0a03-d3ee-4b78-88c1-1aaefe95de3c.png" alt="SceneDragon" />
 
                     <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
                 </div>
