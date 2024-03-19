@@ -7,18 +7,11 @@ import AboutLittlePlanet from '../../assets/about/effect/about_little_planets.pn
 import AboutLight from '../../assets/about/effect/about_light.png';
 import AboutLightSmall from '../../assets/about/effect/light_small.png';
 import Bonelist from '../../assets/about/bonelist.svg';
-import AboutStory01 from '../../assets/about/about_story-01.png';
-import AboutStory02 from '../../assets/about/about_story-02.png';
-import ArrowIcon from '../../assets/about/icon_arrow.png';
-import SceneDragon from '../../assets/about/scene_dragon.png';
-import SceneDragonSmall from '../../assets/about/scene_dragon_small.png';
 import './index.less';
 import { Digital, Question, Staff } from "../../nervape/about";
 import { nervapeApi } from "../../api/nervape-api";
 import TwitterIcon from '../../assets/about/twitter.svg';
-import UpArrowIcon from '../../assets/about/up_arrow.svg';
 import AboutBottom from '../../assets/about/about_bottom.png';
-import { NavTool } from "../../route/navi-tool";
 import { DataContext, isMobile, scrollToTop } from "../../utils/utils";
 import CryptapeLogo from '../../assets/about/partners/cryptape.svg';
 import DidLogo from '../../assets/about/partners/did.svg';
@@ -36,6 +29,7 @@ import PodcastLogo from '../../assets/about/social-media/podcast.svg';
 import MediumLogo from '../../assets/about/social-media/medium.svg';
 import PinterestLogo from '../../assets/about/social-media/pinterest.svg';
 import RedLogo from '../../assets/about/social-media/red.svg';
+import NervapeStudio from '../../assets/logo/logo_nervape.svg';
 
 import { Parallax } from 'rc-scroll-anim';
 import Footer from "../components/footer";
@@ -244,30 +238,51 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <section className="image-section">
-                <div className="section-bg flex-center">
-                    {/* <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" /> */}
+            <section className="image-section nervape-studio-section">
+                <div className="image-content" id="nervape-studio-section">
+                    <div className="nervape-studio-content">
+                        <Parallax
+                            className="nervape-studio"
+                            location="nervape-studio-section"
+                            animation={[
+                                {
+                                    translateY: '-50%',
+                                    scale: 1,
+                                    playScale: [0.3, 0.8],
+                                    filter: 'blur(0)'
+                                },
+                                {
+                                    translateY: '-50%',
+                                    scale: 0.9,
+                                    playScale: [0.5, 1],
+                                    filter: 'blur(2px)'
+                                }
+                            ]}
+                        >
+                            <div className="title-img">
+                                <img src={NervapeStudio} alt="" />
+                            </div>
 
-                    <div className="title">
-                        <p>Nervape Studio lives at the intersection of digital and physical art, storytelling, and blockchain technology.</p>
-                        <p>We are building a creator ecosystem that deeply values freedom, trust, and creativity to foster long-term, sustainable collaboration.</p>
+                            <div className="title">
+                                <p>Nervape Studio lives at the intersection of <span>digital</span> and <span>physical</span> art, storytelling, and blockchain technology.</p>
+                                <p>We are building a <span>creator ecosystem</span> that deeply values freedom, trust, and creativity to foster long-term, sustainable collaboration.</p>
+                            </div>
+                        </Parallax>
                     </div>
                 </div>
             </section>
 
-            {state.windowWidth > 750 && <div className="stable-line"></div>}
+            <div className="stable-line"></div>
 
             <section className="physical-section nervape-section">
-                {state.windowWidth > 750 && (
-                    <Parallax
-                        className="mask-cover-content"
-                        animation={{
-                            playScale: [1, 1.5],
-                            opacity: 0.7
-                        }}
-                    >
-                    </Parallax>
-                )}
+                <Parallax
+                    className="mask-cover-content"
+                    animation={{
+                        playScale: [1, 1.5],
+                        opacity: 0.7
+                    }}
+                >
+                </Parallax>
 
                 <div className="section-bg">
                     <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png" alt="SceneDragon" />
@@ -378,7 +393,7 @@ export default function AboutPage() {
 
             <div className="stable-line"></div>
 
-            <section className="image-section">
+            <section className="image-section your-section">
                 <Parallax
                     className="mask-cover-content"
                     animation={{
@@ -389,7 +404,7 @@ export default function AboutPage() {
                 </Parallax>
 
                 <div className="section-bg flex-center">
-                    <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/2ceb0a03-d3ee-4b78-88c1-1aaefe95de3c.png" alt="SceneDragon" />
+                    <img loading="lazy" style={{ position: 'absolute' }} src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/2ceb0a03-d3ee-4b78-88c1-1aaefe95de3c.png" alt="SceneDragon" />
 
                     <div className="title">”YOU ARE THE ONLY ONE WHO CAN DEFINE YOURSELF.”</div>
                 </div>
