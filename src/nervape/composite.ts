@@ -59,3 +59,9 @@ export class NervapeIntro {
     sub_title2: string = "";
     desc: string = "";
 }
+
+export class NervapeModule {
+    title: string = "";
+    color: string = "";
+    desc: string = "";
+}

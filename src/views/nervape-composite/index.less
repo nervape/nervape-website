@@ -337,6 +337,40 @@
       }
     }
 
+    .modules-section {
+      background: #C7C59C;
+      width: 100%;
+      padding: 40px;
+
+      .modules-content {
+        flex-wrap: wrap;
+
+        .module-item {
+          width: calc((100% - 12px) / 4);
+          aspect-ratio: 1;
+          margin-right: 4px;
+          margin-top: 4px;
+          border-radius: 24px;
+          padding: 32px;
+
+          .title {
+            color: #FFF;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: normal;
+          }
+
+          &:nth-child(4n) {
+            margin-right: 0;
+          }
+
+          &:nth-child(-n + 4) {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+
     .banner-section {
       width: 100vw;
       min-height: 200vh;

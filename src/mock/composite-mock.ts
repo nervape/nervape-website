@@ -1,4 +1,4 @@
-import { Question, Intro, Parthership, Phase, Banner, NervapeIntro } from "../nervape/composite";
+import { Question, Intro, Parthership, Phase, Banner, NervapeIntro, NervapeModule } from "../nervape/composite";
 
 import Landing01 from '../assets/nacp/Landing-01.png';
 import Landing02 from '../assets/nacp/Landing-02.png';
@@ -234,10 +234,43 @@ const nervapeIntro: NervapeIntro[] = [
         sub_title2: "Spreading across multichain",
         desc: "1 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     }
-]
+];
+
+const nervapeModules: NervapeModule[] = [
+    {
+        title: 'Title',
+        color: "#BD4141",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+    },
+    {
+        title: 'Title',
+        color: "#507CAF",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+    },
+    {
+        title: 'Title',
+        color: "#1D7C7C",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+    },
+    {
+        title: 'Title',
+        color: "#408F51",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+    },
+    {
+        title: 'Title',
+        color: "#B535A9",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+    },
+    {
+        title: 'Title',
+        color: "#A7A954",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+    },
+];
 
 export class PfpMocks {
     public static fnGetNacpData() {
-        return { questionsData, introData, parthershipData, phaseData, bannerData, nervapeIntro }
+        return { questionsData, introData, parthershipData, phaseData, bannerData, nervapeIntro, nervapeModules }
     }
 }

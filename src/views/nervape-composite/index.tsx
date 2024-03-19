@@ -22,7 +22,7 @@ import BActive from '../../assets/wallet/nacp/icon/b_active.svg';
 import EndInActive from '../../assets/wallet/nacp/icon/end_inactive.svg';
 import SoonInActive from '../../assets/wallet/nacp/icon/soon_inactive.svg';
 
-import { Banner, Intro, MintInfo, NervapeIntro, Parthership, Phase, Question, SneakPeek } from "../../nervape/composite";
+import { Banner, Intro, MintInfo, NervapeIntro, NervapeModule, Parthership, Phase, Question, SneakPeek } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
@@ -123,6 +123,8 @@ export default function Composite() {
     const [nervapeOneActive, setNervapeOneActive] = useState(true);
     const [nervapeTwoActive, setNervapeTwoActive] = useState(false);
 
+    const [modules, setModules] = useState<NervapeModule[]>([]);
+
     const fnGetSneakPeeks = async () => {
         const res = await nervapeApi.fnNacpSneakPeek();
         setSneakPeeks(res);
@@ -170,13 +172,15 @@ export default function Composite() {
             parthershipData,
             phaseData,
             bannerData,
-            nervapeIntro } = PfpMocks.fnGetNacpData();
+            nervapeIntro,
+            nervapeModules } = PfpMocks.fnGetNacpData();
         setIntroItems(introData);
         setParthershipItems(parthershipData);
         setPhases(phaseData);
         setQuestions(questionsData);
         setBanner(bannerData[Math.floor(Math.random() * bannerData.length)]);
         setNervapeIntros(nervapeIntro);
+        setModules(nervapeModules);
         fnGetSneakPeeks();
     }, []);
 
@@ -380,6 +384,20 @@ export default function Composite() {
                                 </div>
                             </section>
                         </Parallax>
+
+                        <section className="modules-section">
+                            <div className="modules-content flex-align">
+                                <div className="module-item"></div>
+                                {modules.map((m, i) => {
+                                    return (
+                                        <div className="module-item flex-center" style={{ background: m.color }} key={i}>
+                                            <div className="title">{m.title}</div>
+                                        </div>
+                                    );
+                                })}
+                                <div className="module-item"></div>
+                            </div>
+                        </section>
 
                         <div className="nacp-header-content">
                             <Parallax animation={{ backgroundColor: banner?.endBackground, playScale: [1, 3.5] }}
