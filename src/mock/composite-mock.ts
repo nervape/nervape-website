@@ -1,4 +1,4 @@
-import { Question, Intro, Parthership, Phase, Banner } from "../nervape/composite";
+import { Question, Intro, Parthership, Phase, Banner, NervapeIntro } from "../nervape/composite";
 
 import Landing01 from '../assets/nacp/Landing-01.png';
 import Landing02 from '../assets/nacp/Landing-02.png';
@@ -29,6 +29,8 @@ import Banner2Ape from '../assets/nacp/banner_2_ape.png';
 import Banner2Bg from '../assets/nacp/banner_2_bg.png';
 import Banner3Ape from '../assets/nacp/banner_3_ape.png';
 import Banner3Bg from '../assets/nacp/banner_3_bg.png';
+
+import NervapeTitle from '../assets/landing-page/nervape_title.svg';
 
 const questionsData: Question[] = [
     {
@@ -217,8 +219,25 @@ const bannerData: Banner[] = [
     }
 ]; 
 
+const nervapeIntro: NervapeIntro[] = [
+    {
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/63d4b427-e741-422b-b734-553817ded90d.png",
+        title: NervapeTitle,
+        sub_title1: "Rooted in Bitcoin",
+        sub_title2: "Spreading across multichain",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+    },
+    {
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/63d4b427-e741-422b-b734-553817ded90d.png",
+        title: NervapeTitle,
+        sub_title1: "Rooted in Bitcoin",
+        sub_title2: "Spreading across multichain",
+        desc: "1 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+    }
+]
+
 export class PfpMocks {
     public static fnGetNacpData() {
-        return { questionsData, introData, parthershipData, phaseData, bannerData }
+        return { questionsData, introData, parthershipData, phaseData, bannerData, nervapeIntro }
     }
 }

@@ -46,3 +46,16 @@ export class SneakPeek {
     url: string = '';
     sort: number = 0;
 }
+
+export class MintInfo {
+    total: number = 2777;
+    minted: number = 0;
+}
+
+export class NervapeIntro {
+    cover_image: string = "";
+    title: string = "";
+    sub_title1: string = "";
+    sub_title2: string = "";
+    desc: string = "";
+}

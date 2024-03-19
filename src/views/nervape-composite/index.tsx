@@ -17,7 +17,12 @@ import DiscodeIcon from '../../assets/nacp/discode.svg';
 import BannerText1 from '../../assets/nacp/banner_text_1.png';
 import BannerText2 from '../../assets/nacp/banner_text_2.png';
 
-import { Banner, Intro, Parthership, Phase, Question, SneakPeek } from "../../nervape/composite";
+import BInActive from '../../assets/wallet/nacp/icon/b_inactive.svg';
+import BActive from '../../assets/wallet/nacp/icon/b_active.svg';
+import EndInActive from '../../assets/wallet/nacp/icon/end_inactive.svg';
+import SoonInActive from '../../assets/wallet/nacp/icon/soon_inactive.svg';
+
+import { Banner, Intro, MintInfo, NervapeIntro, Parthership, Phase, Question, SneakPeek } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
@@ -111,6 +116,13 @@ export default function Composite() {
     const [sneakCurrPercent, setSneakCurrPercent] = useState(0);
     const sneakRef = useRef(null);
 
+    const [mintStatus, setMintStatus] = useState(1); // 0未开始 1 进行中 2 已结束
+    const [mintInfo, setMintInfo] = useState<MintInfo>();
+
+    const [nervapeIntros, setNervapeIntros] = useState<NervapeIntro[]>([]);
+    const [nervapeOneActive, setNervapeOneActive] = useState(true);
+    const [nervapeTwoActive, setNervapeTwoActive] = useState(false);
+
     const fnGetSneakPeeks = async () => {
         const res = await nervapeApi.fnNacpSneakPeek();
         setSneakPeeks(res);
@@ -157,12 +169,14 @@ export default function Composite() {
             introData,
             parthershipData,
             phaseData,
-            bannerData } = PfpMocks.fnGetNacpData();
+            bannerData,
+            nervapeIntro } = PfpMocks.fnGetNacpData();
         setIntroItems(introData);
         setParthershipItems(parthershipData);
         setPhases(phaseData);
         setQuestions(questionsData);
         setBanner(bannerData[Math.floor(Math.random() * bannerData.length)]);
+        setNervapeIntros(nervapeIntro);
         fnGetSneakPeeks();
     }, []);
 
@@ -198,6 +212,175 @@ export default function Composite() {
             {showLandingPage && (
                 <div className="landing-page">
                     <div className="page-wrap">
+                        <section className="header-section section-content flex-align">
+                            <div className="banner">
+                                <img src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png" alt="" />
+                            </div>
+
+                            <div className="section-info">
+                                <div className="title">Multi-chain composable NFT based on Bitcoin</div>
+
+                                <div className="minting-container">
+                                    {mintStatus == 0 ? (
+                                        <div className="count-down mint-not-start flex-align">
+                                            <img src={BInActive} alt="" />
+                                            BONELIST MINT <span>starts in</span> 30 days, 20 hrs
+                                        </div>
+                                    ) : (
+                                        <div className="minting-box" style={{ padding: '20px' }}>
+                                            <div className={`minting-content ${mintStatus == 1 ? 'ongoing' : 'over'}`}>
+                                                <div className="flex-align minting-header">
+                                                    <img src={mintStatus == 1 ? BActive : EndInActive} alt="" />
+
+                                                    <div className="minting-info">
+                                                        <div className="m-title">
+                                                            {mintStatus == 1 ? (
+                                                                <div>
+                                                                    BONELIST MINT
+                                                                    <span>is live!</span>
+                                                                </div>
+                                                            ) : 'MINT COMPLETE!'}
+                                                        </div>
+                                                        {mintStatus == 1 && (
+                                                            <div className="minting-tips">Ends in 3 hour 15 minutes</div>
+                                                        )}
+                                                    </div>
+                                                    {mintStatus == 1 && (
+                                                        <div className="minting-btn cursor">MINT</div>
+                                                    )}
+                                                </div>
+
+                                                <div className="minting-progress">
+                                                    <div className="progress-content"></div>
+
+                                                    <div className="progress-data flex-align">
+                                                        <div className="progress-title">Mint progress</div>
+                                                        <div className="progress">27%(1000/2777 minted)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="bone-list">
+                                    <div className="title">Bonelist Lookup</div>
+                                    <div className="address-input">
+                                        <Tooltip
+                                            title={() => {
+                                                return (
+                                                    <p>{isBonelist ? (
+                                                        <>
+                                                            🦴 You’re a bonelist holder!
+                                                            <br />
+                                                            🦧 Welcome to the Third Continent.
+                                                        </>
+                                                    ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
+                                                );
+                                            }}
+                                            placement="bottom"
+                                            overlayClassName="bonelist-tooltip"
+                                            color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
+                                            open={open}>
+                                            <input type="text" value={godwokenAddress} onInput={(e: any) => {
+                                                setGodwokenAddress(e.target.value)
+                                                setOpen(false);
+                                            }} placeholder="Ethereum address" />
+                                        </Tooltip>
+                                        <button
+                                            className="check-btn cursor"
+                                            onClick={async () => {
+                                                if (!godwokenAddress) return;
+                                                setOpen(false);
+                                                const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
+                                                console.log(res);
+                                                setOpen(true);
+                                                setIsBonelist(res > 0);
+                                            }}>CHECK</button>
+                                    </div>
+                                    <div className="tip">
+                                        To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div className="scroll-content">
+                            <div className="scroll-list">
+                                <ul>
+                                    <li>
+                                        <span>SHOW YOUR CREATIVITY</span>
+                                        <span className="express-yourself">EXPRESS YOURSELF</span>
+                                        {state.windowWidth > 375 ? (
+                                            <>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                            </>
+                                        ) : ''}
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <span>SHOW YOUR CREATIVITY</span>
+                                        <span className="express-yourself">EXPRESS YOURSELF</span>
+                                        {state.windowWidth > 375 ? (
+                                            <>
+                                                <span>SHOW YOUR CREATIVITY</span>
+                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                            </>
+                                        ) : ''}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <Parallax location="nervape-section" animation={[
+                            {
+                                playScale: [1.5, 1.5], onStart: () => {
+                                    setNervapeOneActive(false);
+
+                                    setTimeout(() => {
+                                        setNervapeTwoActive(true);
+                                    }, 500);
+                                }, onCompleteBack: () => {
+                                    setNervapeTwoActive(false);
+
+                                    setTimeout(() => {
+                                        setNervapeOneActive(true);
+                                    }, 500);
+                                }
+                            }
+                        ]}>
+                            <section className="nervape-section section-content" id="nervape-section">
+                                <div className="nervape-content">
+                                    {nervapeIntros.map((n, i) => {
+                                        return (
+                                            <div className={`nervape-item transition-3 ${((i == 0 && nervapeOneActive) || (i == 1 && nervapeTwoActive)) && 'active'}`} key={i}>
+                                                <div className="item-content flex-align">
+                                                    <div className="cover-image">
+                                                        <img src={n.cover_image} className="transition" alt="Cover Image" />
+                                                    </div>
+
+                                                    <div className="right-content flex-align">
+                                                        <div className={`right-info transition right-info-${i} ${((i == 0 && nervapeOneActive) || (i == 1 && nervapeTwoActive)) && 'active'}`}>
+                                                            <div className="title">
+                                                                <img src={n.title} alt="Title" />
+                                                            </div>
+
+                                                            <div className={`sub-title transition ${nervapeOneActive && 'active'}`}>{n.sub_title1}</div>
+                                                            <div className={`sub-title transition ${nervapeTwoActive && 'active'}`}>{n.sub_title2}</div>
+
+                                                            <div className="desc">{n.desc}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </section>
+                        </Parallax>
+
                         <div className="nacp-header-content">
                             <Parallax animation={{ backgroundColor: banner?.endBackground, playScale: [1, 3.5] }}
                                 style={{ background: banner?.startBackground }}>
@@ -341,45 +524,16 @@ export default function Composite() {
                             </Parallax>
                         </div>
 
-                        <div className="scroll-content">
-                            <div className="scroll-list">
-                                <ul>
-                                    <li>
-                                        <span>SHOW YOUR CREATIVITY</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 375 ? (
-                                            <>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
-                                            </>
-                                        ) : ''}
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <span>SHOW YOUR CREATIVITY</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 375 ? (
-                                            <>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
-                                            </>
-                                        ) : ''}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
                         <section className="minting-phases-section">
                             <div className="minting-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">DRESSING STEPS</div>
                                         <div className="desc">
-                                            NACP PFP has 13 different types of assets you can use to assemble your Nervape PFP. 
-                                            These asset classes will be divided in 3 steps. 
-                                            Each step will allow you to easily buy, trade, and sell your NACP! 
-                                            We encourage you to try through all 3 steps to get the full PFP experience 
+                                            NACP PFP has 13 different types of assets you can use to assemble your Nervape PFP.
+                                            These asset classes will be divided in 3 steps.
+                                            Each step will allow you to easily buy, trade, and sell your NACP!
+                                            We encourage you to try through all 3 steps to get the full PFP experience
                                             that our platform has to offer and to design the ape PFP you want!
                                         </div>
                                         <div className="learn-more">More details coming soon!</div>
