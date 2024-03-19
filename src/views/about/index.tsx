@@ -246,23 +246,28 @@ export default function AboutPage() {
 
             <section className="image-section">
                 <div className="section-bg flex-center">
-                    <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" />
+                    {/* <img loading="lazy" src={state.windowWidth !== 375 ? SceneDragon : SceneDragonSmall} alt="SceneDragon" /> */}
 
-                    <div className="title">”Nervape Studio lives at the intersection of digital and physical art, storytelling, and blockchain technology. We are building a creator ecosystem that deeply values freedom, trust, and creativity to foster long-term, sustainable collaboration.”</div>
+                    <div className="title">
+                        <p>Nervape Studio lives at the intersection of digital and physical art, storytelling, and blockchain technology.</p>
+                        <p>We are building a creator ecosystem that deeply values freedom, trust, and creativity to foster long-term, sustainable collaboration.</p>
+                    </div>
                 </div>
             </section>
 
-            <div className="stable-line"></div>
+            {state.windowWidth > 750 && <div className="stable-line"></div>}
 
-            <section className="physical-section">
-                <Parallax
-                    className="mask-cover-content"
-                    animation={{
-                        playScale: [1, 1.5],
-                        opacity: 0.7
-                    }}
-                >
-                </Parallax>
+            <section className="physical-section nervape-section">
+                {state.windowWidth > 750 && (
+                    <Parallax
+                        className="mask-cover-content"
+                        animation={{
+                            playScale: [1, 1.5],
+                            opacity: 0.7
+                        }}
+                    >
+                    </Parallax>
+                )}
 
                 <div className="section-bg">
                     <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png" alt="SceneDragon" />
@@ -295,8 +300,8 @@ export default function AboutPage() {
                 <div className="section-bg flex-center">
                     <img loading="lazy" src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/d3f69884-4a83-44c0-a03c-20f2b90c63e9.png" alt="SceneDragon" />
                     {/* <div className="lightgray"></div> */}
+                    <div className="coming-soon">COMING SOON...</div>
                 </div>
-                <div className="coming-soon">COMING SOON...</div>
                 {/* <div className="physical-info section-info">
                     <div className="title">Artifact</div>
                     <div className="desc">
@@ -394,7 +399,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <div className="stable-line"></div>
+            {state.windowWidth > 750 && <div className="stable-line"></div>}
             {/* <Parallax
                 animation={{
                     playScale: [0, 0],
@@ -472,14 +477,16 @@ export default function AboutPage() {
                 </div>
             </section> */}
             <section className="humans-section">
-                <Parallax
-                    className="mask-cover-content"
-                    animation={{
-                        playScale: [1, 1.5],
-                        opacity: 0.7
-                    }}
-                >
-                </Parallax>
+                {state.windowWidth > 750 && (
+                    <Parallax
+                        className="mask-cover-content"
+                        animation={{
+                            playScale: [1, 1.5],
+                            opacity: 0.7
+                        }}
+                    >
+                    </Parallax>
+                )}
 
                 <div className="humans-content">
                     <h3 className="title">The Humans and Other Creatures Behind Nervape</h3>
