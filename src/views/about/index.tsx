@@ -191,7 +191,7 @@ export default function AboutPage() {
                                 className="light-c small"
                             >
                                 <img className="light" src={AboutLightSmall} alt="AboutLightSmall" />
-                                <div className="intro-top-text">Nervape is a Metaverse with an Ongoing Story and 3D NFTs Shaped by the Community.</div>
+                                <div className="intro-top-text">Nervape, the Power of Co-Creation.</div>
                             </Parallax>
                         </>
                     )}
