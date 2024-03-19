@@ -59,12 +59,12 @@ export default function AboutPage() {
         setDigitals([
             {
                 cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/63d4b427-e741-422b-b734-553817ded90d.png',
-                title: 'STORYTELLING',
+                title: 'VIEW SAGA',
                 link: '/story'
             },
             {
                 cover_image: 'https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/33702679-bcf5-4ba6-83ac-7eafdbd30958.png',
-                title: '3D COLLECTION NFT',
+                title: 'VIEW 3D COLLECTIONS',
                 link: '/3dnft'
             }
         ]);
