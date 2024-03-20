@@ -612,7 +612,7 @@ export default function NavHeader(props: any) {
                     handleHeaderClick('nacp');
                   }}>
                   <div className="nacp-logo">
-                    <img className="icon-image" src={state.windowWidth <= 750 ? MNacpLogo : NacpLogo} alt="" />
+                    <img className="icon-image" src={NacpLogo} alt="" />
                   </div>
                 </div>
                 <Menu
