@@ -298,7 +298,7 @@ export default function NFTPage() {
                                                     <div className="type-c">
                                                         <embed src={IconMap.get(banner.type)} className="icon" type="" />
                                                         {/* <img loading="lazy" src={IconMap.get(banner.type)} className="icon" alt="" /> */}
-                                                        <div className="type">{`${banner.type} NFT`.toUpperCase()}</div>
+                                                        <div className="type">{`${banner.type} DOB`.toUpperCase()}</div>
                                                     </div>
                                                     <div
                                                         className="play-icon-c cursor"
