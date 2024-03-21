@@ -1121,15 +1121,25 @@
     }
 
     .roadmap-section {
-      padding: 128px 0 0;
       background: #C7C59C;
       height: auto;
+
+      .section-title {
+        text-align: center;
+        background: #C7C59C;
+        padding-top: 128px;
+        padding-bottom: 32px;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
 
       .roadmap-content {
         width: 100%;
         margin: 0 auto;
         height: 300vh;
-
+        overflow: scroll;
+        
         .roadmap-item {
           padding-bottom: 74px;
           width: 1320px;
@@ -1138,41 +1148,13 @@
           text-align: center;
           position: sticky;
           top: calc(128px + 57px + 32px);
-
-          &:first-child {
-            .cover-image, .road-title, .road-desc {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          .road-map {
-            text-align: center;
-            padding-bottom: 32px;
-            position: absolute;
-            top: 128px;
-            z-index: 1;
-            background: #C7C59C;
-          }
+          opacity: 0;
 
           .cover-image {
             height: calc(100% - 96px - 32px - 57px - 64px);
             width: auto;
-            transform: translateY(75px);
-            opacity: 0;
           }
 
-          .cover-image, .road-title, .road-desc {
-            &.in {
-              transform: translateY(0);
-              opacity: 1;
-            }
-
-            &.out {
-              transform: translateY(-75px);
-              opacity: 0;
-            }
-          }
           .road-title {
             color: #F44D37;
             text-align: center;
@@ -1181,8 +1163,6 @@
             line-height: normal;
             padding-top: 64px;
             padding-bottom: 32px;
-            transform: translateY(75px);
-            opacity: 0;
           }
 
           .road-desc {
@@ -1191,8 +1171,6 @@
             font-size: 20px;
             font-weight: 500;
             line-height: normal;
-            transform: translateY(75px);
-            opacity: 0;
           }
         }
       }

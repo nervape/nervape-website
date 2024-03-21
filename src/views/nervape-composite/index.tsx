@@ -421,35 +421,23 @@ export default function Composite() {
                         </section>
 
                         <section className="roadmap-section">
+                            <div className="section-title">Roadmap</div>
+
                             <div className="roadmap-content">
                                 {roadmap.map((r, i) => {
                                     return (
                                         <Parallax className="roadmap-item" animation={[
                                             {
-                                                playScale: [0, 0.7],
+                                                playScale: [0.5, 0.7],
+                                                opacity: 1,
                                                 onComplete: () => {
-                                                    console.log(`onComplete ${i}`);
-                                                    if (i == 0) {
-                                                        setRoadmapStatus(['out', 'in', 'out']);
-                                                    } else if (i == 1) {
-                                                        setRoadmapStatus(['out', 'out', 'in'])
-                                                    } else {
-                                                        setRoadmapStatus(['out', 'out', 'out']);
-                                                    }
+
                                                 },
                                                 onStartBack: () => {
-                                                    console.log(`onStartBack ${i}`);
-                                                    if (i == 0) {
-                                                        setRoadmapStatus(['out', 'out', 'in']);
-                                                    } else if (i == 1) {
-                                                        setRoadmapStatus(['out', 'in', 'out']);
-                                                    } else {
-                                                        setRoadmapStatus(['in', 'out', 'out']);
-                                                    }
+
                                                 }
                                             }
                                         ]}>
-                                            {/* <div className="section-title road-map">Roadmap</div> */}
                                             <img src={r.cover_image} className={`transition cover-image ${roadmapStatus[i]}`} alt="" />
                                             <div className={`transition road-title ${roadmapStatus[i]}`}>{r.title}</div>
                                             <div className={`transition road-desc ${roadmapStatus[i]}`}>{r.desc}</div>
