@@ -128,9 +128,9 @@ export default function WalletNacp(props: { isFold: boolean; isBonelist: boolean
             <div className="wallet-nacp-content">
                 {currNacpTab == 'ape' ? (
                     <div className="nacp-content-apes flex-align">
-                        {nacpApes.map((ape, index) => {
+                        {/* {nacpApes.map((ape, index) => {
                             return <ApeItem ape={ape} key={index}></ApeItem>
-                        })}
+                        })} */}
                     </div>
                 ) : (
                     <div className="nacp-content-assets flex-align">
