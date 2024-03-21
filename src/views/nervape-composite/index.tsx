@@ -136,6 +136,10 @@ export default function Composite() {
     const [nervapeIntros, setNervapeIntros] = useState<NervapeIntro[]>([]);
     const [nervapeOneActive, setNervapeOneActive] = useState(true);
     const [nervapeTwoActive, setNervapeTwoActive] = useState(false);
+    
+    const [roadOneActive, setRoadOneActive] = useState(true);
+    const [roadTwoActive, setRoadTwoActive] = useState(false);
+    const [roadThreeActive, setRoadThreeActive] = useState(false);
 
     const [modules, setModules] = useState<NervapeModule[]>([]);
     const [roadmap, setRoadmap] = useState<RoadMap[]>([]);
@@ -420,42 +424,42 @@ export default function Composite() {
                             </div>
                         </section>
 
-                        <section className="roadmap-section">
-                            <div className="section-title">Roadmap</div>
+                        <Parallax location="roadmap-section" animation={[
+                            {
+                                playScale: [1.5, 1.5], onStart: () => {
+                                    setRoadOneActive(false);
+                                    setRoadTwoActive(true);
+                                }, onCompleteBack: () => {
+                                    setRoadTwoActive(false);
+                                    setRoadOneActive(true);
+                                }
+                            },
+                            {
+                                playScale: [2, 2], onStart: () => {
+                                    setRoadTwoActive(false);
+                                    setRoadThreeActive(true);
+                                }, onCompleteBack: () => {
+                                    setRoadThreeActive(false);
+                                    setRoadTwoActive(true);
+                                }
+                            }
+                        ]}>
+                            <section className="roadmap-section" id="roadmap-section">
+                                <div className="roadmap-content">
+                                    <div className="section-title">Roadmap</div>
 
-                            <div className="roadmap-content" id="roadmap-content">
-                                {roadmap.map((r, i) => {
-                                    return (
-                                        <Parallax className="roadmap-item" animation={[
-                                            {
-                                                playScale: [0.4, 0.5],
-                                                opacity: 1,
-                                                onComplete: () => {
-
-                                                },
-                                                onStartBack: () => {
-
-                                                }
-                                            },
-                                            {
-                                                playScale: [0.5, 0.6],
-                                                opacity: 0,
-                                                onComplete: () => {
-
-                                                },
-                                                onStartBack: () => {
-
-                                                }
-                                            }
-                                        ]}>
-                                            <img src={r.cover_image} className={`transition cover-image ${roadmapStatus[i]}`} alt="" />
-                                            <div className={`transition road-title ${roadmapStatus[i]}`}>{r.title}</div>
-                                            <div className={`transition road-desc ${roadmapStatus[i]}`}>{r.desc}</div>
-                                        </Parallax>
-                                    );
-                                })}
-                            </div>
-                        </section>
+                                    {roadmap.map((r, i) => {
+                                        return (
+                                            <div className={`roadmap-item roadmap-item-${i} ${((i == 1 && roadTwoActive) || (i == 2 && roadThreeActive)) ? 'active' : 'inactive'}`} style={{ zIndex: i }}>
+                                                <img src={r.cover_image} className={`cover-image`} alt="" />
+                                                <div className={`road-title ${roadmapStatus[i]}`}>{r.title}</div>
+                                                <div className={`road-desc ${roadmapStatus[i]}`}>{r.desc}</div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </section>
+                        </Parallax>
 
                         {/* <div className="nacp-header-content">
                             <Parallax animation={{ backgroundColor: banner?.endBackground, playScale: [1, 3.5] }}
