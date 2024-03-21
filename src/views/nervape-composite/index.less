@@ -57,9 +57,14 @@
         .title {
           width: 801px;
           color: #FFF;
-          font-size: 96px;
+          font-size: 48px;
           font-weight: 800;
-          line-height: 100px;
+          line-height: 48px;
+
+          p {
+            padding: 0;
+            margin: 0;
+          }
         }
 
         .minting-container {
@@ -1140,6 +1145,7 @@
           &.roadmap-item-1,
           &.roadmap-item-2 {
             &.active {
+
               .cover-image,
               .road-title,
               .road-desc {
@@ -1148,6 +1154,7 @@
             }
 
             &.inactive {
+
               .cover-image,
               .road-title,
               .road-desc {
@@ -1174,16 +1181,15 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
+            letter-spacing: 0;
           }
 
           .road-title {
-            color: #F44D37;
+            color: #E27847;
             text-align: center;
             font-size: 48px;
             font-weight: 700;
             line-height: normal;
-            padding-top: 64px;
-            padding-bottom: 32px;
             bottom: 224px;
           }
 
@@ -1428,18 +1434,266 @@
 
       .qa-section {
         .qa-container {
-          .qa-content {
-            .questions {}
+          width: 1120px;
+        }
+      }
+
+      .header-section {
+        .section-info {
+          width: fit-content;
+          margin: 0 40px;
+        }
+      }
+
+      .nervape-section {
+        .nervape-item {
+          .item-content {
+            flex-direction: column;
+
+            .cover-image,
+            .right-content {
+              width: 100%;
+              height: 50%;
+            }
+
+            .cover-image {
+              height: 50%;
+            }
+
+            .right-content {
+              justify-content: center;
+
+              .right-info {
+                padding: 0 32px;
+
+                .title {
+                  width: 500px;
+                  padding-bottom: 32px;
+                }
+
+                .desc {
+                  padding-top: 16px;
+                }
+              }
+            }
           }
+        }
+      }
+
+      .roadmap-section {
+        .roadmap-content {
+          .roadmap-item {
+
+            .road-title,
+            .road-desc {
+              width: 1120px;
+            }
+
+            .road-title {
+              bottom: 280px;
+            }
+          }
+        }
+      }
+
+      .join-section {
+        .join-content {
+          width: 1120px;
         }
       }
     }
   }
 }
 
-@media screen and (min-width: 750px) and (max-width: 1200px) {
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
   .home-page {
     .landing-page {
+      .header-section {
+        .section-info {
+          width: fit-content;
+          margin: 0 40px;
+        }
+      }
+
+      .nervape-section {
+        .nervape-item {
+          .item-content {
+            flex-direction: column;
+
+            .cover-image,
+            .right-content {
+              width: 100%;
+              height: 50%;
+            }
+
+            .cover-image {
+              height: 50%;
+            }
+
+            .right-content {
+              justify-content: center;
+
+              .right-info {
+                padding: 0 32px;
+
+                .title {
+                  width: 500px;
+                  padding-bottom: 32px;
+                }
+
+                .desc {
+                  padding-top: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .qa-section {
+        padding: 96px 0;
+
+        .qa-container {
+          width: 920px;
+        }
+      }
+
+      .roadmap-section {
+        .roadmap-content {
+          .roadmap-item {
+
+            .road-title,
+            .road-desc {
+              width: 920px;
+            }
+
+            .road-title {
+              bottom: 304px;
+            }
+          }
+        }
+      }
+
+      .join-section {
+        .join-content {
+          padding: 96px 0;
+          width: 920px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1000px) {
+  .home-page {
+    .landing-page {
+      .header-section {
+        .section-info {
+          width: fit-content;
+          margin: 0 40px;
+        }
+      }
+
+      .nervape-section {
+        .nervape-item {
+          .item-content {
+            flex-direction: column;
+
+            .cover-image,
+            .right-content {
+              width: 100%;
+              height: 50%;
+            }
+
+            .cover-image {
+              height: 50%;
+            }
+
+            .right-content {
+              justify-content: center;
+
+              .right-info {
+                padding: 0 32px;
+
+                .title {
+                  width: 500px;
+                  padding-bottom: 32px;
+                }
+
+                .desc {
+                  padding-top: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .modules-section {
+        padding: 40px 14px;
+
+        .modules-content {
+          flex-wrap: wrap;
+
+          .module-item {
+            width: calc((100% - 4px) / 2);
+
+            &:nth-child(4n) {
+              margin-right: 4px;
+            }
+
+            &:nth-child(2n) {
+              margin-right: 0;
+            }
+
+            &:nth-child(-n + 4) {
+              margin-top: 4px;
+            }
+
+            &:nth-child(-n + 2) {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+
+      .qa-section {
+        padding: 96px 0;
+
+        .qa-container {
+          width: 520px;
+        }
+      }
+
+      .roadmap-section {
+        .roadmap-content {
+          .roadmap-item {
+
+            .road-title,
+            .road-desc {
+              width: 520px;
+            }
+
+            .road-title {
+              font-size: 32px;
+              bottom: 299px;
+            }
+
+            .road-desc {
+              font-size: 16px;
+              padding-bottom: 96px;
+            }
+          }
+        }
+      }
+
+      .join-section {
+        .join-content {
+          padding: 96px 0;
+          width: 520px;
+        }
+      }
+
       .banner-section {
         .banner-content {
           .banner-container {
@@ -1683,36 +1937,6 @@
           }
         }
       }
-
-      .qa-section {
-        .qa-container {
-          width: 670px;
-
-          .qa-content {
-            .section-title {
-              width: 670px;
-              margin: 0 auto;
-            }
-
-            .questions {
-              margin: 0 auto;
-            }
-          }
-        }
-      }
-
-      .join-section {
-        .join-footer {
-          .join-content {
-            width: 670px;
-            padding-top: 96px;
-
-            .section-title {
-              font-weight: 900;
-            }
-          }
-        }
-      }
     }
   }
 }
@@ -1722,6 +1946,205 @@
     .landing-page {
       .img-filter {
         filter: drop-shadow(0px 4px 0px #000000);
+      }
+
+      .header-section {
+        .section-info {
+          width: fit-content;
+          margin: 0 14px;
+
+          .title {
+            font-size: 32px;
+            line-height: 32px;
+          }
+
+          .minting-container {
+            .minting-box {
+              width: calc(100vw - 28px);
+            }
+          }
+
+          .bone-list {
+            width: calc(100vw - 28px);
+          }
+        }
+      }
+
+      .nervape-section {
+        .nervape-item {
+          .item-content {
+            flex-direction: column;
+
+            .cover-image,
+            .right-content {
+              width: 100%;
+              height: 50%;
+            }
+
+            .cover-image {
+              height: 50%;
+            }
+
+            .right-content {
+              justify-content: center;
+
+              .right-info {
+                padding: 0 14px;
+
+                .title {
+                  width: 300px;
+                  padding-bottom: 24px;
+                }
+
+                .sub-title {
+                  font-size: 24px;
+                }
+
+                .desc {
+                  padding-top: 8px;
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .modules-section {
+        padding: 40px 14px;
+
+        .modules-content {
+          flex-wrap: wrap;
+
+          .module-item {
+            width: calc((100% - 4px) / 2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+              .title {
+                opacity: 1;
+              }
+  
+              .desc {
+                opacity: 1;
+              }
+            }
+
+            .title, .desc {
+              opacity: 1;
+              position: relative;
+              top: unset;
+              left: unset;
+              transform: unset;
+              text-align: center;
+            }
+
+            .title {
+              font-size: 24px;
+              padding-bottom: 10px;
+            }
+
+            .desc {
+              letter-spacing: 0;
+              width: calc(100% - 14px);
+              font-size: 12px;
+            }
+
+            &:nth-child(4n) {
+              margin-right: 4px;
+            }
+
+            &:nth-child(2n) {
+              margin-right: 0;
+            }
+
+            &:nth-child(-n + 4) {
+              margin-top: 4px;
+            }
+
+            &:nth-child(-n + 2) {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+
+      .qa-section {
+        padding: 96px 0;
+
+        .qa-container {
+          width: 347px;
+
+          .qa-content {
+            .questions {
+              .question {
+                padding: 32px 0;
+
+                .q, .a {
+                  font-size: 16px;
+                  line-height: normal;
+                }
+
+                .arrow {
+                  right: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .roadmap-section {
+        .roadmap-content {
+          padding-top: 48px;
+
+          .section-title {
+            top: 48px;
+          }
+
+          .roadmap-item {
+            .road-title,
+            .road-desc {
+              width: 347px;
+            }
+
+            .road-title {
+              font-size: 24px;
+              bottom: 233px;
+            }
+
+            .road-desc {
+              font-size: 12px;
+              padding-bottom: 64px;
+            }
+          }
+
+          .nav-tabs {
+            bottom: 20px;
+  
+            .nav-tab {
+              width: 80px;
+              height: 8px;
+              margin-right: 8px;
+              border-radius: 2px;
+            }
+          }
+        }
+      }
+
+      .join-section {
+        .join-content {
+          padding: 96px 0;
+          width: 347px;
+
+          .desc {
+            font-size: 16px;
+            line-height: normal;
+          }
+        }
       }
 
       .section-title {
@@ -2030,54 +2453,6 @@
                   margin-right: 0;
                 }
               }
-            }
-          }
-        }
-      }
-
-      .qa-section {
-        .qa-container {
-          width: 347px;
-
-          .qa-content {
-            padding: 96px 0 128px;
-
-            .section-title {
-              width: 347px;
-              margin: 0 auto;
-            }
-
-            .questions {
-              margin: 0 auto;
-              width: 347px;
-              padding-top: 48px;
-
-              .question {
-
-                .q,
-                .a {
-                  font-size: 16px;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .join-section {
-        .join-footer {
-          height: auto;
-
-          .join-content {
-            padding-top: 96px;
-            width: 347px;
-
-            .section-title {
-              font-weight: 900;
-            }
-
-            .desc {
-              font-size: 16px;
             }
           }
         }

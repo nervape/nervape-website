@@ -136,7 +136,7 @@ export default function Composite() {
     const [nervapeIntros, setNervapeIntros] = useState<NervapeIntro[]>([]);
     const [nervapeOneActive, setNervapeOneActive] = useState(true);
     const [nervapeTwoActive, setNervapeTwoActive] = useState(false);
-    
+
     const [roadOneActive, setRoadOneActive] = useState(true);
     const [roadTwoActive, setRoadTwoActive] = useState(false);
     const [roadThreeActive, setRoadThreeActive] = useState(false);
@@ -251,7 +251,11 @@ export default function Composite() {
                             </div>
 
                             <div className="section-info">
-                                <div className="title">Multi-chain composable NFT based on Bitcoin</div>
+                                <div className="title">
+                                    <p>Multi-chain</p>
+                                    <p>composable digital objects</p>
+                                    <p>built on Bitcoin</p>
+                                </div>
 
                                 <div className="minting-container">
                                     {mintStatus == 0 ? (
@@ -372,7 +376,7 @@ export default function Composite() {
                                 playScale: [1.5, 1.5], onStart: () => {
                                     setNervapeOneActive(false);
                                     setNervapeTwoActive(true);
-                                    
+
                                 }, onCompleteBack: () => {
                                     setNervapeTwoActive(false);
                                     setNervapeOneActive(true);

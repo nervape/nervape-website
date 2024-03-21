@@ -272,17 +272,17 @@ const nervapeModules: NervapeModule[] = [
 const roadMaps: RoadMap[] = [
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/6579ab79-cdaf-43c4-a29c-83edea32eda8.png",
-        title: "1Create, Collaborate, and Grow Together",
+        title: "Create, Collaborate, and Grow Together",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     },
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e8f617b8-fc99-4d6a-a4c8-6f3803cc469e.png",
-        title: "2Create, Collaborate, and Grow Together",
+        title: "Create, Collaborate, and Grow Together",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     },
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/6579ab79-cdaf-43c4-a29c-83edea32eda8.png",
-        title: "3Create, Collaborate, and Grow Together",
+        title: "Create, Collaborate, and Grow Together",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     }
 ];
