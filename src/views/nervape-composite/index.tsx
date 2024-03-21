@@ -426,7 +426,7 @@ export default function Composite() {
 
                         <Parallax location="roadmap-section" animation={[
                             {
-                                playScale: [1.5, 1.5], onStart: () => {
+                                playScale: [3, 3], onStart: () => {
                                     setRoadOneActive(false);
                                     setRoadTwoActive(true);
                                     setRoadmapIndex(1);
@@ -437,7 +437,7 @@ export default function Composite() {
                                 }
                             },
                             {
-                                playScale: [2, 2], onStart: () => {
+                                playScale: [4, 4], onStart: () => {
                                     setRoadTwoActive(false);
                                     setRoadThreeActive(true);
                                     setRoadmapIndex(2);
@@ -475,26 +475,36 @@ export default function Composite() {
                                                             top: roadmapTop,
                                                             behavior: 'smooth'
                                                         })
+
+                                                        setTimeout(() => {
+                                                            setRoadmapIndex(0);
+                                                        }, 300);
                                                     } else if (n == 1) {
                                                         setRoadOneActive(false);
                                                         setRoadTwoActive(true);
                                                         setRoadThreeActive(false);
 
                                                         window.scrollTo({
-                                                            top: roadmapTop + window.innerHeight * 1.5,
+                                                            top: roadmapTop + window.innerHeight * 4.1,
                                                             behavior: 'smooth'
                                                         })
+
+                                                        setTimeout(() => {
+                                                            setRoadmapIndex(1);
+                                                        }, 300);
                                                     } else {
                                                         setRoadOneActive(false);
                                                         setRoadTwoActive(false);
                                                         setRoadThreeActive(true);
 
-                                                        setRoadmapIndex(2);
-
                                                         window.scrollTo({
-                                                            top: roadmapTop + window.innerHeight * 2.5,
+                                                            top: roadmapTop + window.innerHeight * 5.1,
                                                             behavior: 'smooth'
                                                         })
+
+                                                        setTimeout(() => {
+                                                            setRoadmapIndex(2);
+                                                        }, 500);
                                                     }
                                                 }}></div>
                                             )
