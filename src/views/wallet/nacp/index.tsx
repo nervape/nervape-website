@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import './index.less';
 
-import NacpLogo from '../../../assets/wallet/NACP_logo.svg';
+import NacpLogo from '../../../assets/logo/logo_nacp.svg';
 import DefaultNacpApe from '../../../assets/wallet/nacp/default_nacp_ape.png';
 import BonelistRequired from '../../../assets/wallet/nacp/Bonelist_Required.png';
 import { Popover } from "antd";

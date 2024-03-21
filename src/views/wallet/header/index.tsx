@@ -261,17 +261,17 @@ export default function WalletHeader(props: any) {
                             }}>Claim</div>
                         </div>
                         <div className={`nacp flex-align ${isBonelist && 'holder'}`}>
-                            <div className="name">NACP</div>
+                            <div className="name">NERVAPE</div>
                             <div className="icon">
                                 <img src={isBonelist ? SuccessIcon : FailedIcon} alt="FailedIcon" />
                             </div>
                         </div>
-                        <div className="nft-3d flex-align">
+                        {/* <div className="nft-3d flex-align">
                             <div className="name">3D NFT</div>
                             <div className="icon">
                                 <img src={FailedIcon} alt="FailedIcon" />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="bone-item bone-points">
                         <div className="title flex-align">
