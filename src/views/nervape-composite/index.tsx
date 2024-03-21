@@ -22,7 +22,7 @@ import BActive from '../../assets/wallet/nacp/icon/b_active.svg';
 import EndInActive from '../../assets/wallet/nacp/icon/end_inactive.svg';
 import SoonInActive from '../../assets/wallet/nacp/icon/soon_inactive.svg';
 
-import { Banner, Intro, MintInfo, NervapeIntro, NervapeModule, Parthership, Phase, Question, SneakPeek } from "../../nervape/composite";
+import { Banner, Intro, MintInfo, NervapeIntro, NervapeModule, Parthership, Phase, Question, RoadMap, SneakPeek } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
@@ -33,8 +33,8 @@ import { OverPack, Parallax } from 'rc-scroll-anim';
 import TweenOne from 'rc-tween-one';
 import QueueAnim from 'rc-queue-anim';
 import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
-import { EffectFade } from 'swiper';
-import "swiper/css";
+import SwiperCore, { EffectFade, Mousewheel } from 'swiper';
+import "swiper/swiper-bundle.min.css";
 
 export function SwiperPrevButton(props: { index: number }) {
     const { index } = props;
@@ -95,6 +95,20 @@ export function SwiperContent(props: { phase: Phase; index: number }) {
     );
 }
 
+export function RoadmapSwiperContent(props: { roadmap: RoadMap; index: number }) {
+    const { roadmap, index } = props;
+    const swiperSlide = useSwiperSlide();
+
+    return (
+        <div className="roadmap-item">
+            {/* <div className="section-title road-map">Roadmap</div> */}
+            <img src={roadmap.cover_image} className="cover-image" alt="" />
+            <div className="road-title">{roadmap.title}</div>
+            <div className="road-desc">{roadmap.desc}</div>
+        </div>
+    );
+}
+
 export default function Composite() {
     const { state } = useContext(DataContext);
     const [showLandingPage, setShowLandingPage] = useState(false);
@@ -124,11 +138,15 @@ export default function Composite() {
     const [nervapeTwoActive, setNervapeTwoActive] = useState(false);
 
     const [modules, setModules] = useState<NervapeModule[]>([]);
+    const [roadmap, setRoadmap] = useState<RoadMap[]>([]);
+    const [roadmapStatus, setRoadmapStatus] = useState<string[]>([]);
 
     const fnGetSneakPeeks = async () => {
         const res = await nervapeApi.fnNacpSneakPeek();
         setSneakPeeks(res);
     }
+
+    SwiperCore.use([EffectFade, Mousewheel]);
 
     const IntroItem = (props: { item: any; }) => {
         const { item } = props;
@@ -173,7 +191,8 @@ export default function Composite() {
             phaseData,
             bannerData,
             nervapeIntro,
-            nervapeModules } = PfpMocks.fnGetNacpData();
+            nervapeModules,
+            roadMaps } = PfpMocks.fnGetNacpData();
         setIntroItems(introData);
         setParthershipItems(parthershipData);
         setPhases(phaseData);
@@ -181,6 +200,7 @@ export default function Composite() {
         setBanner(bannerData[Math.floor(Math.random() * bannerData.length)]);
         setNervapeIntros(nervapeIntro);
         setModules(nervapeModules);
+        setRoadmap(roadMaps);
         fnGetSneakPeeks();
     }, []);
 
@@ -390,8 +410,9 @@ export default function Composite() {
                                 <div className="module-item"></div>
                                 {modules.map((m, i) => {
                                     return (
-                                        <div className="module-item flex-center" style={{ background: m.color }} key={i}>
-                                            <div className="title">{m.title}</div>
+                                        <div className="module-item" style={{ background: m.color }} key={i}>
+                                            <div className="title transition">{m.title}</div>
+                                            <div className="desc transition">{m.desc}</div>
                                         </div>
                                     );
                                 })}
@@ -399,7 +420,46 @@ export default function Composite() {
                             </div>
                         </section>
 
-                        <div className="nacp-header-content">
+                        <section className="roadmap-section">
+                            <div className="roadmap-content">
+                                {roadmap.map((r, i) => {
+                                    return (
+                                        <Parallax className="roadmap-item" animation={[
+                                            {
+                                                playScale: [0, 0.7],
+                                                onComplete: () => {
+                                                    console.log(`onComplete ${i}`);
+                                                    if (i == 0) {
+                                                        setRoadmapStatus(['out', 'in', 'out']);
+                                                    } else if (i == 1) {
+                                                        setRoadmapStatus(['out', 'out', 'in'])
+                                                    } else {
+                                                        setRoadmapStatus(['out', 'out', 'out']);
+                                                    }
+                                                },
+                                                onStartBack: () => {
+                                                    console.log(`onStartBack ${i}`);
+                                                    if (i == 0) {
+                                                        setRoadmapStatus(['out', 'out', 'in']);
+                                                    } else if (i == 1) {
+                                                        setRoadmapStatus(['out', 'in', 'out']);
+                                                    } else {
+                                                        setRoadmapStatus(['in', 'out', 'out']);
+                                                    }
+                                                }
+                                            }
+                                        ]}>
+                                            {/* <div className="section-title road-map">Roadmap</div> */}
+                                            <img src={r.cover_image} className={`transition cover-image ${roadmapStatus[i]}`} alt="" />
+                                            <div className={`transition road-title ${roadmapStatus[i]}`}>{r.title}</div>
+                                            <div className={`transition road-desc ${roadmapStatus[i]}`}>{r.desc}</div>
+                                        </Parallax>
+                                    );
+                                })}
+                            </div>
+                        </section>
+
+                        {/* <div className="nacp-header-content">
                             <Parallax animation={{ backgroundColor: banner?.endBackground, playScale: [1, 3.5] }}
                                 style={{ background: banner?.startBackground }}>
 
@@ -446,57 +506,6 @@ export default function Composite() {
                                             </div>
                                         </TweenOne>
                                         <div className="composite-content" id="composite-content">
-                                            {/* <div className="intro-items" style={{ float: 'left', position: 'relative', left: '0' }}>
-                                                {introItems.map((item, index) => {
-                                                    return (
-                                                        <TweenOne className="intro-content"
-                                                            key={`composite-${index}`} animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }} style={{ opacity: 0 }}>
-                                                            <IntroItem item={item}></IntroItem>
-                                                            {index == 0 && (
-                                                                <div className="bone-list">
-                                                                    <div className="title">Bonelist Lookup</div>
-                                                                    <div className="address-input">
-                                                                        <Tooltip
-                                                                            title={() => {
-                                                                                return (
-                                                                                    <p>{isBonelist ? (
-                                                                                        <>
-                                                                                            🦴 You’re a bonelist holder!
-                                                                                            <br />
-                                                                                            🦧 Welcome to the Third Continent.
-                                                                                        </>
-                                                                                    ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
-                                                                                );
-                                                                            }}
-                                                                            placement="bottom"
-                                                                            overlayClassName="bonelist-tooltip"
-                                                                            color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
-                                                                            open={open}>
-                                                                            <input type="text" value={godwokenAddress} onInput={(e: any) => {
-                                                                                setGodwokenAddress(e.target.value)
-                                                                                setOpen(false);
-                                                                            }} placeholder="Ethereum address" />
-                                                                        </Tooltip>
-                                                                        <button
-                                                                            className="check-btn cursor"
-                                                                            onClick={async () => {
-                                                                                if (!godwokenAddress) return;
-                                                                                setOpen(false);
-                                                                                const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
-                                                                                console.log(res);
-                                                                                setOpen(true);
-                                                                                setIsBonelist(res > 0);
-                                                                            }}>CHECK</button>
-                                                                    </div>
-                                                                    <div className="tip">
-                                                                        To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </TweenOne>
-                                                    );
-                                                })}
-                                            </div> */}
                                             <div className="bone-list">
                                                 <div className="title">Bonelist Lookup</div>
                                                 <div className="address-input">
@@ -540,9 +549,9 @@ export default function Composite() {
                                     </OverPack>
                                 </section>
                             </Parallax>
-                        </div>
+                        </div> */}
 
-                        <section className="minting-phases-section">
+                        {/* <section className="minting-phases-section">
                             <div className="minting-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
@@ -590,7 +599,7 @@ export default function Composite() {
                                                         >
                                                             <div className="origin-item transition-1">
                                                                 <div className="phase-title">{phase.title}</div>
-                                                                {/* <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div> */}
+                                                                <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
                                                             </div>
                                                             <div className="hover-item transition-1 flex-center">
                                                                 <div className="editable">Editable Assets</div>
@@ -638,9 +647,9 @@ export default function Composite() {
                                     </div>
                                 </OverPack>
                             </div>
-                        </section>
+                        </section> */}
 
-                        <section className="what-new-section">
+                        {/* <section className="what-new-section">
                             <div className="what-new-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="what-1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
@@ -695,6 +704,64 @@ export default function Composite() {
                                     </div>
                                 </OverPack>
                             </div>
+                        </section> */}
+
+                        <section className="qa-section">
+                            <div className="qa-container">
+                                <div className="qa-content">
+                                    <TweenOne key="qa-2" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
+                                        <h3 className="section-title">Q&A</h3>
+                                    </TweenOne>
+
+                                    <div className="questions">
+                                        {questions.length ? (
+                                            questions.map((question, index) => {
+                                                return (
+                                                    <TweenOne
+                                                        key={`question-${index}`}
+                                                        animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }}
+                                                        style={{ opacity: 0 }}
+                                                        className={`question cursor ${question.open && 'open'}`}
+                                                        onMouseDown={(e) => {
+                                                            console.log('down', e)
+                                                            setClickPosition({ x: e.clientX, y: e.clientY })
+                                                        }}
+                                                        onMouseUp={(e) => {
+                                                            console.log('up', e)
+                                                            if (e.clientX == clickPosition.x && e.clientY == clickPosition.y) {
+                                                                let _questions = JSON.parse(JSON.stringify(questions));
+                                                                _questions.map((q: any, i: number) => {
+                                                                    if (i !== index) {
+                                                                        q.open = false;
+                                                                    }
+                                                                    return q;
+                                                                })
+                                                                _questions[index].open = !_questions[index].open;
+                                                                setQuestions(_questions);
+                                                            }
+                                                            setClickPosition({ x: 0, y: 0 })
+                                                        }}>
+                                                        <div className="arrow">
+                                                            <img loading="lazy" src={DownArrowIcon} alt="DownArrowIcon" />
+                                                        </div>
+                                                        <div className="q">
+                                                            <div className="q-l">Q:</div>
+                                                            <div className="q-r">{question.question}</div>
+                                                        </div>
+
+                                                        <div className={`a ${question.open && 'show'}`}>
+                                                            <div className="a-l">A:</div>
+                                                            <div className="a-r">
+                                                                {question.answer}
+                                                            </div>
+                                                        </div>
+                                                    </TweenOne>
+                                                );
+                                            })
+                                        ) : ''}
+                                    </div>
+                                </div>
+                            </div>
                         </section>
 
                         <section className="sneak-peek-section" style={{ height: `calc(${(state.windowWidth > 750 ? 664 : 379) * sneakPeeks.length + 'px'} - 100vw + ${state.windowWidth > 750 ? 192 : 64}px + 100vh)` }} ref={sneakRef}>
@@ -711,7 +778,7 @@ export default function Composite() {
                             </div>
                         </section>
 
-                        <section className="partner-program-section">
+                        {/* <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.2}>
                                     <div className="partner-top">
@@ -763,7 +830,7 @@ export default function Composite() {
                                             <img src={NacpLandingPartner} className="top-right" />
                                         </TweenOne>
                                     </div>
-                                    {/* <div className="partner-artists">
+                                    <div className="partner-artists">
                                         <TweenOne className="artist-title" key="partner-3" animation={{ opacity: 1, delay: 400, duration: 600 }}
                                             style={{ opacity: 0 }}>
                                             <div>PARTNER ARTISTS</div>
@@ -780,74 +847,6 @@ export default function Composite() {
                                                     </TweenOne>
                                                 );
                                             })}
-                                        </div>
-                                    </div> */}
-                                </OverPack>
-                            </div>
-                        </section>
-                        {/* <section className="qa-section">
-                            <div className="qa-container">
-                                <OverPack className="flex-justify" always={false} playScale={0.3}>
-                                    {state.windowWidth > 750 && (
-                                        <TweenOne key="qa-1"
-                                            animation={{ opacity: 1, delay: 200, duration: 600 }}
-                                            style={{ opacity: 0 }}
-                                            className="qa-image-c">
-                                            <img src={QAImage} className="qa-image" alt="QAImage" />
-                                        </TweenOne>
-                                    )}
-
-                                    <div className="qa-content">
-                                        <TweenOne key="qa-2" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
-                                            <h3 className="section-title">Q&A</h3>
-                                        </TweenOne>
-
-                                        <div className="questions">
-                                            {questions.length ? (
-                                                questions.map((question, index) => {
-                                                    return (
-                                                        <TweenOne
-                                                            key={`question-${index}`}
-                                                            animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }}
-                                                            style={{ opacity: 0 }}
-                                                            className={`question cursor ${question.open && 'open'}`}
-                                                            onMouseDown={(e) => {
-                                                                console.log('down', e)
-                                                                setClickPosition({ x: e.clientX, y: e.clientY })
-                                                            }}
-                                                            onMouseUp={(e) => {
-                                                                console.log('up', e)
-                                                                if (e.clientX == clickPosition.x && e.clientY == clickPosition.y) {
-                                                                    let _questions = JSON.parse(JSON.stringify(questions));
-                                                                    _questions.map((q: any, i: number) => {
-                                                                        if (i !== index) {
-                                                                            q.open = false;
-                                                                        }
-                                                                        return q;
-                                                                    })
-                                                                    _questions[index].open = !_questions[index].open;
-                                                                    setQuestions(_questions);
-                                                                }
-                                                                setClickPosition({ x: 0, y: 0 })
-                                                            }}>
-                                                            <div className="arrow">
-                                                                <img loading="lazy" src={DownArrowIcon} alt="DownArrowIcon" />
-                                                            </div>
-                                                            <div className="q">
-                                                                <div className="q-l">Q:</div>
-                                                                <div className="q-r">{question.question}</div>
-                                                            </div>
-
-                                                            <div className={`a ${question.open && 'show'}`}>
-                                                                <div className="a-l">A:</div>
-                                                                <div className="a-r">
-                                                                    {question.answer}
-                                                                </div>
-                                                            </div>
-                                                        </TweenOne>
-                                                    );
-                                                })
-                                            ) : ''}
                                         </div>
                                     </div>
                                 </OverPack>

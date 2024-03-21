@@ -1,4 +1,4 @@
-import { Question, Intro, Parthership, Phase, Banner, NervapeIntro, NervapeModule } from "../nervape/composite";
+import { Question, Intro, Parthership, Phase, Banner, NervapeIntro, NervapeModule, RoadMap } from "../nervape/composite";
 
 import Landing01 from '../assets/nacp/Landing-01.png';
 import Landing02 from '../assets/nacp/Landing-02.png';
@@ -269,8 +269,26 @@ const nervapeModules: NervapeModule[] = [
     },
 ];
 
+const roadMaps: RoadMap[] = [
+    {
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/7ef6663c-5abf-4095-9f3c-bd385e44b3dc.png",
+        title: "1Create, Collaborate, and Grow Together",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+    },
+    {
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/7ef6663c-5abf-4095-9f3c-bd385e44b3dc.png",
+        title: "2Create, Collaborate, and Grow Together",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+    },
+    {
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/7ef6663c-5abf-4095-9f3c-bd385e44b3dc.png",
+        title: "3Create, Collaborate, and Grow Together",
+        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+    }
+];
+
 export class PfpMocks {
     public static fnGetNacpData() {
-        return { questionsData, introData, parthershipData, phaseData, bannerData, nervapeIntro, nervapeModules }
+        return { questionsData, introData, parthershipData, phaseData, bannerData, nervapeIntro, nervapeModules, roadMaps }
     }
 }

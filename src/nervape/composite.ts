@@ -65,3 +65,9 @@ export class NervapeModule {
     color: string = "";
     desc: string = "";
 }
+
+export class RoadMap {
+    cover_image: string = "";
+    title: string = "";
+    desc: string = "";
+}
