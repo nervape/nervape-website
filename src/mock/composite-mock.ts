@@ -228,7 +228,7 @@ const nervapeIntro: NervapeIntro[] = [
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     },
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/63d4b427-e741-422b-b734-553817ded90d.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/33702679-bcf5-4ba6-83ac-7eafdbd30958.png",
         title: NervapeTitle,
         sub_title1: "Rooted in Bitcoin",
         sub_title2: "Spreading across multichain",

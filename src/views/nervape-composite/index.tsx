@@ -428,7 +428,7 @@ export default function Composite() {
                                     return (
                                         <Parallax className="roadmap-item" animation={[
                                             {
-                                                playScale: [0.3, 0.4],
+                                                playScale: [0.4, 0.5],
                                                 opacity: 1,
                                                 onComplete: () => {
 
@@ -438,7 +438,7 @@ export default function Composite() {
                                                 }
                                             },
                                             {
-                                                playScale: [0.4, 0.7],
+                                                playScale: [0.5, 0.6],
                                                 opacity: 0,
                                                 onComplete: () => {
 
