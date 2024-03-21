@@ -26,7 +26,7 @@ import { scrollToTop } from "../../utils/utils";
 import WalletHeader from "./header";
 import { useLocation } from "react-router";
 
-import NacpIcon from "../../assets/wallet/navbar/nacp.svg";
+import NacpIcon from "../../assets/wallet/navbar/nacp.png";
 import NftIcon from "../../assets/wallet/navbar/nft.svg";
 import EventIcon from "../../assets/wallet/navbar/event.svg";
 import BadgeIcon from "../../assets/wallet/navbar/badge.svg";
