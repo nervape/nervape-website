@@ -143,7 +143,9 @@ export default function Composite() {
 
     const [modules, setModules] = useState<NervapeModule[]>([]);
     const [roadmap, setRoadmap] = useState<RoadMap[]>([]);
-    const [roadmapStatus, setRoadmapStatus] = useState<string[]>([]);
+    const [roadmapIndex, setRoadmapIndex] = useState(0);
+    const [roadmapTop, setRoadmapTop] = useState(0);
+    const roadmapRef = useRef(null);
 
     const fnGetSneakPeeks = async () => {
         const res = await nervapeApi.fnNacpSneakPeek();
@@ -231,6 +233,9 @@ export default function Composite() {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, true);
+        const { current } = roadmapRef;
+        console.log('roadmapRef scrollTop', (current as unknown as HTMLElement)?.offsetTop);
+        setRoadmapTop((current as unknown as HTMLElement)?.offsetTop);
 
         return () => window.removeEventListener('scroll', handleScroll, true);
     });
@@ -366,16 +371,11 @@ export default function Composite() {
                             {
                                 playScale: [1.5, 1.5], onStart: () => {
                                     setNervapeOneActive(false);
-
-                                    setTimeout(() => {
-                                        setNervapeTwoActive(true);
-                                    }, 500);
+                                    setNervapeTwoActive(true);
+                                    
                                 }, onCompleteBack: () => {
                                     setNervapeTwoActive(false);
-
-                                    setTimeout(() => {
-                                        setNervapeOneActive(true);
-                                    }, 500);
+                                    setNervapeOneActive(true);
                                 }
                             }
                         ]}>
@@ -429,22 +429,26 @@ export default function Composite() {
                                 playScale: [1.5, 1.5], onStart: () => {
                                     setRoadOneActive(false);
                                     setRoadTwoActive(true);
+                                    setRoadmapIndex(1);
                                 }, onCompleteBack: () => {
                                     setRoadTwoActive(false);
                                     setRoadOneActive(true);
+                                    setRoadmapIndex(0);
                                 }
                             },
                             {
                                 playScale: [2, 2], onStart: () => {
                                     setRoadTwoActive(false);
                                     setRoadThreeActive(true);
+                                    setRoadmapIndex(2);
                                 }, onCompleteBack: () => {
                                     setRoadThreeActive(false);
                                     setRoadTwoActive(true);
+                                    setRoadmapIndex(1);
                                 }
                             }
                         ]}>
-                            <section className="roadmap-section" id="roadmap-section">
+                            <section className="roadmap-section" ref={roadmapRef} id="roadmap-section">
                                 <div className="roadmap-content">
                                     <div className="section-title">Roadmap</div>
 
@@ -452,11 +456,50 @@ export default function Composite() {
                                         return (
                                             <div className={`roadmap-item roadmap-item-${i} ${((i == 1 && roadTwoActive) || (i == 2 && roadThreeActive)) ? 'active' : 'inactive'}`} style={{ zIndex: i }}>
                                                 <img src={r.cover_image} className={`cover-image`} alt="" />
-                                                <div className={`road-title ${roadmapStatus[i]}`}>{r.title}</div>
-                                                <div className={`road-desc ${roadmapStatus[i]}`}>{r.desc}</div>
+                                                <div className={`road-title`}>{r.title}</div>
+                                                <div className={`road-desc`}>{r.desc}</div>
                                             </div>
                                         );
                                     })}
+
+                                    <div className="nav-tabs flex-center">
+                                        {[0, 1, 2].map(n => {
+                                            return (
+                                                <div className={`nav-tab cursor transition ${roadmapIndex == n && 'active'}`} onClick={() => {
+                                                    if (n == 0) {
+                                                        setRoadOneActive(true);
+                                                        setRoadTwoActive(false);
+                                                        setRoadThreeActive(false);
+
+                                                        window.scrollTo({
+                                                            top: roadmapTop,
+                                                            behavior: 'smooth'
+                                                        })
+                                                    } else if (n == 1) {
+                                                        setRoadOneActive(false);
+                                                        setRoadTwoActive(true);
+                                                        setRoadThreeActive(false);
+
+                                                        window.scrollTo({
+                                                            top: roadmapTop + window.innerHeight * 1.5,
+                                                            behavior: 'smooth'
+                                                        })
+                                                    } else {
+                                                        setRoadOneActive(false);
+                                                        setRoadTwoActive(false);
+                                                        setRoadThreeActive(true);
+
+                                                        setRoadmapIndex(2);
+
+                                                        window.scrollTo({
+                                                            top: roadmapTop + window.innerHeight * 2.5,
+                                                            behavior: 'smooth'
+                                                        })
+                                                    }
+                                                }}></div>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
                             </section>
                         </Parallax>
