@@ -379,20 +379,20 @@ export default function Composite() {
                                 <div className="nervape-content">
                                     {nervapeIntros.map((n, i) => {
                                         return (
-                                            <div className={`nervape-item transition-3 ${((i == 0 && nervapeOneActive) || (i == 1 && nervapeTwoActive)) && 'active'}`} key={i}>
+                                            <div className={`nervape-item nervape-item-${i}`} key={i}>
                                                 <div className="item-content flex-align">
-                                                    <div className="cover-image">
-                                                        <img src={n.cover_image} className="transition" alt="Cover Image" />
+                                                    <div className={`cover-image ${((i == 1 && nervapeTwoActive)) ? 'active' : 'inactive'}`} >
+                                                        <img src={n.cover_image} alt="Cover Image" />
                                                     </div>
 
-                                                    <div className="right-content flex-align">
-                                                        <div className={`right-info transition right-info-${i} ${((i == 0 && nervapeOneActive) || (i == 1 && nervapeTwoActive)) && 'active'}`}>
+                                                    <div className={`right-content flex-align ${((i == 1 && nervapeTwoActive)) ? 'active' : 'inactive'}`}>
+                                                        <div className={`right-info`}>
                                                             <div className="title">
                                                                 <img src={n.title} alt="Title" />
                                                             </div>
 
-                                                            <div className={`sub-title transition ${nervapeOneActive && 'active'}`}>{n.sub_title1}</div>
-                                                            <div className={`sub-title transition ${nervapeTwoActive && 'active'}`}>{n.sub_title2}</div>
+                                                            <div className={`sub-title ${nervapeOneActive && 'active'}`}>{n.sub_title1}</div>
+                                                            <div className={`sub-title ${nervapeTwoActive && 'active'}`}>{n.sub_title2}</div>
 
                                                             <div className="desc">{n.desc}</div>
                                                         </div>
