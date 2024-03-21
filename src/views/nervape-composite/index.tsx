@@ -423,13 +423,23 @@ export default function Composite() {
                         <section className="roadmap-section">
                             <div className="section-title">Roadmap</div>
 
-                            <div className="roadmap-content">
+                            <div className="roadmap-content" id="roadmap-content">
                                 {roadmap.map((r, i) => {
                                     return (
                                         <Parallax className="roadmap-item" animation={[
                                             {
-                                                playScale: [0.5, 0.7],
+                                                playScale: [0.3, 0.4],
                                                 opacity: 1,
+                                                onComplete: () => {
+
+                                                },
+                                                onStartBack: () => {
+
+                                                }
+                                            },
+                                            {
+                                                playScale: [0.4, 0.7],
+                                                opacity: 0,
                                                 onComplete: () => {
 
                                                 },
