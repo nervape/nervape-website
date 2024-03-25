@@ -239,32 +239,32 @@ const nervapeIntro: NervapeIntro[] = [
 const nervapeModules: NervapeModule[] = [
     {
         title: 'Title',
-        color: "#BD4141",
+        color: "#FAA5EB",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
     },
     {
         title: 'Title',
-        color: "#507CAF",
+        color: "#CD9B64",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
     },
     {
         title: 'Title',
-        color: "#1D7C7C",
+        color: "#FAA5EB",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
     },
     {
         title: 'Title',
-        color: "#408F51",
+        color: "#FAA5EB",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
     },
     {
         title: 'Title',
-        color: "#B535A9",
+        color: "#CD9B64",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
     },
     {
         title: 'Title',
-        color: "#A7A954",
+        color: "#FAA5EB",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
     },
 ];

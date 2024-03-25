@@ -414,17 +414,21 @@ export default function Composite() {
                         </Parallax>
 
                         <section className="modules-section">
-                            <div className="modules-content flex-align">
-                                <div className="module-item"></div>
-                                {modules.map((m, i) => {
-                                    return (
-                                        <div className="module-item" style={{ background: m.color }} key={i}>
-                                            <div className="title transition">{m.title}</div>
-                                            <div className="desc transition">{m.desc}</div>
-                                        </div>
-                                    );
-                                })}
-                                <div className="module-item"></div>
+                            <div className="modules-content">
+                                <img src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/633273dc-3306-4c3d-bec6-b4f45e9bf991.png" className="cover-image" alt="" />
+
+                                <div className="module-items flex-align">
+                                    <div className="module-item"></div>
+                                    {modules.map((m, i) => {
+                                        return (
+                                            <div className="module-item" style={{ background: m.color }} key={i}>
+                                                <div className="title transition">{m.title}</div>
+                                                <div className="desc transition">{m.desc}</div>
+                                            </div>
+                                        );
+                                    })}
+                                    <div className="module-item"></div>
+                                </div>
                             </div>
                         </section>
 
