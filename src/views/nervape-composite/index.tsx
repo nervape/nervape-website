@@ -315,7 +315,7 @@ export default function Composite() {
                                                     ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
                                                 );
                                             }}
-                                            placement="bottom"
+                                            placement="top"
                                             overlayClassName="bonelist-tooltip"
                                             color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
                                             open={open}>

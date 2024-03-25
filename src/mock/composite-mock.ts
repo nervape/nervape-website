@@ -272,14 +272,14 @@ const nervapeIntro: NervapeIntro[] = [
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/55469455-e28b-4d8b-b2bc-f5bd9a7b5776.png",
         title: NervapeTitle,
-        sub_title1: "“Base Assets“ are issued on Bitcoin.",
+        sub_title1: "“Base Assets” are issued on Bitcoin.",
         sub_title2: "“Accessory Assets” are issued on the Nervos Network and will also be available on other major blockchains.",
         desc: "Nervape combines a single \"Base Asset,\" that allows users to mint an on-chain blank ape avatar on Bitcoin, with thirteen multi-chain \"Accessory Assets\" that can be dynamically combined with the base asset. There are a total of 2,777 blank ape avatars, which are our base level on-chain assets on Bitcoin. They form the foundation of everything that follows."
     },
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/45e9b1d7-d378-4b9c-8a99-fb4f2518a414.png",
         title: NervapeTitle,
-        sub_title1: "“Base Assets“ are issued on Bitcoin.",
+        sub_title1: "“Base Assets” are issued on Bitcoin.",
         sub_title2: "“Accessory Assets” are issued on the Nervos Network and will also be available on other major blockchains.",
         desc: "“Accessory assets”, which require frequent interaction, will be issued on chains that are more cost-effective and have better performance. Therefore, the first wave of accessory-type assets as well as the first protocol to equip/un-equip such assets will be issued on the Nervos Network."
     }
