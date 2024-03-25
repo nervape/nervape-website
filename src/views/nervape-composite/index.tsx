@@ -464,8 +464,10 @@ export default function Composite() {
                                         return (
                                             <div className={`roadmap-item roadmap-item-${i} ${((i == 1 && roadTwoActive) || (i == 2 && roadThreeActive)) ? 'active' : 'inactive'}`} style={{ zIndex: i }}>
                                                 <img src={r.cover_image} className={`cover-image`} alt="" />
-                                                <div className={`road-title`}>{r.title}</div>
-                                                <div className={`road-desc`}>{r.desc}</div>
+                                                <div className="roadmap-info">
+                                                    <div className={`road-title`}>{r.title}</div>
+                                                    <div className={`road-desc`}>{r.desc}</div>
+                                                </div>
                                             </div>
                                         );
                                     })}
