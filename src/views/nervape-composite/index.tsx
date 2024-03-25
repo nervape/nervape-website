@@ -346,24 +346,28 @@ export default function Composite() {
                             <div className="scroll-list">
                                 <ul>
                                     <li>
-                                        <span>SHOW YOUR CREATIVITY</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
                                         {state.windowWidth > 375 ? (
                                             <>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
                                             </>
                                         ) : ''}
                                     </li>
                                 </ul>
                                 <ul>
                                     <li>
-                                        <span>SHOW YOUR CREATIVITY</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
                                         {state.windowWidth > 375 ? (
                                             <>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
                                             </>
                                         ) : ''}
                                     </li>
