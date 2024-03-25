@@ -257,7 +257,7 @@ export default function Composite() {
                                     <p>built on Bitcoin</p>
                                 </div>
 
-                                <div className="minting-container">
+                                {/* <div className="minting-container">
                                     {mintStatus == 0 ? (
                                         <div className="count-down mint-not-start flex-align">
                                             <img src={BInActive} alt="" />
@@ -298,7 +298,7 @@ export default function Composite() {
                                             </div>
                                         </div>
                                     )}
-                                </div>
+                                </div> */}
 
                                 <div className="bone-list">
                                     <div className="title">Bonelist Lookup</div>
