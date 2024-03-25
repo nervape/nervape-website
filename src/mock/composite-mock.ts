@@ -221,14 +221,14 @@ const bannerData: Banner[] = [
 
 const nervapeIntro: NervapeIntro[] = [
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/63d4b427-e741-422b-b734-553817ded90d.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/55469455-e28b-4d8b-b2bc-f5bd9a7b5776.png",
         title: NervapeTitle,
         sub_title1: "Rooted in Bitcoin",
         sub_title2: "Spreading across multichain",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     },
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/33702679-bcf5-4ba6-83ac-7eafdbd30958.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/45e9b1d7-d378-4b9c-8a99-fb4f2518a414.png",
         title: NervapeTitle,
         sub_title1: "Rooted in Bitcoin",
         sub_title2: "Spreading across multichain",
@@ -271,17 +271,17 @@ const nervapeModules: NervapeModule[] = [
 
 const roadMaps: RoadMap[] = [
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/6579ab79-cdaf-43c4-a29c-83edea32eda8.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/91c9bf5f-f133-4d68-b4e5-ddd619cd4b9a.png",
         title: "Create, Collaborate, and Grow Together",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     },
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/e8f617b8-fc99-4d6a-a4c8-6f3803cc469e.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/68ba68cd-9be6-4eab-86ff-7c98816be2b1.png",
         title: "Create, Collaborate, and Grow Together",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     },
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/6579ab79-cdaf-43c4-a29c-83edea32eda8.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/85260463-7d39-407c-82de-a32ab37dc3bc.png",
         title: "Create, Collaborate, and Grow Together",
         desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
     }

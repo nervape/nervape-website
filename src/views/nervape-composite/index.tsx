@@ -247,7 +247,7 @@ export default function Composite() {
                     <div className="page-wrap">
                         <section className="header-section section-content flex-align">
                             <div className="banner">
-                                <img src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/c76f3768-ffa7-4df6-b309-5c80bd1ef38b.png" alt="" />
+                                <img src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/20183147-a06b-4f97-a679-6283126e9b00.png" alt="" />
                             </div>
 
                             <div className="section-info">
