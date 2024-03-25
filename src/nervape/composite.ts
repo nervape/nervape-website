@@ -1,6 +1,6 @@
 export class Question {
     question: string = "";
-    answer: string = "";
+    answer: string | Element = "";
     sort: number = 0;
     background: string = "";
     open: boolean = false;

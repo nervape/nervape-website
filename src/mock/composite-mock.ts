@@ -34,30 +34,79 @@ import NervapeTitle from '../assets/landing-page/nervape_title.svg';
 
 const questionsData: Question[] = [
     {
-        answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
+        question: 'Where is Nervape going to be minted and what protocol will it use?',
         background: '#141D26',
-        question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+        answer: 'Nervape will be minted on Bitcoin, using the RGB++ protocol.',
+        sort: 10,
+        open: false
+    },
+    {
+        question: 'What is the estimated launch of Nervape?',
+        background: '#282F41',
+        answer: 'Expected launch is mid to late April of Phase 1 where users can mint blank ape avatars on Bitcoin. Phase 2 will be the release of the accessory assets which we anticipate for early May. The first blockchain the accessory assets will launch on will be Nervos’ CKB, with more chains to follow.',
+        sort: 9,
+        open: false
+    },
+    {
+        question: 'What is the price per mint?',
+        background: '#9196A5',
+        answer: 'Due to the significant fluctuation in Bitcoin prices, the specific mint price will be announced just before the official sale starts. We ask for your understanding.',
+        sort: 8,
+        open: false
+    },
+    {
+        question: 'How many Nervapes will be issued in total? How many bonelist (whitelist) spots are there?',
+        background: '#506077',
+        answer: 'There will be a total of 2777 Nervapes issued, with 1800 bonelist spots available. The remaining spots will be open for a Public Mint at a first come, first serve basis.',
+        sort: 7,
+        open: false
+    },
+    {
+        question: 'How many bonelist spots can each wallet have?',
+        background: '#506077',
+        answer: 'Each wallet can have a maximum of one bonelist spot.',
+        sort: 6,
+        open: false
+    },
+    {
+        question: 'What are the benefits of having a bonelist spot?',
+        background: '#506077',
+        answer: "1.Bonelist holders can mint in advance during the bonelist minting phase.<br/>2.Each spot guarantees a mint of the Nervape base asset.<br/>3.Discounted mint price.",
+        sort: 5,
+        open: false
+    },
+    {
+        question: 'Is there still a chance to claim a bonelist spot?',
+        background: '#506077',
+        answer: 'Yes there is! Please follow our official X (Twitter) account and join our Discord to participate in community events for your chance to win a bonelist.',
+        sort: 4,
+        open: false
+    },
+    {
+        question: 'How many Nervapes can each wallet mint at most?',
+        background: '#506077',
+        answer: 'During the Bonelist Mint phase, users with a bonelist spot can mint a maximum of one Nervape.During the Public Mint phase, each wallet can mint a maximum of 5 Nervapes.',
         sort: 3,
         open: false
     },
     {
-        answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
-        background: '#282F41',
-        question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+        question: 'What wallets can be used to mint Nervape?',
+        background: '#506077',
+        answer: 'Currently, Joyid Wallet is confirmed to be be able to mint Nervapes. The team is also working on integrating Unisat Wallet and OKX Wallet, with more details to follow.',
         sort: 2,
         open: false
     },
     {
-        answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
-        background: '#9196A5',
-        question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+        question: 'For Bonelist spots claimed using a Metamask ethereum address, how can they be migrated to a Bitcoin address?',
+        background: '#506077',
+        answer: 'The team will provide users a simple online application that allows them to transfer their bonelist spot from an ethereum address to a bitcoin address.',
         sort: 1,
         open: false
     },
     {
-        answer: 'Curabitur euismod, ex quis tincidunt tincidunt, nulla libero hendrerit nisi, ac mollis neque diam luctus dui. Duis eu ipsum posuere, auctor sem sed, laoreet massa. Sed volutpat odio quis leo varius tincidunt. ',
+        question: 'What is the relationship between the previous Nervape 3D NFT collections (character, item, scene, special) and the upcoming Nervape release?',
         background: '#506077',
-        question: 'Nullam vitae sapien sit amet massa semper congue sit amet non tortor. Nulla mollis, ipsum sit amet mollis congue, turpis velit porttitor?',
+        answer: 'There is no direct relationship. The 3D series is centered around the Nervape Saga, our multi-chapter narrative, with the 3D NFT collections directly related to the content of the story. The upcoming Nervape release are multi-chain composable digital objects built on Bitcoin. Nervape exists as its own digital objects collection; though some of the accessory assets are inspired by the Nervape Saga, many more assets take inspiration from our community and team’s input.',
         sort: 0,
         open: false
     }
@@ -223,67 +272,67 @@ const nervapeIntro: NervapeIntro[] = [
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/55469455-e28b-4d8b-b2bc-f5bd9a7b5776.png",
         title: NervapeTitle,
-        sub_title1: "Rooted in Bitcoin",
-        sub_title2: "Spreading across multichain",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+        sub_title1: "“Base Assets“ are issued on Bitcoin.",
+        sub_title2: "“Accessory Assets” are issued on the Nervos Network and will also be available on other major blockchains.",
+        desc: "Nervape combines a single \"Base Asset,\" that allows users to mint an on-chain blank ape avatar on Bitcoin, with thirteen multi-chain \"Accessory Assets\" that can be dynamically combined with the base asset. There are a total of 2,777 blank ape avatars, which are our base level on-chain assets on Bitcoin. They form the foundation of everything that follows."
     },
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/45e9b1d7-d378-4b9c-8a99-fb4f2518a414.png",
         title: NervapeTitle,
-        sub_title1: "Rooted in Bitcoin",
-        sub_title2: "Spreading across multichain",
-        desc: "1 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+        sub_title1: "“Base Assets“ are issued on Bitcoin.",
+        sub_title2: "“Accessory Assets” are issued on the Nervos Network and will also be available on other major blockchains.",
+        desc: "“Accessory assets”, which require frequent interaction, will be issued on chains that are more cost-effective and have better performance. Therefore, the first wave of accessory-type assets as well as the first protocol to equip/un-equip such assets will be issued on the Nervos Network."
     }
 ];
 
 const nervapeModules: NervapeModule[] = [
     {
-        title: 'Title',
+        title: 'Composability',
         color: "#FAA5EB",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+        desc: "A Nervape is a composable DOB (Digital Object). It combines a single \"Base Asset,\" that allows users to mint an on-chain blank ape avatar on Bitcoin, with thirteen multi-chain \"Accessory Assets\" that can be dynamically combined with the base asset."
     },
     {
-        title: 'Title',
+        title: 'Dynamic Nature',
         color: "#CD9B64",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+        desc: "Every asset within the Nervape ecosystem is designed to be assembled, disassembled, and updated, offering an ever-evolving DOBs (Digital Objects) experience. This dynamic capability ensures that Nervapes can continue to be personalized by the user, reflecting the growth and evolving preferences of their owners over time."
     },
     {
-        title: 'Title',
+        title: 'Value and Ownership',
         color: "#FAA5EB",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+        desc: "The foundational ape avatar of Nervape, as an on-chain Bitcoin asset, guarantees complete on-chain ownership for holders, providing value and immutability. This ape will always exist on the Bitcoin blockchain."
     },
     {
-        title: 'Title',
+        title: 'Human-First Approach',
         color: "#FAA5EB",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+        desc: "Emphasizing the importance of individuality, Nervape adopts a human-first approach by rejecting randomly generated images by machines or algorithms. Nervape holders are the sole decision-makers of the final look of their profile pictures, empowering them as creators."
     },
     {
-        title: 'Title',
+        title: 'Co-Creation Platform',
         color: "#CD9B64",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+        desc: "Nervape operates as a permissionless platform, offering development interfaces and design templates for everyone. Without needing approval from the Nervape Studio team, everyone can create and sell assets across multiple chains, fostering a community-driven ecosystem."
     },
     {
-        title: 'Title',
+        title: 'Creator Economy',
         color: "#FAA5EB",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+        desc: "Nervape champions the creator economy by ensuring that creators not only profit from the sale of the assets they design but also benefit from the circulation of their creations. This approach encourages a \"grow together\" philosophy, supporting a sustainable and mutually beneficial ecosystem for creators and users alike."
     },
 ];
 
 const roadMaps: RoadMap[] = [
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/91c9bf5f-f133-4d68-b4e5-ddd619cd4b9a.png",
-        title: "Create, Collaborate, and Grow Together",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+        title: "Phase 1: Open Mint for \"Base\" Assets  (Late April, 2024)",
+        desc: "We will Launch 2777 on-chain, blank ape avatar for mint on Bitcoin. Owning these base level, blank Nervapes is a crucial first step for future participation."
     },
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/68ba68cd-9be6-4eab-86ff-7c98816be2b1.png",
-        title: "Create, Collaborate, and Grow Together",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+        title: "Phase 2: Open \"Accessory\" Assets",
+        desc: "We will release \"Accessory Assets\" designed for the blank ape avatar. The first collection of these assets will be minted on the Nervos Network. We will also develop a protocol to allow users to assemble and disassemble their Nervape accessory assets on our platform."
     },
     {
         cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/85260463-7d39-407c-82de-a32ab37dc3bc.png",
-        title: "Create, Collaborate, and Grow Together",
-        desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
+        title: "Phase 3: Open Co-Creation",
+        desc: "Launch a co-creation platform for independent creators and the community to design and develop their own “accessory assets” on the Nervos Network and other chains. This allows users to claim, purchase, and trade these “accessory assets”. "
     }
 ];
 

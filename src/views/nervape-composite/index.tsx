@@ -252,9 +252,9 @@ export default function Composite() {
 
                             <div className="section-info">
                                 <div className="title">
-                                    <p>Multi-chain</p>
-                                    <p>composable digital objects</p>
-                                    <p>built on Bitcoin</p>
+                                    <p>Nervape,</p>
+                                    <p>Multi-chain Composable</p>
+                                    <p>Digital Objects Built on Bitcoin.</p>
                                 </div>
 
                                 {/* <div className="minting-container">
@@ -419,7 +419,7 @@ export default function Composite() {
 
                         <section className="modules-section">
                             <div className="modules-content">
-                                <img src="https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/633273dc-3306-4c3d-bec6-b4f45e9bf991.png" className="cover-image" alt="" />
+                                <img src={state.windowRealWidth >= 1000 ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/633273dc-3306-4c3d-bec6-b4f45e9bf991.png" : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/97736771-b0ec-4a43-8b40-fdacaef52308.png"} className="cover-image" alt="" />
 
                                 <div className="module-items flex-align">
                                     <div className="module-item"></div>
@@ -820,9 +820,17 @@ export default function Composite() {
 
                                                         <div className={`a ${question.open && 'show'}`}>
                                                             <div className="a-l">A:</div>
-                                                            <div className="a-r">
-                                                                {question.answer}
-                                                            </div>
+                                                            {question.sort == 5 ? (
+                                                                <div className="a-r">
+                                                                    <p>1.Bonelist holders can mint in advance during the bonelist minting phase.</p>
+                                                                    <p>2.Each spot guarantees a mint of the Nervape base asset.</p>
+                                                                    <p>3.Discounted mint price.</p>
+                                                                </div>
+                                                            ) : (
+                                                                <div className="a-r">
+                                                                    {question.answer}
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </TweenOne>
                                                 );
@@ -952,8 +960,9 @@ export default function Composite() {
                             <Footer></Footer>
                         </footer>
                     </section>
-                </div>
-            )}
-        </div>
+                </div >
+            )
+            }
+        </div >
     );
 }
