@@ -832,7 +832,7 @@ export default function Composite() {
                                                                         e.stopPropagation();
                                                                     }} target="_blank" href="https://twitter.com/Nervapes">X (Twitter)</a> account and join our <a onClick={(e) => {
                                                                         e.stopPropagation();
-                                                                    }} target="_blank" href="https://www.notion.so/Nervape-bda4c156f60746c1a0995c6b7b4bef8f?pvs=4">Discord</a> to participate in community events for your chance to win a bonelist.
+                                                                    }} target="_blank" href="https://discord.gg/7br6nvuNHP">Discord</a> to participate in community events for your chance to win a bonelist.
                                                                 </div>
                                                             ) : question.sort == 2 ? (
                                                                 <div className="a-r">
