@@ -419,7 +419,7 @@ export default function Composite() {
 
                         <section className="modules-section">
                             <div className="modules-content">
-                                <img src={state.windowRealWidth >= 1000 ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/633273dc-3306-4c3d-bec6-b4f45e9bf991.png" : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/97736771-b0ec-4a43-8b40-fdacaef52308.png"} className="cover-image" alt="" />
+                                <img src={state.windowRealWidth >= 1000 ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/633273dc-3306-4c3d-bec6-b4f45e9bf991.png" : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/d535ec78-ef9c-4d2f-89e0-df29cf7d2575.png"} className="cover-image" alt="" />
 
                                 <div className="module-items flex-align">
                                     <div className="module-item"></div>
@@ -825,6 +825,20 @@ export default function Composite() {
                                                                     <p>1.Bonelist holders can mint in advance during the bonelist minting phase.</p>
                                                                     <p>2.Each spot guarantees a mint of the Nervape base asset.</p>
                                                                     <p>3.Discounted mint price.</p>
+                                                                </div>
+                                                            ) : question.sort == 4 ? (
+                                                                <div className="a-r">
+                                                                    Yes there is! Please follow our official <a onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                    }} target="_blank" href="https://twitter.com/Nervapes">X (Twitter)</a> account and join our <a onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                    }} target="_blank" href="https://www.notion.so/Nervape-bda4c156f60746c1a0995c6b7b4bef8f?pvs=4">Discord</a> to participate in community events for your chance to win a bonelist.
+                                                                </div>
+                                                            ) : question.sort == 2 ? (
+                                                                <div className="a-r">
+                                                                    Currently, <a onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                    }} href="https://joy.id/" target="_blank">Joyid Wallet</a> is confirmed to be be able to mint Nervapes. The team is also working on integrating Unisat Wallet and OKX Wallet, with more details to follow.
                                                                 </div>
                                                             ) : (
                                                                 <div className="a-r">

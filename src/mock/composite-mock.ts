@@ -320,17 +320,17 @@ const nervapeModules: NervapeModule[] = [
 
 const roadMaps: RoadMap[] = [
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/91c9bf5f-f133-4d68-b4e5-ddd619cd4b9a.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/8ad8e498-da64-4cec-acb1-41963314ee5f.png",
         title: "Phase 1: Open Mint for \"Base\" Assets  (Late April, 2024)",
-        desc: "We will Launch 2777 on-chain, blank ape avatar for mint on Bitcoin. Owning these base level, blank Nervapes is a crucial first step for future participation."
+        desc: "We will launch 2777 on-chain, blank ape avatars for mint on Bitcoin. Owning these base level, blank Nervapes is a crucial first step for future participation."
     },
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/68ba68cd-9be6-4eab-86ff-7c98816be2b1.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/d3e3c7e5-ea3c-464a-b818-c0d8bfbd2c29.png",
         title: "Phase 2: Open \"Accessory\" Assets",
         desc: "We will release \"Accessory Assets\" designed for the blank ape avatar. The first collection of these assets will be minted on the Nervos Network. We will also develop a protocol to allow users to assemble and disassemble their Nervape accessory assets on our platform."
     },
     {
-        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/85260463-7d39-407c-82de-a32ab37dc3bc.png",
+        cover_image: "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/fcf4f05b-bb66-4866-995c-15a3de4e43ab.png",
         title: "Phase 3: Open Co-Creation",
         desc: "Launch a co-creation platform for independent creators and the community to design and develop their own “accessory assets” on the Nervos Network and other chains. This allows users to claim, purchase, and trade these “accessory assets”. "
     }

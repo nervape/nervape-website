@@ -304,7 +304,8 @@
             background: #FFFFFF;
 
             .right-info {
-              padding: 0 32px;
+              padding: 128px 32px 0;
+              align-self: flex-start;
 
               .title {
                 width: 500px;
@@ -1106,12 +1107,16 @@
                 .q-l,
                 .a-l {
                   margin-right: 8px;
+                }
 
-                  .a-r {
-                    p {
-                      padding: 0;
-                      margin: 0;
-                    }
+                .a-r {
+                  a {
+                    color: rgba(13, 16, 20, 0.8);
+                  }
+
+                  p {
+                    padding: 0;
+                    margin: 0;
                   }
                 }
               }
@@ -1218,7 +1223,7 @@
             }
 
             .road-title {
-              color: #E27847;
+              color: #FFC600;
               text-align: center;
               font-size: 48px;
               font-weight: 700;
@@ -1262,8 +1267,8 @@
     }
 
     .join-section {
-      background: #DFC6A7;
-      color: #0D1014;
+      background: #0D1014;
+      color: #FFFFFF;
 
       .join-content {
         padding: 128px 0;
@@ -2013,6 +2018,7 @@
 
             .cover-image {
               height: auto;
+              min-height: 45%;
             }
 
             .right-content {
@@ -2020,7 +2026,7 @@
               flex: 1;
 
               .right-info {
-                padding: 0 14px;
+                padding: 64px 14px 0;
 
                 .title {
                   width: 300px;
