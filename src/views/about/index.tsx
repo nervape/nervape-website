@@ -23,6 +23,7 @@ import SeedaoLogo from '../../assets/about/partners/seedao.svg';
 
 import TwitterLogo from '../../assets/about/social-media/twitter.svg';
 import DiscodeLogo from '../../assets/about/social-media/discode.svg';
+import TgLogo from '../../assets/about/social-media/tg.svg';
 import InstagramLogo from '../../assets/about/social-media/instagram.svg';
 import YoutubeLogo from '../../assets/about/social-media/youtube.svg';
 import PodcastLogo from '../../assets/about/social-media/podcast.svg';
@@ -110,6 +111,11 @@ export default function AboutPage() {
                 cover_image: DiscodeLogo,
                 title: '',
                 link: 'https://discord.gg/rXTcbsxnzd',
+            },
+            {
+                cover_image: TgLogo,
+                title: '',
+                link: 'https://t.me/Nervape_CN',
             },
             {
                 cover_image: InstagramLogo,
