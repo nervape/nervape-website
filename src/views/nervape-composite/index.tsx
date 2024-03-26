@@ -950,9 +950,9 @@ export default function Composite() {
                             <div className="join-content">
                                 <div className="section-title">JOIN OUR COMMUNITY</div>
                                 <div className="desc">
-                                    Don’t miss our NACP release!
+                                    Don't miss our Nervape release!
                                     <br />
-                                    An NACP PFP will open more doors for you in the Nervape ecosystem.
+                                    A Nervape will open more doors for you in the Nervape ecosystem.
                                 </div>
                                 <div className="join-icons">
                                     <img
