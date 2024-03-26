@@ -13,6 +13,7 @@ import NacpTitle from '../../assets/nacp/nacp.svg';
 import NacpMTitle from '../../assets/nacp/nacp_m.svg';
 import TwitterIcon from '../../assets/nacp/twitter.svg';
 import DiscodeIcon from '../../assets/nacp/discode.svg';
+import TgIcon from '../../assets/nacp/tg.svg';
 
 import BannerText1 from '../../assets/nacp/banner_text_1.png';
 import BannerText2 from '../../assets/nacp/banner_text_2.png';
@@ -969,6 +970,13 @@ export default function Composite() {
                                         }}
                                         src={DiscodeIcon}
                                         alt="DiscodeIcon" />
+                                    <img
+                                        className="cursor"
+                                        onClick={() => {
+                                            window.open('https://t.me/Nervape_CN')
+                                        }}
+                                        src={TgIcon}
+                                        alt="TelegramIcon" />
                                 </div>
                             </div>
                             <Footer></Footer>
