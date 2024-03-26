@@ -289,32 +289,32 @@ const nervapeModules: NervapeModule[] = [
     {
         title: 'Composability',
         color: "#FAA5EB",
-        desc: 'Nervape combines a "Base Asset" for minting blank ape avatars on Bitcoin with thirteen "Accessory Assets" across multiple chains for dynamic customization.'
+        desc: 'Nervape combines a "Base Asset" of blank ape avatars minted on Bitcoin with thirteen "Accessory Assets" minted across multiple chains for dynamic customization.'
     },
     {
         title: 'Dynamic Nature',
         color: "#CD9B64",
-        desc: 'Nervape assets are designed for assembly, disassembly, and updates, ensuring personalization that evolves with user preferences.'
+        desc: 'Nervape accessory assets can be assembled, disassembled, and updated, allowing the Nervape to evolve with the user’s preferences.'
     },
     {
         title: 'Value and Ownership',
         color: "#FAA5EB",
-        desc: 'As an on-chain Bitcoin asset, the foundational ape avatar offers complete ownership and immutability, permanently residing on the Bitcoin blockchain.'
+        desc: 'As an on-chain Bitcoin asset, the ape avatar offers complete ownership and immutability, permanently residing on the Bitcoin blockchain.'
     },
     {
         title: 'Human-First Approach',
         color: "#FAA5EB",
-        desc: "Rejecting machine-generated images, Nervape emphasizes individuality, with holders deciding their avatars' final appearance."
+        desc: "Rejecting machine-generated images, Nervape has a human-first approach, with holders deciding their avatars' final appearance instead of a machine."
     },
     {
         title: 'Co-Creation Platform',
         color: "#CD9B64",
-        desc: 'Nervape is a permissionless platform enabling everyone to create and sell assets across chains, promoting a community-driven ecosystem.'
+        desc: 'Nervape is a permissionless platform that enables all users to create and sell assets across chains, promoting a community-driven ecosystem.'
     },
     {
         title: 'Creator Economy',
         color: "#FAA5EB",
-        desc: 'Nervape supports a creator economy where designers profit from and continually benefit from the circulation of their creations, fostering a collaborative growth ecosystem.'
+        desc: 'Nervape supports a creator economy where designers profit from and continually benefit from the circulation of their creations, fostering a growing collaborative ecosystem.'
     },
 ];
 
