@@ -289,32 +289,32 @@ const nervapeModules: NervapeModule[] = [
     {
         title: 'Composability',
         color: "#FAA5EB",
-        desc: "A Nervape is a composable DOB (Digital Object). It combines a single \"Base Asset,\" that allows users to mint an on-chain blank ape avatar on Bitcoin, with thirteen multi-chain \"Accessory Assets\" that can be dynamically combined with the base asset."
+        desc: 'Nervape combines a "Base Asset" for minting blank ape avatars on Bitcoin with thirteen "Accessory Assets" across multiple chains for dynamic customization.'
     },
     {
         title: 'Dynamic Nature',
         color: "#CD9B64",
-        desc: "Every asset within the Nervape ecosystem is designed to be assembled, disassembled, and updated, offering an ever-evolving DOBs (Digital Objects) experience. This dynamic capability ensures that Nervapes can continue to be personalized by the user, reflecting the growth and evolving preferences of their owners over time."
+        desc: 'Nervape assets are designed for assembly, disassembly, and updates, ensuring personalization that evolves with user preferences.'
     },
     {
         title: 'Value and Ownership',
         color: "#FAA5EB",
-        desc: "The foundational ape avatar of Nervape, as an on-chain Bitcoin asset, guarantees complete on-chain ownership for holders, providing value and immutability. This ape will always exist on the Bitcoin blockchain."
+        desc: 'As an on-chain Bitcoin asset, the foundational ape avatar offers complete ownership and immutability, permanently residing on the Bitcoin blockchain.'
     },
     {
         title: 'Human-First Approach',
         color: "#FAA5EB",
-        desc: "Emphasizing the importance of individuality, Nervape adopts a human-first approach by rejecting randomly generated images by machines or algorithms. Nervape holders are the sole decision-makers of the final look of their profile pictures, empowering them as creators."
+        desc: "Rejecting machine-generated images, Nervape emphasizes individuality, with holders deciding their avatars' final appearance."
     },
     {
         title: 'Co-Creation Platform',
         color: "#CD9B64",
-        desc: "Nervape operates as a permissionless platform, offering development interfaces and design templates for everyone. Without needing approval from the Nervape Studio team, everyone can create and sell assets across multiple chains, fostering a community-driven ecosystem."
+        desc: 'Nervape is a permissionless platform enabling everyone to create and sell assets across chains, promoting a community-driven ecosystem.'
     },
     {
         title: 'Creator Economy',
         color: "#FAA5EB",
-        desc: "Nervape champions the creator economy by ensuring that creators not only profit from the sale of the assets they design but also benefit from the circulation of their creations. This approach encourages a \"grow together\" philosophy, supporting a sustainable and mutually beneficial ecosystem for creators and users alike."
+        desc: 'Nervape supports a creator economy where designers profit from and continually benefit from the circulation of their creations, fostering a collaborative growth ecosystem.'
     },
 ];
 
