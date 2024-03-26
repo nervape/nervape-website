@@ -589,61 +589,6 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* <section className="qa-section">
-                <div className="qa-content">
-                    <h3 className="title">Q&A</h3>
-                    <div className="questions">
-                        {questions.length ? (
-                            questions.map((question, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className={`question cursor ${question.open && 'open'}`}
-                                        style={{ background: question.background }}
-                                        onMouseDown={(e) => {
-                                            console.log('down', e)
-                                            setClickPosition({ x: e.clientX, y: e.clientY })
-                                        }}
-                                        onMouseUp={(e) => {
-                                            console.log('up', e)
-                                            if (e.clientX == clickPosition.x && e.clientY == clickPosition.y) {
-                                                let _questions = JSON.parse(JSON.stringify(questions));
-                                                _questions.map((q: any, i: number) => {
-                                                    if (i !== index) {
-                                                        q.open = false;
-                                                    }
-                                                    return q;
-                                                })
-                                                _questions[index].open = !_questions[index].open;
-                                                setQuestions(_questions);
-                                            }
-                                            setClickPosition({ x: 0, y: 0 })
-                                        }}
-                                    >
-                                        <div className="hover-cover"></div>
-                                        <div
-                                            className="arrow"
-                                        >
-                                            <img loading="lazy" src={UpArrowIcon} alt="UpArrowIcon" />
-                                        </div>
-                                        <div className="q">
-                                            <div className="q-l">Q:</div>
-                                            <div className="q-r">{question.question}</div>
-                                        </div>
-                                        {question.open ? (
-                                            <div className="a">
-                                                <div className="a-l">A:</div>
-                                                <div className="a-r" dangerouslySetInnerHTML={{ __html: question.answer }}></div>
-                                            </div>
-                                        ) : ''}
-                                    </div>
-                                );
-                            })
-                        ) : ''}
-                    </div>
-                </div>
-            </section> */}
-
             <section className="bottom-section">
                 <img loading="lazy" src={AboutBottom} alt="AboutBottom" />
             </section>

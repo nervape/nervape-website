@@ -17,7 +17,12 @@ import DiscodeIcon from '../../assets/nacp/discode.svg';
 import BannerText1 from '../../assets/nacp/banner_text_1.png';
 import BannerText2 from '../../assets/nacp/banner_text_2.png';
 
-import { Banner, Intro, Parthership, Phase, Question, SneakPeek } from "../../nervape/composite";
+import BInActive from '../../assets/wallet/nacp/icon/b_inactive.svg';
+import BActive from '../../assets/wallet/nacp/icon/b_active.svg';
+import EndInActive from '../../assets/wallet/nacp/icon/end_inactive.svg';
+import SoonInActive from '../../assets/wallet/nacp/icon/soon_inactive.svg';
+
+import { Banner, Intro, MintInfo, NervapeIntro, NervapeModule, Parthership, Phase, Question, RoadMap, SneakPeek } from "../../nervape/composite";
 import { PfpMocks } from "../../mock/composite-mock";
 import Footer from "../components/footer";
 import { nervapeApi } from "../../api/nervape-api";
@@ -28,8 +33,8 @@ import { OverPack, Parallax } from 'rc-scroll-anim';
 import TweenOne from 'rc-tween-one';
 import QueueAnim from 'rc-queue-anim';
 import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
-import { EffectFade } from 'swiper';
-import "swiper/css";
+import SwiperCore, { EffectFade, Mousewheel } from 'swiper';
+import "swiper/swiper-bundle.min.css";
 
 export function SwiperPrevButton(props: { index: number }) {
     const { index } = props;
@@ -90,6 +95,20 @@ export function SwiperContent(props: { phase: Phase; index: number }) {
     );
 }
 
+export function RoadmapSwiperContent(props: { roadmap: RoadMap; index: number }) {
+    const { roadmap, index } = props;
+    const swiperSlide = useSwiperSlide();
+
+    return (
+        <div className="roadmap-item">
+            {/* <div className="section-title road-map">Roadmap</div> */}
+            <img src={roadmap.cover_image} className="cover-image" alt="" />
+            <div className="road-title">{roadmap.title}</div>
+            <div className="road-desc">{roadmap.desc}</div>
+        </div>
+    );
+}
+
 export default function Composite() {
     const { state } = useContext(DataContext);
     const [showLandingPage, setShowLandingPage] = useState(false);
@@ -111,10 +130,29 @@ export default function Composite() {
     const [sneakCurrPercent, setSneakCurrPercent] = useState(0);
     const sneakRef = useRef(null);
 
+    const [mintStatus, setMintStatus] = useState(1); // 0未开始 1 进行中 2 已结束
+    const [mintInfo, setMintInfo] = useState<MintInfo>();
+
+    const [nervapeIntros, setNervapeIntros] = useState<NervapeIntro[]>([]);
+    const [nervapeOneActive, setNervapeOneActive] = useState(true);
+    const [nervapeTwoActive, setNervapeTwoActive] = useState(false);
+
+    const [roadOneActive, setRoadOneActive] = useState(true);
+    const [roadTwoActive, setRoadTwoActive] = useState(false);
+    const [roadThreeActive, setRoadThreeActive] = useState(false);
+
+    const [modules, setModules] = useState<NervapeModule[]>([]);
+    const [roadmap, setRoadmap] = useState<RoadMap[]>([]);
+    const [roadmapIndex, setRoadmapIndex] = useState(0);
+    const [roadmapTop, setRoadmapTop] = useState(0);
+    const roadmapRef = useRef(null);
+
     const fnGetSneakPeeks = async () => {
         const res = await nervapeApi.fnNacpSneakPeek();
         setSneakPeeks(res);
     }
+
+    SwiperCore.use([EffectFade, Mousewheel]);
 
     const IntroItem = (props: { item: any; }) => {
         const { item } = props;
@@ -157,12 +195,18 @@ export default function Composite() {
             introData,
             parthershipData,
             phaseData,
-            bannerData } = PfpMocks.fnGetNacpData();
+            bannerData,
+            nervapeIntro,
+            nervapeModules,
+            roadMaps } = PfpMocks.fnGetNacpData();
         setIntroItems(introData);
         setParthershipItems(parthershipData);
         setPhases(phaseData);
         setQuestions(questionsData);
         setBanner(bannerData[Math.floor(Math.random() * bannerData.length)]);
+        setNervapeIntros(nervapeIntro);
+        setModules(nervapeModules);
+        setRoadmap(roadMaps);
         fnGetSneakPeeks();
     }, []);
 
@@ -189,6 +233,9 @@ export default function Composite() {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, true);
+        const { current } = roadmapRef;
+        console.log('roadmapRef scrollTop', (current as unknown as HTMLElement)?.offsetTop);
+        setRoadmapTop((current as unknown as HTMLElement)?.offsetTop);
 
         return () => window.removeEventListener('scroll', handleScroll, true);
     });
@@ -198,7 +245,290 @@ export default function Composite() {
             {showLandingPage && (
                 <div className="landing-page">
                     <div className="page-wrap">
-                        <div className="nacp-header-content">
+                        <section className="header-section section-content flex-align">
+                            <div className="banner">
+                                <img src={state.windowRealWidth >= 1000 ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/0ecdc510-01d3-4574-9a1a-16e6eb217ca1.png" : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/39262724-aa69-43e8-96d7-cb0094837c27.png"} alt="" />
+                            </div>
+
+                            <div className="section-info">
+                                <div className="title">
+                                    <p>Nervape,</p>
+                                    <p>Multi-chain Composable</p>
+                                    <p>Digital Objects Built on Bitcoin.</p>
+                                </div>
+
+                                {/* <div className="minting-container">
+                                    {mintStatus == 0 ? (
+                                        <div className="count-down mint-not-start flex-align">
+                                            <img src={BInActive} alt="" />
+                                            BONELIST MINT <span>starts in</span> 30 days, 20 hrs
+                                        </div>
+                                    ) : (
+                                        <div className="minting-box" style={{ padding: '20px' }}>
+                                            <div className={`minting-content ${mintStatus == 1 ? 'ongoing' : 'over'}`}>
+                                                <div className="flex-align minting-header">
+                                                    <img src={mintStatus == 1 ? BActive : EndInActive} alt="" />
+
+                                                    <div className="minting-info">
+                                                        <div className="m-title">
+                                                            {mintStatus == 1 ? (
+                                                                <div>
+                                                                    BONELIST MINT
+                                                                    <span>is live!</span>
+                                                                </div>
+                                                            ) : 'MINT COMPLETE!'}
+                                                        </div>
+                                                        {mintStatus == 1 && (
+                                                            <div className="minting-tips">Ends in 3 hour 15 minutes</div>
+                                                        )}
+                                                    </div>
+                                                    {mintStatus == 1 && (
+                                                        <div className="minting-btn cursor">MINT</div>
+                                                    )}
+                                                </div>
+
+                                                <div className="minting-progress">
+                                                    <div className="progress-content"></div>
+
+                                                    <div className="progress-data flex-align">
+                                                        <div className="progress-title">Mint progress</div>
+                                                        <div className="progress">27%(1000/2777 minted)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div> */}
+
+                                <div className="bone-list">
+                                    <div className="title">Bonelist Lookup</div>
+                                    <div className="address-input">
+                                        <Tooltip
+                                            title={() => {
+                                                return (
+                                                    <p>{isBonelist ? (
+                                                        <>
+                                                            🦴 You’re a bonelist holder!
+                                                            <br />
+                                                            🦧 Welcome to the Third Continent.
+                                                        </>
+                                                    ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
+                                                );
+                                            }}
+                                            placement="top"
+                                            overlayClassName="bonelist-tooltip"
+                                            color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
+                                            open={open}>
+                                            <input type="text" value={godwokenAddress} onInput={(e: any) => {
+                                                setGodwokenAddress(e.target.value)
+                                                setOpen(false);
+                                            }} placeholder="Ethereum address" />
+                                        </Tooltip>
+                                        <button
+                                            className="check-btn cursor"
+                                            onClick={async () => {
+                                                if (!godwokenAddress) return;
+                                                setOpen(false);
+                                                const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
+                                                console.log(res);
+                                                setOpen(true);
+                                                setIsBonelist(res > 0);
+                                            }}>CHECK</button>
+                                    </div>
+                                    <div className="tip">
+                                        To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div className="scroll-content">
+                            <div className="scroll-list">
+                                <ul>
+                                    <li>
+                                        <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
+                                        {state.windowWidth > 375 ? (
+                                            <>
+                                                <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
+                                            </>
+                                        ) : ''}
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                        <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
+                                        {state.windowWidth > 375 ? (
+                                            <>
+                                                <span className="padding-20"><span className="strong">B</span>E YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">T</span>RUST YOURSELF</span>
+                                                <span className="padding-20"><span className="strong">C</span>REATE YOURSELF</span>
+                                            </>
+                                        ) : ''}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <Parallax location="nervape-section" animation={[
+                            {
+                                playScale: [1.5, 1.5], onStart: () => {
+                                    setNervapeOneActive(false);
+                                    setNervapeTwoActive(true);
+
+                                }, onCompleteBack: () => {
+                                    setNervapeTwoActive(false);
+                                    setNervapeOneActive(true);
+                                }
+                            }
+                        ]}>
+                            <section className="nervape-section section-content" id="nervape-section">
+                                <div className="nervape-content">
+                                    {nervapeIntros.map((n, i) => {
+                                        return (
+                                            <div className={`nervape-item nervape-item-${i}`} key={i}>
+                                                <div className="item-content flex-align">
+                                                    <div className={`cover-image ${((i == 1 && nervapeTwoActive)) ? 'active' : 'inactive'}`} >
+                                                        <img src={n.cover_image} alt="Cover Image" />
+                                                    </div>
+
+                                                    <div className={`right-content flex-align ${((i == 1 && nervapeTwoActive)) ? 'active' : 'inactive'}`}>
+                                                        <div className={`right-info`}>
+                                                            <div className="title">
+                                                                <img src={n.title} alt="Title" />
+                                                            </div>
+
+                                                            <div className={`sub-title ${nervapeOneActive && 'active'}`}>{n.sub_title1}</div>
+                                                            <div className={`sub-title ${nervapeTwoActive && 'active'}`}>{n.sub_title2}</div>
+
+                                                            <div className="desc">{n.desc}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </section>
+                        </Parallax>
+
+                        <section className="modules-section">
+                            <div className="modules-content">
+                                <img src={state.windowRealWidth >= 1000 ? "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/633273dc-3306-4c3d-bec6-b4f45e9bf991.png" : "https://nervape-storage.s3.ap-southeast-1.amazonaws.com/album-main/production/d535ec78-ef9c-4d2f-89e0-df29cf7d2575.png"} className="cover-image" alt="" />
+
+                                <div className="module-items flex-align">
+                                    <div className="module-item"></div>
+                                    {modules.map((m, i) => {
+                                        return (
+                                            <div className="module-item" style={{ background: m.color }} key={i}>
+                                                <div className="title transition">{m.title}</div>
+                                                <div className="desc transition">{m.desc}</div>
+                                            </div>
+                                        );
+                                    })}
+                                    <div className="module-item"></div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <Parallax location="roadmap-section" animation={[
+                            {
+                                playScale: [3, 3], onStart: () => {
+                                    setRoadOneActive(false);
+                                    setRoadTwoActive(true);
+                                    setRoadmapIndex(1);
+                                }, onCompleteBack: () => {
+                                    setRoadTwoActive(false);
+                                    setRoadOneActive(true);
+                                    setRoadmapIndex(0);
+                                }
+                            },
+                            {
+                                playScale: [4, 4], onStart: () => {
+                                    setRoadTwoActive(false);
+                                    setRoadThreeActive(true);
+                                    setRoadmapIndex(2);
+                                }, onCompleteBack: () => {
+                                    setRoadThreeActive(false);
+                                    setRoadTwoActive(true);
+                                    setRoadmapIndex(1);
+                                }
+                            }
+                        ]}>
+                            <section className="roadmap-section" ref={roadmapRef} id="roadmap-section">
+                                <div className="roadmap-content">
+                                    <div className="section-title">Roadmap</div>
+
+                                    {roadmap.map((r, i) => {
+                                        return (
+                                            <div className={`roadmap-item roadmap-item-${i} ${((i == 1 && roadTwoActive) || (i == 2 && roadThreeActive)) ? 'active' : 'inactive'}`} style={{ zIndex: i }}>
+                                                <img src={r.cover_image} className={`cover-image`} alt="" />
+                                                <div className="roadmap-info">
+                                                    <div className={`road-title`}>{r.title}</div>
+                                                    <div className={`road-desc`}>{r.desc}</div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+
+                                    <div className="nav-tabs flex-center">
+                                        {[0, 1, 2].map(n => {
+                                            return (
+                                                <div className={`nav-tab cursor transition ${roadmapIndex == n && 'active'}`} onClick={() => {
+                                                    if (n == 0) {
+                                                        setRoadOneActive(true);
+                                                        setRoadTwoActive(false);
+                                                        setRoadThreeActive(false);
+
+                                                        window.scrollTo({
+                                                            top: roadmapTop,
+                                                            behavior: 'smooth'
+                                                        })
+
+                                                        setTimeout(() => {
+                                                            setRoadmapIndex(0);
+                                                        }, 300);
+                                                    } else if (n == 1) {
+                                                        setRoadOneActive(false);
+                                                        setRoadTwoActive(true);
+                                                        setRoadThreeActive(false);
+
+                                                        window.scrollTo({
+                                                            top: roadmapTop + window.innerHeight * 4.1,
+                                                            behavior: 'smooth'
+                                                        })
+
+                                                        setTimeout(() => {
+                                                            setRoadmapIndex(1);
+                                                        }, 300);
+                                                    } else {
+                                                        setRoadOneActive(false);
+                                                        setRoadTwoActive(false);
+                                                        setRoadThreeActive(true);
+
+                                                        window.scrollTo({
+                                                            top: roadmapTop + window.innerHeight * 5.1,
+                                                            behavior: 'smooth'
+                                                        })
+
+                                                        setTimeout(() => {
+                                                            setRoadmapIndex(2);
+                                                        }, 500);
+                                                    }
+                                                }}></div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </section>
+                        </Parallax>
+
+                        {/* <div className="nacp-header-content">
                             <Parallax animation={{ backgroundColor: banner?.endBackground, playScale: [1, 3.5] }}
                                 style={{ background: banner?.startBackground }}>
 
@@ -245,57 +575,6 @@ export default function Composite() {
                                             </div>
                                         </TweenOne>
                                         <div className="composite-content" id="composite-content">
-                                            {/* <div className="intro-items" style={{ float: 'left', position: 'relative', left: '0' }}>
-                                                {introItems.map((item, index) => {
-                                                    return (
-                                                        <TweenOne className="intro-content"
-                                                            key={`composite-${index}`} animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }} style={{ opacity: 0 }}>
-                                                            <IntroItem item={item}></IntroItem>
-                                                            {index == 0 && (
-                                                                <div className="bone-list">
-                                                                    <div className="title">Bonelist Lookup</div>
-                                                                    <div className="address-input">
-                                                                        <Tooltip
-                                                                            title={() => {
-                                                                                return (
-                                                                                    <p>{isBonelist ? (
-                                                                                        <>
-                                                                                            🦴 You’re a bonelist holder!
-                                                                                            <br />
-                                                                                            🦧 Welcome to the Third Continent.
-                                                                                        </>
-                                                                                    ) : '❗️You’re not a bonelist ape. No bones for you (yet). Try harder! Join our community for opportunities to get a bonelist! '}</p>
-                                                                                );
-                                                                            }}
-                                                                            placement="bottom"
-                                                                            overlayClassName="bonelist-tooltip"
-                                                                            color={`${isBonelist ? "#F44D37" : "#CDCFD1"}`}
-                                                                            open={open}>
-                                                                            <input type="text" value={godwokenAddress} onInput={(e: any) => {
-                                                                                setGodwokenAddress(e.target.value)
-                                                                                setOpen(false);
-                                                                            }} placeholder="Ethereum address" />
-                                                                        </Tooltip>
-                                                                        <button
-                                                                            className="check-btn cursor"
-                                                                            onClick={async () => {
-                                                                                if (!godwokenAddress) return;
-                                                                                setOpen(false);
-                                                                                const res = await nervapeApi.fnSearchBonelist(godwokenAddress);
-                                                                                console.log(res);
-                                                                                setOpen(true);
-                                                                                setIsBonelist(res > 0);
-                                                                            }}>CHECK</button>
-                                                                    </div>
-                                                                    <div className="tip">
-                                                                        To be notified as soon as we go live... Join Our <a className="cursor font-color" href="https://discord.com/invite/7br6nvuNHP" target="_blank" rel="noopener noreferrer">Discord</a>
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </TweenOne>
-                                                    );
-                                                })}
-                                            </div> */}
                                             <div className="bone-list">
                                                 <div className="title">Bonelist Lookup</div>
                                                 <div className="address-input">
@@ -339,47 +618,18 @@ export default function Composite() {
                                     </OverPack>
                                 </section>
                             </Parallax>
-                        </div>
+                        </div> */}
 
-                        <div className="scroll-content">
-                            <div className="scroll-list">
-                                <ul>
-                                    <li>
-                                        <span>SHOW YOUR CREATIVITY</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 375 ? (
-                                            <>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
-                                            </>
-                                        ) : ''}
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <span>SHOW YOUR CREATIVITY</span>
-                                        <span className="express-yourself">EXPRESS YOURSELF</span>
-                                        {state.windowWidth > 375 ? (
-                                            <>
-                                                <span>SHOW YOUR CREATIVITY</span>
-                                                <span className="express-yourself">EXPRESS YOURSELF</span>
-                                            </>
-                                        ) : ''}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <section className="minting-phases-section">
+                        {/* <section className="minting-phases-section">
                             <div className="minting-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
                                         <div className="section-title">DRESSING STEPS</div>
                                         <div className="desc">
-                                            NACP PFP has 13 different types of assets you can use to assemble your Nervape PFP. 
-                                            These asset classes will be divided in 3 steps. 
-                                            Each step will allow you to easily buy, trade, and sell your NACP! 
-                                            We encourage you to try through all 3 steps to get the full PFP experience 
+                                            NACP PFP has 13 different types of assets you can use to assemble your Nervape PFP.
+                                            These asset classes will be divided in 3 steps.
+                                            Each step will allow you to easily buy, trade, and sell your NACP!
+                                            We encourage you to try through all 3 steps to get the full PFP experience
                                             that our platform has to offer and to design the ape PFP you want!
                                         </div>
                                         <div className="learn-more">More details coming soon!</div>
@@ -418,7 +668,7 @@ export default function Composite() {
                                                         >
                                                             <div className="origin-item transition-1">
                                                                 <div className="phase-title">{phase.title}</div>
-                                                                {/* <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div> */}
+                                                                <div className="phase-date">{phase.startDate + '~' + phase.endDate}</div>
                                                             </div>
                                                             <div className="hover-item transition-1 flex-center">
                                                                 <div className="editable">Editable Assets</div>
@@ -466,9 +716,9 @@ export default function Composite() {
                                     </div>
                                 </OverPack>
                             </div>
-                        </section>
+                        </section> */}
 
-                        <section className="what-new-section">
+                        {/* <section className="what-new-section">
                             <div className="what-new-content">
                                 <OverPack always={false} playScale={0.3}>
                                     <TweenOne key="what-1" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
@@ -523,6 +773,86 @@ export default function Composite() {
                                     </div>
                                 </OverPack>
                             </div>
+                        </section> */}
+
+                        <section className="qa-section">
+                            <div className="qa-container">
+                                <div className="qa-content">
+                                    <TweenOne key="qa-2" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
+                                        <h3 className="section-title">Q&A</h3>
+                                    </TweenOne>
+
+                                    <div className="questions">
+                                        {questions.length ? (
+                                            questions.map((question, index) => {
+                                                return (
+                                                    <TweenOne
+                                                        key={`question-${index}`}
+                                                        animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }}
+                                                        style={{ opacity: 0 }}
+                                                        className={`question cursor ${question.open && 'open'}`}
+                                                        onMouseDown={(e) => {
+                                                            console.log('down', e)
+                                                            setClickPosition({ x: e.clientX, y: e.clientY })
+                                                        }}
+                                                        onMouseUp={(e) => {
+                                                            console.log('up', e)
+                                                            if (e.clientX == clickPosition.x && e.clientY == clickPosition.y) {
+                                                                let _questions = JSON.parse(JSON.stringify(questions));
+                                                                _questions.map((q: any, i: number) => {
+                                                                    if (i !== index) {
+                                                                        q.open = false;
+                                                                    }
+                                                                    return q;
+                                                                })
+                                                                _questions[index].open = !_questions[index].open;
+                                                                setQuestions(_questions);
+                                                            }
+                                                            setClickPosition({ x: 0, y: 0 })
+                                                        }}>
+                                                        <div className="arrow">
+                                                            <img loading="lazy" src={DownArrowIcon} alt="DownArrowIcon" />
+                                                        </div>
+                                                        <div className="q">
+                                                            <div className="q-l">Q:</div>
+                                                            <div className="q-r">{question.question}</div>
+                                                        </div>
+
+                                                        <div className={`a ${question.open && 'show'}`}>
+                                                            <div className="a-l">A:</div>
+                                                            {question.sort == 5 ? (
+                                                                <div className="a-r">
+                                                                    <p>1.Bonelist holders can mint in advance during the bonelist minting phase.</p>
+                                                                    <p>2.Each spot guarantees a mint of the Nervape base asset.</p>
+                                                                    <p>3.Discounted mint price.</p>
+                                                                </div>
+                                                            ) : question.sort == 4 ? (
+                                                                <div className="a-r">
+                                                                    Yes there is! Please follow our official <a onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                    }} target="_blank" href="https://twitter.com/Nervapes">X (Twitter)</a> account and join our <a onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                    }} target="_blank" href="https://discord.gg/7br6nvuNHP">Discord</a> to participate in community events for your chance to win a bonelist.
+                                                                </div>
+                                                            ) : question.sort == 2 ? (
+                                                                <div className="a-r">
+                                                                    Currently, <a onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                    }} href="https://joy.id/" target="_blank">Joyid Wallet</a> is confirmed to be be able to mint Nervapes. The team is also working on integrating Unisat Wallet and OKX Wallet, with more details to follow.
+                                                                </div>
+                                                            ) : (
+                                                                <div className="a-r">
+                                                                    {question.answer}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </TweenOne>
+                                                );
+                                            })
+                                        ) : ''}
+                                    </div>
+                                </div>
+                            </div>
                         </section>
 
                         <section className="sneak-peek-section" style={{ height: `calc(${(state.windowWidth > 750 ? 664 : 379) * sneakPeeks.length + 'px'} - 100vw + ${state.windowWidth > 750 ? 192 : 64}px + 100vh)` }} ref={sneakRef}>
@@ -539,7 +869,7 @@ export default function Composite() {
                             </div>
                         </section>
 
-                        <section className="partner-program-section">
+                        {/* <section className="partner-program-section">
                             <div className="partner-content">
                                 <OverPack always={false} playScale={0.2}>
                                     <div className="partner-top">
@@ -591,7 +921,7 @@ export default function Composite() {
                                             <img src={NacpLandingPartner} className="top-right" />
                                         </TweenOne>
                                     </div>
-                                    {/* <div className="partner-artists">
+                                    <div className="partner-artists">
                                         <TweenOne className="artist-title" key="partner-3" animation={{ opacity: 1, delay: 400, duration: 600 }}
                                             style={{ opacity: 0 }}>
                                             <div>PARTNER ARTISTS</div>
@@ -608,74 +938,6 @@ export default function Composite() {
                                                     </TweenOne>
                                                 );
                                             })}
-                                        </div>
-                                    </div> */}
-                                </OverPack>
-                            </div>
-                        </section>
-                        {/* <section className="qa-section">
-                            <div className="qa-container">
-                                <OverPack className="flex-justify" always={false} playScale={0.3}>
-                                    {state.windowWidth > 750 && (
-                                        <TweenOne key="qa-1"
-                                            animation={{ opacity: 1, delay: 200, duration: 600 }}
-                                            style={{ opacity: 0 }}
-                                            className="qa-image-c">
-                                            <img src={QAImage} className="qa-image" alt="QAImage" />
-                                        </TweenOne>
-                                    )}
-
-                                    <div className="qa-content">
-                                        <TweenOne key="qa-2" animation={{ opacity: 1, delay: 200, duration: 600 }} style={{ opacity: 0 }}>
-                                            <h3 className="section-title">Q&A</h3>
-                                        </TweenOne>
-
-                                        <div className="questions">
-                                            {questions.length ? (
-                                                questions.map((question, index) => {
-                                                    return (
-                                                        <TweenOne
-                                                            key={`question-${index}`}
-                                                            animation={{ opacity: 1, delay: 200 * (index + 1), duration: 600 }}
-                                                            style={{ opacity: 0 }}
-                                                            className={`question cursor ${question.open && 'open'}`}
-                                                            onMouseDown={(e) => {
-                                                                console.log('down', e)
-                                                                setClickPosition({ x: e.clientX, y: e.clientY })
-                                                            }}
-                                                            onMouseUp={(e) => {
-                                                                console.log('up', e)
-                                                                if (e.clientX == clickPosition.x && e.clientY == clickPosition.y) {
-                                                                    let _questions = JSON.parse(JSON.stringify(questions));
-                                                                    _questions.map((q: any, i: number) => {
-                                                                        if (i !== index) {
-                                                                            q.open = false;
-                                                                        }
-                                                                        return q;
-                                                                    })
-                                                                    _questions[index].open = !_questions[index].open;
-                                                                    setQuestions(_questions);
-                                                                }
-                                                                setClickPosition({ x: 0, y: 0 })
-                                                            }}>
-                                                            <div className="arrow">
-                                                                <img loading="lazy" src={DownArrowIcon} alt="DownArrowIcon" />
-                                                            </div>
-                                                            <div className="q">
-                                                                <div className="q-l">Q:</div>
-                                                                <div className="q-r">{question.question}</div>
-                                                            </div>
-
-                                                            <div className={`a ${question.open && 'show'}`}>
-                                                                <div className="a-l">A:</div>
-                                                                <div className="a-r">
-                                                                    {question.answer}
-                                                                </div>
-                                                            </div>
-                                                        </TweenOne>
-                                                    );
-                                                })
-                                            ) : ''}
                                         </div>
                                     </div>
                                 </OverPack>
@@ -712,8 +974,9 @@ export default function Composite() {
                             <Footer></Footer>
                         </footer>
                     </section>
-                </div>
-            )}
-        </div>
+                </div >
+            )
+            }
+        </div >
     );
 }
