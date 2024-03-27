@@ -3,6 +3,7 @@ import './index.less';
 
 import DefaultAvatar from '../../../assets/wallet/default_avatar.png';
 import NervosLogo from '../../../assets/logo/nervos_logo.svg';
+import BTCLogo from '../../../assets/logo/btc_logo.svg';
 import GodwokenLogo from '../../../assets/logo/godwoken_logo.svg';
 import EthLogo from '../../../assets/logo/etherum.svg';
 import InfoIcon from '../../../assets/icons/info_icon.svg';
@@ -176,6 +177,8 @@ export default function WalletHeader(props: any) {
      */
 
     const walletIcon = () => {
+        if ([LoginWalletType.JOYID_BTC, LoginWalletType.OKX, LoginWalletType.UniSat].includes(state.loginWalletType as LoginWalletType)) return BTCLogo;
+
         if (state.loginWalletType === LoginWalletType.UNIPASS_V3 || state.loginWalletType === LoginWalletType.JOYID) return NervosLogo;
         // 检查是否支持当前网络
         if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {

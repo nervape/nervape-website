@@ -2,4 +2,6 @@
 
 interface Window {
     ethereum?: any;
+    okxwallet?: any;
+    unisat?: any;
 }

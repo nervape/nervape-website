@@ -16,81 +16,95 @@
     }
 
     .login-content {
-        width: 600px;
+        width: 347px;
+        height: 516px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) scale(0);
         transform-origin: center;
-        background: rgba(27, 33, 47, 0.95);
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
         border-radius: 16px;
+        background: rgba(27, 33, 47, 0.95);
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.25);
         transition: all 0.5s;
+        padding: 16px;
+
+        .title {
+            color: #FFF;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 24px;
+            letter-spacing: -0.6px;
+            padding-bottom: 20px;
+        }
 
         .wallet-way {
-            text-align: center;
-            display: flex;
-            align-items: center;
-            padding: 32px;
+            width: 100%;
+            height: 48px;
+            padding: 4px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.10);
 
-            .line {
-                height: 226px;
-                width: 0.5px;
-                border: 1px solid #595D64;
-                margin: 0 20px;
-            }
+            .way-item {
+                flex: 1;
+                border-radius: 12px;
+                background: rgba(109, 124, 147, 0.00);
+                color: #FFF;
+                font-size: 12px;
+                font-weight: 700;
+                line-height: 24px;
+                letter-spacing: -0.6px;
+                height: 100%;
 
-            .godwoken-content {
-                width: 240px;
-            }
-
-            .nervos-l1-content {
-                align-self: flex-start;
-            }
-
-            .godwoken-content,
-            .nervos-l1-content {
-                .title {
-                    font-size: 12px;
-                    line-height: 24px;
-                    font-weight: 700;
-                    text-align: left;
-                    letter-spacing: -0.05em;
-                    color: #ffffff;
-                    padding-bottom: 20px;
+                p {
+                    padding: 0;
+                    margin: 0;
                 }
 
-                .btn-groups {
-                    text-align: left;
+                &:last-child {
+                    line-height: normal;
+                }
 
-                    .btn {
-                        text-align: left;
-                        width: 240px;
-                        height: 54px;
-                        border: 1px solid #F44D37;
-                        border-radius: 6px;
-                        background: transparent;
-                        color: #ffffff;
-                        font-size: 12px;
-                        font-weight: 500;
-                        margin-bottom: 20px;
-                        transition: all 0.3s;
+                &.active {
+                    background: #FFFFFF;
+                }
+            }
+        }
 
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
+        .line {
+            width: 315px;
+            height: 1px;
+            background: #595D64;
+            margin: 20px 0;
+        }
 
-                        &:hover {
-                            background: rgba(255, 255, 255, 0.1);
-                        }
+        .wallet-items {
+            .wallet-item {
+                width: 100%;
+                padding: 12px;
+                height: 64px;
+                color: #FFF;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: -0.6px;
+                margin-bottom: 12px;
+                border-radius: 16px;
+                background: rgba(255, 255, 255, 0.03);
 
-                        .wallet-icon {
-                            width: 30px;
-                            height: 30px;
-                            margin-left: 16px;
-                            margin-right: 12px;
-                        }
-                    }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.15);
+                }
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 12px;
                 }
             }
         }
@@ -100,31 +114,8 @@
 .login-modal.show {
     opacity: 1;
     visibility: visible;
+
     .login-content {
         transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-@media screen and (max-width: 750px) {
-    .login-modal {
-        .login-content {
-            width: 347px;
-            .wallet-way {
-                flex-direction: column;
-                .line {
-                    width: 100%;
-                    height: 0.5px;
-                    margin: 41px 0 20px;
-                }
-                .godwoken-content, .nervos-l1-content {
-                    width: 100%;
-                    .btn-groups {
-                        .btn {
-                            width: 100%;
-                        }
-                    }
-                }
-            }
-        }
     }
 }

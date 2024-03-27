@@ -10,6 +10,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { NavTool } from "../../../route/navi-tool";
 
 import NervosLogo from '../../../assets/logo/nervos_logo.svg';
+import BTCLogo from '../../../assets/logo/btc_logo.svg';
 import GodwokenLogo from '../../../assets/logo/godwoken_logo.svg';
 import EthLogo from '../../../assets/logo/etherum.svg';
 import InfoIcon from '../../../assets/icons/info_icon.svg';
@@ -107,6 +108,12 @@ export default function WallectConnect(props: any) {
             } else if (_storageJson.type === LoginWalletType.JOYID) {
                 setCurrentAddress(_storageJson.address || '');
                 setLoginWalletType(LoginWalletType.JOYID);
+            } else if (_storageJson.type === LoginWalletType.OKX) {
+                setCurrentAddress(_storageJson.address || '');
+                setLoginWalletType(LoginWalletType.OKX);
+            } else if (_storageJson.type === LoginWalletType.UniSat) {
+                setCurrentAddress(_storageJson.address || '');
+                setLoginWalletType(LoginWalletType.UniSat);
             }
         } else {
             clearStorage();
@@ -269,6 +276,7 @@ export default function WallectConnect(props: any) {
     ];
 
     const walletIcon = () => {
+        if ([LoginWalletType.JOYID_BTC, LoginWalletType.OKX, LoginWalletType.UniSat].includes(state.loginWalletType as LoginWalletType)) return BTCLogo;
         if (state.loginWalletType === LoginWalletType.UNIPASS_V3 || state.loginWalletType === LoginWalletType.JOYID) return NervosLogo;
         // 检查是否支持当前网络
         if (!chain || ![godWoken.id, mainnet.id].includes(chain.id)) {

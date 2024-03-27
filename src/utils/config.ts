@@ -43,5 +43,8 @@ export const CONFIG = {
     YOKAI_URL: import.meta.env.VITE_YOKAI_URL,
 
     // metamask app url
-    METAMASK_APP_URL: import.meta.env.VITE_METAMASK_URL
+    METAMASK_APP_URL: import.meta.env.VITE_METAMASK_URL,
+
+    // OKX APP URL
+    OKX_APP_URL: import.meta.env.VITE_OKX_URL
 }
