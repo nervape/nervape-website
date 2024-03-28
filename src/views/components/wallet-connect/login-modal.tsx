@@ -93,6 +93,11 @@ export default function LoginModal(props: any) {
         accounts: [],
     });
     const self = selfRef.current;
+    
+    const selfOKxRef = useRef<{ accounts: string[] }>({
+        accounts: [],
+    });
+    const selfOkx = selfOKxRef.current;
 
     const getBasicInfo = async () => {
         const unisat = (window as any).unisat;
@@ -109,6 +114,20 @@ export default function LoginModal(props: any) {
 
         const network = await unisat.getNetwork();
         setNetwork(network);
+    };
+    
+    const getOKXBasicInfo = async () => {
+        const okxwallet = window.okxwallet;
+        const [address] = await okxwallet.bitcoin.getAccounts();
+
+        setStorage({
+            type: LoginWalletType.OKX,
+            address: address,
+            username: ''
+        });
+
+        setCurrentAddress(address);
+        setLoginWalletType(LoginWalletType.OKX);
     };
 
     const handleAccountsChanged = (_accounts: string[]) => {
@@ -135,11 +154,38 @@ export default function LoginModal(props: any) {
             setConnected(false);
         }
     };
+    
+    const handleOkxAccountsChanged = (_accounts: string[]) => {
+        if (selfOkx.accounts[0] === _accounts[0]) {
+            // prevent from triggering twice
+            return;
+        }
+        selfOkx.accounts = _accounts;
+        if (_accounts.length > 0) {
+            setStorage({
+                type: LoginWalletType.OKX,
+                address: _accounts[0],
+                username: ''
+            });
+
+            setCurrentAddress(_accounts[0]);
+            setLoginWalletType(LoginWalletType.OKX);
+
+            getOKXBasicInfo();
+        } else {
+        }
+    };
 
     const handleNetworkChanged = (network: string) => {
         setNetwork(network);
         getBasicInfo();
     };
+    
+    const handleOKxNetworkChanged = (network: string) => {
+        getOKXBasicInfo();
+    };
+
+    
 
     async function connectUnipass() {
         (async () => {
@@ -255,6 +301,19 @@ export default function LoginModal(props: any) {
         }
     }
 
+    async function checkOkx() {
+        let okxwallet = window.okxwallet;
+        console.log('LoginWalletType.OKX', state.loginWalletType);
+        if (state.loginWalletType === LoginWalletType.OKX) {
+            okxwallet.bitcoin.getAccounts().then((accounts: string[]) => {
+                handleOkxAccountsChanged(accounts);
+            });
+
+            okxwallet.bitcoin.on("accountsChanged", handleOkxAccountsChanged);
+            okxwallet.bitcoin.on("networkChanged", handleOKxNetworkChanged);
+        }
+    }
+
     async function connectUnisat() {
         if (!unisatInstalled) {
             window.location.href = "https://unisat.io";
@@ -330,9 +389,12 @@ export default function LoginModal(props: any) {
                 ]
             }
         ]);
-
-        checkUnisat();
     }, []);
+
+    useEffect(() => {
+        checkUnisat();
+        checkOkx();
+    }, [state.loginWalletType])
 
     const fnConnectWallet = async (way: ConnectWay, wallet: Wallet) => {
         switch (way.chain) {
